@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, View, Text, Button, StyleSheet, Dimensions, Image} from 'react-native';
+import {View, Text, Button, StyleSheet, Dimensions, Image} from 'react-native';
 import {PagerDotIndicator, IndicatorViewPager} from '../../components/ViewPager';
 
 export default class GuideView extends React.Component {
@@ -14,9 +14,9 @@ export default class GuideView extends React.Component {
     render() {
         let {height, width} = Dimensions.get("window");
         return (
-            <View>
+            <View style={styles.container}>
                 <IndicatorViewPager
-                    style={{height: height / 100 * 80}}
+                    style={{flex:1}}
                     indicator={this._renderDotIndicator()}
                     goToNext={next => this.goToNext = next}
                     onPageSelected={this.onPageSelected}>
@@ -99,6 +99,11 @@ const getCardWidth = () => {
 };
 
 const styles = StyleSheet.create({
+    container: {
+        flex:1,
+        paddingTop: 50,
+        paddingBottom: 20
+    },
     page: {
         flex: 1,
         alignItems: 'center',
@@ -128,6 +133,5 @@ const styles = StyleSheet.create({
         lineHeight: 20,
         color: '#ffffff',
         textAlign: 'center',
-
     }
 });

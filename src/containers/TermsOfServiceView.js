@@ -6,8 +6,8 @@ export default class TermsOfServiceView extends React.Component {
         return (
         <View style={styles.container}>
             <View style={styles.contents}>
-            <ScrollView style={{padding: 5}}>
-                <Text>
+            <ScrollView>
+                <Text style={{paddingVertical: 10, paddingHorizontal: 10}}>
                 Linkbit는 프라이빗 키를 비롯한 사용자 정보를 안전하게 암호화하여 기기에 저장하며, 중앙 서버에 이를 보관하지 않아 해킹의 위협이 없습니다.
                 {'\n\n'}
                 Linkbit 이용약관 {'\n'}

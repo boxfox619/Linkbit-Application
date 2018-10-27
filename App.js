@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import TermsOfServiceView from "./src/containers/TermsOfServiceView";
+import PinCodeInputView from "./src/containers/PinCodeInputView";
 
 export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TermsOfServiceView/>
+        <PinCodeInputView/>
       </View>
     );
   }
