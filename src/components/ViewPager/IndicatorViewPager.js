@@ -16,16 +16,14 @@ export default class IndicatorViewPager extends Component {
         ...ViewPager.propTypes,
         indicator: PropTypes.node,
         pagerStyle: ViewPropTypes.style,
-        autoPlayEnable: PropTypes.bool,
-        autoPlayInterval: PropTypes.number,
-        horizontalScroll: PropTypes.bool
+        horizontalScroll: PropTypes.bool,
+        onPageSelected: PropTypes.func,
+        goToNext: PropTypes.func
     };
 
     static defaultProps = {
         indicator: null,
         initialPage: 0,
-        autoPlayInterval: 3000,
-        autoPlayEnable: false,
         horizontalScroll: true
     };
 
@@ -37,22 +35,18 @@ export default class IndicatorViewPager extends Component {
         this._renderIndicator = this._renderIndicator.bind(this);
         this.setPage = this.setPage.bind(this);
         this.setPageWithoutAnimation = this.setPageWithoutAnimation.bind(this);
-        this._startAutoPlay = this._startAutoPlay.bind(this);
-        this._stopAutoPlay = this._stopAutoPlay.bind(this);
         this._currentIndex = props.initialPage;
         this._childrenCount = React.Children.count(props.children);
     }
 
     componentDidMount () {
-        if (this.props.autoPlayEnable) this._startAutoPlay()
-        else this._stopAutoPlay()
+        if(this.props.goToNext){
+            this.props.goToNext(this._goToNextPage);
+        }
     }
 
     componentWillUpdate (nextProps, nextState) {
         this._childrenCount = React.Children.count(nextProps.children)
-        if (this.props.autoPlayEnable !== nextProps.autoPlayEnable) {
-            nextProps.autoPlayEnable ? this._startAutoPlay() : this._stopAutoPlay()
-        }
     }
 
     render () {
@@ -71,10 +65,6 @@ export default class IndicatorViewPager extends Component {
         )
     }
 
-    componentWillUnmount () {
-        this._stopAutoPlay()
-    }
-
     _onPageScroll (params) {
         let indicator = this.refs[INDICATOR_REF]
         indicator && indicator.onPageScroll && indicator.onPageScroll(params)
@@ -86,6 +76,9 @@ export default class IndicatorViewPager extends Component {
         indicator && indicator.onPageSelected && indicator.onPageSelected(params)
         this.props.onPageSelected && this.props.onPageSelected(params)
         this._currentIndex = params.position
+        if(this.props.onPageSelected){
+            this.props.onPageSelected(this._currentIndex);
+        }
     }
 
     _renderIndicator () {
@@ -101,18 +94,6 @@ export default class IndicatorViewPager extends Component {
     _goToNextPage () {
         let nextIndex = (this._currentIndex + 1) % this._childrenCount
         this.setPage(nextIndex)
-    }
-
-    _startAutoPlay () {
-        if (this._timerId) clearInterval(this._timerId)
-        this._timerId = setInterval(this._goToNextPage, this.props.autoPlayInterval)
-    }
-
-    _stopAutoPlay () {
-        if (this._timerId) {
-            clearInterval(this._timerId)
-            this._timerId = null
-        }
     }
 
     setPage (selectedPage) {
