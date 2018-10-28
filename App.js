@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import PinCodeInputView from "./src/containers/PinCodeInputView";
+import {FingerPrintView} from "./src/containers";
 
 export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <PinCodeInputView/>
+        <FingerPrintView/>
       </View>
     );
   }

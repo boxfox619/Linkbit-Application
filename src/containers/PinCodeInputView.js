@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, StyleSheet, Dimensions, Image, Text} from 'react-native';
-import PinCodeView from '../../components/PinCodeView';
+import {View, StyleSheet, Dimensions, Text} from 'react-native';
+import PinCodeView from '../components/PinCodeView/index';
 
 export default class PinCodeInputView extends React.Component {
 
