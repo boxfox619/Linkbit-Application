@@ -1,0 +1,5 @@
+class TransactionApi {
+    fetchTransactions = (address) => {
+
+    }
+}
