@@ -3,5 +3,6 @@ import {PagerDotIndicator, IndicatorViewPager} from './ViewPager';
 import PinCodeView from './PinCodeView';
 import CoinCard from './WalletCard/CoinCard';
 import WalletCard from './WalletCard/WalletCard';
+import WalletList from './WalletList/WalletList';
 
-export {ProgressDialog, PagerDotIndicator, IndicatorViewPager, PinCodeView, CoinCard, WalletCard};
+export {ProgressDialog, PagerDotIndicator, IndicatorViewPager, PinCodeView, CoinCard, WalletCard, WalletList};

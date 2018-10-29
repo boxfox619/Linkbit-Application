@@ -1,12 +1,12 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {MainTabView} from "./src/containers";
+import {GuideView} from "./src/containers";
 
 export default class App extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <MainTabView/>
+                <GuideView/>
             </View>
         );
     }

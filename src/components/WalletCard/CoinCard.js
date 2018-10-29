@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {TouchableOpacity, View, Text, StyleSheet, Image} from 'react-native';
-import {HOST} from '../../libs/Constraints';
+import {HOST, PRIMARY_COLOR} from '../../libs/Constraints';
 
 export default class CoinCard extends React.Component {
 
@@ -20,7 +20,7 @@ export default class CoinCard extends React.Component {
         balance: '0',
         price: '0',
         activate: false,
-        themeColor: '#594343'
+        themeColor: PRIMARY_COLOR
     };
 
     constructor(props) {

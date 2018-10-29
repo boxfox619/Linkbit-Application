@@ -1,13 +1,13 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import MainView from "./MainView";
+import WalletListView from "./WalletListView";
 
 export default class MainTabView extends React.Component {
 
     render() {
         return (
             <View style={styles.container}>
-                <MainView/>
+                <WalletListView/>
             </View>
         )
     }

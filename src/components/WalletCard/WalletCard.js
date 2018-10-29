@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {PRIMARY_COLOR} from '../../libs/Constraints';
 import {TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 
 export default class CoinCard extends React.Component {
@@ -16,7 +17,7 @@ export default class CoinCard extends React.Component {
     static defaultProps = {
         balance: '0',
         price: '0',
-        themeColor: '#bbaad'
+        themeColor: PRIMARY_COLOR
     };
 
     render() {

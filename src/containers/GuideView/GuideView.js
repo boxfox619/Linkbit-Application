@@ -1,18 +1,19 @@
 import React from 'react';
 import {View, Text, Button, StyleSheet, Dimensions, Image} from 'react-native';
 import {PagerDotIndicator, IndicatorViewPager} from '../../components/ViewPager';
+import {observable} from 'mobx';
+import {observer} from 'mobx-react';
 
+@observer
 export default class GuideView extends React.Component {
+    @observable buttonLabel = '다음';
+    @observable currentPage = 0;
+
     constructor(props) {
         super(props);
-        this.state = {
-            buttonLabel: '다음',
-            currentPage: 0
-        }
     }
 
     render() {
-        let {height, width} = Dimensions.get("window");
         return (
             <View style={styles.container}>
                 <IndicatorViewPager
@@ -63,7 +64,7 @@ export default class GuideView extends React.Component {
                 </IndicatorViewPager>
                 <Button
                     onPress={this.onPressNext}
-                    title={this.state.buttonLabel}
+                    title={this.buttonLabel}
                     color="#594343"
                     overrides={{backgroundColor: "#594343"}}
                     accessibilityLabel="Learn more about this purple button"
@@ -73,15 +74,16 @@ export default class GuideView extends React.Component {
     }
 
     onPageSelected = (page) =>{
+        this.currentPage = page;
         if(page == 3){
-            this.setState({buttonLabel: '시작하기', currentPage: page});
+            this.buttonLabel = '시작하기';
         }else{
-            this.setState({buttonLabel: '다음', currentPage: page});
+            this.buttonLabel = '다음';
         }
     }
 
     onPressNext = () =>{
-        if(this.state.currentPage < 3){
+        if(this.currentPage < 3){
             this.goToNext();
         }else{
 

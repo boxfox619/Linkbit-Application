@@ -1,3 +1,3 @@
 const HOST = 'http://boxfox2015.cafe24.com';
-
-export {HOST};
+const PRIMARY_COLOR = '#594343';
+export {HOST, PRIMARY_COLOR};
