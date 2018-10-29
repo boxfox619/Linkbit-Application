@@ -12,7 +12,7 @@ export class TransactionStore{
     }
 
     fetchTransactions = async () => {
-        const transactions = await this.walletApi.fetchTransactions(this.address);
+        const transactions = await this.transactionApi.fetchTransactions(this.address);
         runInAction(() => {
             this.transactions = transactions;
         });
