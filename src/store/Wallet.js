@@ -6,18 +6,16 @@ export default class Wallet {
     @observable name;
     @observable balance;
     @observable symbol;
-    @observable major;
-    @observable open;
 
-    saveHandler = null;
+    updateWallet = null;
     store;
 
     constructor(store) {
         this.store = store;
-        this.saveHandler = reaction(
+        this.updateWallet = reaction(
             () => this.asJson,
             (json) => {
-                this.store.walletApi.saveWallet(json);
+                this.store.walletApi.updateWallet(json);
             }
         );
     }
@@ -41,9 +39,5 @@ export default class Wallet {
         this.symbol = json.symbol;
         this.major = json.major;
         this.open = json.open;
-    }
-
-    save() {
-        this.saveHandler();
     }
 }
