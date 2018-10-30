@@ -18,7 +18,7 @@ export default class WalletGroup extends React.Component {
         moneySymbol: PropTypes.string.isRequired,
         wallets: PropTypes.array.isRequired,
         onToggled: PropTypes.func.isRequired
-    };
+    }
 
     static defaultProps = {
         activated: false
