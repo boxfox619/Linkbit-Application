@@ -1,7 +1,8 @@
 import TransactionApi from '../api/TransactionApi';
 import {observable, computed, runInAction} from 'mobx';
+import Transaction from "./Transaction";
 
-export class TransactionStore{
+export default class TransactionStore{
     @observable transactions = [];
     address;
     transactionApi;
@@ -14,7 +15,11 @@ export class TransactionStore{
     fetchTransactions = async () => {
         const transactions = await this.transactionApi.fetchTransactions(this.address);
         runInAction(() => {
+          this.wallets = wallets.map(json => {
+            let transaction = new Transaction();
+            transaction.updateFromJson(json);
             this.transactions = transactions;
+          });
         });
     }
 

@@ -1,7 +1,7 @@
 import {fetch} from 'react-native';
 import {HOST} from "../libs/Constraints";
 
-class WalletApi {
+export default class WalletApi {
   fetchWallets = async () => {
     try {
       const res = await fetch(`${HOST}/wallet/list`, {
@@ -17,13 +17,10 @@ class WalletApi {
     }
   };
 
-  saveWallet = () => {
-  }
-
-  createWallet = async (address, name, password, description, major, open) => {
+  updateWallet = async (address, name, password, description) => {
     try {
-      let res = await fetch(`${HOST}/wallet/new`, {
-        method: 'GET',
+      let res = await fetch(`${HOST}/wallet`, {
+        method: 'PUT',
         headers: {
           'Authorization': ''
         },
@@ -31,9 +28,28 @@ class WalletApi {
           address,
           name,
           password,
-          description,
-          major,
-          open
+          description
+        })
+      });
+      let resJson = res.json();
+      return resJson;
+    } catch (error){
+      console.log(error);
+    }
+  }
+
+  createWallet = async (address, name, password, description) => {
+    try {
+      let res = await fetch(`${HOST}/wallet/new`, {
+        method: 'POST',
+        headers: {
+          'Authorization': ''
+        },
+        body: JSON.stringify({
+          address,
+          name,
+          password,
+          description
         })
       });
       let resJson = res.json();
