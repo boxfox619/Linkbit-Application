@@ -25,15 +25,16 @@ export default class WalletList extends React.Component {
 
     renderWalletList = () => {
         if (this.props.wallets && this.props.wallets.length > 0) {
-            this.groupBy(this.props.wallets, 'symbol').map(wallets => {
-                const symbol = wallets[0].symbol;
+            let walletMap = this.groupBy(this.props.wallets, 'symbol');
+            return Array.from(walletMap.keys()).map(symbol => {
+                let wallets = walletMap.get(symbol);
                 return (<WalletGroup activated={symbol === this.selectedCoin}
                                      coinSymbol={symbol}
                                      moneySymbol={this.props.moneySymbol}
                                      wallets={wallets}
                                      onToggled={() => this.selectedCoin = symbol}
                                      onWalletSelected={wallet => this.props.onWalletSelected(wallet)}/>)
-            })
+            });
         }
     };
 
