@@ -15,8 +15,8 @@ export default class WalletList extends React.Component {
 
     render() {
         return (
-            <View style={{flex:1}}>
-                <ScrollView style={{flex:1}}>
+            <View style={{flex: 1}}>
+                <ScrollView style={{flex: 1}}>
                     {this.renderWalletList()}
                 </ScrollView>
             </View>
@@ -24,21 +24,30 @@ export default class WalletList extends React.Component {
     }
 
     renderWalletList = () => {
-        this.groupBy(this.props.wallets, 'symbol').map(wallets => {
-            const symbol = wallets[0].symbol;
-            return (<WalletGroup activated={symbol === this.selectedCoin}
-                                 coinSymbol={symbol}
-                                 moneySymbol={this.props.moneySymbol}
-                                 wallets={wallets}
-                                 onToggled={() => {this.selectedCoin = symbol}}
-                                 onWalletSelected={wallet => this.props.onWalletSelected(wallet)}/>)
-        })
+        if (this.props.wallets && this.props.wallets.length > 0) {
+            this.groupBy(this.props.wallets, 'symbol').map(wallets => {
+                const symbol = wallets[0].symbol;
+                return (<WalletGroup activated={symbol === this.selectedCoin}
+                                     coinSymbol={symbol}
+                                     moneySymbol={this.props.moneySymbol}
+                                     wallets={wallets}
+                                     onToggled={() => this.selectedCoin = symbol}
+                                     onWalletSelected={wallet => this.props.onWalletSelected(wallet)}/>)
+            })
+        }
     };
 
-    groupBy = (list, key) =>{
-        return list.reduce(function(rv, x) {
-            (rv[x[key]] = rv[x[key]] || []).push(x);
-            return rv;
-        }, {});
+    groupBy = (list, keyStr) => {
+        const map = new Map();
+        list.forEach((item) => {
+            const key = item[keyStr];
+            const collection = map.get(key);
+            if (!collection) {
+                map.set(key, [item]);
+            } else {
+                collection.push(item);
+            }
+        });
+        return map;
     };
 }

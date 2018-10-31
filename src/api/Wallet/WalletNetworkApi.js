@@ -1,7 +1,7 @@
 import {fetch} from 'react-native';
-import {HOST} from "../libs/Constraints";
+import {HOST} from "../../libs/Constraints";
 
-export default class WalletApi {
+export default class WalletNetworkApi {
   fetchWallets = async () => {
     try {
       const res = await fetch(`${HOST}/wallet/list`, {

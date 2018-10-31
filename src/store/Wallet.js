@@ -1,4 +1,4 @@
-import {observable, computed, runInAction, reaction} from 'mobx';
+import {observable, computed, action, reaction} from 'mobx';
 
 export default class Wallet {
     @observable address;
@@ -20,14 +20,17 @@ export default class Wallet {
         );
     }
 
+    @action setName(name){
+        this.name = name;
+    }
+
     @computed get asJson() {
         return {
             address: this.address,
             linkedAddress: this.linkedAddress,
             name: this.name,
             balance: this.balance,
-            major: this.major,
-            open: this.open
+            symbol: this.symbol
         };
     }
 
@@ -37,7 +40,5 @@ export default class Wallet {
         this.name = json.name;
         this.balance = json.balance;
         this.symbol = json.symbol;
-        this.major = json.major;
-        this.open = json.open;
     }
 }

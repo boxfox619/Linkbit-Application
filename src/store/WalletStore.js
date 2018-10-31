@@ -1,12 +1,13 @@
-import WalletApi from '../api/WalletApi';
+import WalletApi from '../api/Wallet/WalletApi';
 import Wallet from './Wallet';
 import {observable, computed, runInAction} from 'mobx';
 
 class WalletStore {
     @observable wallets = [];
+    walletApi;
 
     constructor() {
-        this.walletApi = new WalletApi();
+        this.walletApi = WalletApi.create();
     }
 
     fetchWallets = async () => {
@@ -22,17 +23,22 @@ class WalletStore {
 
     addWallet = async (wallet) => {
         const result = await this.walletApi.createWallet(wallet.asJson());
-        if(result){
+        if (result) {
             runInAction(() => {
                 this.wallets = [...this.wallets, wallet]
             })
-        }else{
+        } else {
             //@TODO implement fail create wallet
         }
     }
 
-    @computed
-    walletCount = () => this.wallets.length
+    @computed get walletList() {
+        return this.wallets;
+    }
+
+    @computed get walletCount() {
+        return this.wallets.length;
+    }
 }
 
 export default new WalletStore();
