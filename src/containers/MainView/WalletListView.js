@@ -41,7 +41,9 @@ export default class WalletListView extends React.Component {
     }
 
     openWalletDetail = (w) => {
-        //@TODO implement wallet detail open
+        //@TODO imp
+        //
+        // lement wallet detail open
     }
 
 }

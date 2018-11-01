@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {PRIMARY_COLOR} from '../../libs/Constraints';
 import {TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 
-export default class CoinCard extends React.Component {
+export default class WalletCard extends React.Component {
 
     static propTypes = {
         name: PropTypes.string.isRequired,

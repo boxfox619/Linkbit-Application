@@ -1,5 +1,5 @@
 
-export default class WalletApiTest {
+export default class WalletApiMock {
 
     fetchWallets = async () => {
         return [

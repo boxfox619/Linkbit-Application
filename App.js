@@ -2,10 +2,11 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {MainTabView} from "./src/containers";
 import {Provider} from 'mobx-react';
-import WalletStore from "./src/store/WalletStore";
+import {WalletStore, CoinStore} from "./src/store";
 
 const store = {
-    wallet: WalletStore
+    wallet: WalletStore,
+    coin: CoinStore
 }
 
 export default class App extends React.Component {

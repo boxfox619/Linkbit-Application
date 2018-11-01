@@ -1,5 +1,5 @@
 import {observable, computed, runInAction} from 'mobx';
-import CoinApi from '../api/CoinApi';
+import CoinApi from '../api/Coin/CoinApi';
 import Coin from './Coin';
 
 class CoinStore {
@@ -7,23 +7,34 @@ class CoinStore {
     @observable isLoading = false;
     coinApi;
 
-    constructor(){
+    constructor() {
         this.coinApi = new CoinApi();
     }
 
-    loadPrices() {
+    loadCoins(symbols) {
+        runInAction(() => {
+            symbols.forEach(symbol => this.coinList.push(new Coin(symbol)));
+        });
+        this.refreshCoins();
+    }
+
+    refreshCoins = async () =>{
         this.isLoading = true;
         this.coinApi.fetchCoinPrices(this.coinList.map(coin => coin.symbol)).then(coins => {
-            coins.forEach(json => this.updateCoinPrice(json));
-            this.isLoading = false;
+            runInAction(() => {
+                coins.forEach(json => this.updateCoinPrice(json));
+                this.isLoading = false;
+            });
         });
     }
 
-    loadPrice(symbol){
+    loadCoin = async (symbol) =>{
         this.isLoading = true;
         this.coinApi.fetchCoinPrices([symbol]).then(coins => {
-            coins.forEach(json => this.updateCoinPrice(json));
-            this.isLoading = false;
+            runInAction(() => {
+                coins.forEach(json => this.updateCoinPrice(json));
+                this.isLoading = false;
+            });
         });
     }
 
@@ -33,18 +44,22 @@ class CoinStore {
             coin = new Coin(json.symbol);
             coin.updateFromJson(coin);
             this.coinList.push(coin);
-        }else {
+        } else {
             coin.updateFromJson(json);
         }
     }
 
-    @computed getCoinPrice = (symbol) => {
+    @computed get coinLists() {
+        return this.coinList;
+    }
+
+    @computed getCoin = (symbol) => {
         let coin = this.coinList.find(coin => coin.symbol === symbol);
-        if(!coin){
+        if (!coin) {
             coin = new Coin(symbol);
             this.coinList.push(coin);
-            this.loadPrice(symbol);
+            this.loadCoin(symbol);
         }
-        return coin.price;
+        return coin;
     }
 }

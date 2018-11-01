@@ -1,7 +1,7 @@
 import {fetch} from "react-native";
-import {HOST} from "../libs/Constraints";
+import {HOST} from "../../libs/Constraints";
 
-export default class CoinApi {
+export default class CoinNetworkApi {
 
     fetchCoinPrices = async (symbols) => {
         try {
