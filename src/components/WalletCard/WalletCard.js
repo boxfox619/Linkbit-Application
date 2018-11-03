@@ -11,19 +11,21 @@ export default class WalletCard extends React.Component {
         moneySymbol: PropTypes.string.isRequired,
         balance: PropTypes.string,
         price: PropTypes.string,
-        themeColor: PropTypes.string
+        themeColor: PropTypes.string,
+        onSelected: PropTypes.func
     };
 
     static defaultProps = {
         balance: '0',
         price: '0',
-        themeColor: PRIMARY_COLOR
+        themeColor: PRIMARY_COLOR,
+        onSelected: () => {}
     };
 
     render() {
         return (
             <View>
-                <TouchableOpacity onPress={this.onPress} style={[styles.container, this.getCardStyle()]}>
+                <TouchableOpacity onPress={this.onSelected} style={[styles.container, this.getCardStyle()]}>
                     <Text style={[styles.label, this.getTextColor()]}>{this.props.name}</Text>
                     <View style={styles.valuesWrapper}>
                         <View style={styles.values}>
@@ -55,8 +57,7 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         paddingVertical: 10,
         paddingHorizontal: 15,
-        marginTop: 10,
-        marginBottom: 3
+        marginVertical: 3
     },
     label: {
         fontSize: 18,

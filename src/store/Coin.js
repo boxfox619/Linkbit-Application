@@ -1,15 +1,15 @@
-import {observable} from 'mobx';
+import {observable, action, computed} from 'mobx';
 
 export default class Coin{
-    @observable symbol;
-    @observable price;
-    @observable name;
+    @observable symbol = '';
+    @observable price = 0;
+    @observable name = '';
 
     constructor(symbol){
         this.symbol = symbol;
     }
 
-    asJson(){
+    @computed get asJson(){
         return {
             symbol: this.symbol,
             price: this.price,
@@ -17,7 +17,7 @@ export default class Coin{
         }
     }
 
-    updateFromJson = (json) => {
+    @action updateFromJson = (json) => {
         this.price = json.price;
         this.name = json.name;
     }

@@ -15,9 +15,6 @@ class PinCodeView extends React.Component {
       pinViewAnim: new Animated.Value(0),
       animatedDeleteButtonOnPress: true
     };
-    this.keyboardOnPress = this.keyboardOnPress.bind(this);
-    this.setDeleteButton = this.setDeleteButton.bind(this);
-    this.clear = this.clear.bind(this)
   }
 
   userInput = [];
@@ -35,7 +32,7 @@ class PinCodeView extends React.Component {
     })
   };
 
-  clear() {
+  clear = () => {
     this.userInput = [];
     this.setState({
       animatedInputIndex: Object.assign([]),

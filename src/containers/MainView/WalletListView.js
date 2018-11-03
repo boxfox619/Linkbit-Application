@@ -55,7 +55,8 @@ const styles = StyleSheet.create({
     totalBalanceCard: {
         backgroundColor: PRIMARY_COLOR,
         padding: 17,
-        borderRadius: 6
+        borderRadius: 6,
+        marginBottom: 10
     },
     totalBalanceLabel: {
         color: '#ffffff',

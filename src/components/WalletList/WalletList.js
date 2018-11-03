@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import WalletGroup from './WalletGroup';
 import {ScrollView, View} from 'react-native';
 import {observable} from 'mobx';
+import {observer} from 'mobx-react';
 
+@observer
 export default class WalletList extends React.Component {
     @observable selectedCoin = undefined;
     static propTypes = {
@@ -28,12 +30,16 @@ export default class WalletList extends React.Component {
             let walletMap = this.groupBy(this.props.wallets, 'symbol');
             return Array.from(walletMap.keys()).map(symbol => {
                 let wallets = walletMap.get(symbol);
-                return (<WalletGroup activated={symbol === this.selectedCoin}
-                                     coinSymbol={symbol}
-                                     moneySymbol={this.props.moneySymbol}
-                                     wallets={wallets}
-                                     onToggled={() => this.selectedCoin = symbol}
-                                     onWalletSelected={wallet => this.props.onWalletSelected(wallet)}/>)
+                return (
+                    <WalletGroup
+                        key={symbol}
+                        activated={symbol === this.selectedCoin}
+                        coinSymbol={symbol}
+                        moneySymbol={this.props.moneySymbol}
+                        wallets={wallets}
+                        onToggled={() => this.selectedCoin = symbol}
+                        onWalletSelected={wallet => this.props.onWalletSelected(wallet)}/>
+                )
             });
         }
     };

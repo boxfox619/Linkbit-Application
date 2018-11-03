@@ -77,8 +77,7 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         paddingVertical: 10,
         paddingHorizontal: 15,
-        position: 'relative',
-        marginVertical: 3
+        position: 'relative'
     },
     label: {
         fontSize: 20,

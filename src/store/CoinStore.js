@@ -1,4 +1,4 @@
-import {observable, computed, runInAction} from 'mobx';
+import {observable, computed, runInAction, action} from 'mobx';
 import CoinApi from '../api/Coin/CoinApi';
 import Coin from './Coin';
 
@@ -20,33 +20,29 @@ class CoinStore {
 
     refreshCoins = async () => {
         this.isLoading = true;
-        this.coinApi.fetchCoinPrices(this.coinList.map(coin => coin.symbol)).then(coins => {
-            runInAction(() => {
-                coins.forEach(json => this.updateCoinPrice(json));
-                this.isLoading = false;
-            });
+        let coins = await this.coinApi.fetchCoinPrices(this.coinList.map(coin => coin.symbol));
+        coins.forEach(json => this.updateCoinPrice(json));
+        runInAction(() => {
+            this.isLoading = false;
         });
     }
 
     loadCoin = async (symbol) => {
         this.isLoading = true;
-        this.coinApi.fetchCoinPrices([symbol]).then(coins => {
-            runInAction(() => {
-                coins.forEach(json => this.updateCoinPrice(json));
-                this.isLoading = false;
-            });
+        let coins = await this.coinApi.fetchCoinPrices([symbol]);
+        coins.forEach(json => this.updateCoinPrice(json));
+        runInAction(() => {
+            this.isLoading = false;
         });
     }
 
-    updateCoinPrice(json) {
-        var coin = this.coinList.find(coin => coin.symbol === coin.symbol);
+    @action updateCoinPrice(json) {
+        var coin = this.coinList.find(coin => coin.symbol === json.symbol);
         if (!coin) {
             coin = new Coin(json.symbol);
-            coin.updateFromJson(coin);
             this.coinList.push(coin);
-        } else {
-            coin.updateFromJson(json);
         }
+        coin.updateFromJson(json);
     }
 
     @computed get coinLists() {
@@ -54,17 +50,15 @@ class CoinStore {
     }
 
     getCoin(symbol) {
-        return computed(() => {
-            let coin = this.coinList.find(coin => coin.symbol === symbol);
+        let coin = this.coinList.find(coin => coin.symbol === symbol);
+        if (!coin) {
             runInAction(() => {
-                if (!coin) {
-                    coin = new Coin(symbol);
-                    this.coinList.push(coin);
-                    this.loadCoin(symbol);
-                }
+                coin = new Coin(symbol);
+                this.coinList.push(coin);
+                this.loadCoin(symbol);
             });
-            return coin;
-        }).get();
+        }
+        return coin;
     }
 }
 
