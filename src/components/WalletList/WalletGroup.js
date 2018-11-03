@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {View} from 'react-native';
 import {CoinCard, WalletCard} from '../../components';
+import {dollarFormat} from '../../libs/NumberFormatter';
 import {observer, inject} from 'mobx-react';
 import {observable} from 'mobx';
 
-@inject(['coin'])
+@inject('coin')
 @observer
 export default class WalletGroup extends React.Component {
     @observable totalBalance = 0;
@@ -23,6 +24,13 @@ export default class WalletGroup extends React.Component {
         activated: false
     };
 
+    constructor(props) {
+        super(props);
+        this.props.wallets.forEach(wallet => {
+            this.totalBalance += wallet.balance;
+        });
+    }
+
     render() {
         const coin = this.props.coin.getCoin(this.props.coinSymbol);
         return (
@@ -32,7 +40,7 @@ export default class WalletGroup extends React.Component {
                           symbol={this.props.coinSymbol}
                           moneySymbol={this.props.moneySymbol}
                           balance={this.totalBalance}
-                          price={this.totalBalance * coin.price}
+                          price={dollarFormat(this.totalBalance * coin.price)}
                           onClick={() => this.setState({test: !this.state.test})}/>
                 {this.props.activated && this.renderWallets()}
             </View>
@@ -41,7 +49,6 @@ export default class WalletGroup extends React.Component {
 
     renderWallets = () => {
         return this.props.wallets.map(wallet => {
-            this.totalBalance += wallet.balance;
             return (<WalletCard name={wallet.name}
                                 symbol={wallet.symbol}
                                 moneySymbol={this.props.moneySymbol}

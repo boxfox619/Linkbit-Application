@@ -8,7 +8,7 @@ class CoinStore {
     coinApi;
 
     constructor() {
-        this.coinApi = new CoinApi();
+        this.coinApi = CoinApi.create();
     }
 
     loadCoins(symbols) {
@@ -18,7 +18,7 @@ class CoinStore {
         this.refreshCoins();
     }
 
-    refreshCoins = async () =>{
+    refreshCoins = async () => {
         this.isLoading = true;
         this.coinApi.fetchCoinPrices(this.coinList.map(coin => coin.symbol)).then(coins => {
             runInAction(() => {
@@ -28,7 +28,7 @@ class CoinStore {
         });
     }
 
-    loadCoin = async (symbol) =>{
+    loadCoin = async (symbol) => {
         this.isLoading = true;
         this.coinApi.fetchCoinPrices([symbol]).then(coins => {
             runInAction(() => {
@@ -53,13 +53,19 @@ class CoinStore {
         return this.coinList;
     }
 
-    @computed getCoin = (symbol) => {
-        let coin = this.coinList.find(coin => coin.symbol === symbol);
-        if (!coin) {
-            coin = new Coin(symbol);
-            this.coinList.push(coin);
-            this.loadCoin(symbol);
-        }
-        return coin;
+    getCoin(symbol) {
+        return computed(() => {
+            let coin = this.coinList.find(coin => coin.symbol === symbol);
+            runInAction(() => {
+                if (!coin) {
+                    coin = new Coin(symbol);
+                    this.coinList.push(coin);
+                    this.loadCoin(symbol);
+                }
+            });
+            return coin;
+        }).get();
     }
 }
+
+export default new CoinStore();
