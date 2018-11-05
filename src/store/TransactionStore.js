@@ -1,4 +1,4 @@
-import TransactionApi from '../api/TransactionApi';
+import TransactionApi from '../api/Transaction/TransactionApi';
 import {observable, computed, runInAction} from 'mobx';
 import Transaction from "./Transaction";
 
@@ -9,7 +9,7 @@ export default class TransactionStore{
 
     constructor(address){
         this.address = address;
-        this.transactionApi = new TransactionApi();
+        this.transactionApi = TransactionApi.create();
     }
 
     fetchTransactions = async () => {
