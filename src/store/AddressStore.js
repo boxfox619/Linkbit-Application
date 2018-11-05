@@ -1,5 +1,5 @@
 import {observable, computed, runInAction} from 'mobx';
-import AddressApi from '../api/AddressApi';
+import AddressApi from '../api/Address/AddressApi';
 import LinkedAddress from './LinkedAddress';
 
 class AddressStore {
@@ -8,7 +8,7 @@ class AddressStore {
     isLoading = false;
 
     constructor() {
-        this.addressApi = new AddressApi();
+        this.addressApi = AddressApi.create();
     }
 
     loadAddresss() {
