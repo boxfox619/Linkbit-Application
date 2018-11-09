@@ -10,8 +10,9 @@ export default class MainTabView extends React.Component {
             <View style={styles.container}>
                 <Header
                     backgroundColor={'#ffffff'}
-                    leftComponent={<Text style={styles.title}>Wallet</Text>}
-                    rightComponent={{ icon: 'payment', color: '#000000' }}
+                    leftComponent={<Text style={styles.title}>WALLET</Text>}
+                    rightComponent={{ icon: 'payment', color: '#000000', marginRight:10 }}
+                    outerContainerStyles={{borderBottomWidth: 0, height:80 }}
                 />
                 <View style={styles.content}>
                     <WalletListView/>
@@ -26,13 +27,13 @@ const styles = StyleSheet.create({
         flex: 1
     },
     title: {
-        fontSize: 17,
+        fontSize: 20,
         fontWeight: 'bold',
         marginLeft: 10,
     },
     content: {
         flex: 1,
-        paddingVertical: 40,
+        paddingVertical: 10,
         paddingHorizontal: 20
     }
 
