@@ -28,14 +28,15 @@ export default class MainTabView extends React.Component {
                 <View style={styles.content}>
                     <WalletListView/>
                 </View>
-
-                <ButtonGroup
-                    onPress={this.updateIndex}
-                    selectedIndex={selectedIndex}
-                    buttons={this.getTabIcons()}
-                    containerStyle={styles.containerStyle}
-                    buttonStyle={styles.buttonStyle}
-                />
+                <View style={styles.bottomBar}>
+                    <ButtonGroup
+                        onPress={this.updateIndex}
+                        selectedIndex={selectedIndex}
+                        buttons={this.getTabIcons()}
+                        containerStyle={styles.containerStyle}
+                        buttonStyle={styles.buttonStyle}
+                    />
+                </View>
             </View>
         )
     }
@@ -48,7 +49,7 @@ export default class MainTabView extends React.Component {
     };
 
     getIconColor = (idx) => {
-        return (idx === this.state.selectedIndex) ? PRIMARY_COLOR : '#777';
+        return (idx === this.state.selectedIndex) ? '#fff' : '#ACA1A1';
     };
 
     updateIndex = (selectedIndex) => {
@@ -70,15 +71,19 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20
     },
+    bottomBar: {
+        height: 60,
+        backgroundColor: PRIMARY_COLOR
+    },
     containerStyle: {
-        height: 50,
+        height: 60,
         borderWidth: 0,
-        backgroundColor: '#fff',
+        backgroundColor: PRIMARY_COLOR,
         marginTop: 0,
         borderRadius: 0
     },
     buttonStyle: {
-        backgroundColor: '#fff',
+        backgroundColor: PRIMARY_COLOR,
         borderWidth: 0
     }
 });
