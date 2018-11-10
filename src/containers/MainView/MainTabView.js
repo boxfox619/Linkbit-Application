@@ -26,7 +26,7 @@ export default class MainTabView extends React.Component {
                     outerContainerStyles={{borderBottomWidth: 0, height: 80}}
                 />
                 <View style={styles.content}>
-                    <WalletListView/>
+                    {this.renderContents()}
                 </View>
                 <Navbar
                     onTabSelected={this.updateIndex}
@@ -36,6 +36,14 @@ export default class MainTabView extends React.Component {
                 />
             </View>
         )
+    }
+
+    renderContents = () =>{
+        switch(this.state.selectedIndex){
+            case 0: return <WalletListView/>;
+            case 1: return <View></View>;
+            case 2: return <View></View>;
+        }
     }
 
     get tabs() {
