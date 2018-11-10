@@ -2,8 +2,8 @@ import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import WalletListView from "./WalletListView";
 import {PRIMARY_COLOR} from "../../libs/Constraints";
-import {Header, ButtonGroup} from 'react-native-elements';
-import {NavIcon} from "../../components";
+import {Header} from 'react-native-elements';
+import {Navbar} from "../../components";
 
 
 export default class MainTabView extends React.Component {
@@ -28,28 +28,22 @@ export default class MainTabView extends React.Component {
                 <View style={styles.content}>
                     <WalletListView/>
                 </View>
-                <View style={styles.bottomBar}>
-                    <ButtonGroup
-                        onPress={this.updateIndex}
-                        selectedIndex={selectedIndex}
-                        buttons={this.getTabIcons()}
-                        containerStyle={styles.containerStyle}
-                        buttonStyle={styles.buttonStyle}
-                    />
-                </View>
+                <Navbar
+                    onTabSelected={this.updateIndex}
+                    selectedIndex={selectedIndex}
+                    tabs={this.tabs}
+                    containerStyle={styles.containerStyle}
+                />
             </View>
         )
     }
 
-    getTabIcons = () => {
-        const icon1 = () => <NavIcon icon='payment' label='Wallet' color={this.getIconColor(0)}/>;
-        const icon2 = () => <NavIcon icon='swap-horiz' label='Transaction' color={this.getIconColor(1)}/>;
-        const icon3 = () => <NavIcon icon='settings' label='Settings' color={this.getIconColor(2)}/>;
-        return [{element: icon1}, {element: icon2}, {element: icon3}]
-    };
-
-    getIconColor = (idx) => {
-        return (idx === this.state.selectedIndex) ? '#fff' : '#ACA1A1';
+    get tabs() {
+        return [
+            {icon: 'payment', label: 'Wallet'},
+            {icon: 'swap-horiz', label: 'Transaction'},
+            {icon: 'settings', label: 'Settings'}
+        ];
     };
 
     updateIndex = (selectedIndex) => {
@@ -71,19 +65,8 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20
     },
-    bottomBar: {
-        height: 60,
-        backgroundColor: PRIMARY_COLOR
-    },
     containerStyle: {
         height: 60,
-        borderWidth: 0,
-        backgroundColor: PRIMARY_COLOR,
-        marginTop: 0,
-        borderRadius: 0
-    },
-    buttonStyle: {
-        backgroundColor: PRIMARY_COLOR,
-        borderWidth: 0
+        backgroundColor: PRIMARY_COLOR
     }
 });
