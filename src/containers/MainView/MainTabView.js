@@ -8,8 +8,8 @@ export default class MainTabView extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                {/* <WalletListView/> */}
-                <TransactionsView />
+                <WalletListView/>
+                {/* <TransactionsView /> */}
             </View>
         )
     }
