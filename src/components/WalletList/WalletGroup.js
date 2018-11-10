@@ -31,10 +31,13 @@ export default class WalletGroup extends React.Component {
         props.wallets.forEach(wallet => {
             this.totalBalance += wallet.balance;
         });
+        this.state = {
+            coin: this.props.coin.getCoin(this.props.coinSymbol)
+        }
     }
 
     render() {
-        const coin = this.props.coin.getCoin(this.props.coinSymbol);
+        const {coin} = this.state;
         return (
             <View style={styles.container}>
                 <CoinCard activate={this.props.activated}
