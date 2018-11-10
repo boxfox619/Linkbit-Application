@@ -11,7 +11,9 @@ export default class MainTabView extends React.Component {
     constructor() {
         super();
         this.state = {
-            selectedIndex: 0
+            selectedIndex: 0,
+            headerTitle: 'WALLET',
+            headerIcon: {}
         }
     }
 
@@ -21,8 +23,8 @@ export default class MainTabView extends React.Component {
             <View style={styles.container}>
                 <Header
                     backgroundColor={'#ffffff'}
-                    leftComponent={<Text style={styles.title}>WALLET</Text>}
-                    rightComponent={{icon: 'payment', color: '#000000', marginRight: 10}}
+                    leftComponent={<Text style={styles.title}>{this.state.headerTitle}</Text>}
+                    rightComponent={this.state.headerIcon}
                     outerContainerStyles={{borderBottomWidth: 0, height: 80}}
                 />
                 <View style={styles.content}>
@@ -38,11 +40,14 @@ export default class MainTabView extends React.Component {
         )
     }
 
-    renderContents = () =>{
-        switch(this.state.selectedIndex){
-            case 0: return <WalletListView/>;
-            case 1: return <View></View>;
-            case 2: return <View></View>;
+    renderContents = () => {
+        switch (this.state.selectedIndex) {
+            case 0:
+                return <WalletListView/>;
+            case 1:
+                return <View></View>;
+            case 2:
+                return <View></View>;
         }
     }
 
@@ -55,7 +60,22 @@ export default class MainTabView extends React.Component {
     };
 
     updateIndex = (selectedIndex) => {
-        this.setState({selectedIndex})
+        let state = {selectedIndex};
+        switch (selectedIndex) {
+            case 0:
+                state.headerTitle = 'WALLET';
+                state.headerIcon = {icon: 'payment', color: '#000000', marginRight: 10};
+                break;
+            case 1:
+                state.headerTitle = 'TRANSACTION';
+                state.headerIcon = undefined;
+                break;
+            case 2:
+                state.headerTitle = 'SETTING';
+                state.headerIcon = undefined;
+                break;
+        }
+        this.setState(state);
     }
 }
 
