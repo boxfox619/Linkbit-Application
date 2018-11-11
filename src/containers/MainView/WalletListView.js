@@ -17,7 +17,7 @@ export default class WalletListView extends React.Component {
             linkedAddress: 'Linkbit-3156-3266',
             moneySymbol: 'KRW'
         };
-        WalletStore.fetchWallets();
+        this.props.wallet.fetchWallets();
     }
 
     render() {
