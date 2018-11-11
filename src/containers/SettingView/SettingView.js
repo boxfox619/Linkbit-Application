@@ -1,5 +1,11 @@
 import React from 'react'
-import { StyleSheet, View, FlatList, Text } from 'react-native'
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  FlatList,
+  Text,
+} from 'react-native'
 
 export default class SettingView extends React.Component {
   render () {
@@ -26,13 +32,13 @@ export default class SettingView extends React.Component {
 
     return (
       <View style={styles.container}>
-        <FlatList
-          data={list}
-          renderItem={({item}) => <View style={styles.listItem}>
-            <Text style={[styles.key, item.key === '초기화' && styles.reset]}>{item.key}</Text>
-            <Text style={styles.sub}>{item.sub}</Text>
-          </View>}
-        />
+        {
+          list.map((item, idx)=>
+            <TouchableOpacity key={idx} onPress={this.onPress} style={styles.listItem}>
+              <Text style={[styles.key, item.key === '초기화' && styles.reset]}>{item.key}</Text>
+              <Text style={styles.sub}>{item.sub}</Text>
+            </TouchableOpacity>)
+        }
       </View>
     )
   }
@@ -41,12 +47,12 @@ export default class SettingView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 20
   },
   listItem: {
-    flex: 1,
+    padding: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#eaeaea',
   },
