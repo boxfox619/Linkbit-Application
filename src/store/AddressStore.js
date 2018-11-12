@@ -11,16 +11,14 @@ class AddressStore {
         this.addressApi = AddressApi.create();
     }
 
-    loadAddresss() {
+    loadAddresss = async () => {
         this.isLoading = true;
-        this.addressApi.fetchLinkedAddressList().then(addressList => {
+        const addressList = await this.addressApi.fetchOwnAddressList();
+        runInAction(() => {
             addressList.forEach(json => this.updateAddress(json));
             this.isLoading = false;
-        }).catch(err => {
-            console.log(err);
-            this.isLoading = false;
         });
-    }
+    };
 
     updateAddress = (json) => {
         let linkedAddress = this.linkedAddressList.find(linked => linked.address);
@@ -28,12 +26,12 @@ class AddressStore {
             linkedAddress = new LinkedAddress();
         }
         linkedAddress.updateFromJson(json)
-    }
+    };
 
     @computed getLinkedAddress(symbol, accountAddress) {
         let linkedAddressList = this.linkedAddressList.filter(linked => linked.getAccountAddress(symbol) === accountAddress);
         return linkedAddressList;
     }
-
-
 }
+
+export default new AddressStore();

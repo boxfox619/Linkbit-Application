@@ -2,14 +2,20 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {MainTabView} from "./src/containers";
 import {Provider} from 'mobx-react';
-import {WalletStore, CoinStore} from "./src/store";
+import {WalletStore, CoinStore, AddressStore} from "./src/store";
 
 const store = {
     wallet: WalletStore,
-    coin: CoinStore
-}
+    coin: CoinStore,
+    address: AddressStore
+};
 
 export default class App extends React.Component {
+    componentWillMount() {
+        store.address.loadAddresss();
+        store.wallet.loadWallets();
+    }
+
     render() {
         return (
             <Provider {...store}>
