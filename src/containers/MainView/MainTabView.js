@@ -5,7 +5,6 @@ import {PRIMARY_COLOR} from "../../libs/Constraints";
 import {Header} from 'react-native-elements';
 import {Navbar} from "../../components";
 
-
 export default class MainTabView extends React.Component {
 
     constructor() {

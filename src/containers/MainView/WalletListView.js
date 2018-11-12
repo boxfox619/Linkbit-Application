@@ -1,8 +1,7 @@
 import React from 'react';
-import {View, StyleSheet, Dimensions, Text, ScrollView} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import {WalletList} from "../../components";
 import {PRIMARY_COLOR} from "../../libs/Constraints";
-import WalletStore from '../../store/WalletStore';
 import {inject, observer} from 'mobx-react';
 
 @inject(['wallet'])
@@ -17,7 +16,6 @@ export default class WalletListView extends React.Component {
             linkedAddress: 'Linkbit-3156-3266',
             moneySymbol: 'KRW'
         };
-        this.props.wallet.fetchWallets();
     }
 
     render() {

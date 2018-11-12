@@ -3,7 +3,10 @@ import {View, StyleSheet, FlatList, Text} from 'react-native';
 import {Header} from 'react-native-elements';
 import {HeaderButtonWithTitle} from "../../components/Header/HeaderButtonWithTitle";
 import BorderCard from "../../components/Card/BorderCard";
+import {inject, observer} from "mobx-react/index";
 
+@inject(['address'])
+@observer
 export default class AddressView extends React.Component {
 
     render() {
@@ -16,7 +19,7 @@ export default class AddressView extends React.Component {
                 />
                 <FlatList
                     style={styles.list}
-                    data={[{address: 'Linkbit-3567-1332', connected: 0}]}
+                    data={this.props.address.linkedAddressList}
                     renderItem={({item})=> {
                         return (
                             <BorderCard key={item.address}>
