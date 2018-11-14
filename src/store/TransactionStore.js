@@ -23,8 +23,7 @@ export default class TransactionStore{
         });
     }
 
-    @computed
-    transactionCount = () => this.transactions.length
-
-
+    @computed get transactionCount() {
+        return this.transactions.length
+    }
 }
