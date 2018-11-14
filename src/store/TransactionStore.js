@@ -12,13 +12,13 @@ export default class TransactionStore{
         this.transactionApi = TransactionApi.create();
     }
 
-    fetchTransactions = async () => {
-        const transactions = await this.transactionApi.fetchTransactions(this.address);
+    fetchTransactions = async (page, count) => {
+        const transactions = await this.transactionApi.fetchTransactions(this.address, page, count);
         runInAction(() => {
-          this.wallets = wallets.map(json => {
+          transactions.forEach(json => {
             let transaction = new Transaction();
             transaction.updateFromJson(json);
-            this.transactions = transactions;
+            this.transactions.push(transaction);
           });
         });
     }

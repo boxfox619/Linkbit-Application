@@ -1,16 +1,25 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native'
-import TransactionsList from '../../components/TransactionsList/TransactionsList'
+import {View, StyleSheet} from 'react-native'
+import TransactionsList from '../../components/Transaction/TransactionListView'
 import CardSummary from '../../components/CardSummary/CardSummary'
+import TransactionStore from "../../store/TransactionStore";
 
 export default class TransactionsView extends React.Component {
+    constructor(props){
+        super(props)
+        this.store = new TransactionStore()
+    }
     render() {
         return (
             <View style={styles.container}>
                 <CardSummary symbol={''} accountAddress={''} linkedAddress={''} balance={''}/>
-                <TransactionsList />
+                <TransactionsList fetchTransaction={this.fetchTransaction} data={this.store.transactions}/>
             </View>
         )
+    }
+
+    fetchTransaction = (page, count) => {
+        this.store.fetchTransactions(page, count)
     }
 }
 
