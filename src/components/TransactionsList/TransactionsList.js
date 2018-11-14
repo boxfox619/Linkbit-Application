@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, FlatList } from 'react-native'
+import { StyleSheet, FlatList } from 'react-native'
 import TransactionCard from '../TransactionCard/TransactionCard'
 
 function randomUsers(count = 10) {
@@ -42,7 +42,7 @@ export default class TransactionsView extends React.Component {
     render() {
         return (
             <FlatList
-                style={styles.TransactionListView}
+                style={styles.transactionListView}
                 data={this.state.data}
                 initialNumToRender={10}
                 onEndReachedThreshold={1}
@@ -64,7 +64,7 @@ export default class TransactionsView extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    TransactionListView: {
+    transactionListView: {
         backgroundColor: 'red',
         borderStyle: 'dotted',
         width: '100%',

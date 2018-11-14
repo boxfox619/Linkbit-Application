@@ -1,23 +1,41 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import PropTypes from 'prop-types';
+import {View, StyleSheet, Text} from 'react-native';
 
 export default class TransactionCard extends React.Component {
+    static propTypes = {
+        date: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired,
+        address: PropTypes.string.isRequired,
+        amount: PropTypes.number.isRequired,
+        symbol: PropTypes.string.isRequired,
+        confirm: PropTypes.number.isRequired
+    }
+
     render() {
-        const { date, email, address, coin, symbol, confirm } = this.props
+        const {date, email, address, amount, symbol, confirm} = this.props
 
         return (
-            <View style={styles.TransactionRow}>
-                <Text style={styles.TransactionRowDate}>{date}</Text>
-                <View style={styles.TransactionRowAccountContainer}>
-                    <Text style={styles.TransactionRowAccountContainerEmail}>{email}</Text>
-                    <Text style={styles.TransactionRowAccountContainerAddress}>{address}</Text>
+            <View style={styles.transactionRow}>
+                <Text style={styles.date}>{date}</Text>
+                <View style={styles.accountContainer}>
+                    <Text style={styles.email}>{email}</Text>
+                    <Text style={styles.address}>{address}</Text>
                 </View>
-                <View style={styles.TransactionRowAmountContainer}>
-                    <Text style={styles.TransactionRowAmountContainerPlusCoin}>{`${coin} ${symbol}`}</Text>
-                    <Text style={styles.TransactionRowAmountContainerConfirm}>{confirm}</Text>
+                <View style={styles.amountContainer}>
+                    <Text style={[styles.amount, this.getAmountColor()]}>{`${amount} ${symbol}`}</Text>
+                    <Text style={styles.confirm}>{confirm}</Text>
                 </View>
             </View>
         )
+    }
+
+    getAmountColor = () => {
+        if (this.props.amount > 0) {
+            return {color: '#0088FF'}
+        } else {
+            return {color: 'red'}
+        }
     }
 }
 
@@ -26,45 +44,44 @@ const styles = StyleSheet.create({
         width: '100%',
         margin: 0
     },
-    TransactionRow: {
+    transactionRow: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         position: 'relative',
         height: 79,
     },
-    TransactionRowDate: {
+    date: {
         position: 'absolute',
         left: 0,
         top: 0
     },
-    TransactionRowAccountContainer: {
+    accountContainer: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         height: '100%'
     },
-    TransactionRowAccountContainerEmail: {
+    email: {
         fontSize: 16
     },
-    TransactionRowAccountContainerAddress: {
+    address: {
         fontSize: 12,
         color: '#555555'
     },
-    TransactionRowAmountContainer: {
+    amountContainer: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         height: '100%',
     },
-    TransactionRowAmountContainerPlusCoin: {
+    amount: {
         fontSize: 16,
-        color: '#0088FF',
         fontWeight: 'bold',
         textAlign: 'right',
         alignItems: 'flex-end'
     },
-    TransactionRowAmountContainerConfirm: {
+    confirm: {
         fontSize: 12,
         color: '#555555',
         textAlign: 'right'

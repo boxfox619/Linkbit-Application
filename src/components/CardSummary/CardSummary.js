@@ -1,23 +1,30 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, FlatList } from 'react-native';
-import { List, ListItem } from 'react-native-elements'
+import PropTypes from 'prop-types';
+import { View, StyleSheet, Text, Image } from 'react-native';
 
 export default class CardSummary extends React.Component {
+    static propTypes = {
+        symbol: PropTypes.string.isRequired,
+        balance: PropTypes.string.isRequired,
+        linkedAddress: PropTypes.string.isRequired,
+        accountAddress: PropTypes.string.isRequired
+    };
     render() {
+        const {symbol, balance, linkedAddress, accountAddress} = this.props;
         return (
             <View style={styles.cardSummary}>
-                <View style={styles.cardSummaryIconContainer}>
-                    <Image style={styles.cardSummaryIcon} />
+                <View style={styles.iconContainer}>
+                    <Image style={styles.icon} />
                 </View>
-                <Text style={styles.cardSummaryName}>Name</Text>
+                <Text style={styles.name}>Name</Text>
                 <View>
-                    <View style={styles.cardSummaryCoinContainer}>
-                        <Text style={styles.cardSummaryCoinSymbol}>Symbol</Text>
-                        <Text style={styles.cardSummaryCoinValue}>Value</Text>
+                    <View style={styles.coinContainer}>
+                        <Text style={styles.symbol}>{symbol}</Text>
+                        <Text style={styles.balance}>{balance}</Text>
                     </View>
-                    <View style={styles.cardSummaryAddressContainer}>
-                        <Text style={styles.cardSummaryAddressLinkbitAddress}>Linkbit Address</Text>
-                        <Text style={styles.cardSummaryAddressActualAddress}>Actual Address</Text>
+                    <View style={styles.addressContainer}>
+                        <Text style={styles.linkedAddress}>{linkedAddress}</Text>
+                        <Text style={styles.accountAddress}>{accountAddress}</Text>
                     </View>
                 </View>
             </View>
@@ -39,7 +46,7 @@ const styles = StyleSheet.create({
         ],
         justifyContent: 'space-between'
     },
-    cardSummaryIconContainer: {
+    iconContainer: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-end',
@@ -48,44 +55,44 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginLeft: 20
     },
-    cardSummaryIcon: {
+    icon: {
         width: 32,
         height: 32,
         backgroundColor: 'white',
         borderRadius: 16
     },
-    cardSummaryName: {
+    name: {
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
     },
-    cardSummaryCoinContainer: {
+    coinContainer: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'baseline'
     },
-    cardSummaryCoinSymbol: {
+    symbol: {
         color: 'white',
         fontSize: 12,
         textAlignVertical: 'bottom',
         opacity: 0.5,
     },
-    cardSummaryCoinValue: {
+    balance: {
         color: 'white',
         fontSize: 16,
         marginLeft: 5
     },
-    cardSummaryAddressContainer: {
+    addressContainer: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
-    cardSummaryAddressLinkbitAddress: {
+    linkedAddress: {
         color: 'white',
         fontSize: 12,
         opacity: 0.5,
     },
-    cardSummaryAddressActualAddress: {
+    accountAddress: {
         color: 'white',
         fontSize: 12,
     },
