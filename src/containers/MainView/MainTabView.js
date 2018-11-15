@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import WalletListView from "./WalletListView";
-import {Header} from 'react-native-elements';
+import TransactionsView from "../TransactionsView/TransactionsView"
+import { Header } from 'react-native-elements';
 
 export default class MainTabView extends React.Component {
 
@@ -11,11 +12,12 @@ export default class MainTabView extends React.Component {
                 <Header
                     backgroundColor={'#ffffff'}
                     leftComponent={<Text style={styles.title}>WALLET</Text>}
-                    rightComponent={{ icon: 'payment', color: '#000000', marginRight:10 }}
-                    outerContainerStyles={{borderBottomWidth: 0, height:80 }}
+                    rightComponent={{ icon: 'payment', color: '#000000', marginRight: 10 }}
+                    outerContainerStyles={{ borderBottomWidth: 0, height: 80 }}
                 />
                 <View style={styles.content}>
-                    <WalletListView/>
+                    {/* <WalletListView /> */}
+                    <TransactionsView />
                 </View>
             </View>
         )
