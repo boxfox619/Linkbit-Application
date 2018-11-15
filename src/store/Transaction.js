@@ -1,4 +1,4 @@
-import {observable, computed, runInAction, reaction} from 'mobx';
+import { observable, computed, runInAction, reaction } from 'mobx';
 
 export default class Transaction {
   @observable hash;
@@ -7,6 +7,11 @@ export default class Transaction {
   @observable targetAddress;
   @observable amount;
   @observable status;
+  @observable date
+  @observable email
+  @observable address
+  @observable coin
+  @observable confirm
 
   constructor(store) {
     this.store = store;
@@ -30,5 +35,10 @@ export default class Transaction {
     this.targetAddress = json.targetAddress;
     this.amount = json.amount;
     this.status = json.status;
+    this.date = '2018-11-11'
+    this.email = json.email
+    this.address = json.address
+    this.coin = json.coin
+    this.confirm = json.confirm
   }
 }

@@ -54,7 +54,7 @@ export default class TransactionListView extends React.Component {
                         date={item.date}
                         email={item.email}
                         address={item.address}
-                        coin={item.coin}
+                        amount={item.coin}
                         symbol={item.symbol}
                         confirm={item.confirm}/>}
             />
