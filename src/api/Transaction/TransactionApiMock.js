@@ -7,7 +7,8 @@ export default class TransactionApiMock {
                 address: '0xasd1231fdva1231vas',
                 coin: 11.23,
                 symbol: 'ETH',
-                confirm: 91
+                confirm: 91,
+                date: '2018-11-11'
             })
     }
     return list;

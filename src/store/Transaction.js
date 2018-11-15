@@ -29,13 +29,13 @@ export default class Transaction {
   }
 
   updateFromJson(json) {
-    this.hash = json.hash;
-    this.symbol = json.symbol;
-    this.sourceAddress = json.sourceAddress;
-    this.targetAddress = json.targetAddress;
-    this.amount = json.amount;
-    this.status = json.status;
-    this.date = '2018-11-11'
+    this.hash = json.hash
+    this.symbol = json.symbol
+    this.sourceAddress = json.sourceAddress
+    this.targetAddress = json.targetAddress
+    this.amount = json.amount
+    this.status = json.status
+    this.date = json.date
     this.email = json.email
     this.address = json.address
     this.coin = json.coin
