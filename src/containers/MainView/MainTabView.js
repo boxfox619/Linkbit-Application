@@ -1,10 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import WalletListView from "./WalletListView";
 import {PRIMARY_COLOR} from "../../libs/Constraints";
 import {Header} from 'react-native-elements';
 import {Navbar} from "../../components";
-
+import TransactionsView from "../TransactionsView/TransactionsView"
+import { Header } from 'react-native-elements';
 
 export default class MainTabView extends React.Component {
 
@@ -45,7 +46,7 @@ export default class MainTabView extends React.Component {
             case 0:
                 return <WalletListView/>;
             case 1:
-                return <View></View>;
+                return <TransactionsView/>;
             case 2:
                 return <View></View>;
         }
