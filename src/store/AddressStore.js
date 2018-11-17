@@ -28,7 +28,7 @@ class AddressStore {
         linkedAddress.updateFromJson(json)
     };
 
-    @computed getLinkedAddress(symbol, accountAddress) {
+    getLinkedAddress = (symbol, accountAddress) => {
         let linkedAddressList = this.linkedAddressList.filter(linked => linked.getAccountAddress(symbol) === accountAddress);
         return linkedAddressList;
     }

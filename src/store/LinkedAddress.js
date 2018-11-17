@@ -11,7 +11,7 @@ export default class LinkedAddress {
         };
     }
 
-    @computed getAccountAddress(symbol){
+    getAccountAddress = (symbol) =>{
         return this.accountAddressList.find(account => account.symbol === symbol);
     }
 

@@ -39,6 +39,10 @@ export default class MainTabView extends React.Component {
         )
     }
 
+    componentDidMount() {
+        this.updateIndex(0);
+    }
+
     renderContents = () => {
         switch (this.state.selectedIndex) {
             case 0:
