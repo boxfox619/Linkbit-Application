@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native'
-import TransactionsList from '../../components/Transaction/TransactionListView'
-import CardSummary from '../../components/CardSummary/CardSummary'
+import {WalletSummaryCard, TransactionListView} from '../../components'
 import TransactionStore from "../../store/TransactionStore";
 
 export default class TransactionsView extends React.Component {
@@ -12,8 +11,8 @@ export default class TransactionsView extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <CardSummary symbol={''} accountAddress={''} linkedAddress={''} balance={''}/>
-                <TransactionsList fetchTransaction={this.fetchTransaction} data={this.store.transactions}/>
+                <WalletSummaryCard symbol={''} accountAddress={''} linkedAddress={''} balance={''}/>
+                <TransactionListView fetchTransaction={this.fetchTransaction} data={this.store.transactions}/>
             </View>
         )
     }
