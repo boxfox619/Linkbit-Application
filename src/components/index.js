@@ -8,13 +8,13 @@ import Navbar from "./Navbar/Navbar";
 import WalletSummaryCard from './Card/WalletSummaryCard';
 import TransactionCard from './Card/TransactionCard';
 import TransactionListView from './List/TransactionListView';
-import WalletListView from "./List/WalletListView";
+import WalletList from "./List/WalletList";
 
 export {
     ProgressDialog,
     PagerDotIndicator,
     IndicatorViewPager,
-    WalletListView,
+    WalletList,
     TransactionListView,
     NavIcon,
     Navbar,
