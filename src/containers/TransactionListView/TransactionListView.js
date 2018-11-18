@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native'
-import {WalletSummaryCard, TransactionListView} from '../../components'
+import {WalletSummaryCard, TransactionList} from '../../components'
 import TransactionStore from "../../store/TransactionStore";
 
-export default class TransactionsView extends React.Component {
+export default class TransactionListView extends React.Component {
     constructor(props){
         super(props)
         this.store = new TransactionStore()
@@ -12,7 +12,7 @@ export default class TransactionsView extends React.Component {
         return (
             <View style={styles.container}>
                 <WalletSummaryCard symbol={''} accountAddress={''} linkedAddress={''} balance={''}/>
-                <TransactionListView fetchTransaction={this.fetchTransaction} data={this.store.transactions}/>
+                <TransactionList fetchTransaction={this.fetchTransaction} data={this.store.transactions}/>
             </View>
         )
     }

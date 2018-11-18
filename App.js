@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {MainTabView} from "./src/containers";
+import {MainTabView, AddressView} from "./src/containers";
 import {Provider} from 'mobx-react';
 import {WalletStore, CoinStore, AddressStore} from "./src/store";
 
@@ -20,7 +20,7 @@ export default class App extends React.Component {
         return (
             <Provider {...store}>
                 <View style={styles.container}>
-                    <MainTabView/>
+                    <AddressView/>
                 </View>
             </Provider>
         );

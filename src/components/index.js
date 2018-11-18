@@ -7,7 +7,7 @@ import NavIcon from "./Navbar/NavIcon";
 import Navbar from "./Navbar/Navbar";
 import WalletSummaryCard from './Card/WalletSummaryCard';
 import TransactionCard from './Card/TransactionCard';
-import TransactionListView from './List/TransactionListView';
+import TransactionList from './List/TransactionList';
 import WalletList from "./List/WalletList";
 
 export {
@@ -15,7 +15,7 @@ export {
     PagerDotIndicator,
     IndicatorViewPager,
     WalletList,
-    TransactionListView,
+    TransactionList,
     NavIcon,
     Navbar,
     BorderCard,

@@ -4,7 +4,7 @@ import WalletListView from "./WalletListView";
 import {PRIMARY_COLOR} from "../../libs/Constraints";
 import {Header} from 'react-native-elements';
 import {Navbar} from "../../components";
-import TransactionsView from "../TransactionsView/TransactionsView"
+import TransactionListView from "../TransactionListView/TransactionListView"
 
 export default class MainTabView extends React.Component {
 
@@ -49,7 +49,7 @@ export default class MainTabView extends React.Component {
             case 0:
                 return <WalletListView/>;
             case 1:
-                return <TransactionsView/>;
+                return <TransactionListView/>;
             case 2:
                 return <View></View>;
         }
