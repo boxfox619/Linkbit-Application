@@ -1,6 +1,5 @@
 import ProgressDialog from './ProgressDialog';
 import {PagerDotIndicator, IndicatorViewPager} from './ViewPager';
-import PinCodeView from './PinCodeView';
 import CoinCard from './Card/CoinCard';
 import WalletCard from './Card/WalletCard';
 import BorderCard from './Card/BorderCard';
@@ -15,7 +14,6 @@ export {
     ProgressDialog,
     PagerDotIndicator,
     IndicatorViewPager,
-    PinCodeView,
     WalletListView,
     TransactionListView,
     NavIcon,

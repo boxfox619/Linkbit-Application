@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, Easing, View } from "react-native";
+import { Animated, View } from "react-native";
 
 import KeyboardView from './KeyboardView'
 import InputView from './InputView'
