@@ -12,8 +12,8 @@ const store = {
 
 export default class App extends React.Component {
     componentWillMount() {
-        store.address.loadAddresss();
-        store.wallet.loadWallets();
+        store.address.loadAddressList();
+        store.wallet.loadWalletList();
     }
 
     render() {

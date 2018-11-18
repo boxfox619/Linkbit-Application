@@ -20,6 +20,7 @@ export default class AddressView extends React.Component {
                 <FlatList
                     style={styles.list}
                     data={this.props.address.linkedAddressList}
+                    extraData={{size: this.props.address.linkedAddressList.length}}
                     renderItem={({item})=> {
                         return (
                             <BorderCard key={item.address}>
@@ -42,6 +43,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     list: {
-        padding: 10
+        padding: 10,
+        flex: 1
     }
 });

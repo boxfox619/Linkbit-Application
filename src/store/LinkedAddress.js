@@ -21,7 +21,7 @@ export default class LinkedAddress {
         }
     }
 
-    updateFromJson(json) {
+    @action updateFromJson(json) {
         this.address = json.address;
         this.accountAddressList = json.accountAddressList;
     }
