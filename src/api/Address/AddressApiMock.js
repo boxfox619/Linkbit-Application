@@ -13,6 +13,9 @@ export default class AddressApiMock {
                 {symbol: 'ETH', address: '0x12asbabvadgsgq2wr1231'},
                 {symbol: 'BTC', address: '0x12rsAGVA2w1asfdqw123'}
             ]
+        }, {
+            address: 'Linkbit-124-124',
+            accountAddressList: []
         }
         ];
     };
