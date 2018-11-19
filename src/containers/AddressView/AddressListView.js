@@ -7,7 +7,7 @@ import {inject, observer} from "mobx-react/index";
 
 @inject(['address'])
 @observer
-export default class AddressView extends React.Component {
+export default class AddressListView extends React.Component {
 
     render() {
         return (
