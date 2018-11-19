@@ -6,6 +6,7 @@ import {HeaderButtonWithTitle} from "../../components/Header/HeaderButtonWithTit
 import {inject, observer} from "mobx-react/index";
 import BorderCard from "../../components/Card/BorderCard";
 import WalletCard from "../../components/Card/WalletCard";
+import AddressCard from "../../components/Card/AddressCard";
 
 @inject(['address'])
 @observer
@@ -25,10 +26,7 @@ export default class AddressManagementView extends React.Component {
                                                           onIconClicked={this.onBack}/>}
                     outerContainerStyles={{borderBottomWidth: 0, height: 70}}
                 />
-                <BorderCard>
-                    <Text>{addressItem.address}</Text>
-                    {/* @TODO Implement the address detail card*/}
-                </BorderCard>
+                <AddressCard address={addressItem.address} linkedAddressCount={addressItem.accountAddressList.length} activate={true}/>
                 <FlatList
                     style={styles.list}
                     data={addressItem.accountAddressList}

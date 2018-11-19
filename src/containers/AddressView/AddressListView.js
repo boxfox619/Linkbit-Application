@@ -4,6 +4,7 @@ import {Header} from 'react-native-elements';
 import {HeaderButtonWithTitle} from "../../components/Header/HeaderButtonWithTitle";
 import BorderCard from "../../components/Card/BorderCard";
 import {inject, observer} from "mobx-react/index";
+import AddressCard from "../../components/Card/AddressCard";
 
 @inject(['address'])
 @observer
@@ -25,17 +26,7 @@ export default class AddressListView extends React.Component {
                     extraData={{size: this.props.address.linkedAddressList.length}}
                     renderItem={({item}) => {
                         return (
-                            <BorderCard>
-                                <Text>{item.address}</Text>
-                                {item.accountAddressList.length > 0 &&
-                                <Text style={[styles.connectState, styles.connected]}>
-                                    {item.accountAddressList.length} connected
-                                </Text>
-                                }
-                                {item.accountAddressList.length == 0 &&
-                                    <Text style={styles.connectState}>nothing connected</Text>
-                                }
-                            </BorderCard>
+                            <AddressCard address={item.address} linkedAddressCount={item.accountAddressList.length}/>
                         )
                     }}
                 />
@@ -55,12 +46,5 @@ const styles = StyleSheet.create({
     list: {
         padding: 10,
         flex: 1
-    },
-    connectState: {
-        textAlign: 'right',
-        color: 'black'
-    },
-    connected: {
-        color: 'green'
     }
 });
