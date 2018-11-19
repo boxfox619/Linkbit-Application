@@ -14,16 +14,27 @@ export default class AddressListView extends React.Component {
             <View style={styles.container}>
                 <Header
                     backgroundColor={'#ffffff'}
-                    leftComponent={<HeaderButtonWithTitle icon='arrow-back' title='내 주소 관리' onIconClicked={this.onBack}/>}
-                    outerContainerStyles={{borderBottomWidth: 0, height: 70}}
+                    leftComponent={<HeaderButtonWithTitle icon='arrow-back' title='내 주소 관리'
+                                                          onIconClicked={this.onBack}/>}
+                    outerContainerStyles={{borderBottomWidth: 0, height: 60, marginTop: 10}}
                 />
                 <FlatList
                     style={styles.list}
+                    keyExtractor={(item) => item.address}
                     data={this.props.address.linkedAddressList}
-                    renderItem={({item})=> {
+                    extraData={{size: this.props.address.linkedAddressList.length}}
+                    renderItem={({item}) => {
                         return (
-                            <BorderCard key={item.address}>
+                            <BorderCard>
                                 <Text>{item.address}</Text>
+                                {item.accountAddressList.length > 0 &&
+                                <Text style={[styles.connectState, styles.connected]}>
+                                    {item.accountAddressList.length} connected
+                                </Text>
+                                }
+                                {item.accountAddressList.length == 0 &&
+                                    <Text style={styles.connectState}>nothing connected</Text>
+                                }
                             </BorderCard>
                         )
                     }}
@@ -42,6 +53,14 @@ const styles = StyleSheet.create({
         flex: 1
     },
     list: {
-        padding: 10
+        padding: 10,
+        flex: 1
+    },
+    connectState: {
+        textAlign: 'right',
+        color: 'black'
+    },
+    connected: {
+        color: 'green'
     }
 });

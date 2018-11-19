@@ -6,7 +6,7 @@ import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 
 @observer
-export default class WalletListView extends React.Component {
+export default class WalletList extends React.Component {
     @observable selectedCoin = undefined;
     static propTypes = {
         moneySymbol: PropTypes.string.isRequired,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {StyleSheet, FlatList} from 'react-native'
 import TransactionCard from '../Card/TransactionCard'
 
-export default class TransactionListView extends React.Component {
+export default class TransactionList extends React.Component {
 
     static propTypes = {
         fetchTransaction: PropTypes.func.isRequired,

@@ -11,7 +11,7 @@ class AddressStore {
         this.addressApi = AddressApi.create();
     }
 
-    loadAddresss = async () => {
+    loadAddressList = async () => {
         this.isLoading = true;
         const addressList = await this.addressApi.fetchOwnAddressList();
         runInAction(() => {
@@ -21,9 +21,10 @@ class AddressStore {
     };
 
     updateAddress = (json) => {
-        let linkedAddress = this.linkedAddressList.find(linked => linked.address);
+        let linkedAddress = this.linkedAddressList.find(linked => linked.address===json.address);
         if (!linkedAddress) {
             linkedAddress = new LinkedAddress();
+            this.linkedAddressList.push(linkedAddress);
         }
         linkedAddress.updateFromJson(json)
     };
