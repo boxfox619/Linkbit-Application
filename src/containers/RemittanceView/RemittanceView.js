@@ -5,6 +5,8 @@ import CardSummary from '../../components/CardSummary/CardSummary'
 import NavigationButton from '../../components/NavigationButton/NavigationButton'
 import DropdownMenu from 'react-native-dropdown-menu'
 
+const searchBarIcon = require('./img/search.png')
+
 export default class RemmittanceView extends React.Component {
     render() {
         const data = [["KRW", "USD"]]
@@ -22,10 +24,15 @@ export default class RemmittanceView extends React.Component {
                             <Text style={styles.optionName}>친구</Text>
                         </View>
                     </View>
+                    <Text style={styles.title}>{'친구 목록'}</Text>
+                    <View style={styles.searchBar}>
+                        <Image style={styles.searchBarIcon}
+                            source={searchBarIcon} />
+                        <View style={styles.divider} />
+                        <TextInput style={styles.searchBarInput} />
+                    </View>
                     <Text style={styles.title}>{'지갑 주소'}</Text>
                     <View style={styles.searchBar}>
-                        <Image style={styles.searchBarIcon} />
-                        <View style={styles.divider} />
                         <TextInput style={styles.searchBarInput} />
                     </View>
                     <Text style={styles.title}>{'보낼 금액'}</Text>
@@ -121,6 +128,9 @@ const styles = StyleSheet.create({
     searchBarIcon: {
         width: 47,
         height: 47,
+        transform: [{
+            scale: 0.5
+        }]
     },
     searchBarInput: {
         height: 47,
@@ -133,7 +143,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row'
     },
-    unitInput:{
+    unitInput: {
         height: 53,
         flexGrow: 1,
         borderRadius: 5,
