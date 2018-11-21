@@ -35,6 +35,10 @@ export default class RemmittanceView extends React.Component {
                     <View style={styles.searchBar}>
                         <TextInput style={styles.searchBarInput} />
                     </View>
+                    <Text style={styles.title}>{'받는 주소'}</Text>
+                    <View style={styles.toAddressContainer}>
+                        <Text style={styles.toAddressText}>{'6abnbexlai13tbajfldxze'}</Text>
+                    </View>
                     <Text style={styles.title}>{'보낼 금액'}</Text>
                     <View style={styles.amountContainer}>
                         <TextInput style={styles.unitInput} />
@@ -50,6 +54,16 @@ export default class RemmittanceView extends React.Component {
                                 // maxHeight={300} 
                                 handler={(selection, row) => this.setState({ text: data[selection][row] })}
                                 data={data} />
+                        </View>
+                    </View>
+                    <View style={styles.toAmountContainer}>
+                        <View style={{ display: 'flex', flexDirection: 'row' }}>
+                            <Text style={styles.toAmountSymbol}>{'KRW'}</Text>
+                            <Text style={styles.toAmount}>{'8,080,468'}</Text>
+                        </View>
+                        <View style={{ display: 'flex', flexDirection: 'row' }}>
+                            <Text style={styles.toAmountSymbol}>{'ETH'}</Text>
+                            <Text style={styles.toAmount}>{'35.315'}</Text>
                         </View>
                     </View>
                     <NavigationButton title={'다음'} />
@@ -71,7 +85,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         width: '100%',
         height: '100%',
-        paddingHorizontal: 20
     },
     title: {
         color: '#594343',
@@ -119,6 +132,45 @@ const styles = StyleSheet.create({
         width: '100%',
         alignContent: 'center',
         alignItems: 'center'
+    },
+    toAddressContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        borderColor: '#594343',
+        backgroundColor: '#594343',
+        borderRadius: 5,
+        borderWidth: 3,
+        height: 53,
+        width: '100%',
+        paddingLeft: 13,
+        alignContent: 'center',
+        alignItems: 'center'
+    },
+    toAddressText: {
+        fontSize: 14,
+        color: '#ffffff'
+    },
+    toAmountContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        borderColor: '#594343',
+        backgroundColor: '#594343',
+        borderRadius: 5,
+        borderWidth: 3,
+        height: 53,
+        width: '100%',
+        paddingHorizontal: 13,
+        alignContent: 'center',
+        alignItems: 'center'
+    },
+    toAmountSymbol:{
+        color: '#888888',
+        fontSize: 14
+    },   
+    toAmount:{
+        color: '#ffffff',
+        fontSize: 14
     },
     divider: {
         width: 1,
