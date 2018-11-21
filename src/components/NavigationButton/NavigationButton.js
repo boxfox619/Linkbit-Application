@@ -10,7 +10,7 @@ export default class NavigationButton extends React.Component {
         accountAddress: PropTypes.string.isRequired
     };
     render() {
-        const { title, onPress } = this.props;
+        const { title, onPress } = this.props
         return (
             <TouchableOpacity
                 style={styles.container}
