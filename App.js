@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {MainTabView, AddressListView} from "./src/containers";
+import {registerScreens} from './src/containers/screens';
+import {AddressListView} from "./src/containers";
 import {Provider} from 'mobx-react';
 import {WalletStore, CoinStore, AddressStore} from "./src/store";
 
@@ -12,6 +13,7 @@ const store = {
 
 export default class App extends React.Component {
     componentWillMount() {
+        registerScreens();
         store.address.loadAddressList();
         store.wallet.loadWalletList();
     }
