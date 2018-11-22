@@ -1,8 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, FlatList, Text} from 'react-native';
-import {Header} from 'react-native-elements';
+import {Header, Button} from 'react-native-elements';
 import {HeaderButtonWithTitle} from "../../components/Header/HeaderButtonWithTitle";
-import BorderCard from "../../components/Card/BorderCard";
 import {inject, observer} from "mobx-react/index";
 import AddressCard from "../../components/Card/AddressCard";
 
@@ -30,8 +29,13 @@ export default class AddressListView extends React.Component {
                         )
                     }}
                 />
+                <Button title="Buy" onPress={this.onBuyAddress}/>
             </View>
         )
+    }
+
+    onBuyAddress = () => {
+
     }
 
     onBack = () => {
