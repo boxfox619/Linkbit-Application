@@ -3,7 +3,15 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 
 export default class SegmentedControl extends React.Component {
     state = {
-        selectedIndex: 1
+        selectedIndex: -1
+    }
+
+    componentDidMount() {
+        this.setState({ selectedIndex: this.props.selectedIndex })
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({ selectedIndex: nextProps.selectedIndex })
     }
 
     renderOptions = () => {
@@ -15,7 +23,10 @@ export default class SegmentedControl extends React.Component {
                 [styles.option,
                 index === 0 ? null : styles.marginLeft,
                 selectedIndex === index ? styles.selected : null]}
-                onPress={() => this.setState({ selectedIndex: index })}>
+                onPress={() => {
+                    this.setState({ selectedIndex: index })
+                    this.props.onChange(index)
+                }}>
                 <Text style={[styles.optionName, selectedIndex === index ? styles.selectedText : null]}>{option}</Text>
             </TouchableOpacity>
         )))
@@ -50,7 +61,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     marginLeft: {
-        marginLeft: 10
+        marginLeft: 5
     },
     optionName: {
         color: '#594343',

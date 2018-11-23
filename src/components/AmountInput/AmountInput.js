@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderWidth: 3,
         borderColor: '#594343',
-        marginRight: 10
+        marginRight: 5
     },
     unitPicker: {
         height: 53,
