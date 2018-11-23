@@ -8,4 +8,13 @@ export function registerScreens() {
     Navigation.registerComponent('AddressBuyPricing', () => require('./AddressView/AddressBuyPricingView').default)
     Navigation.registerComponent('AddressBuyFinish', () => require('./AddressView/AddressBuyFinishView').default)
     Navigation.registerComponent('Main', () => require('./MainView/MainTabView').default)
+    Navigation.events().registerAppLaunchedListener(() => {
+        Navigation.setRoot({
+            root: {
+                component: {
+                    name: 'Main'
+                }
+            },
+        });
+    });
 }

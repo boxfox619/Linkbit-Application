@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet, FlatList} from 'react-native';
-import {Header} from 'react-native-elements';
-import {HeaderButtonWithTitle} from "../../components/Header/HeaderButtonWithTitle";
 import {inject, observer} from "mobx-react/index";
-import BorderCard from "../../components/Card/BorderCard";
 import WalletCard from "../../components/Card/WalletCard";
 import AddressCard from "../../components/Card/AddressCard";
 
 @inject(['address'])
 @observer
 export default class AddressManagementView extends React.Component {
+
+    static get options() {
+        return {topBar: {title: {text: '주소 관리'}}}
+    }
 
     static propTypes = {
         currentAddress: PropTypes.string.isRequired
@@ -20,12 +21,6 @@ export default class AddressManagementView extends React.Component {
         const addressItem = this.props.address.linkedAddressList.find(a => a.address === this.props.currentAddress)
         return (
             <View style={styles.container}>
-                <Header
-                    backgroundColor={'#ffffff'}
-                    leftComponent={<HeaderButtonWithTitle icon='arrow-back' title='주소 연결 관리'
-                                                          onIconClicked={this.onBack}/>}
-                    outerContainerStyles={{borderBottomWidth: 0, height: 70}}
-                />
                 <AddressCard address={addressItem.address} linkedAddressCount={addressItem.accountAddressList.length} activate={true}/>
                 <FlatList
                     style={styles.list}

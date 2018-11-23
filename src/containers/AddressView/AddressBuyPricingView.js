@@ -4,11 +4,16 @@ import {PricingCard} from 'react-native-elements'
 import {observer} from 'mobx-react';
 import {observable} from 'mobx';
 import {inject} from "mobx-react/index";
+import {Navigation} from 'react-native-navigation'
 
 @inject(['address'])
 @observer
 export default class AddressBuyView extends React.Component {
     @observable freeable = false
+
+    static get options() {
+        return {topBar: {title: {text: '주소 구매'}}}
+    }
 
     render() {
         return (
@@ -43,11 +48,11 @@ export default class AddressBuyView extends React.Component {
 
 
     getFreeAddress = () => {
-
+        Navigation.push(this.props.componentId, {component: {name : 'AddressBuyFinish'}})
     }
 
     buyAddress = () => {
-
+        Navigation.push(this.props.componentId, {component: {name : 'AddressBuyFinish'}})
     }
 }
 

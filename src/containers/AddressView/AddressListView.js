@@ -1,23 +1,21 @@
-import React from 'react';
-import {View, StyleSheet, FlatList, Text} from 'react-native';
-import {Header, Button} from 'react-native-elements';
-import {HeaderButtonWithTitle} from "../../components/Header/HeaderButtonWithTitle";
-import {inject, observer} from "mobx-react/index";
-import AddressCard from "../../components/Card/AddressCard";
+import React from 'react'
+import {View, StyleSheet, FlatList, Text} from 'react-native'
+import {Button} from 'react-native-elements'
+import {inject, observer} from "mobx-react/index"
+import AddressCard from "../../components/Card/AddressCard"
+import {Navigation} from 'react-native-navigation'
 
 @inject(['address'])
 @observer
 export default class AddressListView extends React.Component {
 
+    static get options() {
+        return {topBar: {title: {text: '주소 목록'}}}
+    }
+
     render() {
         return (
             <View style={styles.container}>
-                <Header
-                    backgroundColor={'#ffffff'}
-                    leftComponent={<HeaderButtonWithTitle icon='arrow-back' title='내 주소 관리'
-                                                          onIconClicked={this.onBack}/>}
-                    outerContainerStyles={{borderBottomWidth: 0, height: 60, marginTop: 10}}
-                />
                 <FlatList
                     style={styles.list}
                     keyExtractor={(item) => item.address}
@@ -25,21 +23,17 @@ export default class AddressListView extends React.Component {
                     extraData={{size: this.props.address.linkedAddressList.length}}
                     renderItem={({item}) => {
                         return (
-                            <AddressCard address={item.address} linkedAddressCount={item.accountAddressList.length}/>
+                            <AddressCard address={item.address}
+                                         linkedAddressCount={item.accountAddressList.length}
+                                         onPress={() => Navigation.push(this.props.componentId, {component: {name: 'AddressManagement'}})}/>
                         )
                     }}
                 />
-                <Button title="Buy" onPress={this.onBuyAddress}/>
+                <Button title="Buy" onPress={() => Navigation.push(this.props.componentId, {component: {name: 'AddressBuy'}})}/>
             </View>
         )
     }
-
-    onBuyAddress = () => {
-
-    }
-
-    onBack = () => {
-    }
+d
 }
 
 
