@@ -6,6 +6,7 @@ import { Header } from 'react-native-elements';
 import { Navbar } from "../../components";
 import TransactionsView from "../TransactionsView/TransactionsView"
 import RemittanceView from '../RemittanceView/RemittanceView'
+import RemmittanceResultCard from '../../components/RemittanceResultCard/RemittanceResultCard'
 
 export default class MainTabView extends React.Component {
 
@@ -21,26 +22,32 @@ export default class MainTabView extends React.Component {
     render() {
         const { selectedIndex } = this.state;
         return (
-            <RemittanceView />
-            // <SafeAreaView style={styles.safeArea}>
-            //     <View style={styles.container}>
-            //         <Header
-            //             backgroundColor={'#ffffff'}
-            //             leftComponent={<Text style={styles.title}>{this.state.headerTitle}</Text>}
-            //             rightComponent={this.state.headerIcon}
-            //             outerContainerStyles={{ borderBottomWidth: 0, height: 80 }}
-            //         />
-            //         <View style={styles.content}>
-            //             {this.renderContents()}
-            //         </View>
-            //         <Navbar
-            //             onTabSelected={this.updateIndex}
-            //             selectedIndex={selectedIndex}
-            //             tabs={this.tabs}
-            //             containerStyle={styles.containerStyle}
-            //         />
-            //     </View>
-            // </SafeAreaView>
+            <SafeAreaView style={styles.safeArea}>
+                {/* <RemmittanceResultCard symbol={'ETH'}
+                balance={'35.124'}
+                linkedAddress={'6abnbexlai13tbajfldxze'}
+                accountAddress={'나의 이더리움 지갑 1'} /> */}
+                <RemittanceView />
+                {/* <SafeAreaView style={styles.safeArea}>
+                    <View style={styles.container}>
+                        <Header
+                            backgroundColor={'#ffffff'}
+                            leftComponent={<Text style={styles.title}>{this.state.headerTitle}</Text>}
+                            rightComponent={this.state.headerIcon}
+                            outerContainerStyles={{ borderBottomWidth: 0, height: 80 }}
+                        />
+                        <View style={styles.content}>
+                            {this.renderContents()}
+                        </View>
+                        <Navbar
+                            onTabSelected={this.updateIndex}
+                            selectedIndex={selectedIndex}
+                            tabs={this.tabs}
+                            containerStyle={styles.containerStyle}
+                        />
+                    </View>
+                </SafeAreaView> */}
+            </SafeAreaView>
         )
     }
 
@@ -86,7 +93,9 @@ export default class MainTabView extends React.Component {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        width: '100%',
+        height: '100%'
     },
     container: {
         flex: 1
