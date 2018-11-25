@@ -25,6 +25,7 @@ export default class AddressManagementView extends React.Component {
                 <FlatList
                     style={styles.list}
                     data={addressItem.accountAddressList}
+                    keyExtractor={(item) => item.address}
                     renderItem={({item}) => {
                         return (<WalletCard name={item.address} symbol={item.symbol} moneySymbol={'KRW'}/>)
                     }}
@@ -40,7 +41,8 @@ export default class AddressManagementView extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        padding:10
     },
     list: {
         flex: 1

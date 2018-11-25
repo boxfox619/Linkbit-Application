@@ -17,11 +17,13 @@ export default class AddressBuyView extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <FormLabel>Address</FormLabel>
-                <FormInput onChangeText={this.addressValidCheck}/>
-                {this.errMessage &&
-                <FormValidationMessage>{this.errMessage}</FormValidationMessage>
-                }
+                <View style={styles.form}>
+                    <FormLabel>Address</FormLabel>
+                    <FormInput onChangeText={this.addressValidCheck}/>
+                    {this.errMessage &&
+                    <FormValidationMessage>{this.errMessage}</FormValidationMessage>
+                    }
+                </View>
                 <Button title={"다음"} onPress={this.onNext} disabled={!this.addressIsValid}/>
             </View>
         )
@@ -40,6 +42,11 @@ export default class AddressBuyView extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        paddingTop: 10,
+        paddingBottom: 20
+    },
+    form: {
+        flex:1
     }
 })

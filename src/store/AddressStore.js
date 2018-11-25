@@ -24,7 +24,7 @@ class AddressStore {
         let linkedAddress = this.linkedAddressList.find(linked => linked.address===json.address);
         if (!linkedAddress) {
             linkedAddress = new LinkedAddress();
-            this.linkedAddressList.push(linkedAddress);
+            this.linkedAddressList = [...this.linkedAddressList, linkedAddress];
         }
         linkedAddress.updateFromJson(json)
     };

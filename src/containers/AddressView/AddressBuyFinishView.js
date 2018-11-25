@@ -11,8 +11,10 @@ export default class AddressBuyFinishView extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Success Address Buy</Text>
-                <Text>Your Address : {this.address}</Text>
+                <View style={styles.content}>
+                    <Text>Success Address Buy</Text>
+                    <Text>Your Address : {this.address}</Text>
+                </View>
                 <Button title="finish" onPress={this.onFinish}/>
             </View>
         )
@@ -25,6 +27,12 @@ export default class AddressBuyFinishView extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        paddingBottom: 20
+    },
+    content: {
+        flex:1,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });

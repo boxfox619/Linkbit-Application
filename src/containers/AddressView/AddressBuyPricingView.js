@@ -8,7 +8,7 @@ import {Navigation} from 'react-native-navigation'
 
 @inject(['address'])
 @observer
-export default class AddressBuyView extends React.Component {
+export default class AddressBuyPricingView extends React.Component {
     @observable freeable = false
 
     static get options() {
@@ -31,7 +31,7 @@ export default class AddressBuyView extends React.Component {
                     }
                     <PricingCard
                         color={'#A72CE9'}
-                        title={'Buy Address'}
+                        title={'GET Address'}
                         price={'$2'}
                         info={['1 Address', 'Buy own address']}
                         button={{ title: 'GET ADDRESS', icon: 'credit-card' }}
