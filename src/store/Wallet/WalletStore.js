@@ -1,4 +1,4 @@
-import WalletApi from '../api/Wallet/WalletApi';
+import WalletApi from '../../api/Wallet/WalletApi';
 import Wallet from './Wallet';
 import {observable, computed, runInAction} from 'mobx';
 

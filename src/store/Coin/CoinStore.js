@@ -1,5 +1,5 @@
 import {observable, computed, runInAction, action} from 'mobx';
-import CoinApi from '../api/Coin/CoinApi';
+import CoinApi from '../../api/Coin/CoinApi';
 import Coin from './Coin';
 
 class CoinStore {

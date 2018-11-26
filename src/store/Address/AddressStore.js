@@ -1,5 +1,5 @@
 import {observable, computed, runInAction} from 'mobx';
-import AddressApi from '../api/Address/AddressApi';
+import AddressApi from '../../api/Address/AddressApi';
 import LinkedAddress from './LinkedAddress';
 
 class AddressStore {

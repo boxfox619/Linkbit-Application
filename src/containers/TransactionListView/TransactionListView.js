@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native'
 import {WalletSummaryCard, TransactionList} from '../../components'
-import TransactionStore from "../../store/TransactionStore";
+import {TransactionStore} from "../../store";
 
 export default class TransactionListView extends React.Component {
     constructor(props){

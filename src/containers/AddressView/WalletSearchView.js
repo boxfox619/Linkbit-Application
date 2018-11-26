@@ -39,7 +39,7 @@ export default class WalletSearchView extends React.Component {
     }
 
     onChangeText = (text) => {
-        if (text.length == 0) {
+        if (text.length === 0) {
             this.wallets = this.props.wallet.wallets
         } else {
             text = text.toLowerCase()
