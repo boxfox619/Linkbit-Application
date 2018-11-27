@@ -1,18 +1,37 @@
 import React from 'react'
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  FlatList,
-  Text,
-} from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
+import { Localization } from 'expo-localization'
+import i18n from 'i18n-js'
+const en = {
+  lang_key: 'Language',
+  lang_sub: 'You can select a language by country',
+  bill_key: 'Currency',
+  bill_sub: 'You can set the unit of currency',
+  lock_key: 'Security',
+  lock_sub: 'You can set up security methods',
+  reset_key: 'Reset',
+  reset_sub: 'We destroy all accounts and information'
+}
+const ko = {
+  lang_key: '언어 설정',
+  lang_sub: '나라별 언어를 선택할 수 있습니다',
+  bill_key: '화폐 단위',
+  bill_sub: '화폐 단위를 설정할 수 있습니다',
+  lock_key: '보안 설정',
+  lock_sub: '보안 방법을 설정할 수 있습니다',
+  reset_key: '초기화',
+  reset_sub: '모든 계정과 정보를 파기합니다',
+}
 
+i18n.fallbacks = true;
+i18n.translations = { en, ko };
+i18n.locale = Localization.locale;
 export default class SettingView extends React.Component {
   render () {
     const list = [
       {
-        key: '언어 설정',
-        sub: '나라별 언어를 선택할 수 있습니다',
+        key: i18n.t('lang_key'),
+        sub: i18n.t('lang_sub'),
       }, {
         key: '화폐 단위',
         sub: '화폐 단위를 설정할 수 있습니다',
