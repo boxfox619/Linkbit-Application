@@ -32,35 +32,12 @@ const ko = {
 i18n.fallbacks = true
 i18n.translations = { en, ko }
 i18n.locale = Localization.locale
-
-const RenderView = (props => {
-  const { viewName } = props
-
-  const langList = [{
-    name: i18n.t('lang_ko', {locale: 'en'}),
-    txt: i18n.t('lang_ko'),
-  }, {
-    name: i18n.t('lang_en', {locale: 'en'}),
-    txt: i18n.t('lang_en'),
-  }]
-
-  return (
-    <View style={styles.container}>
-      {
-        langList.map((item, idx) =>
-          <TouchableOpacity key={idx} style={styles.listItem}>
-            <Text>{item.txt}</Text>
-          </TouchableOpacity>)
-      }
-    </View>
-  )
-})
-
 @observer
 export default class SettingView extends React.Component {
   @observable selectedSettingName = 'SettingList'
 
   render () {
+    const viewName = `${this.selectedSettingName}View`
     const settingList = [{
       name: i18n.t('lang_mainTxt', {locale: 'en'}),
       mainTxt: i18n.t('lang_mainTxt'),
