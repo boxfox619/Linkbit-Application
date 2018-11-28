@@ -4,6 +4,7 @@ import {observable} from 'mobx'
 import {observer} from 'mobx-react'
 import { Localization } from 'expo-localization'
 import i18n from 'i18n-js'
+import { PinCodeInputView } from '../'
 const en = {
   lang_mainTxt: 'Language',
   lang_subTxt: 'You can select a language by country',
@@ -11,6 +12,8 @@ const en = {
   lang_ko: 'Korean',
   bill_mainTxt: 'Currency',
   bill_subTxt: 'You can set the unit of currency',
+  bill_usd: 'USD - US Dollar',
+  bill_krw: 'KRW - Korea Won',
   lock_mainTxt: 'Security',
   lock_subTxt: 'You can set up security methods',
   reset_mainTxt: 'Reset',
@@ -23,6 +26,9 @@ const ko = {
   lang_ko: '한국어',
   bill_mainTxt: '화폐 단위',
   bill_subTxt: '화폐 단위를 설정할 수 있습니다',
+  bill_en: '화폐 단위를 설정할 수 있습니다',
+  bill_usd: 'USD - 미국 달러',
+  bill_krw: 'KRW - 한국 원',
   lock_mainTxt: '보안 설정',
   lock_subTxt: '보안 방법을 설정할 수 있습니다',
   reset_mainTxt: '초기화',
@@ -34,20 +40,39 @@ i18n.translations = { en, ko }
 i18n.locale = Localization.locale
 
 const SettingDetailView = (props => {
+  const { viewName, onPressSetView } = props
+  const list = {
+    LanguageView: [{
+      txt: i18n.t('lang_ko'),
+      val: 'en',
+    }, {
+      txt: i18n.t('lang_en'),
+      val: 'ko'
+    }],
+    CurrencyView: [{
+      txt: i18n.t('bill_krw'),
+      val: 'KRW'
+    }, {
+      txt: i18n.t('bill_usd'),
+      val: 'USD'
+    }]
+  }
 
-  const langList = [{
-    name: i18n.t('lang_ko', {locale: 'en'}),
-    txt: i18n.t('lang_ko'),
-  }, {
-    name: i18n.t('lang_en', {locale: 'en'}),
-    txt: i18n.t('lang_en'),
-  }]
+  const onPressSettingDetail = val => {
+    i18n.locale = val
+    onPressSetView('Setting')
+  }
 
   return (
     <View style={styles.container}>
       {
-        langList.map((item, idx) =>
-          <TouchableOpacity key={idx} style={styles.listItem}>
+        (viewName === 'SecurityView' && <PinCodeInputView/>) ||
+        (viewName === 'ResetView' && <Text>초기화</Text>) ||
+        list[viewName].map(item =>
+          <TouchableOpacity
+            key={item.txt}
+            style={styles.listItem}
+            onPress={() => onPressSettingDetail(item.val)}>
             <Text>{item.txt}</Text>
           </TouchableOpacity>)
       }
