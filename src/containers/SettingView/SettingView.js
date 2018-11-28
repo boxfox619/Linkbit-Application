@@ -62,6 +62,7 @@ export default class SettingView extends React.Component {
 
   render () {
     const viewName = `${this.selectedSettingName}View`
+  onRenderSettingList = () => {
     const settingList = [{
       name: i18n.t('lang_mainTxt', {locale: 'en'}),
       mainTxt: i18n.t('lang_mainTxt'),
@@ -81,17 +82,14 @@ export default class SettingView extends React.Component {
     }]
 
     return (
-      <View style={styles.container}>
-        {
-          viewName === 'SettingList' ?
-          settingList.map((item, idx) =>
-            <TouchableOpacity key={idx} onPress={() => this.onPressSetting(item.name)} style={styles.listItem}>
-              <Text style={[styles.mainTxt, item.mainTxt === '초기화' && styles.reset]}>{item.mainTxt}</Text>
-              <Text style={styles.subTxt}>{item.subTxt}</Text>
-            </TouchableOpacity>) :
-            <RenderView viewName={viewName}/>
-        }
-      </View>
+      settingList.map((item, idx) =>
+        <TouchableOpacity
+          key={idx}
+          style={styles.listItem}
+          onPress={() => this.onPressSetView(item.name)}>
+          <Text style={[styles.mainTxt, item.mainTxt === '초기화' && styles.reset]}>{item.mainTxt}</Text>
+          <Text style={styles.subTxt}>{item.subTxt}</Text>
+        </TouchableOpacity>)
     )
   }
 
