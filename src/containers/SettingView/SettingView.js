@@ -33,8 +33,7 @@ i18n.fallbacks = true
 i18n.translations = { en, ko }
 i18n.locale = Localization.locale
 
-const RenderView = (props => {
-  const { viewName } = props
+const SettingDetailView = (props => {
 
   const langList = [{
     name: i18n.t('lang_ko', {locale: 'en'}),
@@ -58,10 +57,26 @@ const RenderView = (props => {
 
 @observer
 export default class SettingView extends React.Component {
-  @observable selectedSettingName = 'SettingList'
+  @observable selectedSettingName = 'Setting'
 
   render () {
     const viewName = `${this.selectedSettingName}View`
+
+    return (
+      <View style={styles.container}>
+        {
+          viewName === 'SettingView' ?
+            this.onRenderSettingList() :
+            <SettingDetailView
+              viewName={viewName}
+              onPressSetView={this.onPressSetView}/>
+        }
+      </View>
+    )
+  }
+
+  onPressSetView = name => this.selectedSettingName = name
+
   onRenderSettingList = () => {
     const settingList = [{
       name: i18n.t('lang_mainTxt', {locale: 'en'}),
@@ -92,8 +107,6 @@ export default class SettingView extends React.Component {
         </TouchableOpacity>)
     )
   }
-
-  onPressSetting = name => this.selectedSettingName = name
 }
 
 const styles = StyleSheet.create({
