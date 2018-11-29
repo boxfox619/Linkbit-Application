@@ -1,7 +1,7 @@
 import SettingView from './SettingView/SettingView';
-import FingerPrintView from './FingerPrintView/FingerPrintView';
+import FingerPrintView from './SecurityView/FingerPrintView';
 import GuideView from './GuideView/GuideView';
-import PinCodeInputView from './PinCodeInputView';
+import PinCodeInputView from './SecurityView/PinCodeInputView';
 import TermsOfServiceView from './TermsOfServiceView';
 import MainTabView from "./MainView/MainTabView";
 
