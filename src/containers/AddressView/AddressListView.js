@@ -1,11 +1,11 @@
 import React from 'react'
-import {View, StyleSheet, FlatList, Text} from 'react-native'
+import {View, StyleSheet, FlatList} from 'react-native'
 import {Button} from 'react-native-elements'
 import {inject, observer} from "mobx-react/index"
 import AddressCard from "../../components/Card/AddressCard"
-import {Navigation} from 'react-native-navigation'
 import {observable} from 'mobx'
 import AddressManagementView from './AddressManagementView';
+import {PRIMARY_COLOR} from "../../libs/Constraints";
 
 @inject(['address'])
 @observer
@@ -38,21 +38,28 @@ export default class AddressListView extends React.Component {
                         )
                     }}
                 />
-                <Button title="Buy" onPress={() => Navigation.push(this.props.componentId, {component: {name: 'AddressBuy'}})}/>
+                <Button title="Get New Address"
+                        buttonStyle={styles.getAddressButton}
+                        onPress={() => this.props.navigation.navigate('AddressBuy')}/>
             </View>
         )
         }
     }
-d
 }
 
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        paddingTop: 0,
+        paddingBottom: 20
     },
     list: {
         padding: 10,
         flex: 1
+    },
+    getAddressButton: {
+        backgroundColor: PRIMARY_COLOR
     }
+
 });

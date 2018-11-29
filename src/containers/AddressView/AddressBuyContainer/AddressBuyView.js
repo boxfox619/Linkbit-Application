@@ -1,9 +1,9 @@
 import React from 'react'
-import {View, StyleSheet, Text} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 import {FormLabel, FormInput, FormValidationMessage, Button} from 'react-native-elements'
-import {observer} from 'mobx-react';
-import {observable} from 'mobx';
-import {Navigation} from 'react-native-navigation'
+import {observer} from 'mobx-react'
+import {observable} from 'mobx'
+import {PRIMARY_COLOR} from "../../../libs/Constraints";
 
 @observer
 export default class AddressBuyView extends React.Component {
@@ -24,18 +24,24 @@ export default class AddressBuyView extends React.Component {
                     <FormValidationMessage>{this.errMessage}</FormValidationMessage>
                     }
                 </View>
-                <Button title={"다음"} onPress={this.onNext} disabled={!this.addressIsValid}/>
+                <Button title={"다음"}
+                        onPress={this.onNext}
+                        buttonStyle={styles.getAddressButton}
+                        disabled={!this.addressIsValid}/>
             </View>
         )
     }
 
     onNext = () => {
         if(this.addressIsValid){
-            Navigation.push(this.props.componentId, {component: {name : 'AddressBuyPricing'}})
+            this.props.navigation.navigate('AddressBuyPricing')
         }
     }
 
     addressValidCheck = (text) => {
+        if(text.length>0){
+            this.addressIsValid = true
+        }
         //@ TODO implement checker of address is valid
     }
 }
@@ -48,5 +54,8 @@ const styles = StyleSheet.create({
     },
     form: {
         flex:1
+    },
+    getAddressButton: {
+        backgroundColor: PRIMARY_COLOR
     }
 })

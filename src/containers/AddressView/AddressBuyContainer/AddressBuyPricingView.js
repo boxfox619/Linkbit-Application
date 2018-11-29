@@ -1,10 +1,8 @@
 import React from 'react'
 import {View, StyleSheet, ScrollView} from 'react-native'
 import {PricingCard} from 'react-native-elements'
-import {observer} from 'mobx-react';
-import {observable} from 'mobx';
-import {inject} from "mobx-react/index";
-import {Navigation} from 'react-native-navigation'
+import {observer, inject} from 'mobx-react'
+import {observable} from 'mobx'
 
 @inject(['address'])
 @observer
@@ -48,11 +46,11 @@ export default class AddressBuyPricingView extends React.Component {
 
 
     getFreeAddress = () => {
-        Navigation.push(this.props.componentId, {component: {name : 'AddressBuyFinish'}})
+        this.props.navigation.navigate('AddressBuyFinish')
     }
 
     buyAddress = () => {
-        Navigation.push(this.props.componentId, {component: {name : 'AddressBuyFinish'}})
+        this.props.navigation.navigate('AddressBuyFinish')
     }
 }
 

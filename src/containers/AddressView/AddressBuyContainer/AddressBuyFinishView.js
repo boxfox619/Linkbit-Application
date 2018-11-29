@@ -1,8 +1,9 @@
 import React from 'react'
 import {View, StyleSheet, Text} from 'react-native'
-import {Button} from 'react-native-elements';
+import {Button} from 'react-native-elements'
 import {observer} from 'mobx-react'
 import {observable} from 'mobx'
+import {PRIMARY_COLOR} from "../../../libs/Constraints";
 
 @observer
 export default class AddressBuyFinishView extends React.Component {
@@ -15,13 +16,16 @@ export default class AddressBuyFinishView extends React.Component {
                     <Text>Success Address Buy</Text>
                     <Text>Your Address : {this.address}</Text>
                 </View>
-                <Button title="finish" onPress={this.onFinish}/>
+                <Button title="finish"
+                        onPress={this.onFinish}
+                        buttonStyle={styles.getAddressButton}/>
             </View>
         )
     }
 
     onFinish = () => {
-
+        const params = this.state.params || {}
+        this.props.navigation.goBack(params.go_back_key)
     }
 }
 
@@ -34,5 +38,8 @@ const styles = StyleSheet.create({
         flex:1,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    getAddressButton: {
+        backgroundColor: PRIMARY_COLOR
     }
 });
