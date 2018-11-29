@@ -57,7 +57,8 @@ const SettingDetailView = (props => {
   }
 
   const onPressSettingDetail = val => {
-    i18n.locale = val
+    if(viewName === 'LanguageView') i18n.locale = val
+
     onPressSetView('Setting')
   }
 
