@@ -10,12 +10,11 @@ export default class AddressCard extends React.Component {
         address: PropTypes.string.isRequired,
         linkedAddressCount: PropTypes.number.isRequired,
         activate: PropTypes.bool.isRequired,
-        onPress: PropTypes.func.isRequired
+        onPress: PropTypes.func
     }
 
     static defaultProps = {
-        activate: false,
-        onPress: () => {}
+        activate: false
     }
 
     render() {

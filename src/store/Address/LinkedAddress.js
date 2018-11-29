@@ -21,6 +21,12 @@ export default class LinkedAddress {
         }
     }
 
+    @action deleteAddress(symbol, address) {
+        if (this.getAccountAddress(symbol)) {
+            this.accountAddressList.splice(this.accountAddressList.indexOf(address), 1)
+        }
+    }
+
     @action updateFromJson(json) {
         this.address = json.address;
         this.accountAddressList = json.accountAddressList;

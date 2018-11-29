@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {PRIMARY_COLOR} from '../../libs/Constraints';
-import {TouchableOpacity, View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import BorderCard from "./BorderCard";
 
 export default class WalletCard extends React.Component {
@@ -13,20 +13,19 @@ export default class WalletCard extends React.Component {
         balance: PropTypes.string,
         price: PropTypes.string,
         themeColor: PropTypes.string,
-        onSelected: PropTypes.func
+        onPress: PropTypes.func
     };
 
     static defaultProps = {
         balance: '0',
         price: '0',
         themeColor: PRIMARY_COLOR,
-        onSelected: () => {
-        }
+        onPress: () => {}
     };
 
     render() {
         return (
-            <BorderCard onPress={this.onSelected} themeColor={this.props.themeColor}>
+            <BorderCard onPress={this.props.onPress} themeColor={this.props.themeColor}>
                 <Text style={[styles.label, this.getTextColor()]}>{this.props.name}</Text>
                 <View style={styles.valuesWrapper}>
                     <View style={styles.values}>

@@ -24,8 +24,7 @@ export default class AddressBuyFinishView extends React.Component {
     }
 
     onFinish = () => {
-        const params = this.state.params || {}
-        this.props.navigation.goBack(params.go_back_key)
+        this.props.navigation.navigate('Address')
     }
 }
 

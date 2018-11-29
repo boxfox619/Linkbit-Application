@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {View, StyleSheet, FlatList} from 'react-native';
+import {View, StyleSheet, FlatList, Alert} from 'react-native';
+import {Button} from 'react-native-elements'
 import {inject, observer} from "mobx-react/index";
 import WalletCard from "../../components/Card/WalletCard";
 import AddressCard from "../../components/Card/AddressCard";
@@ -13,24 +13,57 @@ export default class AddressManagementView extends React.Component {
         return {topBar: {title: {text: '주소 관리'}}}
     }
 
-    static propTypes = {
-        currentAddress: PropTypes.string.isRequired
-    }
-
     render() {
-        const addressItem = this.props.address.linkedAddressList.find(a => a.address === this.props.currentAddress)
         return (
             <View style={styles.container}>
-                <AddressCard address={addressItem.address} linkedAddressCount={addressItem.accountAddressList.length} activate={true}/>
+                <AddressCard address={this.currentAddressItem.address} linkedAddressCount={this.currentAddressItem.accountAddressList.length} activate={true}/>
                 <FlatList
                     style={styles.list}
-                    data={addressItem.accountAddressList}
+                    data={this.currentAddressItem.accountAddressList}
                     keyExtractor={(item) => item.address}
                     renderItem={({item}) => {
-                        return (<WalletCard name={item.address} symbol={item.symbol} moneySymbol={'KRW'}/>)
+                        return (<WalletCard onPress={()=>this.onWalletPressed(item)} name={item.address} symbol={item.symbol} moneySymbol={'KRW'}/>)
                     }}
                 />
+                <Button title="Link new wallet"
+                        buttonStyle={styles.getAddressButton}
+                        onPress={() => this.onLinkNewWallet()}/>
             </View>
+        )
+    }
+
+    get currentAddressItem() {
+        const address = this.props.navigation.state.params.address
+        return this.props.address.linkedAddressList.find(a => a.address === address)
+    }
+
+    onLinkNewWallet = () => {
+        this.props.navigation.navigate({
+            routeName: 'WalletSearch',
+            params: {
+                excludeAddressList: this.currentAddressItem.accountAddressList,
+                onWalletSelected: this.addWallet
+            }
+        })
+    }
+
+    addWallet = (wallet) => {
+        this.currentAddressItem.addAddress(wallet.symbol, wallet.accountAddress)
+    }
+
+    deleteWallet = (wallet) => {
+        this.currentAddressItem.deleteAddress(wallet.symbol, wallet.accountAddress)
+    }
+
+    onWalletPressed = (wallet) => {
+        Alert.alert(
+            '지갑 삭제',
+            '연결된 지갑을 삭제하시겠습니까?',
+            [
+                {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                {text: 'OK', onPress: () => this.deleteWallet(wallet)},
+            ],
+            { cancelable: false }
         )
     }
 

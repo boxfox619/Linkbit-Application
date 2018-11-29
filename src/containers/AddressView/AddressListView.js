@@ -4,7 +4,6 @@ import {Button} from 'react-native-elements'
 import {inject, observer} from "mobx-react/index"
 import AddressCard from "../../components/Card/AddressCard"
 import {observable} from 'mobx'
-import AddressManagementView from './AddressManagementView';
 import {PRIMARY_COLOR} from "../../libs/Constraints";
 
 @inject(['address'])
@@ -20,9 +19,6 @@ export default class AddressListView extends React.Component {
     }
 
     render() {
-        if(!!this.selectedAddress){
-            return (<AddressManagementView currentAddress={this.selectedAddress }/>)
-        }else{
         return (
             <View style={styles.container}>
                 <FlatList
@@ -34,7 +30,10 @@ export default class AddressListView extends React.Component {
                         return (
                             <AddressCard address={item.address}
                                          linkedAddressCount={item.accountAddressList.length}
-                                         onPress={() => this.selectedAddress = item.address}/>
+                                         onPress={() => this.props.navigation.navigate({
+                                             routeName : 'AddressManagement',
+                                             params: {address: item.address}
+                                         })}/>
                         )
                     }}
                 />
@@ -43,7 +42,6 @@ export default class AddressListView extends React.Component {
                         onPress={() => this.props.navigation.navigate('AddressBuy')}/>
             </View>
         )
-        }
     }
 }
 

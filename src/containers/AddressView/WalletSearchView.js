@@ -10,11 +10,9 @@ import WalletCard from "../../components/Card/WalletCard";
 @observer
 export default class WalletSearchView extends React.Component {
     @observable wallets
-    static propTypes = {
-        onSelectWallet: PropTypes.func.isRequired
-    }
 
     render() {
+        const {onWalletSelected} = this.props.navigation.state.params
         return (
             <View style={styles.container}>
                 <SearchBar
@@ -31,7 +29,7 @@ export default class WalletSearchView extends React.Component {
                         return (<WalletCard name={item.address}
                                             symbol={item.symbol}
                                             moneySymbol={'KRW'}
-                                            onSelected={() => this.props.onSelectWallet(item)}/>)
+                                            onPress={() => onWalletSelected(item)}/>)
                     }}
                 />
             </View>
@@ -39,8 +37,9 @@ export default class WalletSearchView extends React.Component {
     }
 
     onChangeText = (text) => {
+        const excludeAddressList = this.props.navigation.state.params.excludeAddressList || []
         if (text.length === 0) {
-            this.wallets = this.props.wallet.wallets
+            this.wallets = this.props.wallet.wallets.filter(w => excludeAddressList.indexOf(w.accountAddress) > -1)
         } else {
             text = text.toLowerCase()
             this.wallets = this.props.wallet.wallets.filter(w => {
@@ -49,7 +48,7 @@ export default class WalletSearchView extends React.Component {
                     || w.linkedAddress.toLowerCase().indexOf(text) > -1
                     || w.name.toLowerCase().indexOf(text) > -1
                 )
-            })
+            }).filter(w => excludeAddressList.indexOf(w.accountAddress) > -1)
         }
     }
 }
