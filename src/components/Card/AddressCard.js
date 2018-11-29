@@ -33,7 +33,7 @@ export default class AddressCard extends React.Component {
     }
 
     get activeColor(){
-        return {color: this.props.activate ? 'white' : ''};
+        return {color: this.props.activate ? 'white' : 'black'};
     }
 }
 

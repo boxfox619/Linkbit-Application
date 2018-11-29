@@ -8,6 +8,8 @@ import TransactionListView from "../TransactionListView/TransactionListView"
 
 export default class MainTabView extends React.Component {
 
+    static navigationOptions = { header: null }
+
     constructor() {
         super();
         this.state = {
@@ -68,7 +70,7 @@ export default class MainTabView extends React.Component {
         switch (selectedIndex) {
             case 0:
                 state.headerTitle = 'WALLET';
-                state.headerIcon = {icon: 'payment', color: '#000000', marginRight: 10};
+                state.headerIcon = {icon: 'payment', color: '#000000', marginRight: 10, onPress: () => this.props.navigation.navigate('Address')};
                 break;
             case 1:
                 state.headerTitle = 'TRANSACTION';
