@@ -1,7 +1,5 @@
 import React from 'react'
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
-import {observable} from 'mobx'
-import {observer} from 'mobx-react'
 import { Localization } from 'expo-localization'
 import i18n from 'i18n-js'
 import { PinCodeInputView } from '../'
@@ -80,9 +78,13 @@ const SettingDetailView = (props => {
   )
 })
 
-@observer
 export default class SettingView extends React.Component {
-  @observable selectedSettingName = 'Setting'
+  constructor(props) {
+    super(props)
+    this.state = {
+      selectedSettingName: 'Setting'
+    }
+  }
 
   render () {
     const viewName = `${this.selectedSettingName}View`
@@ -100,7 +102,7 @@ export default class SettingView extends React.Component {
     )
   }
 
-  onPressSetView = name => this.selectedSettingName = name
+  onPressSetView = name => this.setState({ selectedSettingName: name })
 
   onRenderSettingList = () => {
     const settingList = [{
