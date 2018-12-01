@@ -42,7 +42,7 @@ export default class AddressManagementView extends React.Component {
         this.props.navigation.navigate({
             routeName: 'WalletSearch',
             params: {
-                excludeAddressList: this.currentAddressItem.accountAddressList,
+                excludeSymbolList: this.currentAddressItem.accountAddressList.map(a=>a.symbol),
                 onWalletSelected: this.addWallet
             }
         })

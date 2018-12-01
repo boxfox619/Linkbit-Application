@@ -40,20 +40,20 @@ export default class WalletSearchView extends React.Component {
     }
 
     onChangeText = (text) => {
-        let excludeAddressList = this.props.navigation.state.params.excludeAddressList || []
-        excludeAddressList = excludeAddressList.map(item => item.address)
-        if (!text || text.length === 0) {
-            this.wallets = this.props.wallet.wallets.filter(w => excludeAddressList.indexOf(w.accountAddress) === -1)
-        } else {
+        const {params} = this.props.navigation.state
+        const excludeAddressList = params.excludeAddressList || []
+        const excludeSymbolList = params.excludeSymbolList || []
+        let resultWallets = this.props.wallet.wallets
+        if (!!text && text.length > 0) {
             text = text.toLowerCase()
-            this.wallets = this.props.wallet.wallets.filter(w => {
-                return (
-                    w.address.toLowerCase().indexOf(text) > -1
-                    || w.linkedAddress.toLowerCase().indexOf(text) > -1
-                    || w.name.toLowerCase().indexOf(text) > -1
-                )
-            }).filter(w => excludeAddressList.indexOf(w.accountAddress) > -1)
+            resultWallets = resultWallets.filter(w => (
+                w.address.toLowerCase().includes(text)
+                || w.linkedAddress.toLowerCase().includes(text)
+                || w.name.toLowerCase().includes(text)
+            ))
         }
+        this.wallets = resultWallets.filter(w => excludeSymbolList.indexOf(w.symbol) === -1)
+            .filter(w => excludeAddressList.indexOf(w.address) === -1)
     }
 }
 
