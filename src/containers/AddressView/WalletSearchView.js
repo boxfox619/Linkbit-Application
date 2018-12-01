@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {View, StyleSheet, FlatList} from 'react-native'
 import {SearchBar} from 'react-native-elements'
 import {observer, inject} from 'mobx-react'
@@ -36,10 +35,15 @@ export default class WalletSearchView extends React.Component {
         )
     }
 
+    componentDidMount() {
+        this.onChangeText()
+    }
+
     onChangeText = (text) => {
-        const excludeAddressList = this.props.navigation.state.params.excludeAddressList || []
-        if (text.length === 0) {
-            this.wallets = this.props.wallet.wallets.filter(w => excludeAddressList.indexOf(w.accountAddress) > -1)
+        let excludeAddressList = this.props.navigation.state.params.excludeAddressList || []
+        excludeAddressList = excludeAddressList.map(item => item.address)
+        if (!text || text.length === 0) {
+            this.wallets = this.props.wallet.wallets.filter(w => excludeAddressList.indexOf(w.accountAddress) === -1)
         } else {
             text = text.toLowerCase()
             this.wallets = this.props.wallet.wallets.filter(w => {

@@ -9,8 +9,9 @@ import {PRIMARY_COLOR} from "../../libs/Constraints";
 @inject(['address'])
 @observer
 export default class AddressListView extends React.Component {
-    @observable selectedAddress =  undefined
-    constructor(props){
+    @observable selectedAddress = undefined
+
+    constructor(props) {
         super(props)
     }
 
@@ -19,21 +20,24 @@ export default class AddressListView extends React.Component {
     }
 
     render() {
+        const {linkedAddressList} = this.props.address
+        const linkedAddressSize = linkedAddressList.reduce((count, value) => count + value.accountAddressList.length, 0)
         return (
             <View style={styles.container}>
                 <FlatList
                     style={styles.list}
                     keyExtractor={(item) => item.address}
-                    data={this.props.address.linkedAddressList}
-                    extraData={{size: this.props.address.linkedAddressList.length}}
+                    data={linkedAddressList}
+                    extraData={linkedAddressSize}
                     renderItem={({item}) => {
                         return (
-                            <AddressCard address={item.address}
-                                         linkedAddressCount={item.accountAddressList.length}
-                                         onPress={() => this.props.navigation.navigate({
-                                             routeName : 'AddressManagement',
-                                             params: {address: item.address}
-                                         })}/>
+                            <AddressCard
+                                address={item.address}
+                                linkedAddressCount={item.accountAddressList.length}
+                                onPress={() => this.props.navigation.navigate({
+                                    routeName: 'AddressManagement',
+                                    params: {address: item.address}
+                                })}/>
                         )
                     }}
                 />

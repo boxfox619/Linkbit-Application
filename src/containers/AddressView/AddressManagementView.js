@@ -20,6 +20,7 @@ export default class AddressManagementView extends React.Component {
                 <FlatList
                     style={styles.list}
                     data={this.currentAddressItem.accountAddressList}
+                    extraData={{size: this.currentAddressItem.accountAddressList.length}}
                     keyExtractor={(item) => item.address}
                     renderItem={({item}) => {
                         return (<WalletCard onPress={()=>this.onWalletPressed(item)} name={item.address} symbol={item.symbol} moneySymbol={'KRW'}/>)
@@ -48,11 +49,11 @@ export default class AddressManagementView extends React.Component {
     }
 
     addWallet = (wallet) => {
-        this.currentAddressItem.addAddress(wallet.symbol, wallet.accountAddress)
+        this.currentAddressItem.addAddress(wallet.symbol, wallet.address)
     }
 
     deleteWallet = (wallet) => {
-        this.currentAddressItem.deleteAddress(wallet.symbol, wallet.accountAddress)
+        this.currentAddressItem.deleteAddress(wallet.symbol, wallet.address)
     }
 
     onWalletPressed = (wallet) => {
