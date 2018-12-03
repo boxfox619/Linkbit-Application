@@ -10,27 +10,30 @@ import AddressBox from './AddressBox/AddressBox'
 import AddressInput from './AddressInput/AddressInput'
 import AmountInput from './AmountInput/AmountInput'
 import AmountBox from './AmountBox/AmountBox'
-import RemittanceProcessStore from '../../store/RemittanceProcessStore'
 import RemittanceType from '../../store/RemittanceType'
 
-const remittanceProcessStore = new RemittanceProcessStore()
-
-@observer
 export default class RemmittanceView extends React.Component {
+    state = {
+        method: RemittanceType.Friend,
+        step: 1
+    }
+
     componentDidMount() {
+
     }
 
     onMethodChange = index => {
         for (const key in RemittanceType) {
             if (RemittanceType[key] === index) {
-                remittanceProcessStore.method = RemittanceType[key]
+                this.setState({ method: RemittanceType[key] })
             }
         }
 
-        remittanceProcessStore.step = 1
+        this.setState({ step: 1 })
     }
 
     render() {
+        const { method, step } = this.state
         return (
             <View style={styles.container}>
                 <View style={styles.wrapper}>
@@ -38,10 +41,10 @@ export default class RemmittanceView extends React.Component {
                     <CardSummary />
                     <Text style={styles.title}>{'송금 방법'}</Text>
                     <SegmentedControl options={['친구', '지갑']}
-                        selectedIndex={remittanceProcessStore.method}
+                        selectedIndex={method}
                         onChange={this.onMethodChange} />
                     {
-                        remittanceProcessStore.method === RemittanceType.Friend ?
+                        method === RemittanceType.Friend ?
                             <React.Fragment>
                                 <Text style={styles.title}>{'친구 목록'}</Text>
                                 <SearchBar />
@@ -49,7 +52,7 @@ export default class RemmittanceView extends React.Component {
                             null
                     }
                     {
-                        remittanceProcessStore.method === RemittanceType.Wallet ?
+                        method === RemittanceType.Wallet ?
                             <React.Fragment>
                                 <Text style={styles.title}>{'지갑 주소'}</Text>
                                 <AddressInput />
@@ -57,7 +60,7 @@ export default class RemmittanceView extends React.Component {
                             null
                     }
                     {
-                        remittanceProcessStore.step >= 2 && remittanceProcessStore.method === RemittanceType.Friend ?
+                        step >= 2 && method === RemittanceType.Friend ?
                             <React.Fragment>
                                 <Text style={styles.title}>{'받는 분'}</Text>
                                 <AddressBox address={'6abnbexlai13tbajfldxze'} />
@@ -65,7 +68,7 @@ export default class RemmittanceView extends React.Component {
                             null
                     }
                     {
-                        remittanceProcessStore.step >= 2 && remittanceProcessStore.method === RemittanceType.Wallet ?
+                        step >= 2 && method === RemittanceType.Wallet ?
                             <React.Fragment>
                                 <Text style={styles.title}>{'받는 주소'}</Text>
                                 <AddressBox address={'6abnbexlai13tbajfldxze'} />
@@ -73,25 +76,29 @@ export default class RemmittanceView extends React.Component {
                             null
                     }
                     {
-                        remittanceProcessStore.step >= 3 ?
+                        step >= 3 ?
                             <Text style={styles.title}>{'보낼 금액'}</Text> :
                             null
                     }
                     {
-                        remittanceProcessStore.step === 3 ?
+                        step === 3 ?
                             <AmountInput data={[['KRW', 'USD']]} /> :
                             null
                     }
                     {
-                        remittanceProcessStore.step >= 4 ?
+                        step >= 4 ?
                             <AmountBox /> :
                             null
                     }
                 </View>
                 <NavigationButton title={'다음'}
-                    onPress={() => remittanceProcessStore.step++} />
+                    onPress={() => this.setState({ step: step + 1 })} />
             </View>
         )
+    }
+
+    postCoin = () => {
+
     }
 }
 
