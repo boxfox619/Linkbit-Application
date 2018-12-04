@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Alert, View, TouchableOpacity, Text } from 'react-native'
 import { Localization } from 'expo-localization'
 import i18n from 'i18n-js'
-import { PinCodeInputView } from '../'
+import { SecurityView } from '../'
 const en = {
   lang_mainTxt: 'Language',
   lang_subTxt: 'You can select a language by country',
@@ -65,7 +65,7 @@ const SettingDetailView = (props => {
   return (
     <View style={styles.container}>
       {
-        (viewName === 'SecurityView' && <PinCodeInputView/>) ||
+        (viewName === 'SecurityView' && <SecurityView/>) ||
         (viewName === 'ResetView' && Alert.alert(
           '초기화',
           '모든 계정과 정보를 파기합니다.',
