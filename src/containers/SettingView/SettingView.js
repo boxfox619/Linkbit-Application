@@ -38,7 +38,7 @@ i18n.translations = { en, ko }
 i18n.locale = Localization.locale
 
 const SettingDetailView = (props => {
-  const { viewName, onPressSetView } = props
+  const { viewName, onSetView } = props
   const list = {
     LanguageView: [{
       txt: i18n.t('lang_ko'),
@@ -56,10 +56,10 @@ const SettingDetailView = (props => {
     }]
   }
 
-  const onPressSettingDetail = val => {
+  const handleSettingDetail = val => {
     if(viewName === 'LanguageView') i18n.locale = val
 
-    onPressSetView('Setting')
+    onSetView('Setting')
   }
 
   return (
@@ -71,7 +71,7 @@ const SettingDetailView = (props => {
           <TouchableOpacity
             key={item.txt}
             style={styles.listItem}
-            onPress={() => onPressSettingDetail(item.val)}>
+            onPress={() => handleSettingDetail(item.val)}>
             <Text>{item.txt}</Text>
           </TouchableOpacity>)
       }
@@ -80,10 +80,11 @@ const SettingDetailView = (props => {
 })
 
 export default class SettingView extends React.Component {
-  constructor(props) {
+
+  constructor(props){
     super(props)
     this.state = {
-      selectedSettingName: 'Setting'
+      view: 'Setting'
     }
   }
 
@@ -103,7 +104,7 @@ export default class SettingView extends React.Component {
     )
   }
 
-  onPressSetView = name => this.setState({ selectedSettingName: name })
+  handleSetView = name => this.setState({ view: name })
 
   onRenderSettingList = () => {
     const settingList = [{
@@ -129,7 +130,7 @@ export default class SettingView extends React.Component {
         <TouchableOpacity
           key={idx}
           style={styles.listItem}
-          onPress={() => this.onPressSetView(item.name)}>
+          onPress={() => this.handleSetView(item.name)}>
           <Text style={[styles.mainTxt, item.mainTxt === '초기화' && styles.reset]}>{item.mainTxt}</Text>
           <Text style={styles.subTxt}>{item.subTxt}</Text>
         </TouchableOpacity>)
