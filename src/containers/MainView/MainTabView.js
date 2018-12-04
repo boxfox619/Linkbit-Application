@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView } from 'react-native';
 import WalletListView from "./WalletListView";
-import {PRIMARY_COLOR} from "../../libs/Constraints";
-import {Header} from 'react-native-elements';
-import {Navbar} from "../../components";
-import TransactionsView from "../TransactionsView/TransactionsView"
+import { PRIMARY_COLOR } from "../../libs/Constraints";
 import { Header } from 'react-native-elements';
+import { Navbar } from "../../components";
+import TransactionsView from "../TransactionsView/TransactionsView"
+import RemittanceView from '../RemittanceView/RemittanceView'
+import RemmittanceResultCard from '../../components/RemittanceResultCard/RemittanceResultCard'
 
 export default class MainTabView extends React.Component {
 
@@ -19,34 +20,43 @@ export default class MainTabView extends React.Component {
     }
 
     render() {
-        const {selectedIndex} = this.state;
+        const { selectedIndex } = this.state;
         return (
-            <View style={styles.container}>
-                <Header
-                    backgroundColor={'#ffffff'}
-                    leftComponent={<Text style={styles.title}>{this.state.headerTitle}</Text>}
-                    rightComponent={this.state.headerIcon}
-                    outerContainerStyles={{borderBottomWidth: 0, height: 80}}
-                />
-                <View style={styles.content}>
-                    {this.renderContents()}
-                </View>
-                <Navbar
-                    onTabSelected={this.updateIndex}
-                    selectedIndex={selectedIndex}
-                    tabs={this.tabs}
-                    containerStyle={styles.containerStyle}
-                />
-            </View>
+            <SafeAreaView style={styles.safeArea}>
+                {/* <RemmittanceResultCard symbol={'ETH'}
+                balance={'35.124'}
+                linkedAddress={'6abnbexlai13tbajfldxze'}
+                accountAddress={'나의 이더리움 지갑 1'} /> */}
+                <RemittanceView />
+                {/* <SafeAreaView style={styles.safeArea}>
+                    <View style={styles.container}>
+                        <Header
+                            backgroundColor={'#ffffff'}
+                            leftComponent={<Text style={styles.title}>{this.state.headerTitle}</Text>}
+                            rightComponent={this.state.headerIcon}
+                            outerContainerStyles={{ borderBottomWidth: 0, height: 80 }}
+                        />
+                        <View style={styles.content}>
+                            {this.renderContents()}
+                        </View>
+                        <Navbar
+                            onTabSelected={this.updateIndex}
+                            selectedIndex={selectedIndex}
+                            tabs={this.tabs}
+                            containerStyle={styles.containerStyle}
+                        />
+                    </View>
+                </SafeAreaView> */}
+            </SafeAreaView>
         )
     }
 
     renderContents = () => {
         switch (this.state.selectedIndex) {
             case 0:
-                return <WalletListView/>;
+                return <WalletListView />;
             case 1:
-                return <TransactionsView/>;
+                return <TransactionsView />;
             case 2:
                 return <View></View>;
         }
@@ -54,18 +64,18 @@ export default class MainTabView extends React.Component {
 
     get tabs() {
         return [
-            {icon: 'payment', label: 'Wallet'},
-            {icon: 'swap-horiz', label: 'Transaction'},
-            {icon: 'settings', label: 'Settings'}
+            { icon: 'payment', label: 'Wallet' },
+            { icon: 'swap-horiz', label: 'Transaction' },
+            { icon: 'settings', label: 'Settings' }
         ];
     };
 
     updateIndex = (selectedIndex) => {
-        let state = {selectedIndex};
+        let state = { selectedIndex };
         switch (selectedIndex) {
             case 0:
                 state.headerTitle = 'WALLET';
-                state.headerIcon = {icon: 'payment', color: '#000000', marginRight: 10};
+                state.headerIcon = { icon: 'payment', color: '#000000', marginRight: 10 };
                 break;
             case 1:
                 state.headerTitle = 'TRANSACTION';
@@ -81,6 +91,12 @@ export default class MainTabView extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    safeArea: {
+        flex: 1,
+        backgroundColor: '#fff',
+        width: '100%',
+        height: '100%'
+    },
     container: {
         flex: 1
     },
