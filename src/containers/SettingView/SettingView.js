@@ -88,22 +88,6 @@ export default class SettingView extends React.Component {
     }
   }
 
-  render () {
-    const viewName = `${this.selectedSettingName}View`
-
-    return (
-      <View style={styles.container}>
-        {
-          viewName === 'SettingView' ?
-            this.onRenderSettingList() :
-            <SettingDetailView
-              viewName={viewName}
-              onPressSetView={this.onPressSetView}/>
-        }
-      </View>
-    )
-  }
-
   handleSetView = name => this.setState({ view: name })
 
   onRenderSettingList = () => {
@@ -134,6 +118,22 @@ export default class SettingView extends React.Component {
           <Text style={[styles.mainTxt, item.mainTxt === '초기화' && styles.reset]}>{item.mainTxt}</Text>
           <Text style={styles.subTxt}>{item.subTxt}</Text>
         </TouchableOpacity>)
+    )
+  }
+
+  render () {
+    const viewName = `${this.state.view}View`
+
+    return (
+      <View style={styles.container}>
+        {
+          viewName === 'SettingView' ?
+            this.onRenderSettingList() :
+            <SettingDetailView
+              viewName={viewName}
+              onSetView={this.handleSetView}/>
+        }
+      </View>
     )
   }
 }
