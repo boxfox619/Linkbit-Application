@@ -1,50 +1,78 @@
-import React from 'react';
-import {View, Text, Button, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import PinCodeInputView form './PinCodeInputView'
+import React from 'react'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import PinCodeView from './PinCodeView'
+import FingerPrintView from './FingerPrintView'
 
+const SecurityDetailView = (props => {
+  const {view, onVerifySuccess} = props
+
+  return (
+    <>
+      {
+        view === 'pin' ?
+        <PinCodeView onVerifySuccess={() => onVerifySuccess(false)}/> :
+        <FingerPrintView onVerifySuccess={() => onVerifySuccess(false)}/>
+      }
+    </>
+  )
+})
 export default class SecurityView extends React.Component {
-  constructor(props) {
-    super(props);
+
+  constructor (props) {
+    super(props)
     this.state = {
-      isFirstTime: true
+      isVerify: false,
+      view: false,
     }
   }
 
-  render() {
+  handleSetView = view => this.setState({view})
+  handleVerifySuccess = view => this.setState({view, isVerify: true})
+
+  render () {
+    const {view} = this.state
+
     return (
       <View style={styles.container}>
         {
-          isFirstTime ?
-            <PinCodeInputView/> :
-            <TouchableOpacity
-              key={i}
-              style={styles.listItem}
-              onPress={() => onPressMethod(item.val)}>
-              <Text>{item.txt}</Text>
-            </TouchableOpacity>
+          view ?
+            <SecurityDetailView
+              view={view}
+              onVerifySuccess={this.handleVerifySuccess}/> :
+            this.state.isVerify ?
+              <>
+                <TouchableOpacity
+                  key={0}
+                  style={styles.listItem}
+                  onPress={() => this.handleSetView('pin')}>
+                  <Text>핀 코드 변경</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  key={1}
+                  style={styles.listItem}
+                  onPress={() => this.handleSetView('finger')}>
+                  <Text>지문 변경</Text>
+                </TouchableOpacity>
+              </> :
+              <PinCodeView
+                needVerify={true}
+                onVerifySuccess={this.handleVerifySuccess}/>
         }
       </View>
     )
-  }
-
-  onPressMethod = method => {
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 20,
+  },
+  listItem: {
+    padding: 20,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    marginBottom: 30,
-    textAlign: 'center'
-  },
-  content: {
-    textAlign: 'center',
-    marginBottom: 50
+    borderBottomWidth: 1,
+    borderBottomColor: '#eaeaea',
   }
-});
+})
