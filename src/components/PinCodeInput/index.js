@@ -6,7 +6,7 @@ import InputView from './InputView'
 import Styles from './styles'
 import PropTypes from 'prop-types'
 
-class PinCodeView extends React.Component {
+class PinCodeInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -106,7 +106,7 @@ class PinCodeView extends React.Component {
   }
 }
 
-PinCodeView.defaultProps = {
+PinCodeInput.defaultProps = {
   deleteText: "DEL",
   buttonBgColor: '#FFF',
   buttonTextColor: '#333',
@@ -117,7 +117,7 @@ PinCodeView.defaultProps = {
   disabled: false,
   clear: false,
 };
-PinCodeView.propTypes = {
+PinCodeInput.propTypes = {
   disabled: PropTypes.bool,
   deleteText: PropTypes.string,
   returnType: PropTypes.string,
@@ -131,4 +131,4 @@ PinCodeView.propTypes = {
   clear: PropTypes.bool,
 };
 
-export default PinCodeView
+export default PinCodeInput
