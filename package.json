@@ -19,10 +19,13 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-native-dropdown-menu": "^2.0.0",
     "react-native-elements": "^0.19.1",
-    "react-native-svg-uri": "^1.2.3"
+    "react-native-navigation": "^2.0.2641",
+    "react-native-svg-uri": "^1.2.3",
+    "react-navigation": "^3.0.2"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.11.0",
-    "babel-plugin-transform-decorators-legacy": "^1.3.5"
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "react-dom": "^16.6.3"
   }
 }

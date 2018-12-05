@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {TouchableOpacity, View, Text, StyleSheet, Image} from 'react-native';
 import {HOST, PRIMARY_COLOR} from '../../libs/Constraints';
+import BorderCard from "./BorderCard";
 
 export default class CoinCard extends React.Component {
 
@@ -29,32 +30,22 @@ export default class CoinCard extends React.Component {
 
     render() {
         return (
-            <View>
-                <TouchableOpacity onPress={this.onPress} style={[styles.container, this.getCardStyle()]}>
-                    <Text style={[styles.label, this.getTextColor()]}>{this.props.coinName}</Text>
-                    <View style={styles.values}>
-                        <Text style={[styles.symbol, this.getTextColor()]}>{this.props.symbol}</Text>
-                        <Text style={[styles.value, this.getTextColor()]}>{this.props.balance}</Text>
-                    </View>
-                    <View style={[styles.values, {marginBottom: 5}]}>
-                        <Text style={[styles.symbol, this.getTextColor()]}>{this.props.moneySymbol}</Text>
-                        <Text style={[styles.value, this.getTextColor()]}>{this.props.price}</Text>
-                    </View>
-                    <View style={styles.iconWrapper}>
-                        <Image style={styles.icon} soruce={{uri: this.getIconUrl()}}/>
-                    </View>
-                </TouchableOpacity>
-            </View>
+            <BorderCard onPress={this.onPress} themeColor={this.props.themeColor} activate={this.props.activate}>
+                <Text style={[styles.label, this.getTextColor()]}>{this.props.coinName}</Text>
+                <View style={styles.values}>
+                    <Text style={[styles.symbol, this.getTextColor()]}>{this.props.symbol}</Text>
+                    <Text style={[styles.value, this.getTextColor()]}>{this.props.balance}</Text>
+                </View>
+                <View style={[styles.values, {marginBottom: 5}]}>
+                    <Text style={[styles.symbol, this.getTextColor()]}>{this.props.moneySymbol}</Text>
+                    <Text style={[styles.value, this.getTextColor()]}>{this.props.price}</Text>
+                </View>
+                <View style={styles.iconWrapper}>
+                    <Image style={styles.icon} soruce={{uri: this.getIconUrl()}}/>
+                </View>
+            </BorderCard>
         )
     }
-
-    getCardStyle = () => {
-        let style = {borderColor: this.props.themeColor};
-        if (this.props.activate) {
-            style.backgroundColor = this.props.themeColor;
-        }
-        return style;
-    };
 
     getTextColor = () => {
         return {color: (this.props.activate) ? '#ffffff' : this.props.themeColor};
@@ -72,13 +63,6 @@ export default class CoinCard extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        borderRadius: 5,
-        borderWidth: 3,
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-        position: 'relative'
-    },
     label: {
         fontSize: 20,
         fontWeight: 'bold',

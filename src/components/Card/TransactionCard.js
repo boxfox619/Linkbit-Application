@@ -40,10 +40,6 @@ export default class TransactionCard extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    TransactionListView: {
-        width: '100%',
-        margin: 0
-    },
     transactionRow: {
         display: 'flex',
         flexDirection: 'row',

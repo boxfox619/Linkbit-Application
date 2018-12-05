@@ -1,4 +1,4 @@
-import WalletApi from '../api/Wallet/WalletApi';
+import WalletApi from '../../api/Wallet/WalletApi';
 import Wallet from './Wallet';
 import {observable, computed, runInAction} from 'mobx';
 
@@ -10,7 +10,7 @@ class WalletStore {
         this.walletApi = WalletApi.create();
     }
 
-    fetchWallets = async () => {
+    loadWalletList = async () => {
         const wallets = await this.walletApi.fetchWallets();
         runInAction(() => {
             this.wallets = wallets.map(json => {

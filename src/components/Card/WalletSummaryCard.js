@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View, StyleSheet, Text, Image } from 'react-native';
 
-export default class CardSummary extends React.Component {
+export default class WalletSummaryCard extends React.Component {
     static propTypes = {
         symbol: PropTypes.string.isRequired,
         balance: PropTypes.string.isRequired,
@@ -12,7 +12,7 @@ export default class CardSummary extends React.Component {
     render() {
         const {symbol, balance, linkedAddress, accountAddress} = this.props;
         return (
-            <View style={styles.cardSummary}>
+            <View style={styles.container}>
                 <View style={styles.iconContainer}>
                     <Image style={styles.icon} />
                 </View>
@@ -33,7 +33,7 @@ export default class CardSummary extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    cardSummary: {
+    container: {
         position: 'relative',
         backgroundColor: '#627EEA',
         width: '100%',

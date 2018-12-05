@@ -1,14 +1,17 @@
 import React from 'react';
-import { View, StyleSheet, Text, SafeAreaView } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import WalletListView from "./WalletListView";
+import {PRIMARY_COLOR} from "../../libs/Constraints";
+import {Header} from 'react-native-elements';
+import {Navbar} from "../../components";
 import { PRIMARY_COLOR } from "../../libs/Constraints";
 import { Header } from 'react-native-elements';
 import { Navbar } from "../../components";
-import TransactionsView from "../TransactionsView/TransactionsView"
-import RemittanceView from '../RemittanceView/RemittanceView'
-import RemmittanceResultCard from '../../components/RemittanceResultCard/RemittanceResultCard'
+import TransactionListView from "../TransactionListView/TransactionListView"
 
 export default class MainTabView extends React.Component {
+
+    static navigationOptions = { header: null }
 
     constructor() {
         super();
@@ -22,33 +25,28 @@ export default class MainTabView extends React.Component {
     render() {
         const { selectedIndex } = this.state;
         return (
-            <SafeAreaView style={styles.safeArea}>
-                {/* <RemmittanceResultCard symbol={'ETH'}
-                balance={'35.124'}
-                linkedAddress={'6abnbexlai13tbajfldxze'}
-                accountAddress={'나의 이더리움 지갑 1'} /> */}
-                <RemittanceView />
-                {/* <SafeAreaView style={styles.safeArea}>
-                    <View style={styles.container}>
-                        <Header
-                            backgroundColor={'#ffffff'}
-                            leftComponent={<Text style={styles.title}>{this.state.headerTitle}</Text>}
-                            rightComponent={this.state.headerIcon}
-                            outerContainerStyles={{ borderBottomWidth: 0, height: 80 }}
-                        />
-                        <View style={styles.content}>
-                            {this.renderContents()}
-                        </View>
-                        <Navbar
-                            onTabSelected={this.updateIndex}
-                            selectedIndex={selectedIndex}
-                            tabs={this.tabs}
-                            containerStyle={styles.containerStyle}
-                        />
-                    </View>
-                </SafeAreaView> */}
-            </SafeAreaView>
+            <View style={styles.container}>
+                <Header
+                    backgroundColor={'#ffffff'}
+                    leftComponent={<Text style={styles.title}>{this.state.headerTitle}</Text>}
+                    rightComponent={this.state.headerIcon}
+                    outerContainerStyles={{ borderBottomWidth: 0, height: 80 }}
+                />
+                <View style={styles.content}>
+                    {this.renderContents()}
+                </View>
+                <Navbar
+                    onTabSelected={this.updateIndex}
+                    selectedIndex={selectedIndex}
+                    tabs={this.tabs}
+                    containerStyle={styles.containerStyle}
+                />
+            </View>
         )
+    }
+
+    componentDidMount() {
+        this.updateIndex(0);
     }
 
     renderContents = () => {
@@ -56,7 +54,7 @@ export default class MainTabView extends React.Component {
             case 0:
                 return <WalletListView />;
             case 1:
-                return <TransactionsView />;
+                return <TransactionListView/>;
             case 2:
                 return <View></View>;
         }
@@ -75,7 +73,7 @@ export default class MainTabView extends React.Component {
         switch (selectedIndex) {
             case 0:
                 state.headerTitle = 'WALLET';
-                state.headerIcon = { icon: 'payment', color: '#000000', marginRight: 10 };
+                state.headerIcon = {icon: 'payment', color: '#000000', marginRight: 10, onPress: () => this.props.navigation.navigate('Address') };
                 break;
             case 1:
                 state.headerTitle = 'TRANSACTION';

@@ -1,5 +1,5 @@
 import {observable, computed, runInAction} from 'mobx';
-import AddressApi from '../api/Address/AddressApi';
+import AddressApi from '../../api/Address/AddressApi';
 import LinkedAddress from './LinkedAddress';
 
 class AddressStore {
@@ -11,29 +11,28 @@ class AddressStore {
         this.addressApi = AddressApi.create();
     }
 
-    loadAddresss() {
+    loadAddressList = async () => {
         this.isLoading = true;
-        this.addressApi.fetchLinkedAddressList().then(addressList => {
+        const addressList = await this.addressApi.fetchOwnAddressList();
+        runInAction(() => {
             addressList.forEach(json => this.updateAddress(json));
             this.isLoading = false;
-        }).catch(err => {
-            console.log(err);
-            this.isLoading = false;
         });
-    }
+    };
 
     updateAddress = (json) => {
-        let linkedAddress = this.linkedAddressList.find(linked => linked.address);
+        let linkedAddress = this.linkedAddressList.find(linked => linked.address===json.address);
         if (!linkedAddress) {
             linkedAddress = new LinkedAddress();
+            this.linkedAddressList = [...this.linkedAddressList, linkedAddress];
         }
         linkedAddress.updateFromJson(json)
-    }
+    };
 
-    @computed getLinkedAddress(symbol, accountAddress) {
+    getLinkedAddress = (symbol, accountAddress) => {
         let linkedAddressList = this.linkedAddressList.filter(linked => linked.getAccountAddress(symbol) === accountAddress);
         return linkedAddressList;
     }
-
-
 }
+
+export default new AddressStore();
