@@ -1,6 +1,6 @@
-import AddressStore from './Address/AddressStore';
-import CoinStore from './Coin/CoinStore';
-import TransactionStore from './Transaction/TransactionStore';
-import WalletStore from './Wallet/WalletStore';
+import AddressStore from './AddressStore'
+import CoinStore from './CoinStore'
+import TransactionStore from './TransactionStore'
+import WalletStore from './WalletStore'
 
-export {AddressStore, CoinStore, TransactionStore, WalletStore};
+export {AddressStore, CoinStore, TransactionStore, WalletStore}

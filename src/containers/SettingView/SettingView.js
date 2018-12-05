@@ -2,7 +2,8 @@ import React from 'react'
 import { StyleSheet, Alert, View, TouchableOpacity, Text } from 'react-native'
 import { Localization } from 'expo-localization'
 import i18n from 'i18n-js'
-import { SecurityView } from '../'
+import { SecurityView } from '..'
+
 const en = {
   lang_mainTxt: 'Language',
   lang_subTxt: 'You can select a language by country',
@@ -15,7 +16,7 @@ const en = {
   lock_mainTxt: 'Security',
   lock_subTxt: 'You can set up security methods',
   reset_mainTxt: 'Reset',
-  reset_subTxt: 'We destroy all accounts and information'
+  reset_subTxt: 'We destroy all accounts and information',
 }
 const ko = {
   lang_mainTxt: '언어 설정',
@@ -45,15 +46,15 @@ const SettingDetailView = (props => {
       val: 'en',
     }, {
       txt: i18n.t('lang_en'),
-      val: 'ko'
+      val: 'ko',
     }],
     CurrencyView: [{
       txt: i18n.t('bill_krw'),
-      val: 'KRW'
+      val: 'KRW',
     }, {
       txt: i18n.t('bill_usd'),
-      val: 'USD'
-    }]
+      val: 'USD',
+    }],
   }
 
   const handleSettingDetail = val => {
@@ -65,7 +66,7 @@ const SettingDetailView = (props => {
   return (
     <View style={styles.container}>
       {
-        (viewName === 'SecurityView' && <SecurityView/>) ||
+        (viewName === 'SecurityView' && <SecurityView />) ||
         (viewName === 'ResetView' && Alert.alert(
           '초기화',
           '모든 계정과 정보를 파기합니다.',
@@ -73,15 +74,16 @@ const SettingDetailView = (props => {
             {text: '취소', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
             {text: '초기화', onPress: handleSettingDetail},
           ],
-          { cancelable: false }
+          { cancelable: false },
         )) ||
-        list[viewName].map(item =>
+        list[viewName].map(item => (
           <TouchableOpacity
             key={item.txt}
             style={styles.listItem}
             onPress={() => handleSettingDetail(item.val)}>
             <Text>{item.txt}</Text>
-          </TouchableOpacity>)
+          </TouchableOpacity>
+        ))
       }
     </View>
   )
@@ -92,7 +94,7 @@ export default class SettingView extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      view: 'Setting'
+      view: 'Setting',
     }
   }
 
@@ -118,14 +120,15 @@ export default class SettingView extends React.Component {
     }]
 
     return (
-      settingList.map((item, idx) =>
+      settingList.map((item, idx) => (
         <TouchableOpacity
           key={idx}
           style={styles.listItem}
           onPress={() => this.handleSetView(item.name)}>
           <Text style={[styles.mainTxt, item.mainTxt === '초기화' && styles.reset]}>{item.mainTxt}</Text>
           <Text style={styles.subTxt}>{item.subTxt}</Text>
-        </TouchableOpacity>)
+        </TouchableOpacity>
+      ))
     )
   }
 
@@ -136,11 +139,11 @@ export default class SettingView extends React.Component {
       <View style={styles.container}>
         {
           viewName === 'SettingView' ?
-            this.onRenderSettingList() :
-            <SettingDetailView
-              viewName={viewName}
-              onSetView={this.handleSetView}/>
-        }
+            this.onRenderSettingList() : (
+              <SettingDetailView
+                viewName={viewName}
+                onSetView={this.handleSetView} />
+            )}
       </View>
     )
   }
@@ -149,7 +152,7 @@ export default class SettingView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20
+    padding: 20,
   },
   listItem: {
     padding: 20,
