@@ -3,6 +3,7 @@ import {PagerDotIndicator, IndicatorViewPager} from './ViewPager';
 import CoinCard from './Card/CoinCard';
 import WalletCard from './Card/WalletCard';
 import BorderCard from './Card/BorderCard';
+import PinCodeView from './PinCodeInput';
 import NavIcon from "./Navbar/NavIcon";
 import Navbar from "./Navbar/Navbar";
 import WalletSummaryCard from './Card/WalletSummaryCard';
@@ -23,4 +24,13 @@ export {
     CoinCard,
     WalletCard,
     WalletSummaryCard,
+    ProgressDialog,
+    PagerDotIndicator,
+    IndicatorViewPager,
+    PinCodeView,
+    CoinCard,
+    WalletCard,
+    WalletList,
+    NavIcon,
+    Navbar
 };

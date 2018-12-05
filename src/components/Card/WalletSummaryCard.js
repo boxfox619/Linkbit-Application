@@ -36,14 +36,10 @@ const styles = StyleSheet.create({
     container: {
         position: 'relative',
         backgroundColor: '#627EEA',
-        width: 316,
+        width: '100%',
         height: 106,
         borderRadius: 6,
         padding: 20,
-        left: '50%',
-        transform: [
-            { translateX: -158 },
-        ],
         justifyContent: 'space-between'
     },
     iconContainer: {
