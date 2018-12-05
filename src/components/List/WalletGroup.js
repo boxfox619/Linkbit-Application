@@ -62,7 +62,7 @@ export default class WalletGroup extends React.Component {
                     moneySymbol={this.props.moneySymbol}
                     balance={wallet.balance.toString()}
                     price={dollarFormat(wallet.balance * price)}
-                    onSelected={() => this.props.onWalletSelected(wallet)}
+                    onPress={() => this.props.onWalletSelected(wallet)}
                 />
             );
         });

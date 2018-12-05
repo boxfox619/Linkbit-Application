@@ -1,4 +1,5 @@
-import {observable, action, computed} from 'mobx';
+import {observable, action, computed} from 'mobx'
+import WalletStore from '../Wallet/WalletStore'
 
 export default class LinkedAddress {
     @observable address;
@@ -11,17 +12,23 @@ export default class LinkedAddress {
         };
     }
 
-    @computed getAccountAddress(symbol){
+    getAccountAddress = (symbol) =>{
         return this.accountAddressList.find(account => account.symbol === symbol);
     }
 
     @action addAddress(symbol, address) {
         if (!this.getAccountAddress(symbol)) {
-            this.accountAddressList.push(address);
+            this.accountAddressList.push({symbol, address});
         }
     }
 
-    updateFromJson(json) {
+    @action deleteAddress(symbol, address) {
+        if (this.getAccountAddress(symbol)) {
+            this.accountAddressList.splice(this.accountAddressList.indexOf(address), 1)
+        }
+    }
+
+    @action updateFromJson(json) {
         this.address = json.address;
         this.accountAddressList = json.accountAddressList;
     }

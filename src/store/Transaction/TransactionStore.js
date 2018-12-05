@@ -1,4 +1,4 @@
-import TransactionApi from '../api/Transaction/TransactionApi';
+import TransactionApi from '../../api/Transaction/TransactionApi';
 import {observable, computed, runInAction} from 'mobx';
 import Transaction from "./Transaction";
 
