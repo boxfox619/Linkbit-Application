@@ -22,8 +22,6 @@ export default createStackNavigator({
   AddressBuy: AddressBuyContainer,
   AddressManagement: AddressManagementView,
   WalletSearch: WalletSearchView,
-},
-{
+}, {
   initialRouteName: 'Main',
-},
-)
+})
