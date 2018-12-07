@@ -1,5 +1,5 @@
-import {fetch} from 'react-native';
-import {HOST} from "../../libs/Constraints";
+import {fetch} from 'react-native'
+import {HOST} from '../../libs/Constraints'
 
 export default class WalletNetworkApi {
   fetchWallets = async () => {
@@ -7,55 +7,58 @@ export default class WalletNetworkApi {
       const res = await fetch(`${HOST}/wallet/list`, {
         method: 'GET',
         headers: {
-          'Authorization': ''
-        }
-      });
-      let resJson = res.json();
-      return resJson;
+          'Authorization': '',
+        },
+      })
+      const resJson = res.json()
+      
+      return resJson
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   };
 
   updateWallet = async (address, name, password, description) => {
     try {
-      let res = await fetch(`${HOST}/wallet`, {
+      const res = await fetch(`${HOST}/wallet`, {
         method: 'PUT',
         headers: {
-          'Authorization': ''
+          'Authorization': '',
         },
         body: JSON.stringify({
           address,
           name,
           password,
-          description
-        })
-      });
-      let resJson = res.json();
-      return resJson;
+          description,
+        }),
+      })
+      const resJson = res.json()
+      
+      return resJson
     } catch (error){
-      console.log(error);
+      console.log(error)
     }
   }
 
   createWallet = async (address, name, password, description) => {
     try {
-      let res = await fetch(`${HOST}/wallet/new`, {
+      const res = await fetch(`${HOST}/wallet/new`, {
         method: 'POST',
         headers: {
-          'Authorization': ''
+          'Authorization': '',
         },
         body: JSON.stringify({
           address,
           name,
           password,
-          description
-        })
-      });
-      let resJson = res.json();
-      return resJson;
+          description,
+        }),
+      })
+      const resJson = res.json()
+      
+      return resJson
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 }

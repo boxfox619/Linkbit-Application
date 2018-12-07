@@ -10,8 +10,8 @@ const SecurityDetailView = (props => {
     <>
       {
         view === 'pin' ?
-        <PinCodeView onVerifySuccess={() => onVerifySuccess(false)}/> :
-        <FingerPrintView onVerifySuccess={() => onVerifySuccess(false)}/>
+          <PinCodeView onVerifySuccess={() => onVerifySuccess(false)} /> :
+          <FingerPrintView onVerifySuccess={() => onVerifySuccess(false)} />
       }
     </>
   )
@@ -35,10 +35,11 @@ export default class SecurityView extends React.Component {
     return (
       <View style={styles.container}>
         {
-          view ?
+          view ? (
             <SecurityDetailView
               view={view}
-              onVerifySuccess={this.handleVerifySuccess}/> :
+              onVerifySuccess={this.handleVerifySuccess} />
+          ):
             this.state.isVerify ?
               <>
                 <TouchableOpacity
@@ -53,11 +54,11 @@ export default class SecurityView extends React.Component {
                   onPress={() => this.handleSetView('finger')}>
                   <Text>지문 변경</Text>
                 </TouchableOpacity>
-              </> :
-              <PinCodeView
-                needVerify={true}
-                onVerifySuccess={this.handleVerifySuccess}/>
-        }
+              </> : (
+                <PinCodeView
+                  needVerify
+                  onVerifySuccess={this.handleVerifySuccess} />
+              )}
       </View>
     )
   }
@@ -74,5 +75,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: '#eaeaea',
-  }
+  },
 })

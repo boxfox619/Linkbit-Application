@@ -1,4 +1,4 @@
-import {observable, computed, action, reaction} from 'mobx';
+import {observable, computed, action, reaction} from 'mobx'
 
 export default class Wallet {
     @observable address;
@@ -11,34 +11,34 @@ export default class Wallet {
     store;
 
     constructor(store) {
-        this.store = store;
-        this.updateWallet = reaction(
-            () => this.asJson,
-            (json) => {
-                this.store.walletApi.updateWallet(json);
-            }
-        );
+      this.store = store
+      this.updateWallet = reaction(
+        () => this.asJson,
+        (json) => {
+          this.store.walletApi.updateWallet(json)
+        },
+      )
     }
 
     @action setName(name){
-        this.name = name;
+      this.name = name
     }
 
     @computed get asJson() {
-        return {
-            address: this.address,
-            linkedAddress: this.linkedAddress,
-            name: this.name,
-            balance: this.balance,
-            symbol: this.symbol
-        };
+      return {
+        address: this.address,
+        linkedAddress: this.linkedAddress,
+        name: this.name,
+        balance: this.balance,
+        symbol: this.symbol,
+      }
     }
 
     updateFromJson(json) {
-        this.address = json.address;
-        this.linkedAddress = json.linkedAddress;
-        this.name = json.name;
-        this.balance = json.balance;
-        this.symbol = json.symbol;
+      this.address = json.address
+      this.linkedAddress = json.linkedAddress
+      this.name = json.name
+      this.balance = json.balance
+      this.symbol = json.symbol
     }
 }

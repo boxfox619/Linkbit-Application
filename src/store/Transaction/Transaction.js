@@ -1,4 +1,4 @@
-import { observable, computed, runInAction, reaction } from 'mobx';
+import { observable, computed, runInAction, reaction } from 'mobx'
 
 export default class Transaction {
   @observable hash;
@@ -14,7 +14,7 @@ export default class Transaction {
   @observable confirm
 
   constructor(store) {
-    this.store = store;
+    this.store = store
   }
 
   @computed get asJson() {
@@ -24,8 +24,8 @@ export default class Transaction {
       sourceAddress: this.sourceAddress,
       targetAddress: this.targetAddress,
       amount: this.amount,
-      status: this.status
-    };
+      status: this.status,
+    }
   }
 
   updateFromJson(json) {

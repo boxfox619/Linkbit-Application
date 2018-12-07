@@ -25,7 +25,7 @@ export default StyleSheet.create({
   // KeyboardView
   keyboardView               : {
     alignItems: 'center',
-    marginTop : 35
+    marginTop : 35,
   },
   keyboardViewItem           : {
     alignItems      : 'center',
@@ -37,6 +37,6 @@ export default StyleSheet.create({
     borderRadius    : 75 / 2,
   },
   keyboardViewItemText       : {
-    fontSize  : 32
+    fontSize  : 32,
   },
 })

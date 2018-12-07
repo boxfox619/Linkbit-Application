@@ -1,5 +1,5 @@
-import {fetch} from "react-native";
-import {HOST} from "../../libs/Constraints";
+import {fetch} from 'react-native'
+import {HOST} from '../../libs/Constraints'
 
 export default class TransactionNetworkApi {
   fetchTransactions = async (address, page, count) => {
@@ -7,13 +7,14 @@ export default class TransactionNetworkApi {
       const res = await fetch(`${HOST}/transaction/list?address=${address}&page=${page}&count=${count}`, {
         method: 'GET',
         headers: {
-          'Authorization': ''
-        }
-      });
-      let resJson = res.json();
-      return resJson;
+          'Authorization': '',
+        },
+      })
+      const resJson = res.json()
+      
+      return resJson
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 }
