@@ -13,7 +13,7 @@
  ## Contributing
 - [MiRim Yu](https://github.com/firepunch)
 - [AshtonYoon](https://github.com/AshtonYoon)
-- [BoxFox][https://github.com/boxfox619]
+- [BoxFox](https://github.com/boxfox619)
 
 ## Extras
 - 핀테크×블록체인 해커톤 참가
