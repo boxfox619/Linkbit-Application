@@ -5,6 +5,7 @@ import { PRIMARY_COLOR } from '../../libs/Constraints'
 import { Navbar } from '../../components'
 import TransactionListView from '../TransactionListView/TransactionListView'
 import WalletListView from './WalletListView'
+import SettingView from '../SettingView/SettingView'
 
 export default class MainTabView extends React.Component {
 
@@ -21,7 +22,7 @@ export default class MainTabView extends React.Component {
 
     render() {
       const { selectedIndex } = this.state
-      
+
       return (
         <View style={styles.container}>
           <Header
@@ -52,7 +53,7 @@ export default class MainTabView extends React.Component {
       case 1:
         return <TransactionListView />
       case 2:
-        return <View />
+        return <SettingView />
       }
     }
 
