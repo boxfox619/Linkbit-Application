@@ -1,15 +1,15 @@
 import ProgressDialog from './ProgressDialog';
 import {PagerDotIndicator, IndicatorViewPager} from './ViewPager';
+import WalletList from "./List/WalletList";
+import TransactionList from './List/TransactionList';
+import TransactionCard from './Card/TransactionCard';
 import CoinCard from './Card/CoinCard';
 import WalletCard from './Card/WalletCard';
+import WalletSummaryCard from './Card/WalletSummaryCard';
 import BorderCard from './Card/BorderCard';
 import PinCodeView from './PinCodeInput';
 import NavIcon from "./Navbar/NavIcon";
 import Navbar from "./Navbar/Navbar";
-import WalletSummaryCard from './Card/WalletSummaryCard';
-import TransactionCard from './Card/TransactionCard';
-import TransactionList from './List/TransactionList';
-import WalletList from "./List/WalletList";
 
 export {
     ProgressDialog,
@@ -17,20 +17,12 @@ export {
     IndicatorViewPager,
     WalletList,
     TransactionList,
-    NavIcon,
-    Navbar,
-    BorderCard,
     TransactionCard,
     CoinCard,
     WalletCard,
     WalletSummaryCard,
-    ProgressDialog,
-    PagerDotIndicator,
-    IndicatorViewPager,
+    BorderCard,
     PinCodeView,
-    CoinCard,
-    WalletCard,
-    WalletList,
     NavIcon,
-    Navbar
+    Navbar,
 };

@@ -1,13 +1,10 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import WalletListView from "./WalletListView";
-import {PRIMARY_COLOR} from "../../libs/Constraints";
-import {Header} from 'react-native-elements';
-import {Navbar} from "../../components";
 import { PRIMARY_COLOR } from "../../libs/Constraints";
 import { Header } from 'react-native-elements';
 import { Navbar } from "../../components";
 import TransactionListView from "../TransactionListView/TransactionListView"
+import WalletListView from "./WalletListView";
 
 export default class MainTabView extends React.Component {
 
