@@ -7,6 +7,7 @@ import TermsOfServiceView from './TermsOfServiceView'
 import MainTabView from './MainView/MainTabView'
 import AddressListView from './AddressView/AddressListView'
 import TransactionListView from './TransactionListView/TransactionListView'
+import CreateWalletView from './CreateWalletView/CreateWalletView'
 
 export {
   FingerPrintView,
@@ -18,4 +19,5 @@ export {
   MainTabView,
   AddressListView,
   SettingView,
+  CreateWalletView,
 }

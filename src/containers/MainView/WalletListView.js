@@ -1,8 +1,9 @@
 import React from 'react'
-import {View, StyleSheet, Text} from 'react-native'
-import {inject, observer} from 'mobx-react'
-import {WalletList} from '../../components'
-import {PRIMARY_COLOR} from '../../libs/Constraints'
+import { View, StyleSheet, Text } from 'react-native'
+import { inject, observer } from 'mobx-react'
+import { WalletList } from '../../components'
+import { PRIMARY_COLOR } from '../../libs/Constraints'
+import ActionButton from 'react-native-action-button'
 
 @inject(['wallet'])
 @observer
@@ -33,15 +34,19 @@ export default class WalletListView extends React.Component {
           moneySymbol={this.state.moneySymbol}
           wallets={this.props.wallet.walletList}
           onWalletSelected={w => this.openWalletDetail(w)} />
+        <ActionButton buttonColor={PRIMARY_COLOR}
+          onPress={() => this.props.navigation.navigate('CreateWallet')}
+          offsetX={0}
+          offsetY={0} />
       </View>
     )
   }
 
-    openWalletDetail = (w) => {
-      //@TODO imp
-      //
-      // lement wallet detail open
-    }
+  openWalletDetail = (w) => {
+    //@TODO imp
+    //
+    // lement wallet detail open
+  }
 
 }
 

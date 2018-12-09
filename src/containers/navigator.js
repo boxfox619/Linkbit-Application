@@ -4,6 +4,7 @@ import AddressListView from './AddressView/AddressListView'
 import AddressManagementView from './AddressView/AddressManagementView'
 import WalletSearchView from './AddressView/WalletSearchView'
 import AddressBuyContainer from './AddressView/AddressBuyContainer/AddressBuyContainer'
+import CreateWalletView from './CreateWalletView/CreateWalletView'
 
 export default createStackNavigator({
   Main: {
@@ -22,6 +23,7 @@ export default createStackNavigator({
   AddressBuy: AddressBuyContainer,
   AddressManagement: AddressManagementView,
   WalletSearch: WalletSearchView,
+  CreateWallet: CreateWalletView
 },
 {
   initialRouteName: 'Main',
