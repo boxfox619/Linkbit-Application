@@ -3,8 +3,9 @@ import {View, StyleSheet, FlatList} from 'react-native'
 import {Button} from 'react-native-elements'
 import {inject, observer} from 'mobx-react/index'
 import {observable} from 'mobx'
-import AddressCard from '../../components/Card/AddressCard'
 import {PRIMARY_COLOR} from '../../libs/Constraints'
+import i18n from '../../libs/Locale'
+import AddressCard from '../../components/Card/AddressCard'
 
 @inject(['address'])
 @observer
@@ -22,7 +23,7 @@ export default class AddressListView extends React.Component {
     render() {
       const {linkedAddressList} = this.props.address
       const linkedAddressSize = linkedAddressList.reduce((count, value) => count + value.accountAddressList.length, 0)
-      
+
       return (
         <View style={styles.container}>
           <FlatList
@@ -42,7 +43,7 @@ export default class AddressListView extends React.Component {
               )
             }} />
           <Button
-            title="Get New Address"
+            title={i18n.t('add_address')}
             buttonStyle={styles.getAddressButton}
             onPress={() => this.props.navigation.navigate('AddressBuy')} />
         </View>

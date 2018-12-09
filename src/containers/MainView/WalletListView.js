@@ -1,8 +1,9 @@
 import React from 'react'
 import {View, StyleSheet, Text} from 'react-native'
 import {inject, observer} from 'mobx-react'
-import {WalletList} from '../../components'
 import {PRIMARY_COLOR} from '../../libs/Constraints'
+import i18n from '../../libs/Locale'
+import {WalletList} from '../../components'
 
 @inject(['wallet'])
 @observer
@@ -22,7 +23,7 @@ export default class WalletListView extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.totalBalanceCard}>
-          <Text style={styles.totalBalanceLabel}>총 자산</Text>
+          <Text style={styles.totalBalanceLabel}>{i18n.t('wallet_total')}</Text>
           <Text style={styles.totalBalanceAddressLabel}>{this.state.linkedAddress}</Text>
           <View style={styles.balanceGroup}>
             <Text style={styles.balance}>{this.state.totalBalance}</Text>

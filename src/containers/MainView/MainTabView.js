@@ -6,6 +6,7 @@ import { Navbar } from '../../components'
 import TransactionListView from '../TransactionListView/TransactionListView'
 import WalletListView from './WalletListView'
 import SettingView from '../SettingView/SettingView'
+import i18n from '../../libs/Locale'
 
 export default class MainTabView extends React.Component {
 
@@ -21,13 +22,13 @@ export default class MainTabView extends React.Component {
     }
 
     render() {
-      const { selectedIndex } = this.state
+      const { headerTitle, selectedIndex } = this.state
 
       return (
         <View style={styles.container}>
           <Header
             backgroundColor="#ffffff"
-            leftComponent={<Text style={styles.title}>{this.state.headerTitle}</Text>}
+            leftComponent={<Text style={styles.title}>{i18n.t(headerTitle)}</Text>}
             rightComponent={this.state.headerIcon}
             outerContainerStyles={{ borderBottomWidth: 0, height: 80 }} />
           <View style={styles.content}>
@@ -69,15 +70,15 @@ export default class MainTabView extends React.Component {
       const state = { selectedIndex }
       switch (selectedIndex) {
       case 0:
-        state.headerTitle = 'WALLET'
+        state.headerTitle = 'wallet'
         state.headerIcon = {icon: 'payment', color: '#000000', marginRight: 10, onPress: () => this.props.navigation.navigate('Address') }
         break
       case 1:
-        state.headerTitle = 'TRANSACTION'
+        state.headerTitle = 'transaction'
         state.headerIcon = undefined
         break
       case 2:
-        state.headerTitle = 'SETTING'
+        state.headerTitle = 'setting'
         state.headerIcon = undefined
         break
       }
