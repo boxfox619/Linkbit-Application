@@ -1,7 +1,7 @@
 import React from 'react'
 import { Animated } from 'react-native'
 
-const InputView = ({ pinViewAnim, animatedInputIndex, pinLength, bgColor, activeBgColor, styles, bgOpacity }) => {
+const InputView = ({pinViewAnim, animatedInputIndex, pinLength, bgColor, activeBgColor, styles, bgOpacity}) => {
   const tilt = pinViewAnim.interpolate({
     inputRange: [0, 0.3, 0.6, 0.9],
     outputRange: [0, -50, 50, 0],
@@ -11,10 +11,11 @@ const InputView = ({ pinViewAnim, animatedInputIndex, pinLength, bgColor, active
     return (
       <Animated.View
         key={'passwordItem-' + index}
-        style={[styles[1], {
-          backgroundColor: bgColor,
-          opacity: bgOpacity,
-        }]} />
+        style={[
+          styles[1], {
+            backgroundColor: bgColor,
+            opacity: bgOpacity,
+          }]}/>
     )
   }
 
@@ -22,10 +23,11 @@ const InputView = ({ pinViewAnim, animatedInputIndex, pinLength, bgColor, active
     return (
       <Animated.View
         key={'passwordItem-' + index}
-        style={[styles[2], {
-          backgroundColor: activeBgColor,
-          opacity: 1,
-        }]} />
+        style={[
+          styles[2], {
+            backgroundColor: activeBgColor,
+            opacity: 1,
+          }]}/>
     )
   }
   const ShowInput = (pinLength) => {
@@ -39,14 +41,15 @@ const InputView = ({ pinViewAnim, animatedInputIndex, pinLength, bgColor, active
         }
       }
     }
-    
+
     return table
   }
 
   return (
-    <Animated.View style={[styles[0], {
-      transform: [{ translateX: tilt }],
-    }]}>
+    <Animated.View style={[
+      styles[0], {
+        transform: [{translateX: tilt}],
+      }]}>
       {ShowInput(pinLength)}
     </Animated.View>
   )

@@ -1,4 +1,4 @@
-import {createStackNavigator} from 'react-navigation'
+import { createStackNavigator } from 'react-navigation'
 import i18n from '../libs/Locale'
 import MainTabView from './MainView/MainTabView'
 import AddressListView from './AddressView/AddressListView'
@@ -14,7 +14,7 @@ export default createStackNavigator({
     }),
   },
   Address: {
-    screen : AddressListView,
+    screen: AddressListView,
     navigationOptions: () => ({
       title: i18n.t('address_list'),
       headerBackTitle: i18n.t('address_list_back'),

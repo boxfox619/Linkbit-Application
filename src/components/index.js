@@ -1,5 +1,5 @@
 import ProgressDialog from './ProgressDialog'
-import {PagerDotIndicator, IndicatorViewPager} from './ViewPager'
+import { PagerDotIndicator, IndicatorViewPager } from './ViewPager'
 import WalletList from './List/WalletList'
 import TransactionList from './List/TransactionList'
 import TransactionCard from './Card/TransactionCard'

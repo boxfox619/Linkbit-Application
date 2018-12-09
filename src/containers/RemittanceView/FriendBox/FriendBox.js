@@ -2,8 +2,8 @@ import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 
 export default class FriendBox extends React.Component {
-  render() {
-    const { mail } = this.props
+  render () {
+    const {mail} = this.props
 
     return (
       <View style={styles.toFriendContainer}>
@@ -32,12 +32,12 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
   },
-  name:{
+  name: {
     fontSize: 14,
     fontWeight: 'bold',
     color: '#ffffff',
   },
-  address:{
+  address: {
     fontSize: 14,
     color: '#ffffff',
     opacity: 0.5,

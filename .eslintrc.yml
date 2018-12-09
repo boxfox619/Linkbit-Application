@@ -19,9 +19,12 @@ globals:
   require: true
 rules:
   react/jsx-closing-bracket-location: [1, 'after-props']
-  react/jsx-uses-vars: [2]
-  react/no-string-refs: [2]
-  react/prop-types: [2]
+  react/destructuring-assignment:
+    - off
+  react/prop-types:
+    - off
+  react/jsx-filename-extension:
+    - off
   newline-before-return:
     - error
   comma-dangle:

@@ -1,9 +1,9 @@
 import React from 'react'
-import {StyleSheet, View} from 'react-native'
-import {createAppContainer} from 'react-navigation'
-import {Provider} from 'mobx-react'
+import { StyleSheet, View } from 'react-native'
+import { createAppContainer } from 'react-navigation'
+import { Provider } from 'mobx-react'
 import Navigator from './src/containers/Navigator'
-import {WalletStore, CoinStore, AddressStore} from './src/store'
+import { WalletStore, CoinStore, AddressStore } from './src/store'
 
 const store = {
   wallet: WalletStore,
@@ -13,16 +13,16 @@ const store = {
 const AppContainer = createAppContainer(Navigator)
 
 export default class App extends React.Component {
-  componentWillMount() {
+  componentWillMount () {
     store.address.loadAddressList()
     store.wallet.loadWalletList()
   }
 
-  render() {
+  render () {
     return (
       <Provider {...store}>
         <View style={styles.container}>
-          <AppContainer />
+          <AppContainer/>
         </View>
       </Provider>
     )

@@ -4,26 +4,28 @@ import i18n from '../../libs/Locale'
 import { SecurityView } from '..'
 
 const SettingTouchableView = (props => {
-  const { viewName, onSetView } = props
+  const {viewName, onSetView} = props
   const list = {
-    LanguageView: [{
-      txt: i18n.t('lang_ko'),
-      val: 'ko',
-    }, {
-      txt: i18n.t('lang_en'),
-      val: 'en',
-    }],
-    CurrencyView: [{
-      txt: i18n.t('bill_krw'),
-      val: 'KRW',
-    }, {
-      txt: i18n.t('bill_usd'),
-      val: 'USD',
-    }],
+    LanguageView: [
+      {
+        txt: i18n.t('lang_ko'),
+        val: 'ko',
+      }, {
+        txt: i18n.t('lang_en'),
+        val: 'en',
+      }],
+    CurrencyView: [
+      {
+        txt: i18n.t('bill_krw'),
+        val: 'KRW',
+      }, {
+        txt: i18n.t('bill_usd'),
+        val: 'USD',
+      }],
   }
 
   const handleSettingDetail = val => {
-    if(viewName === 'LanguageView') i18n.locale = val
+    if (viewName === 'LanguageView') i18n.locale = val
 
     onSetView('Setting')
   }
@@ -46,33 +48,34 @@ const SettingTouchableView = (props => {
 
 export default class SettingView extends React.Component {
 
-  constructor(props){
+  constructor (props) {
     super(props)
     this.state = {
       view: 'Setting',
     }
   }
 
-  handleSetView = name => this.setState({ view: name })
+  handleSetView = name => this.setState({view: name})
 
   onRenderSettingList = () => {
-    const settingList = [{
-      name: i18n.t('lang_mainTxt', {locale: 'en'}),
-      mainTxt: i18n.t('lang_mainTxt'),
-      subTxt: i18n.t('lang_subTxt'),
-    }, {
-      name: i18n.t('bill_mainTxt', {locale: 'en'}),
-      mainTxt: i18n.t('bill_mainTxt'),
-      subTxt: i18n.t('bill_subTxt'),
-    }, {
-      name: i18n.t('lock_mainTxt', {locale: 'en'}),
-      mainTxt: i18n.t('lock_mainTxt'),
-      subTxt: i18n.t('lock_subTxt'),
-    }, {
-      name: i18n.t('reset_mainTxt', {locale: 'en'}),
-      mainTxt: i18n.t('reset_mainTxt'),
-      subTxt: i18n.t('reset_subTxt'),
-    }]
+    const settingList = [
+      {
+        name: i18n.t('lang_mainTxt', {locale: 'en'}),
+        mainTxt: i18n.t('lang_mainTxt'),
+        subTxt: i18n.t('lang_subTxt'),
+      }, {
+        name: i18n.t('bill_mainTxt', {locale: 'en'}),
+        mainTxt: i18n.t('bill_mainTxt'),
+        subTxt: i18n.t('bill_subTxt'),
+      }, {
+        name: i18n.t('lock_mainTxt', {locale: 'en'}),
+        mainTxt: i18n.t('lock_mainTxt'),
+        subTxt: i18n.t('lock_subTxt'),
+      }, {
+        name: i18n.t('reset_mainTxt', {locale: 'en'}),
+        mainTxt: i18n.t('reset_mainTxt'),
+        subTxt: i18n.t('reset_subTxt'),
+      }]
 
     return (
       settingList.map((item, idx) => (
@@ -90,14 +93,13 @@ export default class SettingView extends React.Component {
   render () {
     const viewName = `${this.state.view}View`
 
-
     return (
       <View style={styles.container}>
         {
           viewName === 'SettingView' ?
             this.onRenderSettingList() :
             viewName === 'SecurityView' ?
-              <SecurityView /> :
+              <SecurityView/> :
               viewName === 'ResetView' ?
                 Alert.alert(
                   i18n.t('reset_mainTxt'),
@@ -106,11 +108,11 @@ export default class SettingView extends React.Component {
                     {text: i18n.t('cancel'), onPress: () => this.handleSetView('Setting'), style: 'cancel'},
                     {text: i18n.t('reset_mainTxt').toLowerCase(), onPress: () => this.handleSetView('Setting')},
                   ],
-                  { cancelable: false },
+                  {cancelable: false},
                 ) : (
                   <SettingTouchableView
                     viewName={viewName}
-                    onSetView={this.handleSetView} />
+                    onSetView={this.handleSetView}/>
                 )}
       </View>
     )

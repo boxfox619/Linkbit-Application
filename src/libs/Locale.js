@@ -48,7 +48,7 @@ const ko = {
 }
 
 i18n.fallbacks = true
-i18n.translations = { en, ko }
+i18n.translations = {en, ko}
 i18n.locale = Localization.locale
 
 export default i18n

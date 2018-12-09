@@ -9,13 +9,13 @@ import AddressListView from './AddressView/AddressListView'
 import TransactionListView from './TransactionListView/TransactionListView'
 
 export {
+  SettingView,
   FingerPrintView,
   GuideView,
-  SecurityView,
   PinCodeInputView,
+  SecurityView,
   TermsOfServiceView,
-  TransactionListView,
   MainTabView,
   AddressListView,
-  SettingView,
+  TransactionListView,
 }

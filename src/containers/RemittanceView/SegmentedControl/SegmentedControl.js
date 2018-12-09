@@ -2,46 +2,47 @@ import React from 'react'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 
 export default class SegmentedControl extends React.Component {
-    state = {
-      selectedIndex: -1,
-    }
+  state = {
+    selectedIndex: -1,
+  }
 
-    componentDidMount() {
-      this.setState({ selectedIndex: this.props.selectedIndex })
-    }
+  componentDidMount () {
+    this.setState({selectedIndex: this.props.selectedIndex})
+  }
 
-    componentWillReceiveProps(nextProps) {
-      this.setState({ selectedIndex: nextProps.selectedIndex })
-    }
+  componentWillReceiveProps (nextProps) {
+    this.setState({selectedIndex: nextProps.selectedIndex})
+  }
 
-    renderOptions = () => {
-      const { selectedIndex } = this.state
-      const { options } = this.props
+  renderOptions = () => {
+    const {selectedIndex} = this.state
+    const {options} = this.props
 
-      return (options.map((option, index) => (
-        <TouchableOpacity
-          style={
-            [styles.option,
-              index === 0 ? null : styles.marginLeft,
-              selectedIndex === index ? styles.selected : null]}
-          onPress={() => {
-            this.setState({ selectedIndex: index })
-            this.props.onChange(index)
-          }}>
-          <Text style={[styles.optionName, selectedIndex === index ? styles.selectedText : null]}>{option}</Text>
-        </TouchableOpacity>
-      )))
-    }
+    return (options.map((option, index) => (
+      <TouchableOpacity
+        style={
+          [
+            styles.option,
+            index === 0 ? null : styles.marginLeft,
+            selectedIndex === index ? styles.selected : null]}
+        onPress={() => {
+          this.setState({selectedIndex: index})
+          this.props.onChange(index)
+        }}>
+        <Text style={[styles.optionName, selectedIndex === index ? styles.selectedText : null]}>{option}</Text>
+      </TouchableOpacity>
+    )))
+  }
 
-    render() {
-      return (
-        <View style={styles.optionContainer}>
-          {
-            this.renderOptions()
-          }
-        </View>
-      )
-    }
+  render () {
+    return (
+      <View style={styles.optionContainer}>
+        {
+          this.renderOptions()
+        }
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({

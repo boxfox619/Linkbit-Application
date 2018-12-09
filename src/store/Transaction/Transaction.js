@@ -13,11 +13,11 @@ export default class Transaction {
   @observable coin
   @observable confirm
 
-  constructor(store) {
+  constructor (store) {
     this.store = store
   }
 
-  @computed get asJson() {
+  @computed get asJson () {
     return {
       hash: this.hash,
       symbol: this.symbol,
@@ -28,7 +28,7 @@ export default class Transaction {
     }
   }
 
-  updateFromJson(json) {
+  updateFromJson (json) {
     this.hash = json.hash
     this.symbol = json.symbol
     this.sourceAddress = json.sourceAddress

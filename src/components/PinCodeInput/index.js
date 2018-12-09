@@ -7,7 +7,7 @@ import InputView from './InputView'
 import Styles from './styles'
 
 class PinCodeInput extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       animatedInputIndex: Object.assign([]),
@@ -74,9 +74,9 @@ class PinCodeInput extends React.Component {
     }
   }
 
-  render() {
-    const { pinLength, buttonTextColor, returnType, buttonBgColor, inputBgColor, onComplete, disabled, inputActiveBgColor, inputBgOpacity, deleteText } = this.props
-    
+  render () {
+    const {pinLength, buttonTextColor, returnType, buttonBgColor, inputBgColor, onComplete, disabled, inputActiveBgColor, inputBgOpacity, deleteText} = this.props
+
     return (
       <View pointerEvents={disabled ? 'none' : undefined}>
         <InputView
@@ -86,7 +86,7 @@ class PinCodeInput extends React.Component {
           animatedInputIndex={this.state.animatedInputIndex}
           pinViewAnim={this.state.pinViewAnim}
           bgColor={inputBgColor}
-          styles={[Styles.passwordInputView, Styles.passwordInputViewItem, Styles.passwordInputViewItemActive]} />
+          styles={[Styles.passwordInputView, Styles.passwordInputViewItem, Styles.passwordInputViewItemActive]}/>
         <View style={Styles.keyboardView}>
           <KeyboardView
             styles={[Styles.keyboardViewItem, Styles.keyboardViewItemText]}
@@ -98,7 +98,7 @@ class PinCodeInput extends React.Component {
             onComplete={onComplete}
             animatedDeleteButtonOnPress={this.state.animatedDeleteButtonOnPress}
             keyboardOnPress={this.keyboardOnPress}
-            returnType={returnType} />
+            returnType={returnType}/>
         </View>
       </View>
     )
