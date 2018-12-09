@@ -152,7 +152,6 @@ export default class SettingView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
   },
   listItem: {
     padding: 20,
