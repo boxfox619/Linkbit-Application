@@ -107,11 +107,11 @@ export default class SettingView extends React.Component {
                     {text: i18n.t('reset_mainTxt').toLowerCase(), onPress: () => this.handleSetView('Setting')},
                   ],
                   { cancelable: false },
-                ) :
-                <SettingTouchableView
-                  viewName={viewName}
-                  onSetView={this.handleSetView} />
-        }
+                ) : (
+                  <SettingTouchableView
+                    viewName={viewName}
+                    onSetView={this.handleSetView} />
+                )}
       </View>
     )
   }

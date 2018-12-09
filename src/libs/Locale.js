@@ -21,7 +21,7 @@ const en = {
   lock_subTxt: 'You can set up security methods',
   reset_mainTxt: 'Reset',
   reset_subTxt: 'We destroy all accounts and information',
-  cancel: 'cancel'
+  cancel: 'cancel',
 }
 const ko = {
   wallet: '지갑',
@@ -44,7 +44,7 @@ const ko = {
   lock_subTxt: '보안 방법을 설정할 수 있습니다',
   reset_mainTxt: '초기화',
   reset_subTxt: '모든 계정과 정보를 파기합니다',
-  cancel: '취소'
+  cancel: '취소',
 }
 
 i18n.fallbacks = true
