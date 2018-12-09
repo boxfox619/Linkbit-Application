@@ -12,7 +12,7 @@ export default class Navbar extends React.Component {
       defaultColor: PropTypes.string.isRequired,
       activeColor: PropTypes.string.isRequired,
       containerStyle: PropTypes.any.isRequired,
-    };
+    }
 
     static defaultProps = {
       tabs: [],
@@ -23,7 +23,7 @@ export default class Navbar extends React.Component {
       activeColor: '#fff',
       containerStyle: {
       },
-    };
+    }
 
     render() {
       const tabs = this.props.tabs.map((tab, idx) => {

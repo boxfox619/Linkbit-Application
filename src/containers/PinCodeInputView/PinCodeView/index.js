@@ -17,7 +17,7 @@ class PinCodeView extends React.Component {
     }
   }
 
-  userInput = [];
+  userInput = []
   setDeleteButton = (status) => {
     Animated.timing(
       // Animate value over time
@@ -30,7 +30,7 @@ class PinCodeView extends React.Component {
     this.setState({
       animatedDeleteButtonOnPress: !status,
     })
-  };
+  }
 
   clear = () => {
     this.userInput = []
@@ -72,7 +72,7 @@ class PinCodeView extends React.Component {
         })
       }
     }
-  };
+  }
 
   render() {
     const { pinLength, buttonTextColor, returnType, buttonBgColor, inputBgColor, onComplete, disabled, inputActiveBgColor, inputBgOpacity, deleteText } = this.props

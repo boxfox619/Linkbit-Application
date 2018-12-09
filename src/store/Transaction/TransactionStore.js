@@ -3,9 +3,9 @@ import TransactionApi from '../../api/Transaction/TransactionApi'
 import Transaction from './Transaction'
 
 export default class TransactionStore{
-    @observable transactions = [];
-    address;
-    transactionApi;
+    @observable transactions = []
+    address
+    transactionApi
 
     constructor(address){
       this.address = address

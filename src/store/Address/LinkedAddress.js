@@ -2,8 +2,8 @@ import {observable, action, computed} from 'mobx'
 import WalletStore from '../Wallet/WalletStore'
 
 export default class LinkedAddress {
-    @observable address;
-    @observable accountAddressList = [];
+    @observable address
+    @observable accountAddressList = []
 
     @computed get asJson() {
       return {

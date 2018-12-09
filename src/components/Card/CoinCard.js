@@ -15,17 +15,31 @@ export default class CoinCard extends React.Component {
       themeColor: PropTypes.string,
       activate: PropTypes.bool,
       onClick: PropTypes.func,
-    };
+    }
 
     static defaultProps = {
       balance: '0',
       price: '0',
       activate: false,
       themeColor: PRIMARY_COLOR,
-    };
+    }
 
     constructor(props) {
       super(props)
+    }
+
+    getTextColor = () => {
+      return {color: (this.props.activate) ? '#ffffff' : this.props.themeColor}
+    }
+
+    getIconUrl = () => {
+      return `${HOST}/assets/${this.props.symbol.toUpperCase()}.png`
+    }
+
+    onPress = () => {
+      if (this.props.onClick) {
+        this.props.onClick()
+      }
     }
 
     render() {
@@ -45,20 +59,6 @@ export default class CoinCard extends React.Component {
           </View>
         </BorderCard>
       )
-    }
-
-    getTextColor = () => {
-      return {color: (this.props.activate) ? '#ffffff' : this.props.themeColor}
-    };
-
-    getIconUrl = () => {
-      return `${HOST}/assets/${this.props.symbol.toUpperCase()}.png`
-    };
-
-    onPress = () => {
-      if (this.props.onClick) {
-        this.props.onClick()
-      }
     }
 }
 

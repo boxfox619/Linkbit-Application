@@ -18,7 +18,7 @@ export default class AddressApiMock {
         accountAddressList: [],
       },
       ]
-    };
+    }
     registerAddress = async (linkedAddress, accountAddress) => {
       return {status: true}
     }

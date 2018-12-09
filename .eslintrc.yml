@@ -41,6 +41,9 @@ rules:
   semi:
     - error
     - never
+  babel/semi:
+    - error
+    - never
   no-var:
     - error
   prefer-arrow-callback:

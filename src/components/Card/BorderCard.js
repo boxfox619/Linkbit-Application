@@ -8,12 +8,12 @@ export default class BorderCard extends React.Component {
       onPress: PropTypes.func,
       themeColor: PropTypes.string.isRequired,
       activate: PropTypes.bool.isRequired,
-    };
+    }
 
     static defaultProps = {
       themeColor: '#000',
       activate: false,
-    };
+    }
 
     render() {
       if (this.props.onPress) {
@@ -38,7 +38,7 @@ export default class BorderCard extends React.Component {
       }
       
       return style
-    };
+    }
 }
 
 const styles = StyleSheet.create({

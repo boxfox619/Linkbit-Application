@@ -19,13 +19,13 @@ export default class IndicatorViewPager extends Component {
       horizontalScroll: PropTypes.bool,
       onPageSelected: PropTypes.func,
       goToNext: PropTypes.func,
-    };
+    }
 
     static defaultProps = {
       indicator: null,
       initialPage: 0,
       horizontalScroll: true,
-    };
+    }
 
     constructor (props) {
       super(props)

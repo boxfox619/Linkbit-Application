@@ -19,17 +19,17 @@ export default class PagerDotIndicator extends Component {
       dotStyle: ViewPropTypes.style,
       selectedDotStyle: ViewPropTypes.style,
       hideSingle: PropTypes.bool,
-    };
+    }
 
     static defaultProps = {
       pageCount: 0,
       initialPage: 0,
       hideSingle: false,
-    };
+    }
 
     state = {
       selectedIndex: this.props.initialPage,
-    };
+    }
 
     shouldComponentUpdate (nextProps, nextState) {
       return this.state.selectedIndex != nextState.selectedIndex ||

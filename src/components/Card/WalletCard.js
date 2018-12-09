@@ -14,14 +14,14 @@ export default class WalletCard extends React.Component {
       price: PropTypes.string,
       themeColor: PropTypes.string,
       onPress: PropTypes.func,
-    };
+    }
 
     static defaultProps = {
       balance: '0',
       price: '0',
       themeColor: PRIMARY_COLOR,
       onPress: () => {},
-    };
+    }
 
     render() {
       return (
@@ -43,7 +43,7 @@ export default class WalletCard extends React.Component {
 
     getTextColor = () => {
       return {color: this.props.themeColor}
-    };
+    }
 }
 
 const styles = StyleSheet.create({

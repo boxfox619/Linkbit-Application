@@ -6,8 +6,8 @@ import {PagerDotIndicator, IndicatorViewPager} from '../../components/ViewPager'
 
 @observer
 export default class GuideView extends React.Component {
-    @observable buttonLabel = '다음';
-    @observable currentPage = 0;
+    @observable buttonLabel = '다음'
+    @observable currentPage = 0
 
     constructor(props) {
       super(props)

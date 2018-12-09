@@ -3,9 +3,9 @@ import CoinApi from '../../api/Coin/CoinApi'
 import Coin from './Coin'
 
 class CoinStore {
-    @observable coinList = [];
-    @observable isLoading = false;
-    coinApi;
+    @observable coinList = []
+    @observable isLoading = false
+    coinApi
 
     constructor() {
       this.coinApi = CoinApi.create()

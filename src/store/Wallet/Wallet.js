@@ -1,14 +1,14 @@
 import {observable, computed, action, reaction} from 'mobx'
 
 export default class Wallet {
-    @observable address;
-    @observable linkedAddress;
-    @observable name;
-    @observable balance;
-    @observable symbol;
+    @observable address
+    @observable linkedAddress
+    @observable name
+    @observable balance
+    @observable symbol
 
-    updateWallet = null;
-    store;
+    updateWallet = null
+    store
 
     constructor(store) {
       this.store = store

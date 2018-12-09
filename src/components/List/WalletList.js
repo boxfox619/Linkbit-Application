@@ -7,12 +7,12 @@ import WalletGroup from './WalletGroup'
 
 @observer
 export default class WalletList extends React.Component {
-    @observable selectedCoin = undefined;
+    @observable selectedCoin = undefined
     static propTypes = {
       moneySymbol: PropTypes.string.isRequired,
       wallets: PropTypes.array.isRequired,
       onWalletSelected: PropTypes.func,
-    };
+    }
 
 
     render() {
@@ -44,7 +44,7 @@ export default class WalletList extends React.Component {
           )
         })
       }
-    };
+    }
 
     groupBy = (list, keyStr) => {
       const map = new Map()
@@ -59,5 +59,5 @@ export default class WalletList extends React.Component {
       })
       
       return map
-    };
+    }
 }

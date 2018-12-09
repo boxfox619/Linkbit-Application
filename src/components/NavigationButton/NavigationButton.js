@@ -8,7 +8,7 @@ export default class NavigationButton extends React.Component {
       balance: PropTypes.string.isRequired,
       linkedAddress: PropTypes.string.isRequired,
       accountAddress: PropTypes.string.isRequired,
-    };
+    }
     render() {
       const { title, onPress } = this.props
       

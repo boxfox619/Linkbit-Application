@@ -3,8 +3,8 @@ import WalletApi from '../../api/Wallet/WalletApi'
 import Wallet from './Wallet'
 
 class WalletStore {
-    @observable wallets = [];
-    walletApi;
+    @observable wallets = []
+    walletApi
 
     constructor() {
       this.walletApi = WalletApi.create()

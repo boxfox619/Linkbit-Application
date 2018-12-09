@@ -1,12 +1,12 @@
 import { observable, computed, runInAction, reaction } from 'mobx'
 
 export default class Transaction {
-  @observable hash;
-  @observable symbol;
-  @observable sourceAddress;
-  @observable targetAddress;
-  @observable amount;
-  @observable status;
+  @observable hash
+  @observable symbol
+  @observable sourceAddress
+  @observable targetAddress
+  @observable amount
+  @observable status
   @observable date
   @observable email
   @observable address

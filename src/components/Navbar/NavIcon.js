@@ -9,13 +9,13 @@ export default class NavIcon extends React.Component {
       label: PropTypes.string.isRequired,
       icon: PropTypes.string.isRequired,
       color: PropTypes.string.isRequired,
-    };
+    }
 
     static defaultProps = {
       label: '',
       icon: 'android',
       color: '#000',
-    };
+    }
 
     render() {
       return (

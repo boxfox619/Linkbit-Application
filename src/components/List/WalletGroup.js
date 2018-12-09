@@ -9,7 +9,7 @@ import {dollarFormat} from '../../libs/NumberFormatter'
 @inject('coin')
 @observer
 export default class WalletGroup extends React.Component {
-    @observable totalBalance = 0;
+    @observable totalBalance = 0
 
     static propTypes = {
       activated: PropTypes.bool.isRequired,
@@ -18,13 +18,13 @@ export default class WalletGroup extends React.Component {
       wallets: PropTypes.array.isRequired,
       onToggled: PropTypes.func.isRequired,
       onWalletSelected: PropTypes.func,
-    };
+    }
 
     static defaultProps = {
       activated: false,
       onWalletSelected: () => {
       },
-    };
+    }
 
     constructor(props) {
       super(props)

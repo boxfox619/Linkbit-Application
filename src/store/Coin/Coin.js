@@ -1,9 +1,9 @@
 import {observable, action, computed} from 'mobx'
 
 export default class Coin{
-    @observable symbol = '';
-    @observable price = 0;
-    @observable name = '';
+    @observable symbol = ''
+    @observable price = 0
+    @observable name = ''
 
     constructor(symbol){
       this.symbol = symbol

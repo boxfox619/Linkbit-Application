@@ -5,10 +5,10 @@ import { Modal, View, Text, ActivityIndicator } from 'react-native'
 export default class ProgressDialog extends React.Component {
     static propTypes = {
       label: PropTypes.string,
-    };
+    }
     static defaultProps = {
       label: 'Loading2',
-    };
+    }
 
     constructor(props) {
       super(props)

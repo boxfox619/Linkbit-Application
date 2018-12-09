@@ -3,9 +3,9 @@ import AddressApi from '../../api/Address/AddressApi'
 import LinkedAddress from './LinkedAddress'
 
 class AddressStore {
-    @observable linkedAddressList = [];
-    addressApi;
-    isLoading = false;
+    @observable linkedAddressList = []
+    addressApi
+    isLoading = false
 
     constructor() {
       this.addressApi = AddressApi.create()
@@ -18,7 +18,7 @@ class AddressStore {
         addressList.forEach(json => this.updateAddress(json))
         this.isLoading = false
       })
-    };
+    }
 
     updateAddress = (json) => {
       let linkedAddress = this.linkedAddressList.find(linked => linked.address===json.address)
@@ -27,7 +27,7 @@ class AddressStore {
         this.linkedAddressList = [...this.linkedAddressList, linkedAddress]
       }
       linkedAddress.updateFromJson(json)
-    };
+    }
 
     getLinkedAddress = (symbol, accountAddress) => {
       const linkedAddressList = this.linkedAddressList.filter(linked => linked.getAccountAddress(symbol) === accountAddress)
