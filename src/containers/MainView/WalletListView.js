@@ -35,7 +35,7 @@ export default class WalletListView extends React.Component {
           wallets={this.props.wallet.walletList}
           onWalletSelected={w => this.openWalletDetail(w)} />
         <ActionButton buttonColor={PRIMARY_COLOR}
-          onPress={() => this.props.navigation.navigate('CreateWallet')}
+          onPress={() => this.props.navigation.navigate('SelectWallet')}
           offsetX={0}
           offsetY={0} />
       </View>

@@ -1,10 +1,11 @@
-import {createStackNavigator} from 'react-navigation'
+import { createStackNavigator } from 'react-navigation'
 import MainTabView from './MainView/MainTabView'
 import AddressListView from './AddressView/AddressListView'
 import AddressManagementView from './AddressView/AddressManagementView'
 import WalletSearchView from './AddressView/WalletSearchView'
 import AddressBuyContainer from './AddressView/AddressBuyContainer/AddressBuyContainer'
-import CreateWalletView from './CreateWalletView/CreateWalletView'
+import SelectWalletView from './CreateWalletView/SelectWalletView/SelectWalletView'
+import InputWalletDetailView from './CreateWalletView/InputWalletInformationView/InputWalletInformationView'
 
 export default createStackNavigator({
   Main: {
@@ -14,7 +15,7 @@ export default createStackNavigator({
     }),
   },
   Address: {
-    screen : AddressListView,
+    screen: AddressListView,
     navigationOptions: () => ({
       title: 'Own Address List',
       headerBackTitle: 'AddressList',
@@ -23,9 +24,10 @@ export default createStackNavigator({
   AddressBuy: AddressBuyContainer,
   AddressManagement: AddressManagementView,
   WalletSearch: WalletSearchView,
-  CreateWallet: CreateWalletView
+  SelectWallet: SelectWalletView,
+  InputWalletDetail: InputWalletDetailView
 },
-{
-  initialRouteName: 'Main',
-},
+  {
+    initialRouteName: 'Main',
+  },
 )

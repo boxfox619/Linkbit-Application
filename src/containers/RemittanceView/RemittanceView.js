@@ -1,16 +1,11 @@
 import React from 'react'
 import { View, StyleSheet, Text, SafeAreaView, Image, TextInput, Picker } from 'react-native'
-import { observer } from 'mobx-react'
-import { PRIMARY_COLOR } from '../../libs/Constraints'
 import CardSummary from '../../components/CardSummary/CardSummary'
 import NavigationButton from '../../components/NavigationButton/NavigationButton'
-import SegmentedControl from './SegmentedControl/SegmentedControl'
-import SearchBar from '../../components/SearchBar/SearchBar'
 import AddressBox from './AddressBox/AddressBox'
 import AddressInput from './AddressInput/AddressInput'
 import AmountInput from './AmountInput/AmountInput'
 import AmountBox from './AmountBox/AmountBox'
-import FriendBox from './FriendBox/FriendBox'
 import RemittanceType from '../../store/RemittanceType'
 
 export default class RemmittanceView extends React.Component {
