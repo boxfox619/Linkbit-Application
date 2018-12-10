@@ -2,9 +2,8 @@ import React from 'react'
 import { StyleSheet, FlatList, SafeAreaView, Text, View } from 'react-native'
 import NavigationButton from '../../../components/NavigationButton/NavigationButton'
 import Coin from '../Coin/Coin'
-import { coins } from '../../../store/Coins'
 
-export default class SelectedWalletView extends React.Component {
+export default class SelectedWalletDetailView extends React.Component {
     state = {
         selectedIndex: -1,
         isRefresh: false,
@@ -12,6 +11,8 @@ export default class SelectedWalletView extends React.Component {
 
     render() {
         const { selectedIndex, isRefresh } = this.state
+        const coins = this.props.navigation.getParam('coins', [])
+
         return (
             <SafeAreaView>
                 <View style={styles.container}>
@@ -37,13 +38,7 @@ export default class SelectedWalletView extends React.Component {
     }
 
     navigateToNext = () => {
-        const coin = coins[this.state.selectedIndex]
-
-        if (coin.subCoins) {
-            this.props.navigation.navigate('SelectWalletDetail', { coins: coin.subCoins })
-        } else {
-            this.props.navigation.navigate('InputWalletDetail')
-        }
+        this.props.navigation.navigate('InputWalletDetail')
     }
 }
 

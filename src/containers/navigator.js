@@ -5,6 +5,7 @@ import AddressManagementView from './AddressView/AddressManagementView'
 import WalletSearchView from './AddressView/WalletSearchView'
 import AddressBuyContainer from './AddressView/AddressBuyContainer/AddressBuyContainer'
 import SelectWalletView from './CreateWalletView/SelectWalletView/SelectWalletView'
+import SelectWalletDetailView from './CreateWalletView/SelectWalletDetailView/SelectWalletDetailView'
 import InputWalletDetailView from './CreateWalletView/InputWalletInformationView/InputWalletInformationView'
 
 export default createStackNavigator({
@@ -25,6 +26,7 @@ export default createStackNavigator({
   AddressManagement: AddressManagementView,
   WalletSearch: WalletSearchView,
   SelectWallet: SelectWalletView,
+  SelectWalletDetail: SelectWalletDetailView,
   InputWalletDetail: InputWalletDetailView
 },
   {
