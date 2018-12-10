@@ -10,20 +10,25 @@ const SegmentedControlWithTitle = withTitle(SegmentedControl)
 
 export default class InputWalletInformationView extends React.Component {
     state = {
-        selectedIndex: 0
+        selectedIndex: 0,
+        coin: {}
+    }
+
+    componentDidMount() {
+        const coin = this.props.navigation.getParam('coin', {})
+        this.setState({ coin })
     }
 
     render() {
-        const { themeColor, icon } = this.props
-        const { selectedIndex } = this.state
+        const { selectedIndex, coin } = this.state
 
         return (
             <SafeAreaView>
                 <View style={styles.container}>
                     <View style={{ paddingHorizontal: 20 }}>
-                        <View style={styles.card}>
+                        <View style={[styles.card, { backgroundColor: coin.themeColor }]}>
                             <Image style={styles.icon}
-                                source={icon} />
+                                source={coin.icon} />
                         </View>
                         <InputWithTitle title={'지갑 이름'} />
                         <InputWithTitle title={'지갑 설명'} />
@@ -36,7 +41,8 @@ export default class InputWalletInformationView extends React.Component {
                             selectedIndex={selectedIndex}
                             onChange={index => this.setState({ selectedIndex: index })} />
                     </View>
-                    <NavigationButton title={'다음'} />
+                    <NavigationButton title={'생성하기'}
+                        onPress={()=>this.props.navigation.navigate('Main')} />
                 </View>
             </SafeAreaView>
         )
@@ -55,11 +61,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 100,
         borderRadius: 5,
-        backgroundColor: '#007aff'
     },
     icon: {
         width: 40,
         height: 40,
-        backgroundColor: 'white'
     }
 })

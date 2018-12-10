@@ -7,18 +7,23 @@ export default class SelectedWalletDetailView extends React.Component {
     state = {
         selectedIndex: -1,
         isRefresh: false,
+        coin: {}
+    }
+
+    componentDidMount() {
+        const coin = this.props.navigation.getParam('coin', {})
+        this.setState({ coin })
     }
 
     render() {
-        const { selectedIndex, isRefresh } = this.state
-        const coins = this.props.navigation.getParam('coins', [])
+        const { selectedIndex, isRefresh, coin } = this.state
 
         return (
             <SafeAreaView>
                 <View style={styles.container}>
                     <FlatList
                         style={styles.list}
-                        data={coins}
+                        data={coin.subCoins}
                         keyExtractor={(item, index) => index.toString()}
                         refreshing={isRefresh}
                         onRefresh={() => { }}
@@ -38,7 +43,7 @@ export default class SelectedWalletDetailView extends React.Component {
     }
 
     navigateToNext = () => {
-        this.props.navigation.navigate('InputWalletDetail')
+        this.props.navigation.navigate('InputWalletDetail', { coin: this.state.coin })
     }
 }
 

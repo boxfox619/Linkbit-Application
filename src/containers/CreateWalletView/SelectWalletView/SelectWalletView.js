@@ -40,9 +40,9 @@ export default class SelectedWalletView extends React.Component {
         const coin = coins[this.state.selectedIndex]
 
         if (coin.subCoins) {
-            this.props.navigation.navigate('SelectWalletDetail', { coins: coin.subCoins })
+            this.props.navigation.navigate('SelectWalletDetail', { coin: coin })
         } else {
-            this.props.navigation.navigate('InputWalletDetail')
+            this.props.navigation.navigate('InputWalletDetail', { coin: coin })
         }
     }
 }
