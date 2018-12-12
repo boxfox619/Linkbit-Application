@@ -3,21 +3,31 @@ import {HOST} from "../../libs/Constraints";
 
 export default class CoinNetworkApi {
 
-    fetchCoinPrices = async (symbols) => {
+
+    fetchAllCoinsPrice = async () => {
         try {
-            const res = await fetch(`${HOST}/coin/list`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': ''
-                },
-                body: JSON.stringify({
-                    coins: symbols
-                })
-            });
-            let resJson = res.json();
-            return resJson;
+            const res = await fetch(`${HOST}/coin/list`, {method: 'GET'});
+            return res.json();
         } catch (error) {
             console.log(error);
         }
-    }
+    };
+
+    fetchCoinPrice = async (symbol) => {
+        try {
+            const res = await fetch(`${HOST}/coin?symbol=${symbol}`, {method: 'GET'});
+            return res.json();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    fetchCoinsPrice = async (symbolList) => {
+        try {
+            const res = await fetch(`${HOST}/coin/list`, {method: 'POST', body: JSON.stringify({symbols: symbolList})});
+            return res.json();
+        } catch (error) {
+            console.log(error);
+        }
+    };
 }

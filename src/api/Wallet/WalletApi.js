@@ -1,5 +1,5 @@
 import WalletApiMock from "./WalletApiMock";
-import WalletNetworkApi from "./WalletNetworkApi";
+import WalletStorageApi from "./WalletNetworkApi";
 import {RUNNING_MODE} from '../../libs/Constraints';
 
 export default {
@@ -7,7 +7,7 @@ export default {
         if(RUNNING_MODE==='test'){
             return new WalletApiMock();
         }else{
-            return new WalletNetworkApi();
+            return new WalletStorageApi();
         }
     }
 }
