@@ -9,7 +9,6 @@ export default class CreateWalletView extends React.Component {
       <SafeAreaView>
         <View style={styles.container}>
           <SelectWalletView />
-          <NavigationButton title={'다음'} />
         </View>
       </SafeAreaView>
     )
