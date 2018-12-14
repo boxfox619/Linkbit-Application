@@ -1,12 +1,12 @@
 import React from 'react'
 import { StyleSheet, FlatList, SafeAreaView, Text, View } from 'react-native'
 import NavigationButton from '../../../components/NavigationButton/NavigationButton'
+import SelectCoinView from '../SelectCoinView/SelectCoinView'
 import Coin from '../Coin/Coin'
 
 export default class SelectedWalletDetailView extends React.Component {
     state = {
         selectedIndex: -1,
-        isRefresh: false,
         coin: {}
     }
 
@@ -16,26 +16,14 @@ export default class SelectedWalletDetailView extends React.Component {
     }
 
     render() {
-        const { selectedIndex, isRefresh, coin } = this.state
+        const { selectedIndex, coin } = this.state
 
         return (
             <SafeAreaView>
                 <View style={styles.container}>
-                    <FlatList
-                        contentContainerStyle={styles.list}
-                        data={coin.subCoins}
-                        keyExtractor={(item, index) => item.symbol}
-                        refreshing={isRefresh}
-                        onRefresh={() => { }}
-                        renderItem={({ item, index }) => (
-                            <Coin name={item.name}
-                                symbol={item.symbol}
-                                icon={item.icon}
-                                themeColor={item.themeColor}
-                                isHighlighted={selectedIndex === index}
-                                updateSelectedIndex={async () => await this.setState({ selectedIndex: index })} />
-                        )} />
-                    {/* Check sub coin is exist */}
+                    <SelectCoinView coins={coin.subCoins}
+                        selectedIndex={selectedIndex}
+                        updateSelectedIndex={async (index) => await this.setState({ selectedIndex: index })} />
                     <NavigationButton title={'다음'}
                         onPress={this.navigateToNext} />
                 </View>

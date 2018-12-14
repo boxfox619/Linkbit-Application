@@ -1,35 +1,23 @@
 import React from 'react'
 import { StyleSheet, FlatList, SafeAreaView, Text, View } from 'react-native'
 import NavigationButton from '../../../components/NavigationButton/NavigationButton'
+import SelectCoinView from '../SelectCoinView/SelectCoinView'
 import Coin from '../Coin/Coin'
 import { coins } from '../../../store/Coins'
 
 export default class SelectedWalletView extends React.Component {
     state = {
         selectedIndex: -1,
-        isRefresh: false,
     }
 
     render() {
-        const { selectedIndex, isRefresh } = this.state
+        const { selectedIndex } = this.state
         return (
             <SafeAreaView>
                 <View style={styles.container}>
-                    <FlatList
-                        contentContainerStyle={styles.list}
-                        data={coins}
-                        keyExtractor={(item, index) => item.symbol}
-                        refreshing={isRefresh}
-                        onRefresh={() => { }}
-                        renderItem={({ item, index }) => (
-                            <Coin name={item.name}
-                                symbol={item.symbol}
-                                icon={item.icon}
-                                themeColor={item.themeColor}
-                                isHighlighted={selectedIndex === index}
-                                updateSelectedIndex={async () => await this.setState({ selectedIndex: index })} />
-                        )} />
-                    {/* Check sub coin is exist */}
+                    <SelectCoinView coins={coins}
+                        selectedIndex={selectedIndex}
+                        updateSelectedIndex={async (index) => await this.setState({ selectedIndex: index })}/>
                     <NavigationButton title={'다음'}
                         onPress={this.navigateToNext} />
                 </View>
@@ -53,7 +41,4 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
-    list: {
-        paddingHorizontal: 20,
-    }
 })
