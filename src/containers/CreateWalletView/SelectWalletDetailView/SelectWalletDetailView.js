@@ -22,7 +22,7 @@ export default class SelectedWalletDetailView extends React.Component {
             <SafeAreaView>
                 <View style={styles.container}>
                     <FlatList
-                        style={styles.list}
+                        contentContainerStyle={styles.list}
                         data={coin.subCoins}
                         keyExtractor={(item, index) => index.toString()}
                         refreshing={isRefresh}
@@ -30,6 +30,7 @@ export default class SelectedWalletDetailView extends React.Component {
                         renderItem={({ item, index }) => (
                             <Coin name={item.name}
                                 symbol={item.symbol}
+                                icon={item.icon}
                                 themeColor={item.themeColor}
                                 isHighlighted={selectedIndex === index}
                                 updateSelectedIndex={async () => await this.setState({ selectedIndex: index })} />

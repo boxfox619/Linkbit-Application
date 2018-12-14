@@ -22,7 +22,7 @@ export default class Coin extends React.Component {
                 onPress={updateSelectedIndex}>
                 <Image style={styles.icon}
                     source={icon} />
-                <View>
+                <View style={styles.titleContainer}>
                     <Text style={[styles.title, { color: isHighlighted ? 'white' : themeColor }]}>{name}</Text>
                     <Text style={[styles.subtitle, { color: isHighlighted ? 'white' : themeColor }]}>{symbol}</Text>
                 </View>
@@ -45,6 +45,9 @@ const styles = StyleSheet.create({
     icon: {
         width: 40,
         height: 40,
+    },
+    titleContainer: {
+        paddingStart: 10,
     },
     title: {
         fontSize: 16
