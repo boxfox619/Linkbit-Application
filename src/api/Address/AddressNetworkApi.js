@@ -15,10 +15,23 @@ export default class AddressNetworkApi {
         }
     };
 
-    registerAddress = async (linkAddress, symbol, accountAddress) => {
+    buyAddress = async (linkAddress) => {
         try {
             const res = await fetch(`${HOST}/address`, {
                 method: 'POST',
+                headers: { 'Authorization': '' },
+                body: JSON.stringify({address: linkAddress})
+            });
+            return res.json();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    registerAddress = async (linkAddress, symbol, accountAddress) => {
+        try {
+            const res = await fetch(`${HOST}/address/account`, {
+                method: 'PUT',
                 headers: { 'Authorization': '' },
                 body: JSON.stringify({
                     linkAddress: linkAddress,
@@ -35,7 +48,7 @@ export default class AddressNetworkApi {
 
     unregisterAddress = async (linkAddress, symbol) => {
         try {
-            const res = await fetch(`${HOST}/address`, {
+            const res = await fetch(`${HOST}/address/account`, {
                 method: 'DELETE',
                 headers: { 'Authorization': '' },
                 body: JSON.stringify({
