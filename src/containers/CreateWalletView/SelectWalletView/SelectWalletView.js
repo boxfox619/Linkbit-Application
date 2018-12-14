@@ -18,7 +18,7 @@ export default class SelectedWalletView extends React.Component {
                     <FlatList
                         contentContainerStyle={styles.list}
                         data={coins}
-                        keyExtractor={(item, index) => index.toString()}
+                        keyExtractor={(item, index) => item.symbol}
                         refreshing={isRefresh}
                         onRefresh={() => { }}
                         renderItem={({ item, index }) => (
