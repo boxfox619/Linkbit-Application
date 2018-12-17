@@ -11,18 +11,49 @@ export default createStackNavigator({
     screen: MainTabView,
     navigationOptions: () => ({
       header: null,
+      headerBackTitle: 'main',
     }),
   },
   Address: {
     screen: AddressListView,
     navigationOptions: () => ({
-      title: i18n.t('address_list'),
-      headerBackTitle: i18n.t('address_list_back'),
+      title: '',
+      headerBackTitle: i18n.t('address_list'),
     }),
   },
-  AddressBuy: AddressBuyContainer,
-  AddressManagement: AddressManagementView,
-  WalletSearch: WalletSearchView,
+  AddressBuy: {
+    screen: AddressBuyContainer,
+    navigationOptions: () => ({
+      title: '',
+      headerBackTitle: 'address_buy',
+    }),
+  },
+  AddressManagement: {
+    screen: AddressManagementView,
+    navigationOptions: () => ({
+      title: '',
+      headerBackTitle: 'address_management',
+    }),
+  },
+  WalletSearch: {
+    screen: WalletSearchView,
+    navigationOptions: () => ({
+      title: '',
+      headerBackTitle: 'wallet_search',
+    }),
+  }
 }, {
-  initialRouteName: 'Main',
-})
+    initialRouteName: 'Main',
+    /* The header config from HomeScreen is now here */
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#fff',
+        border: 0,
+        borderBottomWidth: 0,
+      },
+      headerTintColor: '#000',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    },
+  })
