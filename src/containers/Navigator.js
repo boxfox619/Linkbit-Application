@@ -49,7 +49,10 @@ export default createStackNavigator({
       headerStyle: {
         backgroundColor: '#fff',
         border: 0,
+        // ios
         borderBottomWidth: 0,
+        // android
+        elevation:0,
       },
       headerTintColor: '#000',
       headerTitleStyle: {
