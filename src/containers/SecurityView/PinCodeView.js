@@ -1,13 +1,14 @@
 import React from 'react'
 import { View, StyleSheet, Dimensions, Text } from 'react-native'
 import PinCodeInput from '../../components/PinCodeInput/index'
+import i18n from '../../libs/Locale'
 
 export default class PinCodeView extends React.Component {
 
   constructor (props) {
     super(props)
     this.state = {
-      label: '새로운 PIN 번호를 입력해주세요',
+      label: i18n.t('new_passcode'),
       originPin: '11111',
       newPin: undefined,
     }
@@ -23,7 +24,7 @@ export default class PinCodeView extends React.Component {
       onVerifySuccess()
     } else {
       this.setState({
-        label: '핀 번호가 일치하지 않습니다.\n다시 시도해주세요.',
+        label: i18n.t('verify_passcode'),
         newPin: undefined,
       })
     }
@@ -31,7 +32,7 @@ export default class PinCodeView extends React.Component {
 
   handleChangePinCode = newPin => {
     this.setState({
-      label: '새로운 PIN 번호를 확인해주세요',
+      label: i18n.t('verify_passcode'),
       newPin,
     })
   }
@@ -43,7 +44,7 @@ export default class PinCodeView extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>
-          {needVerify ? 'PIN 번호를 입력해주세요' : label}
+          {needVerify ? i18n.t('check_passcode') : label}
         </Text>
         <PinCodeInput
           style={styles.pin}

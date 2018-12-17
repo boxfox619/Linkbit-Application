@@ -2,6 +2,7 @@ import React from 'react'
 import { View, StyleSheet, FlatList, Alert } from 'react-native'
 import { Button } from 'react-native-elements'
 import { inject, observer } from 'mobx-react/index'
+import i18n from '../../libs/Locale'
 import WalletCard from '../../components/Card/WalletCard'
 import AddressCard from '../../components/Card/AddressCard'
 
@@ -26,7 +27,7 @@ export default class AddressManagementView extends React.Component {
             return (<WalletCard onPress={() => this.onWalletPressed(item)} name={item.address} symbol={item.symbol} moneySymbol="KRW"/>)
           }}/>
         <Button
-          title="Link new wallet"
+          title={i18n.t('add_wallet')}
           buttonStyle={styles.getAddressButton}
           onPress={() => this.onLinkNewWallet()}/>
       </View>
@@ -59,11 +60,11 @@ export default class AddressManagementView extends React.Component {
 
   onWalletPressed = (wallet) => {
     Alert.alert(
-      '지갑 삭제',
-      '연결된 지갑을 삭제하시겠습니까?',
+      `${(i18n.t('wallet')+' '+ i18n.t('delete')).toLowerCase()}`,
+      `${i18n.t('wallet_delete')}`,
       [
-        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'OK', onPress: () => this.deleteWallet(wallet)},
+        {text: `${i18n.t('cancel')}`, onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: `${i18n.t('ok')}`, onPress: () => this.deleteWallet(wallet)},
       ],
       {cancelable: false},
     )

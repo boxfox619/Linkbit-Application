@@ -4,6 +4,7 @@ import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-nativ
 import { observer } from 'mobx-react'
 import { observable } from 'mobx'
 import { PRIMARY_COLOR } from '../../../libs/Constraints'
+import i18n from '../../../libs/Locale'
 
 @observer
 export default class AddressBuyView extends React.Component {
@@ -38,7 +39,7 @@ export default class AddressBuyView extends React.Component {
           }
         </View>
         <Button
-          title="다음"
+          title={i18n.t('next')}
           onPress={this.onNext}
           buttonStyle={styles.getAddressButton}
           disabled={!this.addressIsValid}/>

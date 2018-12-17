@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import PinCodeView from './PinCodeView'
 import FingerPrintView from './FingerPrintView'
+import i18n from '../../libs/Locale'
 
 const SecurityDetailView = (props => {
   const {view, onVerifySuccess} = props
@@ -47,13 +48,13 @@ export default class SecurityView extends React.Component {
                   key={0}
                   style={styles.listItem}
                   onPress={() => this.handleSetView('pin')}>
-                  <Text>핀 코드 변경</Text>
+                  <Text>{i18n.t('lock_pw')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   key={1}
                   style={styles.listItem}
                   onPress={() => this.handleSetView('finger')}>
-                  <Text>지문 변경</Text>
+                  <Text>{i18n.t('lock_finger')}</Text>
                 </TouchableOpacity>
               </> : (
                 <PinCodeView
