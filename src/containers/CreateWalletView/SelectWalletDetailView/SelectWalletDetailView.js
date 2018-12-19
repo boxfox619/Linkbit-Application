@@ -1,8 +1,7 @@
 import React from 'react'
-import { StyleSheet, FlatList, SafeAreaView, Text, View } from 'react-native'
+import { StyleSheet, SafeAreaView, View } from 'react-native'
 import NavigationButton from '../../../components/NavigationButton/NavigationButton'
 import SelectCoinView from '../SelectCoinView/SelectCoinView'
-import Coin from '../Coin/Coin'
 
 export default class SelectedWalletDetailView extends React.Component {
     state = {

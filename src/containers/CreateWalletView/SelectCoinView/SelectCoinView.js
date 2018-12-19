@@ -1,10 +1,17 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { StyleSheet, FlatList } from 'react-native'
 import Coin from '../Coin/Coin'
 
 export default class SelectCoinView extends React.Component {
     state = {
         isRefresh: false,
+    }
+
+    static propTypes = {
+        coins: PropTypes.array.isRequired,
+        selectedIndex: PropTypes.number.isRequired,
+        updateSelectedIndex: PropTypes.func.isRequired
     }
 
     render() {
