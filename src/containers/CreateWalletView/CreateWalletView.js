@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, StyleSheet, SafeAreaView } from 'react-native'
-import NavigationButton from '../../components/NavigationButton/NavigationButton'
 import SelectWalletView from './SelectWalletView/SelectWalletView'
 
 export default class CreateWalletView extends React.Component {
