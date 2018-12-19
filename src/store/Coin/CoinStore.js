@@ -4,37 +4,37 @@ import Coin from './Coin'
 
 class CoinStore {
   @observable coinList = []
-  @observable isLoading = false
-  coinApi
+    @observable isLoading = false
+    coinApi
 
-  constructor () {
-    this.coinApi = CoinApi.create()
-  }
+    constructor() {
+        this.coinApi = CoinApi.create()
+    }
 
-  loadCoins (symbols) {
-    runInAction(() => {
-      symbols.forEach(symbol => this.coinList.push(new Coin(symbol)))
-    })
-    this.refreshCoins()
-  }
+    loadCoins(symbols) {
+        runInAction(() => {
+            symbols.forEach(symbol => this.coinList.push(new Coin(symbol)))
+        })
+        this.refreshCoins()
+    }
 
-  refreshCoins = async () => {
-    this.isLoading = true
-    const coins = await this.coinApi.fetchCoinPrices(this.coinList.map(coin => coin.symbol))
-    coins.forEach(json => this.updateCoinPrice(json))
-    runInAction(() => {
-      this.isLoading = false
-    })
-  }
+    refreshCoins = async () => {
+        this.isLoading = true
+        const coins = await this.coinApi.fetchCoins(this.coinList.map(coin => coin.symbol))
+        runInAction(() => {
+            coins.forEach(json => this.updateCoinPrice(json))
+            this.isLoading = false
+        })
+    }
 
-  loadCoin = async (symbol) => {
-    this.isLoading = true
-    const coins = await this.coinApi.fetchCoinPrices([symbol])
-    coins.forEach(json => this.updateCoinPrice(json))
-    runInAction(() => {
-      this.isLoading = false
-    })
-  }
+    loadCoin = async (symbol) => {
+        this.isLoading = true
+        const coins = await this.coinApi.fetchCoins([symbol])
+        runInAction(() => {
+            coins.forEach(json => this.updateCoinPrice(json))
+            this.isLoading = false
+        })
+    }
 
   @action updateCoinPrice (json) {
     let coin = this.coinList.find(coin => coin.symbol === json.symbol)

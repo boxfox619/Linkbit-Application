@@ -1,7 +1,7 @@
 import {HOST} from '../../libs/Constraints'
 
 export default class CoinApiMock {
-    fetchCoinPrices = async (symbols) => {
+    fetchCoins = async (symbols) => {
       return await symbols.map(symbol => COINS.find(c => c.symbol === symbol))
     }
 

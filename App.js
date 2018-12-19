@@ -13,10 +13,11 @@ const store = {
 const AppContainer = createAppContainer(Navigator)
 
 export default class App extends React.Component {
-  componentWillMount () {
-    store.address.loadAddressList()
-    store.wallet.loadWalletList()
-  }
+    componentWillMount() {
+        store.address.loadAddressList()
+        store.wallet.loadWalletList()
+        store.coin.refreshCoins()
+    }
 
   render () {
     return (
