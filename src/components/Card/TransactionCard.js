@@ -1,42 +1,42 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {View, StyleSheet, Text} from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 
 export default class TransactionCard extends React.Component {
-    static propTypes = {
-      date: PropTypes.string.isRequired,
-      email: PropTypes.string.isRequired,
-      address: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired,
-      symbol: PropTypes.string.isRequired,
-      confirm: PropTypes.number.isRequired,
-    }
+  static propTypes = {
+    date: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
+    amount: PropTypes.number.isRequired,
+    symbol: PropTypes.string.isRequired,
+    confirm: PropTypes.number.isRequired,
+  }
 
-    render() {
-      const {date, email, address, amount, symbol, confirm} = this.props
+  render () {
+    const {date, email, address, amount, symbol, confirm} = this.props
 
-      return (
-        <View style={styles.transactionRow}>
-          <Text style={styles.date}>{date}</Text>
-          <View style={styles.accountContainer}>
-            <Text style={styles.email}>{email}</Text>
-            <Text style={styles.address}>{address}</Text>
-          </View>
-          <View style={styles.amountContainer}>
-            <Text style={[styles.amount, this.getAmountColor()]}>{`${amount} ${symbol}`}</Text>
-            <Text style={styles.confirm}>{confirm}</Text>
-          </View>
+    return (
+      <View style={styles.transactionRow}>
+        <Text style={styles.date}>{date}</Text>
+        <View style={styles.accountContainer}>
+          <Text style={styles.email}>{email}</Text>
+          <Text style={styles.address}>{address}</Text>
         </View>
-      )
-    }
+        <View style={styles.amountContainer}>
+          <Text style={[styles.amount, this.getAmountColor()]}>{`${amount} ${symbol}`}</Text>
+          <Text style={styles.confirm}>{confirm}</Text>
+        </View>
+      </View>
+    )
+  }
 
-    getAmountColor = () => {
-      if (this.props.amount > 0) {
-        return {color: '#0088FF'}
-      } else {
-        return {color: 'red'}
-      }
+  getAmountColor = () => {
+    if (this.props.amount > 0) {
+      return {color: '#0088FF'}
+    } else {
+      return {color: 'red'}
     }
+  }
 }
 
 const styles = StyleSheet.create({

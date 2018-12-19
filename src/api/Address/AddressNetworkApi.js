@@ -5,7 +5,7 @@ export default class AddressNetworkApi {
 
     fetchOwnAddressList = async () => {
 
-    };
+    }
 
     registerAddress = async (linkedAddress, accountAddress) => {
       try {

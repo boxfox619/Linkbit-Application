@@ -1,35 +1,35 @@
 import React from 'react'
-import {View, StyleSheet, Text} from 'react-native'
-import {Button} from 'react-native-elements'
-import {observer} from 'mobx-react'
-import {observable} from 'mobx'
-import {PRIMARY_COLOR} from '../../../libs/Constraints'
+import { View, StyleSheet, Text } from 'react-native'
+import { Button } from 'react-native-elements'
+import { observer } from 'mobx-react'
+import { observable } from 'mobx'
+import { PRIMARY_COLOR } from '../../../libs/Constraints'
 
 @observer
 export default class AddressBuyFinishView extends React.Component {
-    @observable address
+  @observable address
 
-    render() {
-      return (
-        <View style={styles.container}>
-          <View style={styles.content}>
-            <Text>Success Address Buy</Text>
-            <Text>
-Your Address :
-              {this.address}
-            </Text>
-          </View>
-          <Button
-            title="finish"
-            onPress={this.onFinish}
-            buttonStyle={styles.getAddressButton} />
+  onFinish = () => {
+    this.props.navigation.navigate('Address')
+  }
+
+  render () {
+    return (
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <Text>Success Address Buy</Text>
+          <Text>
+            Your Address :
+            {this.address}
+          </Text>
         </View>
-      )
-    }
-
-    onFinish = () => {
-      this.props.navigation.navigate('Address')
-    }
+        <Button
+          title="finish"
+          onPress={this.onFinish}
+          buttonStyle={styles.getAddressButton}/>
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   content: {
-    flex:1,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },

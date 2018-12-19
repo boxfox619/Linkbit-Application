@@ -11,58 +11,62 @@ import IndicatorViewPager from './IndicatorViewPager'
 const DEFAULT_DOT_RADIUS = 8
 const SELECTED_DOT_RADIUS = 12
 export default class PagerDotIndicator extends Component {
-    static propTypes = {
-      ...ViewPropTypes,
-      pageCount: PropTypes.number.isRequired,
-      initialPage: PropTypes.number,
-      pager: PropTypes.instanceOf(IndicatorViewPager),
-      dotStyle: ViewPropTypes.style,
-      selectedDotStyle: ViewPropTypes.style,
-      hideSingle: PropTypes.bool,
-    };
+  static propTypes = {
+    ...ViewPropTypes,
+    pageCount: PropTypes.number.isRequired,
+    initialPage: PropTypes.number,
+    pager: PropTypes.instanceOf(IndicatorViewPager),
+    dotStyle: ViewPropTypes.style,
+    selectedDotStyle: ViewPropTypes.style,
+    hideSingle: PropTypes.bool,
+  }
 
-    static defaultProps = {
-      pageCount: 0,
-      initialPage: 0,
-      hideSingle: false,
-    };
+  static defaultProps = {
+    pageCount: 0,
+    initialPage: 0,
+    hideSingle: false,
+  }
 
-    state = {
-      selectedIndex: this.props.initialPage,
-    };
+  state = {
+    selectedIndex: this.props.initialPage,
+  }
 
-    shouldComponentUpdate (nextProps, nextState) {
-      return this.state.selectedIndex != nextState.selectedIndex ||
-            this.props.pageCount != nextProps.pageCount ||
-            this.props.dotStyle != nextProps.dotStyle ||
-            this.props.selectedDotStyle != nextProps.selectedDotStyle ||
-            this.props.style != nextProps.style
-    }
+  shouldComponentUpdate (nextProps, nextState) {
+    const {
+      selectedIndex, pageCount, dotStyle, selectedDotStyle, style,
+    } = this.state
 
-    render() {
-      const {pageCount, dotStyle, selectedDotStyle}=this.props
-      if (pageCount <= 0)return null
-      if (this.props.hideSingle && pageCount == 1) return null
-      const dotsView = []
-      for (let i = 0; i < pageCount; i++) {
-        const isSelect = i === this.state.selectedIndex
-        dotsView.push(
-          <View
-            style={[styles.dot, isSelect ? styles.selectDot : null, isSelect ? selectedDotStyle : dotStyle]}
-            key={i} />,
-        )
-      }
-      
-      return (
-        <View {...this.props} style={[styles.container, this.props.style]}>
-          {dotsView}
-        </View>
+    return selectedIndex !== nextState.selectedIndex ||
+      pageCount !== nextProps.pageCount ||
+      dotStyle !== nextProps.dotStyle ||
+      selectedDotStyle !== nextProps.selectedDotStyle ||
+      style !== nextProps.style
+  }
+
+  render () {
+    const {pageCount, dotStyle, selectedDotStyle} = this.props
+    if (pageCount <= 0) return null
+    if (this.props.hideSingle && pageCount === 1) return null
+    const dotsView = []
+    for (let i = 0; i < pageCount; i++) {
+      const isSelect = i === this.state.selectedIndex
+      dotsView.push(
+        <View
+          style={[styles.dot, isSelect ? styles.selectDot : null, isSelect ? selectedDotStyle : dotStyle]}
+          key={i}/>,
       )
     }
 
-    onPageSelected (e) {
-      this.setState({selectedIndex: e.position})
-    }
+    return (
+      <View {...this.props} style={[styles.container, this.props.style]}>
+        {dotsView}
+      </View>
+    )
+  }
+
+  onPageSelected (e) {
+    this.setState({selectedIndex: e.position})
+  }
 }
 const styles = StyleSheet.create({
   container: {

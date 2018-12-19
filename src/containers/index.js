@@ -10,14 +10,15 @@ import TransactionListView from './TransactionListView/TransactionListView'
 import CreateWalletView from './CreateWalletView/CreateWalletView'
 
 export {
+  SettingView,
   FingerPrintView,
   GuideView,
-  SecurityView,
   PinCodeInputView,
+  SecurityView,
   TermsOfServiceView,
-  TransactionListView,
   MainTabView,
   AddressListView,
+  TransactionListView,
   SettingView,
   CreateWalletView,
 }

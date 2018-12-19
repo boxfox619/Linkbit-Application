@@ -2,14 +2,14 @@ import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 
 export default class AmountBox extends React.Component {
-  render() {
+  render () {
     return (
       <View style={styles.toAmountContainer}>
-        <View style={{ display: 'flex', flexDirection: 'row' }}>
+        <View style={{display: 'flex', flexDirection: 'row'}}>
           <Text style={styles.toAmountSymbol}>KRW</Text>
           <Text style={styles.toAmount}>8,080,468</Text>
         </View>
-        <View style={{ display: 'flex', flexDirection: 'row' }}>
+        <View style={{display: 'flex', flexDirection: 'row'}}>
           <Text style={styles.toAmountSymbol}>ETH</Text>
           <Text style={styles.toAmount}>35.315</Text>
         </View>

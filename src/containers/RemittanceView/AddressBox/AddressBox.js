@@ -2,8 +2,8 @@ import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 
 export default class AddressBox extends React.Component {
-  render() {
-    const { address } = this.props
+  render () {
+    const {address} = this.props
 
     return (
       <View style={styles.toAddressContainer}>

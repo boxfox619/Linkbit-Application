@@ -3,34 +3,35 @@ import PropTypes from 'prop-types'
 import { View, StyleSheet, Text, Image } from 'react-native'
 
 export default class WalletSummaryCard extends React.Component {
-    static propTypes = {
-      symbol: PropTypes.string.isRequired,
-      balance: PropTypes.string.isRequired,
-      linkedAddress: PropTypes.string.isRequired,
-      accountAddress: PropTypes.string.isRequired,
-    };
-    render() {
-      const {symbol, balance, linkedAddress, accountAddress} = this.props
-      
-      return (
-        <View style={styles.container}>
-          <View style={styles.iconContainer}>
-            <Image style={styles.icon} />
+  static propTypes = {
+    symbol: PropTypes.string.isRequired,
+    balance: PropTypes.string.isRequired,
+    linkedAddress: PropTypes.string.isRequired,
+    accountAddress: PropTypes.string.isRequired,
+  }
+
+  render () {
+    const {symbol, balance, linkedAddress, accountAddress} = this.props
+
+    return (
+      <View style={styles.container}>
+        <View style={styles.iconContainer}>
+          <Image style={styles.icon}/>
+        </View>
+        <Text style={styles.name}>Name</Text>
+        <View>
+          <View style={styles.coinContainer}>
+            <Text style={styles.symbol}>{symbol}</Text>
+            <Text style={styles.balance}>{balance}</Text>
           </View>
-          <Text style={styles.name}>Name</Text>
-          <View>
-            <View style={styles.coinContainer}>
-              <Text style={styles.symbol}>{symbol}</Text>
-              <Text style={styles.balance}>{balance}</Text>
-            </View>
-            <View style={styles.addressContainer}>
-              <Text style={styles.linkedAddress}>{linkedAddress}</Text>
-              <Text style={styles.accountAddress}>{accountAddress}</Text>
-            </View>
+          <View style={styles.addressContainer}>
+            <Text style={styles.linkedAddress}>{linkedAddress}</Text>
+            <Text style={styles.accountAddress}>{accountAddress}</Text>
           </View>
         </View>
-      )
-    }
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({

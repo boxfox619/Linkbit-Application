@@ -10,12 +10,13 @@ const SecurityDetailView = (props => {
     <>
       {
         view === 'pin' ?
-          <PinCodeView onVerifySuccess={() => onVerifySuccess(false)} /> :
-          <FingerPrintView onVerifySuccess={() => onVerifySuccess(false)} />
+          <PinCodeView onVerifySuccess={() => onVerifySuccess(false)}/> :
+          <FingerPrintView onVerifySuccess={() => onVerifySuccess(false)}/>
       }
     </>
   )
 })
+
 export default class SecurityView extends React.Component {
 
   constructor (props) {
@@ -36,10 +37,10 @@ export default class SecurityView extends React.Component {
       <View style={styles.container}>
         {
           view ? (
-            <SecurityDetailView
-              view={view}
-              onVerifySuccess={this.handleVerifySuccess} />
-          ):
+              <SecurityDetailView
+                view={view}
+                onVerifySuccess={this.handleVerifySuccess}/>
+            ) :
             this.state.isVerify ?
               <>
                 <TouchableOpacity
@@ -57,7 +58,7 @@ export default class SecurityView extends React.Component {
               </> : (
                 <PinCodeView
                   needVerify
-                  onVerifySuccess={this.handleVerifySuccess} />
+                  onVerifySuccess={this.handleVerifySuccess}/>
               )}
       </View>
     )
@@ -67,7 +68,6 @@ export default class SecurityView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
   },
   listItem: {
     padding: 20,

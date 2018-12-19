@@ -5,12 +5,14 @@ import { PRIMARY_COLOR } from '../../libs/Constraints'
 import { Navbar } from '../../components'
 import TransactionListView from '../TransactionListView/TransactionListView'
 import WalletListView from './WalletListView'
+import SettingView from '../SettingView/SettingView'
+import i18n from '../../libs/Locale'
 
 export default class MainTabView extends React.Component {
 
   static navigationOptions = { header: null }
 
-  constructor() {
+  constructor () {
     super()
     this.state = {
       selectedIndex: 0,
@@ -18,17 +20,16 @@ export default class MainTabView extends React.Component {
       headerIcon: {},
     }
   }
-
   render() {
-    const { selectedIndex } = this.state
+      const {headerTitle, headerIcon, selectedIndex} = this.state
 
     return (
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
           <Header
             backgroundColor="#ffffff"
-            leftComponent={<Text style={styles.title}>{this.state.headerTitle}</Text>}
-            rightComponent={this.state.headerIcon}
+            leftComponent={<Text style={styles.title}>{i18n.t(headerTitle)}</Text>}
+            rightComponent={headerIcon}
             outerContainerStyles={{ borderBottomWidth: 0, height: 80 }} />
           <View style={styles.content}>
             {this.renderContents()}
@@ -52,9 +53,9 @@ export default class MainTabView extends React.Component {
       case 0:
         return <WalletListView navigation={this.props.navigation}/>
       case 1:
-        return <TransactionListView />
+        return <TransactionListView/>
       case 2:
-        return <View />
+        return <SettingView />
     }
   }
 
@@ -67,18 +68,18 @@ export default class MainTabView extends React.Component {
   }
 
   updateIndex = (selectedIndex) => {
-    const state = { selectedIndex }
+    const state = {selectedIndex}
     switch (selectedIndex) {
       case 0:
-        state.headerTitle = 'WALLET'
-        state.headerIcon = { icon: 'payment', color: '#000000', marginRight: 10, onPress: () => this.props.navigation.navigate('Address') }
+        state.headerTitle = 'wallet'
+        state.headerIcon = {icon: 'payment', color: '#000000', marginRight: 10, onPress: () => this.props.navigation.navigate('Address')}
         break
       case 1:
-        state.headerTitle = 'TRANSACTION'
+        state.headerTitle = 'transaction'
         state.headerIcon = undefined
         break
       case 2:
-        state.headerTitle = 'SETTING'
+        state.headerTitle = 'setting'
         state.headerIcon = undefined
         break
     }

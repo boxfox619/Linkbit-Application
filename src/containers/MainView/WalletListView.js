@@ -4,12 +4,13 @@ import { inject, observer } from 'mobx-react'
 import { WalletList } from '../../components'
 import { PRIMARY_COLOR } from '../../libs/Constraints'
 import ActionButton from 'react-native-action-button'
+import i18n from '../../libs/Locale'
 
 @inject(['wallet'])
 @observer
 export default class WalletListView extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       test: false,
@@ -19,11 +20,17 @@ export default class WalletListView extends React.Component {
     }
   }
 
-  render() {
+  openWalletDetail = (w) => {
+    //@TODO imp
+    //
+    // lement wallet detail open
+  }
+
+  render () {
     return (
       <View style={styles.container}>
         <View style={styles.totalBalanceCard}>
-          <Text style={styles.totalBalanceLabel}>총 자산</Text>
+          <Text style={styles.totalBalanceLabel}>{i18n.t('wallet_total')}</Text>
           <Text style={styles.totalBalanceAddressLabel}>{this.state.linkedAddress}</Text>
           <View style={styles.balanceGroup}>
             <Text style={styles.balance}>{this.state.totalBalance}</Text>
@@ -41,13 +48,6 @@ export default class WalletListView extends React.Component {
       </View>
     )
   }
-
-  openWalletDetail = (w) => {
-    //@TODO imp
-    //
-    // lement wallet detail open
-  }
-
 }
 
 const styles = StyleSheet.create({

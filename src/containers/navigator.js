@@ -1,4 +1,5 @@
-import { createStackNavigator } from 'react-navigation'
+import {createStackNavigator} from 'react-navigation'
+import i18n from '../libs/Locale'
 import MainTabView from './MainView/MainTabView'
 import AddressListView from './AddressView/AddressListView'
 import AddressManagementView from './AddressView/AddressManagementView'
@@ -9,27 +10,27 @@ import SelectWalletDetailView from './CreateWalletView/SelectWalletDetailView/Se
 import InputWalletDetailView from './CreateWalletView/InputWalletInformationView/InputWalletInformationView'
 
 export default createStackNavigator({
-  Main: {
-    screen: MainTabView,
-    navigationOptions: () => ({
-      header: null,
-    }),
-  },
-  Address: {
-    screen: AddressListView,
-    navigationOptions: () => ({
-      title: 'Own Address List',
-      headerBackTitle: 'AddressList',
-    }),
-  },
-  AddressBuy: AddressBuyContainer,
-  AddressManagement: AddressManagementView,
-  WalletSearch: WalletSearchView,
-  SelectWallet: SelectWalletView,
-  SelectWalletDetail: SelectWalletDetailView,
-  InputWalletDetail: InputWalletDetailView
-},
-  {
-    initialRouteName: 'Main',
-  },
+        Main: {
+            screen: MainTabView,
+            navigationOptions: () => ({
+                header: null,
+            }),
+        },
+        Address: {
+            screen: AddressListView,
+            navigationOptions: () => ({
+                title: i18n.t('address_list'),
+                headerBackTitle: i18n.t('address_list_back'),
+            }),
+        },
+        AddressBuy: AddressBuyContainer,
+        AddressManagement: AddressManagementView,
+        WalletSearch: WalletSearchView,
+        SelectWallet: SelectWalletView,
+        SelectWalletDetail: SelectWalletDetailView,
+        InputWalletDetail: InputWalletDetailView
+    },
+    {
+        initialRouteName: 'Main',
+    },
 )

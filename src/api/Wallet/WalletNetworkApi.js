@@ -16,7 +16,7 @@ export default class WalletNetworkApi {
     } catch (error) {
       console.log(error)
     }
-  };
+  }
 
   updateWallet = async (address, name, password, description) => {
     try {

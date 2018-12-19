@@ -9,14 +9,14 @@ export class HeaderButtonWithTitle extends React.Component {
       icon: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       onIconClicked: PropTypes.func.isRequired,
-    };
+    }
 
     static defaultProps = {
       icon: 'arrow-back',
       title: '',
       onIconClicked: () => {
       },
-    };
+    }
 
     render() {
       return (

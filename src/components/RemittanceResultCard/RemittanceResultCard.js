@@ -3,17 +3,17 @@ import PropTypes from 'prop-types'
 import { View, StyleSheet, Text, Image } from 'react-native'
 
 export default class CardSummary extends React.Component {
-  render() {
-    const { symbol, balance, linkedAddress, accountAddress } = this.props
+  render () {
+    const {symbol, balance, linkedAddress, accountAddress} = this.props
 
     return (
       <View style={styles.cardSummary}>
         <View style={styles.iconContainer}>
-          <Image style={styles.icon} />
+          <Image style={styles.icon}/>
         </View>
         <Text style={styles.title}>해당 주소로</Text>
         <Text style={styles.title}>
-          <Text style={[styles.title, { fontWeight: 'bold' }]}>{`${symbol} ${balance} `}</Text>
+          <Text style={[styles.title, {fontWeight: 'bold'}]}>{`${symbol} ${balance} `}</Text>
           <Text style={styles.title}>송금 완료</Text>
         </Text>
         <Text style={styles.detail}>{`받는 주소 : ${linkedAddress}`}</Text>

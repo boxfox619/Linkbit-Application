@@ -4,14 +4,14 @@ import { View, StyleSheet, Image, TextInput } from 'react-native'
 const searchBarIcon = require('./img/search.png')
 
 export default class SearchBar extends React.Component {
-  render() {
+  render () {
     return (
       <View style={styles.searchBar}>
         <Image
           style={styles.searchBarIcon}
-          source={searchBarIcon} />
-        <View style={styles.divider} />
-        <TextInput style={styles.searchBarInput} />
+          source={searchBarIcon}/>
+        <View style={styles.divider}/>
+        <TextInput style={styles.searchBarInput}/>
       </View>
     )
   }
@@ -32,9 +32,10 @@ const styles = StyleSheet.create({
   searchBarIcon: {
     width: 47,
     height: 47,
-    transform: [{
-      scale: 0.5,
-    }],
+    transform: [
+      {
+        scale: 0.5,
+      }],
   },
   searchBarInput: {
     height: 47,
