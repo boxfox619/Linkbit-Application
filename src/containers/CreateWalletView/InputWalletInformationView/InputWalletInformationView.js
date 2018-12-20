@@ -4,6 +4,8 @@ import NavigationButton from '../../../components/NavigationButton/NavigationBut
 import Input from '../../../components/Input/Input'
 import SegmentedControl from '../../../components/SegmentedControl/SegmentedControl'
 import withTitle from '../../../components/HOC/withTitle'
+import BorderCard from "../../../components/Card/BorderCard";
+import Coin from "../Coin/Coin";
 
 const InputWithTitle = withTitle(Input)
 const SegmentedControlWithTitle = withTitle(SegmentedControl)
@@ -14,7 +16,7 @@ export default class InputWalletInformationView extends React.Component {
         coin: {}
     }
 
-    componentDidMount() {
+    componentWillMount() {
         const coin = this.props.navigation.getParam('coin', {})
         this.setState({ coin })
     }
@@ -26,10 +28,7 @@ export default class InputWalletInformationView extends React.Component {
             <SafeAreaView>
                 <View style={styles.container}>
                     <View style={{ paddingHorizontal: 20 }}>
-                        <View style={[styles.card, { backgroundColor: coin.themeColor }]}>
-                            <Image style={styles.icon}
-                                source={coin.icon} />
-                        </View>
+                        <Coin name={coin.name} symbol={coin.symbol} themeColor={coin.themeColor} onPress={()=>{}} activate={true}/>
                         <InputWithTitle title={'지갑 이름'} />
                         <InputWithTitle title={'지갑 설명'} />
                         <InputWithTitle title={'비밀번호'}
