@@ -1,32 +1,36 @@
 import React from 'react'
-import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native'
+import PropTypes from 'prop-types'
+import {HOST} from "../../../libs/Constraints"
+import { View, StyleSheet, Image, Text } from 'react-native'
+import BorderCard from "../../../components/Card/BorderCard";
 
 export default class Coin extends React.Component {
-    state = {
-        isHighlighted: false
+
+    static propTypes = {
+        name: PropTypes.string.isRequired,
+        symbol: PropTypes.string.isRequired,
+        themeColor: PropTypes.string.isRequired,
+        onPress: PropTypes.func.isRequired,
+        activate: PropTypes.bool.isRequired
     }
 
-    componentDidMount() {
-        this.setState({ isHighlighted: this.props.isHighlighted })
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({ isHighlighted: nextProps.isHighlighted })
+    static defaultProps = {
+        activate: false
     }
 
     render() {
-        const { name, symbol, icon, themeColor, updateSelectedIndex } = this.props
-        const { isHighlighted } = this.state
+        const { name, symbol, themeColor, activate, onPress } = this.props
         return (
-            <TouchableOpacity style={[styles.container, { borderColor: themeColor, backgroundColor: isHighlighted ? themeColor : 'white' }]}
-                onPress={updateSelectedIndex}>
-                <Image style={styles.icon}
-                    source={icon} />
-                <View style={styles.titleContainer}>
-                    <Text style={[styles.title, { color: isHighlighted ? 'white' : themeColor }]}>{name}</Text>
-                    <Text style={[styles.subtitle, { color: isHighlighted ? 'white' : themeColor }]}>{symbol}</Text>
+            <BorderCard themeColor={themeColor} activate={activate} onPress={onPress}>
+                <View style={styles.container}>
+                    <Image style={styles.icon} source={{uri: `${HOST}/assets/${symbol}.png`}} resizeMode={'contain'}/>
+                    <View style={styles.titleContainer}>
+                        <Text style={[styles.title, { color: activate ? 'white' : themeColor }]}>{name}</Text>
+                        <Text style={[styles.subtitle, { color: activate ? 'white' : themeColor }]}>{symbol}</Text>
+                    </View>
                 </View>
-            </TouchableOpacity>)
+            </BorderCard>
+        )
     }
 }
 
@@ -34,17 +38,11 @@ const styles = StyleSheet.create({
     container: {
         display: 'flex',
         flexDirection: 'row',
-        width: '100%',
-        borderRadius: 5,
-        borderWidth: 3,
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-        marginVertical: 3,
         position: 'relative',
     },
     icon: {
-        width: 40,
         height: 40,
+        width: 40
     },
     titleContainer: {
         paddingStart: 10,

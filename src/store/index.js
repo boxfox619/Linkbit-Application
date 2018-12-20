@@ -1,11 +1,11 @@
 import AddressStore from './Address/AddressStore'
-import CoinStore from './Coin/CoinStore'
+import CoinPriceStore from './Coin/CoinPriceStore'
 import TransactionStore from './Transaction/TransactionStore'
 import WalletStore from './Wallet/WalletStore'
 
 export {
   AddressStore,
-  CoinStore,
+  CoinPriceStore,
   TransactionStore,
   WalletStore,
 }

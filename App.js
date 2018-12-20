@@ -3,11 +3,11 @@ import { StyleSheet, View } from 'react-native'
 import { createAppContainer } from 'react-navigation'
 import { Provider } from 'mobx-react'
 import Navigator from './src/containers/Navigator'
-import { WalletStore, CoinStore, AddressStore } from './src/store'
+import { WalletStore, CoinPriceStore, AddressStore } from './src/store'
 
 const store = {
   wallet: WalletStore,
-  coin: CoinStore,
+  coin: CoinPriceStore,
   address: AddressStore,
 }
 const AppContainer = createAppContainer(Navigator)
