@@ -1,31 +1,32 @@
-import React from 'react';
-import {View, StyleSheet} from 'react-native'
-import {WalletSummaryCard, TransactionList} from '../../components'
-import {TransactionStore} from "../../store";
+import React from 'react'
+import { View, StyleSheet } from 'react-native'
+import { WalletSummaryCard, TransactionList } from '../../components'
+import { TransactionStore } from '../../store'
 
 export default class TransactionListView extends React.Component {
-    constructor(props){
-        super(props)
-        this.store = new TransactionStore()
-    }
-    render() {
-        return (
-            <View style={styles.container}>
-                <WalletSummaryCard symbol={''} accountAddress={''} linkedAddress={''} balance={''}/>
-                <TransactionList fetchTransaction={this.fetchTransaction} data={this.store.transactions}/>
-            </View>
-        )
-    }
+  constructor (props) {
+    super(props)
+    this.store = new TransactionStore()
+  }
 
-    fetchTransaction = (page, count) => {
-        this.store.fetchTransactions(page, count)
-    }
+  fetchTransaction = (page, count) => {
+    this.store.fetchTransactions(page, count)
+  }
+
+  render () {
+    return (
+      <View style={styles.container}>
+        <WalletSummaryCard symbol="" accountAddress="" linkedAddress="" balance=""/>
+        <TransactionList fetchTransaction={this.fetchTransaction} data={this.store.transactions}/>
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        width: '100%',
-        height: '100%',
-        paddingVertical: 0,
-    }
-});
+  container: {
+    width: '100%',
+    height: '100%',
+    paddingVertical: 0,
+  },
+})

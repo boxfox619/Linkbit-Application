@@ -10,4 +10,5 @@ export default {
             return new WalletStorageApi();
         }
     }
+  },
 }

@@ -1,44 +1,41 @@
-import WalletApi from '../../api/Wallet/WalletApi';
-import Wallet from './Wallet';
-import {observable, computed, runInAction} from 'mobx';
+import {observable, computed, runInAction} from 'mobx'
+import WalletApi from '../../api/Wallet/WalletApi'
+import Wallet from './Wallet'
 
 class WalletStore {
-    @observable wallets = [];
-    walletApi;
+    @observable wallets = []
+    walletApi
 
     constructor() {
-        this.walletApi = WalletApi.create();
+        this.walletApi = WalletApi.create()
     }
 
     loadWalletList = async () => {
-        const wallets = await this.walletApi.fetchWallets();
+        const wallets = await this.walletApi.fetchWallets()
         runInAction(() => {
             this.wallets = wallets.map(json => {
-                let wallet = new Wallet();
-                wallet.updateFromJson(json);
-                return wallet;
-            });
-        });
+                const wallet = new Wallet()
+                wallet.updateFromJson(json)
+
+                return wallet
+            })
+        })
     }
 
-    addWallet = async (wallet) => {
-        const result = await this.walletApi.createWallet(wallet.asJson());
-        if (result) {
-            runInAction(() => {
-                this.wallets = [...this.wallets, wallet]
-            })
-        } else {
-            //@TODO implement fail create wallet
-        }
+    createWallet = async (symbol, name, password) => {
+        const walletData = await this.walletApi.createWallet(symbol, password)
+        runInAction(() => {
+            this.wallets = [...this.wallets, {...walletData, name}]
+        })
     }
 
     @computed get walletList() {
-        return this.wallets;
+        return this.wallets
     }
 
     @computed get walletCount() {
-        return this.wallets.length;
+        return this.wallets.length
     }
 }
 
-export default new WalletStore();
+export default new WalletStore()

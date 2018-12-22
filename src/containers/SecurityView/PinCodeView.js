@@ -13,26 +13,6 @@ export default class PinCodeView extends React.Component {
     }
   }
 
-  render () {
-    const {needVerify, onVerifySuccess} = this.props
-    const {label, newPin} = this.state
-
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>
-          {needVerify ? 'PIN 번호를 입력해주세요' : label}
-        </Text>
-        <PinCodeInput
-          style={styles.pin}
-          onComplete={(val, clear) => newPin || needVerify ?
-            this.handleVerifyPinCode(val, onVerifySuccess, clear()) :
-            this.handleChangePinCode(val, clear())}
-          pinLength={5}
-          inputActiveBgColor='#e8a93a'/>
-      </View>
-    )
-  }
-
   handleVerifyPinCode = (inputPin, onVerifySuccess) => {
     const targetPin = this.state.newPin || this.state.originPin
 
@@ -54,6 +34,26 @@ export default class PinCodeView extends React.Component {
       label: '새로운 PIN 번호를 확인해주세요',
       newPin,
     })
+  }
+
+  render () {
+    const {needVerify, onVerifySuccess} = this.props
+    const {label, newPin} = this.state
+
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>
+          {needVerify ? 'PIN 번호를 입력해주세요' : label}
+        </Text>
+        <PinCodeInput
+          style={styles.pin}
+          onComplete={(val, clear) => newPin || needVerify ?
+            this.handleVerifyPinCode(val, onVerifySuccess, clear()) :
+            this.handleChangePinCode(val, clear())}
+          pinLength={5}
+          inputActiveBgColor='#e8a93a'/>
+      </View>
+    )
   }
 }
 

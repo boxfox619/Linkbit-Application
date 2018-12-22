@@ -1,34 +1,34 @@
-import { observable, computed, runInAction, reaction } from 'mobx';
+import { observable, computed, runInAction, reaction } from 'mobx'
 
 export default class Transaction {
-  @observable hash;
-  @observable symbol;
-  @observable sourceAddress;
-  @observable targetAddress;
-  @observable amount;
-  @observable status;
+  @observable hash
+  @observable symbol
+  @observable sourceAddress
+  @observable targetAddress
+  @observable amount
+  @observable status
   @observable date
   @observable email
   @observable address
   @observable coin
   @observable confirm
 
-  constructor(store) {
-    this.store = store;
+  constructor (store) {
+    this.store = store
   }
 
-  @computed get asJson() {
+  @computed get asJson () {
     return {
       hash: this.hash,
       symbol: this.symbol,
       sourceAddress: this.sourceAddress,
       targetAddress: this.targetAddress,
       amount: this.amount,
-      status: this.status
-    };
+      status: this.status,
+    }
   }
 
-  updateFromJson(json) {
+  updateFromJson (json) {
     this.hash = json.hash
     this.symbol = json.symbol
     this.sourceAddress = json.sourceAddress

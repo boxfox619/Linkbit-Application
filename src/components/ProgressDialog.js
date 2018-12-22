@@ -15,13 +15,15 @@ export default class ProgressDialog extends React.Component {
     }
 
     render() {
-        return (<Modal onRequestClose={() => null}>
-            <View style={{flex: 1, backgroundColor: '#dcdcdc', alignItems: 'center', justifyContent: 'center'}}>
-                <View style={{borderRadius: 10, backgroundColor: 'white', padding: 25}}>
-                    <Text style={{fontSize: 20, fontWeight: '200'}}>{this.props.label}</Text>
-                    <ActivityIndicator size="large"/>
+        return (
+            <Modal onRequestClose={() => null}>
+                <View style={{ flex: 1, backgroundColor: '#dcdcdc', alignItems: 'center', justifyContent: 'center' }}>
+                    <View style={{ borderRadius: 10, backgroundColor: 'white', padding: 25 }}>
+                        <Text style={{ fontSize: 20, fontWeight: '200' }}>{this.props.label}</Text>
+                        <ActivityIndicator size="large" />
+                    </View>
                 </View>
-            </View>
-        </Modal>);
+            </Modal>
+        );
     }
 }
