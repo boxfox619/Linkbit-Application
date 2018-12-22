@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { createAppContainer } from 'react-navigation'
 import { Provider } from 'mobx-react'
-import Navigator from './src/containers/Navigator'
+import Navigator from './src/containers/navigator'
 import { WalletStore, CoinPriceStore, AddressStore } from './src/store'
 
 const store = {
