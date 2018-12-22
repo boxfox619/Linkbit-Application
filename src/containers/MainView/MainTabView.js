@@ -21,7 +21,7 @@ export default class MainTabView extends React.Component {
     }
   }
   render() {
-      const {headerTitle, headerIcon, selectedIndex} = this.state
+    const {headerTitle, headerIcon, selectedIndex} = this.state
 
     return (
       <SafeAreaView style={styles.safeArea}>
@@ -50,12 +50,12 @@ export default class MainTabView extends React.Component {
 
   renderContents = () => {
     switch (this.state.selectedIndex) {
-      case 0:
-        return <WalletListView navigation={this.props.navigation}/>
-      case 1:
-        return <TransactionListView/>
-      case 2:
-        return <SettingView />
+    case 0:
+      return <WalletListView navigation={this.props.navigation} />
+    case 1:
+      return <TransactionListView />
+    case 2:
+      return <SettingView />
     }
   }
 
@@ -70,18 +70,18 @@ export default class MainTabView extends React.Component {
   updateIndex = (selectedIndex) => {
     const state = {selectedIndex}
     switch (selectedIndex) {
-      case 0:
-        state.headerTitle = 'wallet'
-        state.headerIcon = {icon: 'payment', color: '#000000', marginRight: 10, onPress: () => this.props.navigation.navigate('Address')}
-        break
-      case 1:
-        state.headerTitle = 'transaction'
-        state.headerIcon = undefined
-        break
-      case 2:
-        state.headerTitle = 'setting'
-        state.headerIcon = undefined
-        break
+    case 0:
+      state.headerTitle = 'wallet'
+      state.headerIcon = {icon: 'payment', color: '#000000', marginRight: 10, onPress: () => this.props.navigation.navigate('Address')}
+      break
+    case 1:
+      state.headerTitle = 'transaction'
+      state.headerIcon = undefined
+      break
+    case 2:
+      state.headerTitle = 'setting'
+      state.headerIcon = undefined
+      break
     }
     this.setState(state)
   }

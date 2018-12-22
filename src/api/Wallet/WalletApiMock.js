@@ -35,9 +35,10 @@ export default class WalletApiMock {
     }
 
     createWallet = async (symbol, password) => {
-        let address = Math.random().toString(36).substring(7);
-        let linkAddress = Math.random().toString(36).substring(7);
-        return await {symbol, balance: 0, address: `0xAavq${address}`, linkedAddress: `Linkbit-${linkAddress}`}
+      const address = Math.random().toString(36).substring(7)
+      const linkAddress = Math.random().toString(36).substring(7)
+      
+      return await {symbol, balance: 0, address: `0xAavq${address}`, linkedAddress: `Linkbit-${linkAddress}`}
     }
 
 }

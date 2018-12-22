@@ -26,7 +26,7 @@ export default class AddressBuyFinishView extends React.Component {
         <Button
           title="finish"
           onPress={this.onFinish}
-          buttonStyle={styles.getAddressButton}/>
+          buttonStyle={styles.getAddressButton} />
       </View>
     )
   }

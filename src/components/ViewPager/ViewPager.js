@@ -60,7 +60,7 @@ export default class ViewPager extends Component {
         ref={VIEWPAGER_REF}
         key={this.props.children ? this.props.children.length : 0}
         onPageScroll={this._onPageScrollOnAndroid}
-        onPageSelected={this._onPageSelectedOnAndroid}/>
+        onPageSelected={this._onPageSelectedOnAndroid} />
     )
   }
 
@@ -99,10 +99,10 @@ export default class ViewPager extends Component {
       marginHorizontal: -this.props.pageMargin / 2,
     }
     if (this.props.style && !this.props.style.height)
-      return <ScrollView {...props} style={[scrollViewStyle, this.props.style]}/>
+      return <ScrollView {...props} style={[scrollViewStyle, this.props.style]} />
     else return (
       <View style={this.props.style}>
-        <ScrollView {...props} style={scrollViewStyle}/>
+        <ScrollView {...props} style={scrollViewStyle} />
       </View>
     )
   }

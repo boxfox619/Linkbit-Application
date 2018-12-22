@@ -11,7 +11,7 @@ export default class AddressInput extends React.Component {
           style={styles.addressInput}
           value={address}
           onChangeText={onChangeText}
-          placeholder="Type address here"/>
+          placeholder="Type address here" />
       </View>
     )
   }

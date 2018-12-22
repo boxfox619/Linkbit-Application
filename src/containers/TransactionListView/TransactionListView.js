@@ -16,8 +16,8 @@ export default class TransactionListView extends React.Component {
   render () {
     return (
       <View style={styles.container}>
-        <WalletSummaryCard symbol="" accountAddress="" linkedAddress="" balance=""/>
-        <TransactionList fetchTransaction={this.fetchTransaction} data={this.store.transactions}/>
+        <WalletSummaryCard symbol="" accountAddress="" linkedAddress="" balance="" />
+        <TransactionList fetchTransaction={this.fetchTransaction} data={this.store.transactions} />
       </View>
     )
   }

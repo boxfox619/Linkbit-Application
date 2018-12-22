@@ -34,7 +34,7 @@ export default class Navbar extends React.Component {
           <NavIcon
             icon={tab.icon}
             label={tab.label}
-            color={this.props.selectedIndex === idx ? this.props.activeColor : this.props.defaultColor}/>
+            color={this.props.selectedIndex === idx ? this.props.activeColor : this.props.defaultColor} />
         </TouchableOpacity>
       )
     })

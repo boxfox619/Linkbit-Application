@@ -25,11 +25,11 @@ export default class FingerPrintView extends React.Component {
         <Image
           style={{position: 'absolute', top: -(height / 100 * 10), width: width / 100 * 120}}
           source={backgroundImg}
-          resizeMode="contain"/>
+          resizeMode="contain" />
         <Image
           style={{position: 'absolute', top: height / 100 * 36, marginBottom: 40, width: 60}}
           source={fingerprintImg}
-          resizeMode="contain"/>
+          resizeMode="contain" />
         <View style={{position: 'absolute', bottom: 30}}>
           <Text style={styles.title}>지문인식</Text>
           <Text style={styles.content}>
@@ -38,7 +38,7 @@ export default class FingerPrintView extends React.Component {
             {' '}
             홈버튼에 손가락을 올려주세요.
           </Text>
-          <Button title={this.state.buttonLabel} onPress={this.onSkipPress}/>
+          <Button title={this.state.buttonLabel} onPress={this.onSkipPress} />
         </View>
       </View>
     )

@@ -29,7 +29,7 @@ export default class WalletList extends React.Component {
             moneySymbol={this.props.moneySymbol}
             wallets={wallets}
             onToggled={() => {this.selectedCoin = symbol}}
-            onWalletSelected={wallet => this.props.onWalletSelected(wallet)}/>
+            onWalletSelected={wallet => this.props.onWalletSelected(wallet)} />
         )
       })
     }

@@ -16,7 +16,7 @@ export default class WalletSummaryCard extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.iconContainer}>
-          <Image style={styles.icon}/>
+          <Image style={styles.icon} />
         </View>
         <Text style={styles.name}>Name</Text>
         <View>

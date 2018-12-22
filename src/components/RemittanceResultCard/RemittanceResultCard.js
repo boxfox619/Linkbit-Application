@@ -9,7 +9,7 @@ export default class CardSummary extends React.Component {
     return (
       <View style={styles.cardSummary}>
         <View style={styles.iconContainer}>
-          <Image style={styles.icon}/>
+          <Image style={styles.icon} />
         </View>
         <Text style={styles.title}>해당 주소로</Text>
         <Text style={styles.title}>

@@ -23,7 +23,7 @@ export default class AmountInput extends React.Component {
         <TextInput
           style={styles.unitInput}
           value={amount}
-          onChangeText={text => onChangeText(text)}/>
+          onChangeText={text => onChangeText(text)} />
         <View style={styles.unitPicker}>
           <DropdownMenu
             bgColor="transparent"
@@ -35,7 +35,7 @@ export default class AmountInput extends React.Component {
             titleStyle={{color: '#594343'}}
             // maxHeight={300}
             handler={onOptionChange}
-            data={data}/>
+            data={data} />
         </View>
       </View>
     )

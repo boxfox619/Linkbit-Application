@@ -99,7 +99,7 @@ export default class SettingView extends React.Component {
           viewName === 'SettingView' ?
             this.onRenderSettingList() :
             viewName === 'SecurityView' ?
-              <SecurityView/> :
+              <SecurityView /> :
               viewName === 'ResetView' ?
                 Alert.alert(
                   i18n.t('reset_mainTxt'),
@@ -112,7 +112,7 @@ export default class SettingView extends React.Component {
                 ) : (
                   <SettingTouchableView
                     viewName={viewName}
-                    onSetView={this.handleSetView}/>
+                    onSetView={this.handleSetView} />
                 )}
       </View>
     )

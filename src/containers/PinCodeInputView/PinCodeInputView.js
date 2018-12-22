@@ -37,7 +37,7 @@ export default class PinCodeInputView extends React.Component {
           style={styles.pin}
           onComplete={(val, clear) => this.onPinEntered(val, clear())}
           pinLength={5}
-          inputActiveBgColor="#e8a93a"/>
+          inputActiveBgColor="#e8a93a" />
       </View>
     )
   }

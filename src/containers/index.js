@@ -17,5 +17,5 @@ export {
   MainTabView,
   AddressListView,
   TransactionListView,
-  SettingView
+  SettingView,
 }

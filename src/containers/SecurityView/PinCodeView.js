@@ -52,7 +52,7 @@ export default class PinCodeView extends React.Component {
             this.handleVerifyPinCode(val, onVerifySuccess, clear()) :
             this.handleChangePinCode(val, clear())}
           pinLength={5}
-          inputActiveBgColor='#e8a93a'/>
+          inputActiveBgColor='#e8a93a' />
       </View>
     )
   }

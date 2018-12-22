@@ -29,7 +29,9 @@ export default class WalletCard extends React.Component {
         onPress={this.props.onPress}
         themeColor={this.props.themeColor}>
         <Text
-          style={[styles.label, this.getTextColor()]}>{this.props.name}</Text>
+          style={[styles.label, this.getTextColor()]}>
+          {this.props.name}
+        </Text>
         <View style={styles.valuesWrapper}>
           <View style={styles.values}>
             <Text style={[styles.symbol, this.getTextColor()]}>{this.props.symbol}</Text>
@@ -46,6 +48,7 @@ export default class WalletCard extends React.Component {
 
   getTextColor = () => {
     const themeColor = this.props.themeColor
+    
     return {color: themeColor.length === 0 ? PRIMARY_COLOR : themeColor}
   }
 }

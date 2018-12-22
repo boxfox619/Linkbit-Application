@@ -9,9 +9,9 @@ export default class SearchBar extends React.Component {
       <View style={styles.searchBar}>
         <Image
           style={styles.searchBarIcon}
-          source={searchBarIcon}/>
-        <View style={styles.divider}/>
-        <TextInput style={styles.searchBarInput}/>
+          source={searchBarIcon} />
+        <View style={styles.divider} />
+        <TextInput style={styles.searchBarInput} />
       </View>
     )
   }

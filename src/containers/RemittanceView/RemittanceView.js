@@ -82,7 +82,7 @@ export default class RemmittanceView extends React.Component {
       <View style={styles.container}>
         <View style={styles.wrapper}>
           <Text style={styles.title}>출금 지갑</Text>
-          <CardSummary/>
+          <CardSummary />
           {/* <Text style={styles.title}>{'송금 방법'}</Text>
                     <SegmentedControl options={['친구', '지갑']}
                         selectedIndex={method}
@@ -107,22 +107,22 @@ export default class RemmittanceView extends React.Component {
           {/* Wallet */}
           {
             method === RemittanceType.Wallet ? (
-                <React.Fragment>
-                  <Text style={styles.title}>지갑 주소</Text>
-                  <AddressInput
-                    address={addressTo}
-                    onChangeText={addressTo => this.setState({addressTo})}/>
-                </React.Fragment>
-              ) :
+              <React.Fragment>
+                <Text style={styles.title}>지갑 주소</Text>
+                <AddressInput
+                  address={addressTo}
+                  onChangeText={addressTo => this.setState({addressTo})} />
+              </React.Fragment>
+            ) :
               null
           }
           {
             step >= 2 && method === RemittanceType.Wallet ? (
-                <React.Fragment>
-                  <Text style={styles.title}>받는 주소</Text>
-                  <AddressBox address={addressTo}/>
-                </React.Fragment>
-              ) :
+              <React.Fragment>
+                <Text style={styles.title}>받는 주소</Text>
+                <AddressBox address={addressTo} />
+              </React.Fragment>
+            ) :
               null
           }
           {/* Common */}
@@ -133,23 +133,23 @@ export default class RemmittanceView extends React.Component {
           }
           {
             step === 2 ? (
-                <AmountInput
-                  data={[['KRW', 'USD']]}
-                  value={amount}
-                  onChangeText={this.numberChanged}
-                  onOptionChange={(selection, row) => this.setState({symbol: data[selection][row]})}/>
-              ) :
+              <AmountInput
+                data={[['KRW', 'USD']]}
+                value={amount}
+                onChangeText={this.numberChanged}
+                onOptionChange={(selection, row) => this.setState({symbol: data[selection][row]})} />
+            ) :
               null
           }
           {
             step === 3 ?
-              <AmountBox/> :
+              <AmountBox /> :
               null
           }
         </View>
         <NavigationButton
           title={step === 3 ? '송금하기' : '다음'}
-          onPress={this.postCoin}/>
+          onPress={this.postCoin} />
       </View>
     )
   }

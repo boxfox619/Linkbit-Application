@@ -8,12 +8,12 @@ const KeyboardView = ({keyboardOnPress, pinLength, onComplete, bgColor, returnTy
     let onPressActive
     let component
     if (item === 'empty') {
-      return (<View style={[styles[0]]}/>)
+      return (<View style={[styles[0]]} />)
     }
     if (item === deleteText) {
       onPressActive = animatedDeleteButtonOnPress
       style = [styles[0]]
-      component = (<Image style={{width: 30, height: 30}} source={require('./img/ic_delete.png')}/>)
+      component = (<Image style={{width: 30, height: 30}} source={require('./img/ic_delete.png')} />)
     } else {
       onPressActive = false
       style = [styles[0]]
@@ -51,7 +51,7 @@ const KeyboardView = ({keyboardOnPress, pinLength, onComplete, bgColor, returnTy
       numColumns={3}
       renderItem={renderItem}
       data={data}
-      keyExtractor={(val, index) => 'pinViewItem-' + index}/>
+      keyExtractor={(val, index) => 'pinViewItem-' + index} />
   )
 }
 export default KeyboardView

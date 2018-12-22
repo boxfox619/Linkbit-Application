@@ -17,19 +17,19 @@ export default class AddressManagementView extends React.Component {
   render () {
     return (
       <View style={styles.container}>
-        <AddressCard address={this.currentAddressItem.address} linkedAddressCount={this.currentAddressItem.accountAddressList.length} activate/>
+        <AddressCard address={this.currentAddressItem.address} linkedAddressCount={this.currentAddressItem.accountAddressList.length} activate />
         <FlatList
           style={styles.list}
           data={this.currentAddressItem.accountAddressList}
           extraData={{size: this.currentAddressItem.accountAddressList.length}}
           keyExtractor={(item) => item.address}
           renderItem={({item}) => {
-            return (<WalletCard onPress={() => this.onWalletPressed(item)} name={item.address} symbol={item.symbol} moneySymbol="KRW"/>)
-          }}/>
+            return (<WalletCard onPress={() => this.onWalletPressed(item)} name={item.address} symbol={item.symbol} moneySymbol="KRW" />)
+          }} />
         <Button
           title={i18n.t('add_wallet')}
           buttonStyle={styles.getAddressButton}
-          onPress={() => this.onLinkNewWallet()}/>
+          onPress={() => this.onLinkNewWallet()} />
       </View>
     )
   }

@@ -53,7 +53,7 @@ export default class PagerDotIndicator extends Component {
       dotsView.push(
         <View
           style={[styles.dot, isSelect ? styles.selectDot : null, isSelect ? selectedDotStyle : dotStyle]}
-          key={i}/>,
+          key={i} />,
       )
     }
 

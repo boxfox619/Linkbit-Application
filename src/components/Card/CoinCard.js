@@ -33,8 +33,9 @@ export default class CoinCard extends React.Component {
   }
 
   getTextColor = () => {
-      const themeColor = this.getThemeColor();
-      return {color: (this.props.activate) ? '#ffffff' : themeColor}
+    const themeColor = this.getThemeColor()
+    
+    return {color: (this.props.activate) ? '#ffffff' : themeColor}
   }
 
   getIconUrl = () => {
@@ -63,7 +64,7 @@ export default class CoinCard extends React.Component {
           <Text style={[styles.value, this.getTextColor()]}>{this.props.price}</Text>
         </View>
         <View style={styles.iconWrapper}>
-          <Image style={styles.icon} soruce={{uri: this.getIconUrl()}}/>
+          <Image style={styles.icon} soruce={{uri: this.getIconUrl()}} />
         </View>
       </BorderCard>
     )

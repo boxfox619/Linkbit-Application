@@ -58,7 +58,7 @@ export default class IndicatorViewPager extends Component {
           ref={VIEWPAGER_REF}
           style={[styles.pager, this.props.pagerStyle]}
           onPageScroll={this._onPageScroll}
-          onPageSelected={this._onPageSelected}/>
+          onPageSelected={this._onPageSelected} />
         {this._renderIndicator()}
       </View>
     )

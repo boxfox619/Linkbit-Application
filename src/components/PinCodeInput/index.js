@@ -86,7 +86,7 @@ class PinCodeInput extends React.Component {
           animatedInputIndex={this.state.animatedInputIndex}
           pinViewAnim={this.state.pinViewAnim}
           bgColor={inputBgColor}
-          styles={[Styles.passwordInputView, Styles.passwordInputViewItem, Styles.passwordInputViewItemActive]}/>
+          styles={[Styles.passwordInputView, Styles.passwordInputViewItem, Styles.passwordInputViewItemActive]} />
         <View style={Styles.keyboardView}>
           <KeyboardView
             styles={[Styles.keyboardViewItem, Styles.keyboardViewItemText]}
@@ -98,7 +98,7 @@ class PinCodeInput extends React.Component {
             onComplete={onComplete}
             animatedDeleteButtonOnPress={this.state.animatedDeleteButtonOnPress}
             keyboardOnPress={this.keyboardOnPress}
-            returnType={returnType}/>
+            returnType={returnType} />
         </View>
       </View>
     )

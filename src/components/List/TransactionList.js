@@ -56,8 +56,8 @@ export default class TransactionList extends React.Component {
             address={item.address}
             amount={item.coin}
             symbol={item.symbol}
-            confirm={item.confirm}/>
-        )}/>
+            confirm={item.confirm} />
+        )} />
     )
   }
 }

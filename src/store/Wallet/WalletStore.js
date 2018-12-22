@@ -7,34 +7,34 @@ class WalletStore {
     walletApi
 
     constructor() {
-        this.walletApi = WalletApi.create()
+      this.walletApi = WalletApi.create()
     }
 
     loadWalletList = async () => {
-        const wallets = await this.walletApi.fetchWallets()
-        runInAction(() => {
-            this.wallets = wallets.map(json => {
-                const wallet = new Wallet()
-                wallet.updateFromJson(json)
+      const wallets = await this.walletApi.fetchWallets()
+      runInAction(() => {
+        this.wallets = wallets.map(json => {
+          const wallet = new Wallet()
+          wallet.updateFromJson(json)
 
-                return wallet
-            })
+          return wallet
         })
+      })
     }
 
     createWallet = async (symbol, name, password) => {
-        const walletData = await this.walletApi.createWallet(symbol, password)
-        runInAction(() => {
-            this.wallets = [...this.wallets, {...walletData, name}]
-        })
+      const walletData = await this.walletApi.createWallet(symbol, password)
+      runInAction(() => {
+        this.wallets = [...this.wallets, {...walletData, name}]
+      })
     }
 
     @computed get walletList() {
-        return this.wallets
+      return this.wallets
     }
 
     @computed get walletCount() {
-        return this.wallets.length
+      return this.wallets.length
     }
 }
 

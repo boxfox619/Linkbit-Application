@@ -39,13 +39,13 @@ export default class AddressListView extends React.Component {
                 onPress={() => this.props.navigation.navigate({
                   routeName: 'AddressManagement',
                   params: {address: item.address},
-                })}/>
+                })} />
             )
-          }}/>
+          }} />
         <Button
           title={i18n.t('add_address')}
           buttonStyle={styles.getAddressButton}
-          onPress={() => this.props.navigation.navigate('AddressBuy')}/>
+          onPress={() => this.props.navigation.navigate('AddressBuy')} />
       </View>
     )
   }

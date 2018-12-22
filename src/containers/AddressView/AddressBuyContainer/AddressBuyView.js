@@ -33,7 +33,7 @@ export default class AddressBuyView extends React.Component {
       <View style={styles.container}>
         <View style={styles.form}>
           <FormLabel>Address</FormLabel>
-          <FormInput onChangeText={this.addressValidCheck}/>
+          <FormInput onChangeText={this.addressValidCheck} />
           {this.errMessage &&
           <FormValidationMessage>{this.errMessage}</FormValidationMessage>
           }
@@ -42,7 +42,7 @@ export default class AddressBuyView extends React.Component {
           title={i18n.t('next')}
           onPress={this.onNext}
           buttonStyle={styles.getAddressButton}
-          disabled={!this.addressIsValid}/>
+          disabled={!this.addressIsValid} />
       </View>
     )
   }

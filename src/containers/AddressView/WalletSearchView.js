@@ -41,7 +41,7 @@ export default class WalletSearchView extends React.Component {
           lightTheme
           onChangeText={this.onChangeText}
           onClearText={this.onChangeText}
-          placeholder={i18n.t('wallet_search')}/>
+          placeholder={i18n.t('wallet_search')} />
         <FlatList
           style={styles.list}
           data={this.wallets}
@@ -52,9 +52,9 @@ export default class WalletSearchView extends React.Component {
                 name={item.address}
                 symbol={item.symbol}
                 moneySymbol="KRW"
-                onPress={() => onWalletSelected(item)}/>
+                onPress={() => onWalletSelected(item)} />
             )
-          }}/>
+          }} />
       </View>
     )
   }

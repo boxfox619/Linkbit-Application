@@ -33,7 +33,7 @@ const en = {
   next: 'Next',
   cancel: 'cancel',
   ok: 'Ok',
-  delete: 'Delete'
+  delete: 'Delete',
 }
 const ko = {
   wallet: '지갑',
@@ -68,7 +68,7 @@ const ko = {
   next: '다음',
   cancel: '취소',
   ok: '확인',
-  delete: '삭제'
+  delete: '삭제',
 }
 
 i18n.fallbacks = true

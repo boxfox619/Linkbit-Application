@@ -27,8 +27,9 @@ export default class BorderCard extends React.Component {
   render () {
     if (this.props.onPress) {
       return (
-        <TouchableOpacity onPress={this.props.onPress}
-                          style={[styles.container, this.getCardStyle()]}>
+        <TouchableOpacity
+          onPress={this.props.onPress}
+          style={[styles.container, this.getCardStyle()]}>
           {this.props.children}
         </TouchableOpacity>
       )

@@ -38,6 +38,7 @@ export default class WalletGroup extends React.Component {
 
   render () {
     const {coin} = this.state
+    
     return (
       <View style={styles.container}>
         <CoinCard
@@ -48,7 +49,7 @@ export default class WalletGroup extends React.Component {
           moneySymbol={this.props.moneySymbol}
           balance={this.totalBalance.toString()}
           price={dollarFormat(this.totalBalance * coin.price)}
-          onClick={() => this.props.onToggled(this.props.coinSymbol)}/>
+          onClick={() => this.props.onToggled(this.props.coinSymbol)} />
         {this.props.activated && this.renderWallets(coin)}
       </View>
     )
@@ -65,7 +66,7 @@ export default class WalletGroup extends React.Component {
           balance={wallet.balance.toString()}
           themeColor={coin.themeColor}
           price={dollarFormat(wallet.balance * coin.price)}
-          onPress={() => this.props.onWalletSelected(wallet)}/>
+          onPress={() => this.props.onWalletSelected(wallet)} />
       )
     })
   }

@@ -36,7 +36,7 @@ export default class AddressBuyPricingView extends React.Component {
               price="$0"
               info={['1 Address', 'We provide one free address']}
               button={{title: 'GET ADDRESS', icon: 'check'}}
-              onButtonPress={this.getFreeAddress}/>
+              onButtonPress={this.getFreeAddress} />
           )}
           <PricingCard
             color="#A72CE9"
@@ -44,7 +44,7 @@ export default class AddressBuyPricingView extends React.Component {
             price="$2"
             info={['1 Address', 'Buy own address']}
             button={{title: 'GET ADDRESS', icon: 'credit-card'}}
-            onButtonPress={this.buyAddress}/>
+            onButtonPress={this.buyAddress} />
         </ScrollView>
       </View>
     )
