@@ -1,11 +1,18 @@
 import React from 'react'
 import { Text, StyleSheet, View } from 'react-native'
 
-const withTitle = Component => ({ title, ...props }) => {
+const withTitle = Component => ({ title, isError, ...props }) => {
     return (
         <View>
-            <Text style={styles.title}>{title}</Text>
-            <Component {...props}/>
+            <Text style={[styles.title, isError ? { color: 'red' } : {}]}>
+                {
+                    isError ?
+                        '⚠️ ' :
+                        ''
+                }
+                {title}
+            </Text>
+            <Component {...props} />
         </View>
     )
 }
