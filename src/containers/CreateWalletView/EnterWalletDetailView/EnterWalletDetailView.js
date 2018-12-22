@@ -4,15 +4,15 @@ import NavigationButton from '../../../components/NavigationButton/NavigationBut
 import Input from '../../../components/Input/Input'
 import SegmentedControl from '../../../components/SegmentedControl/SegmentedControl'
 import withTitle from '../../../components/HOC/withTitle'
-import Coin from "../Coin/Coin";
 import { inject, observer } from 'mobx-react'
+import CoinItem from "../../../components/Card/CoinItem";
 
 const InputWithTitle = withTitle(Input)
 const SegmentedControlWithTitle = withTitle(SegmentedControl)
 
 @inject(['wallet'])
 @observer
-export default class InputWalletInformationView extends React.Component {
+export default class EnterWalletDetailView extends React.Component {
     state = {
         progress: false,
         selectedIndex: 0,
@@ -46,11 +46,11 @@ export default class InputWalletInformationView extends React.Component {
                 <View style={styles.container}>
                     <ScrollView style={styles.scrollContainer}>
                         <View style={styles.formContainer}>
-                            <Coin name={coin.name}
-                                symbol={coin.symbol}
-                                themeColor={coin.themeColor}
-                                onPress={() => { }}
-                                activate={true} />
+                            <CoinItem name={coin.name}
+                                      symbol={coin.symbol}
+                                      themeColor={coin.themeColor}
+                                      onPress={() => { }}
+                                      activate={true} />
                             <InputWithTitle title={'지갑 이름'}
                                 value={walletName}
                                 onChangeText={text => this.setState({ walletName: text })}

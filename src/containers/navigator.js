@@ -5,9 +5,9 @@ import AddressListView from './AddressView/AddressListView'
 import AddressManagementView from './AddressView/AddressManagementView'
 import WalletSearchView from './AddressView/WalletSearchView'
 import AddressBuyContainer from './AddressView/AddressBuyContainer/AddressBuyContainer'
-import SelectWalletView from './CreateWalletView/SelectWalletView/SelectWalletView'
-import SelectWalletDetailView from './CreateWalletView/SelectWalletDetailView/SelectWalletDetailView'
-import InputWalletDetailView from './CreateWalletView/InputWalletInformationView/InputWalletInformationView'
+import SelectWalletCoinView from './CreateWalletView/SelectWalletCoinView/SelectWalletCoinView'
+import SelectWalletTokenView from './CreateWalletView/SelectWalletTokenView/SelectWalletTokenView'
+import EnterWalletDetailView from "./CreateWalletView/EnterWalletDetailView/EnterWalletDetailView"
 
 export default createStackNavigator({
         Main: {
@@ -21,14 +21,14 @@ export default createStackNavigator({
             navigationOptions: () => ({
                 title: i18n.t('address_list'),
                 headerBackTitle: i18n.t('address_list_back'),
-            }),
+            })
         },
         AddressBuy: AddressBuyContainer,
         AddressManagement: AddressManagementView,
         WalletSearch: WalletSearchView,
-        SelectWallet: SelectWalletView,
-        SelectWalletDetail: SelectWalletDetailView,
-        InputWalletDetail: InputWalletDetailView
+        "CreateWallet.SelectWalletCoin": SelectWalletCoinView,
+        "CreateWallet.SelectWalletToken": SelectWalletTokenView,
+        "CreateWallet.EnterWalletDetail": EnterWalletDetailView
     },
     {
         initialRouteName: 'Main',

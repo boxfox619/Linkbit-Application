@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {HOST} from "../../../libs/Constraints"
+import {HOST} from "../../libs/Constraints"
 import { View, StyleSheet, Image, Text } from 'react-native'
-import BorderCard from "../../../components/Card/BorderCard";
+import BorderCard from "./BorderCard";
 
-export default class Coin extends React.Component {
+export default class CoinItem extends React.Component {
 
     static propTypes = {
         name: PropTypes.string.isRequired,

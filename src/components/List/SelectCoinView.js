@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { View, FlatList } from 'react-native'
-import Coin from '../Coin/Coin'
+import CoinItem from "../Card/CoinItem";
 
 export default class SelectCoinView extends React.Component {
 
@@ -27,7 +27,7 @@ export default class SelectCoinView extends React.Component {
                     keyExtractor={(item, index) => item.symbol}
                     refreshing={isLoading}
                     renderItem={({item, index}) => (
-                        <Coin name={item.name}
+                        <CoinItem name={item.name}
                               symbol={item.symbol}
                               themeColor={item.themeColor}
                               activate={selectedCoin === item.symbol}

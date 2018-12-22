@@ -28,8 +28,12 @@ export default class CoinCard extends React.Component {
     super(props)
   }
 
+  getThemeColor = () => {
+    return this.props.themeColor.length === 0 ? PRIMARY_COLOR : this.props.themeColor
+  }
+
   getTextColor = () => {
-      const themeColor = this.props.themeColor.length === 0 ? PRIMARY_COLOR : this.props.themeColor
+      const themeColor = this.getThemeColor();
       return {color: (this.props.activate) ? '#ffffff' : themeColor}
   }
 
@@ -39,7 +43,7 @@ export default class CoinCard extends React.Component {
 
   onPress = () => {
     if (this.props.onClick) {
-      this.props.onClick()
+      this.props.onClick() 
     }
   }
 
@@ -47,7 +51,7 @@ export default class CoinCard extends React.Component {
     return (
       <BorderCard
         onPress={this.onPress}
-        themeColor={this.props.themeColor}
+        themeColor={this.getThemeColor()}
         activate={this.props.activate}>
         <Text style={[styles.label, this.getTextColor()]}>{this.props.coinName}</Text>
         <View style={styles.values}>

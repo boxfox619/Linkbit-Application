@@ -1,9 +1,9 @@
 import React from 'react'
 import { StyleSheet, SafeAreaView, View } from 'react-native'
 import NavigationButton from '../../../components/NavigationButton/NavigationButton'
-import SelectCoinView from '../SelectCoinView/SelectCoinView'
+import SelectCoinView from "../../../components/List/SelectCoinView";
 
-export default class SelectedWalletDetailView extends React.Component {
+export default class SelectWalletTokenView extends React.Component {
     state = {
         selectedCoinSymbol: undefined,
         parentCoin: undefined,

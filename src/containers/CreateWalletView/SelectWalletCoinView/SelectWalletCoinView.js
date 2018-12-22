@@ -1,12 +1,12 @@
 import React from 'react'
 import { StyleSheet, FlatList, SafeAreaView, Text, View } from 'react-native'
 import NavigationButton from '../../../components/NavigationButton/NavigationButton'
-import SelectCoinView from '../SelectCoinView/SelectCoinView'
 import { observer } from "mobx-react/index";
 import CoinStore from "../../../store/Coin/CoinStore";
+import SelectCoinView from "../../../components/List/SelectCoinView";
 
 @observer
-export default class SelectedWalletView extends React.Component {
+export default class SelectWalletCoinView extends React.Component {
     state = {
         selectedCoin: undefined,
     }
@@ -46,9 +46,9 @@ export default class SelectedWalletView extends React.Component {
         }
 
         if (coin.subCoins) {
-            this.props.navigation.navigate('SelectWalletDetail', { coin })
+            this.props.navigation.navigate('CreateWallet.SelectWalletToken', { coin })
         } else {
-            this.props.navigation.navigate('InputWalletDetail', { coin })
+            this.props.navigation.navigate('CreateWallet.EnterWalletDetail', { coin })
         }
 
     }
