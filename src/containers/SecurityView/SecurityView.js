@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import PinCodeView from './PinCodeView'
+import PassCodeView from './PassCodeView'
 import FingerPrintView from './FingerPrintView'
 import i18n from '../../libs/Locale'
 
@@ -11,7 +11,7 @@ const SecurityDetailView = (props => {
     <>
       {
         view === 'pin' ?
-          <PinCodeView onVerifySuccess={() => onVerifySuccess(false)} /> :
+          <PassCodeView onVerifySuccess={() => onVerifySuccess(false)} /> :
           <FingerPrintView onVerifySuccess={() => onVerifySuccess(false)} />
       }
     </>
@@ -57,7 +57,7 @@ export default class SecurityView extends React.Component {
                   <Text>{i18n.t('lock_finger')}</Text>
                 </TouchableOpacity>
               </> : (
-                <PinCodeView
+                <PassCodeView
                   needVerify
                   onVerifySuccess={this.handleVerifySuccess} />
               )}

@@ -3,7 +3,7 @@ import { View, StyleSheet, Dimensions, Text } from 'react-native'
 import PinCodeInput from '../../components/PinCodeInput/index'
 import i18n from '../../libs/Locale'
 
-export default class PinCodeView extends React.Component {
+export default class PassCodeView extends React.Component {
 
   constructor (props) {
     super(props)
