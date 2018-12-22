@@ -1,9 +1,10 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { inject, observer } from 'mobx-react'
-import { PRIMARY_COLOR } from '../../libs/Constraints'
-import i18n from '../../libs/Locale'
 import { WalletList } from '../../components'
+import { PRIMARY_COLOR } from '../../libs/Constraints'
+import ActionButton from 'react-native-action-button'
+import i18n from '../../libs/Locale'
 
 @inject(['wallet'])
 @observer
@@ -39,7 +40,11 @@ export default class WalletListView extends React.Component {
         <WalletList
           moneySymbol={this.state.moneySymbol}
           wallets={this.props.wallet.walletList}
-          onWalletSelected={w => this.openWalletDetail(w)}/>
+          onWalletSelected={w => this.openWalletDetail(w)} />
+        <ActionButton buttonColor={PRIMARY_COLOR}
+          onPress={() => this.props.navigation.navigate("CreateWallet.SelectWalletCoin")}
+          offsetX={0}
+          offsetY={0} />
       </View>
     )
   }

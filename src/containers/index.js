@@ -9,7 +9,6 @@ import AddressListView from './AddressView/AddressListView'
 import TransactionListView from './TransactionListView/TransactionListView'
 
 export {
-  SettingView,
   FingerPrintView,
   GuideView,
   PinCodeInputView,
@@ -18,4 +17,5 @@ export {
   MainTabView,
   AddressListView,
   TransactionListView,
+  SettingView
 }

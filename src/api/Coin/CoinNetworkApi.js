@@ -3,7 +3,7 @@ import {HOST} from '../../libs/Constraints'
 
 export default class CoinNetworkApi {
 
-    fetchCoinPrices = async (symbols) => {
+    fetchCoins = async (symbols) => {
       try {
         const res = await fetch(`${HOST}/coin/list`, {
           method: 'POST',

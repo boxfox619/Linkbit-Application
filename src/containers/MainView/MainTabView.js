@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, SafeAreaView } from 'react-native'
 import { Header } from 'react-native-elements'
 import { PRIMARY_COLOR } from '../../libs/Constraints'
 import { Navbar } from '../../components'
@@ -10,7 +10,7 @@ import i18n from '../../libs/Locale'
 
 export default class MainTabView extends React.Component {
 
-  static navigationOptions = {header: null}
+  static navigationOptions = { header: null }
 
   constructor () {
     super()
@@ -20,27 +20,50 @@ export default class MainTabView extends React.Component {
       headerIcon: {},
     }
   }
+  render() {
+      const {headerTitle, headerIcon, selectedIndex} = this.state
 
-  componentDidMount () {
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.container}>
+          <Header
+            backgroundColor="#ffffff"
+            leftComponent={<Text style={styles.title}>{i18n.t(headerTitle)}</Text>}
+            rightComponent={headerIcon}
+            outerContainerStyles={{ borderBottomWidth: 0, height: 80 }} />
+          <View style={styles.content}>
+            {this.renderContents()}
+          </View>
+          <Navbar
+            onTabSelected={this.updateIndex}
+            selectedIndex={selectedIndex}
+            tabs={this.tabs}
+            containerStyle={styles.containerStyle} />
+        </View>
+      </SafeAreaView>
+    )
+  }
+
+  componentDidMount() {
     this.updateIndex(0)
   }
 
   renderContents = () => {
     switch (this.state.selectedIndex) {
       case 0:
-        return <WalletListView/>
+        return <WalletListView navigation={this.props.navigation}/>
       case 1:
         return <TransactionListView/>
       case 2:
-        return <SettingView/>
+        return <SettingView />
     }
   }
 
-  get tabs () {
+  get tabs() {
     return [
-      {icon: 'payment', label: 'Wallet'},
-      {icon: 'swap-horiz', label: 'Transaction'},
-      {icon: 'settings', label: 'Settings'},
+      { icon: 'payment', label: 'Wallet' },
+      { icon: 'swap-horiz', label: 'Transaction' },
+      { icon: 'settings', label: 'Settings' },
     ]
   }
 
@@ -61,28 +84,6 @@ export default class MainTabView extends React.Component {
         break
     }
     this.setState(state)
-  }
-
-  render () {
-    const {headerTitle, selectedIndex} = this.state
-
-    return (
-      <View style={styles.container}>
-        <Header
-          backgroundColor="#ffffff"
-          leftComponent={<Text style={styles.title}>{i18n.t(headerTitle)}</Text>}
-          rightComponent={this.state.headerIcon}
-          outerContainerStyles={{borderBottomWidth: 0, height: 80}}/>
-        <View style={styles.content}>
-          {this.renderContents()}
-        </View>
-        <Navbar
-          onTabSelected={this.updateIndex}
-          selectedIndex={selectedIndex}
-          tabs={this.tabs}
-          containerStyle={styles.containerStyle}/>
-      </View>
-    )
   }
 }
 

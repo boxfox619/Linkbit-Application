@@ -1,20 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 
 export default class NavigationButton extends React.Component {
   static propTypes = {
-    symbol: PropTypes.string.isRequired,
-    balance: PropTypes.string.isRequired,
-    linkedAddress: PropTypes.string.isRequired,
-    accountAddress: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    onPress: PropTypes.func.isRequired
   }
 
-  render () {
-    const {title, onPress} = this.props
-
+  render() {
+    const { title, onPress } = this.props
     return (
       <TouchableOpacity
+        activeOpacity={0.4}
         style={styles.container}
         onPress={onPress}
         underlayColor='#fff'>
