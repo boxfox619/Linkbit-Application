@@ -9,7 +9,7 @@ import SelectWalletCoinView from './CreateWalletView/SelectWalletCoinView/Select
 import SelectWalletTokenView from './CreateWalletView/SelectWalletTokenView/SelectWalletTokenView'
 import EnterWalletDetailView from "./CreateWalletView/EnterWalletDetailView/EnterWalletDetailView"
 
-export default createStackNavigator({
+const Navigator = createStackNavigator({
         Main: {
             screen: MainTabView,
             navigationOptions: () => ({
@@ -34,3 +34,5 @@ export default createStackNavigator({
         initialRouteName: 'Main',
     },
 )
+
+export default Navigator
