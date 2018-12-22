@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, FlatList, SafeAreaView, Text, View } from 'react-native'
 import NavigationButton from '../../../components/NavigationButton/NavigationButton'
 import SelectCoinView from '../SelectCoinView/SelectCoinView'
-import {observer} from "mobx-react/index";
+import { observer } from "mobx-react/index";
 import CoinStore from "../../../store/Coin/CoinStore";
 
 @observer
@@ -16,7 +16,7 @@ export default class SelectedWalletView extends React.Component {
     }
 
     render() {
-        const {coinList} = this.coinStore
+        const { coinList } = this.coinStore
         const { selectedCoin } = this.state
         return (
             <SafeAreaView>
@@ -26,7 +26,7 @@ export default class SelectedWalletView extends React.Component {
                         coins={coinList}
                         isLoading={this.coinStore.isLoading}
                         selectedCoin={selectedCoin}
-                        onSelectCoin={(symbol) => this.setState({ selectedCoin: symbol })}/>
+                        onSelectCoin={(symbol) => this.setState({ selectedCoin: symbol })} />
                     <NavigationButton title={'다음'}
                         onPress={this.navigateToNext} />
                 </View>
@@ -35,13 +35,22 @@ export default class SelectedWalletView extends React.Component {
     }
 
     navigateToNext = () => {
-        const {coinList} = this.coinStore
-        const {selectedCoin} = this.state
+        const { coinList } = this.coinStore
+        const { selectedCoin } = this.state
 
-        /*if (coin.subCoins) {
-            this.props.navigation.navigate('SelectWalletDetail', { coin: coin })
-        }*/
-        this.props.navigation.navigate('InputWalletDetail', {coin: coinList.find(c => c.symbol === selectedCoin)})
+        const coin = coinList.find(c => c.symbol === selectedCoin)
+
+        if (!coin) {
+            alert('생성할 코인을 선택해주세요')
+            return
+        }
+
+        if (coin.subCoins) {
+            this.props.navigation.navigate('SelectWalletDetail', { coin })
+        } else {
+            this.props.navigation.navigate('InputWalletDetail', { coin })
+        }
+
     }
 }
 
@@ -51,7 +60,8 @@ const styles = StyleSheet.create({
         height: '100%'
     },
     coinList: {
-        paddingVertical: 10,
+        height: '100%',
+        paddingBottom: 50,
         paddingHorizontal: 10
     }
 })

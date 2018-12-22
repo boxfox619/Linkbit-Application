@@ -5,24 +5,26 @@ import SelectCoinView from '../SelectCoinView/SelectCoinView'
 
 export default class SelectedWalletDetailView extends React.Component {
     state = {
-        selectedIndex: -1,
-        coin: {}
+        selectedCoinSymbol: undefined,
+        parentCoin: undefined,
     }
 
     componentDidMount() {
-        const coin = this.props.navigation.getParam('coin', {})
-        this.setState({ coin })
+        const parentCoin = this.props.navigation.getParam('coin', {})
+        this.setState({ parentCoin })
     }
 
     render() {
-        const { selectedIndex, coin } = this.state
+        const { selectedCoinSymbol, parentCoin } = this.state
+        const coins = parentCoin ? parentCoin.subCoins : undefined
 
         return (
             <SafeAreaView>
                 <View style={styles.container}>
-                    <SelectCoinView coins={coin.subCoins}
-                        selectedIndex={selectedIndex}
-                        updateSelectedIndex={async (index) => await this.setState({ selectedIndex: index })} />
+                    <SelectCoinView coins={coins}
+                        style={styles.list}
+                        selectedCoin={selectedCoinSymbol}
+                        onSelectCoin={symbol => this.setState({ selectedCoinSymbol: symbol })}/>
                     <NavigationButton title={'다음'}
                         onPress={this.navigateToNext} />
                 </View>
@@ -31,16 +33,26 @@ export default class SelectedWalletDetailView extends React.Component {
     }
 
     navigateToNext = () => {
-        this.props.navigation.navigate('InputWalletDetail', { coin: this.state.coin })
+        const { parentCoin, selectedCoinSymbol } = this.state
+        const selectedCoin = parentCoin.subCoins.find(coin => coin.symbol === selectedCoinSymbol)
+
+        if(!selectedCoin){
+            alert("생성할 코인을 선택해주세요")
+            return
+        }
+
+        this.props.navigation.navigate('InputWalletDetail', { coin: selectedCoin })
     }
 }
 
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        height: '100%',
+        height: '100%'
     },
     list: {
-        paddingHorizontal: 20,
+        height: '100%',
+        paddingBottom: 50,
+        paddingHorizontal: 10
     }
 })
