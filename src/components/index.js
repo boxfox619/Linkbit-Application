@@ -7,7 +7,7 @@ import CoinCard from './Card/CoinCard'
 import WalletCard from './Card/WalletCard'
 import WalletSummaryCard from './Card/WalletSummaryCard'
 import BorderCard from './Card/BorderCard'
-import PinCodeView from './PinCodeInput'
+import PassCodeInput from './PassCodeInput'
 import NavIcon from './Navbar/NavIcon'
 import Navbar from './Navbar/Navbar'
 
@@ -22,7 +22,7 @@ export {
   WalletCard,
   WalletSummaryCard,
   BorderCard,
-  PinCodeView,
+  PassCodeInput,
   NavIcon,
   Navbar,
 }

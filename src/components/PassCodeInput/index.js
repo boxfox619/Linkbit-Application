@@ -1,12 +1,11 @@
 import React from 'react'
 import { Animated, View } from 'react-native'
-
 import PropTypes from 'prop-types'
 import KeyboardView from './KeyboardView'
 import InputView from './InputView'
 import Styles from './styles'
 
-class PinCodeView extends React.Component {
+class PassCodeView extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -105,7 +104,7 @@ class PinCodeView extends React.Component {
   }
 }
 
-PinCodeView.defaultProps = {
+PassCodeView.defaultProps = {
   deleteText: 'DEL',
   buttonBgColor: '#FFF',
   buttonTextColor: '#333',
@@ -116,7 +115,7 @@ PinCodeView.defaultProps = {
   disabled: false,
   clear: false,
 }
-PinCodeView.propTypes = {
+PassCodeView.propTypes = {
   disabled: PropTypes.bool,
   deleteText: PropTypes.string,
   returnType: PropTypes.string,
@@ -130,4 +129,4 @@ PinCodeView.propTypes = {
   clear: PropTypes.bool,
 }
 
-export default PinCodeView
+export default PassCodeView

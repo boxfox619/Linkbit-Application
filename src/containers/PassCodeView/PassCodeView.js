@@ -1,8 +1,8 @@
 import React from 'react'
 import { View, StyleSheet, Dimensions, Text } from 'react-native'
-import PinCodeView from './PinCodeView'
+import { PassCodeInput } from '../../components'
 
-export default class PinCodeInputView extends React.Component {
+export default class PassCodeView extends React.Component {
 
   constructor (props) {
     super(props)
@@ -33,7 +33,7 @@ export default class PinCodeInputView extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{this.state.label}</Text>
-        <PinCodeView
+        <PassCodeInput
           style={styles.pin}
           onComplete={(val, clear) => this.onPinEntered(val, clear())}
           pinLength={5}
