@@ -1,7 +1,7 @@
 import React from 'react'
-import { View, StyleSheet, Dimensions, Text } from 'react-native'
-import PinCodeInput from '../../components/PinCodeInput/index'
+import { View, StyleSheet, Text } from 'react-native'
 import i18n from '../../libs/Locale'
+import { PassCodeInput } from '../../components'
 
 export default class PassCodeView extends React.Component {
 
@@ -14,7 +14,7 @@ export default class PassCodeView extends React.Component {
     }
   }
 
-  handleVerifyPinCode = (inputPin, onVerifySuccess) => {
+  handleVerifyPassCode = (inputPin, onVerifySuccess) => {
     const targetPin = this.state.newPin || this.state.originPin
 
     if (targetPin === inputPin) {
@@ -24,13 +24,13 @@ export default class PassCodeView extends React.Component {
       onVerifySuccess()
     } else {
       this.setState({
-        label: i18n.t('verify_passcode'),
+        label: i18n.t('verify_PassCode'),
         newPin: undefined,
       })
     }
   }
 
-  handleChangePinCode = newPin => {
+  handleChangePassCode = newPin => {
     this.setState({
       label: i18n.t('verify_passcode'),
       newPin,
@@ -38,19 +38,19 @@ export default class PassCodeView extends React.Component {
   }
 
   render () {
-    const {needVerify, onVerifySuccess} = this.props
-    const {label, newPin} = this.state
+    const { needVerify, onSetPassCode } = this.props
+    const { label, newPin } = this.state
 
     return (
       <View style={styles.container}>
         <Text style={styles.title}>
           {needVerify ? i18n.t('check_passcode') : label}
         </Text>
-        <PinCodeInput
+        <PassCodeInput
           style={styles.pin}
           onComplete={(val, clear) => newPin || needVerify ?
-            this.handleVerifyPinCode(val, onVerifySuccess, clear()) :
-            this.handleChangePinCode(val, clear())}
+            this.handleVerifyPassCode(val, onSetPassCode, clear()) :
+            this.handleChangePassCode(val, clear())}
           pinLength={5}
           inputActiveBgColor='#e8a93a' />
       </View>
@@ -61,13 +61,11 @@ export default class PassCodeView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 70,
+    paddingVertical: 50,
   },
   title: {
     fontSize: 25,
     textAlign: 'center',
-    marginVertical: 30,
-    width: Dimensions.get('window').width,
   },
   pin: {
     position: 'absolute',
