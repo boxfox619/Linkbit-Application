@@ -4,16 +4,15 @@ import i18n from '../../libs/Locale'
 import { SecurityView } from '..'
 
 const SettingTouchableView = (props => {
-  const {viewName, onSetView} = props
+  const { viewName, onSetView } = props
   const list = {
-    LanguageView: [
-      {
-        txt: i18n.t('lang_ko'),
-        val: 'ko',
-      }, {
-        txt: i18n.t('lang_en'),
-        val: 'en',
-      }],
+    LanguageView: [{
+      txt: i18n.t('lang_ko'),
+      val: 'ko',
+    }, {
+      txt: i18n.t('lang_en'),
+      val: 'en',
+    }],
     CurrencyView: [
       {
         txt: i18n.t('bill_krw'),
@@ -112,7 +111,7 @@ export default class SettingView extends React.Component {
                 ) : (
                   <SettingTouchableView
                     viewName={viewName}
-                    onSetView={this.handleSetView} />
+                    onSetView={this.handleSetView}/>
                 )}
       </View>
     )
