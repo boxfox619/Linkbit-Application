@@ -27,6 +27,9 @@ rules:
     - off
   newline-before-return:
     - error
+  object-curly-spacing:
+    - error
+    - never
   comma-dangle:
     - error
   operator-linebreak:
