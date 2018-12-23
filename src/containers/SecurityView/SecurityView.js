@@ -10,8 +10,8 @@ export default class SecurityView extends React.Component {
     this.state = {
       isPassCodeActive: false,
       isFingerPrintActive: false,
-      isSetPassCode: false,
-      isSetFingerprint: false,
+      creatingPassCode: false,
+      creatingFingerprint: false,
       compatible: false,
     }
   }
@@ -25,8 +25,7 @@ export default class SecurityView extends React.Component {
     this.props.updateSetting('fingerprint', fingerprint)
   }
   scanFingerprint = async () => {
-    const fingerprint = await Expo.Fingerprint.authenticateAsync(i18n.t('confirm_fingerprint'))
-    this.props.updateSetting('fingerprint', fingerprint)
+    await Expo.Fingerprint.authenticateAsync(i18n.t('confirm_fingerprint'))
   }
   showAndroidAlert = () => {
     Alert.alert(
@@ -42,15 +41,15 @@ export default class SecurityView extends React.Component {
   handleChangeSwitch = (key, val) => {
     this.setState({
       [key]: val,
-      isSetPassCode: key === 'isPassCodeActive' && val,
-      isSetFingerprint: key === 'isFingerPrintActive' && val,
+      creatingPassCode: key === 'isPassCodeActive' && val,
+      creatingFingerprint: key === 'isFingerPrintActive' && val,
     }, () => {
-      this.state.isSetFingerprint && this.handleSetFingerPrint()
+      this.state.creatingFingerprint && this.handleSetFingerPrint()
     })
   }
   handleSetPassCode = () => {
     this.setState({
-      isSetPassCode: false
+      creatingPassCode: false
     })
   }
   handleSetFingerPrint = () => {
@@ -63,7 +62,7 @@ export default class SecurityView extends React.Component {
   }
 
   render () {
-    const {isPassCodeActive, isSetPassCode} = this.state
+    const {isPassCodeActive, creatingPassCode} = this.state
     const securityList = [{
       key: 'isPassCodeActive',
       txt: i18n.t('lock_pw'),
@@ -77,7 +76,7 @@ export default class SecurityView extends React.Component {
     return (
       <View style={styles.container}>
         {
-          isSetPassCode ?
+          creatingPassCode ?
             <PassCodeView onSetPassCode={this.handleSetPassCode}/> :
             <FlatList
               data={securityList}
