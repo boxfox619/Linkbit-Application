@@ -1,66 +1,92 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import PassCodeView from './PassCodeView'
-import FingerPrintView from './FingerPrintView'
+import { Platform, View, FlatList, Switch, Text, StyleSheet } from 'react-native'
 import i18n from '../../libs/Locale'
-
-const SecurityDetailView = (props => {
-  const {view, onVerifySuccess} = props
-
-  return (
-    <>
-      {
-        view === 'pin' ?
-          <PassCodeView onVerifySuccess={() => onVerifySuccess(false)} /> :
-          <FingerPrintView onVerifySuccess={() => onVerifySuccess(false)} />
-      }
-    </>
-  )
-})
+import PassCodeView from './PassCodeView'
 
 export default class SecurityView extends React.Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      isVerify: false,
-      view: false,
+      isPassCodeActive: false,
+      isFingerPrintActive: false,
+      isSetPassCode: false,
+      isSetFingerprint: false,
+      compatible: false,
     }
   }
 
-  handleSetView = view => this.setState({view})
-  handleVerifySuccess = view => this.setState({view, isVerify: true})
+  checkDeviceForHardware = async () => {
+    const compatible = await Expo.Fingerprint.hasHardwareAsync()
+    this.setState({compatible})
+  }
+  checkForFingerprints = async () => {
+    const fingerprint = await Expo.Fingerprint.isEnrolledAsync()
+    this.props.updateSetting('fingerprint', fingerprint)
+  }
+  scanFingerprint = async () => {
+    const fingerprint = await Expo.Fingerprint.authenticateAsync(i18n.t('confirm_fingerprint'))
+  }
+  showAndroidAlert = () => {
+    Alert.alert(
+      'Fingerprint Scan',
+      '',
+      [
+        {text: 'Scan', onPress: () => this.scanFingerprint},
+        {text: 'Cancel', onPress: () => this.handleChangeSwitch('isFingerPrintActive', false), style: 'cancel'}
+      ]
+    )
+  }
+
+  handleChangeSwitch = (key, val) => {
+    this.setState({
+      [key]: val,
+      isSetPassCode: key === 'isPassCodeActive' && val,
+      isSetFingerprint: key === 'isFingerPrintActive' && val,
+    }, () => {
+      this.state.isSetFingerprint && this.handleSetFingerPrint()
+    })
+  }
+  handleSetPassCode = () => {
+    this.setState({
+      isSetPassCode: false
+    })
+  }
+  handleSetFingerPrint = () => {
+    this.checkDeviceForHardware()
+    this.checkForFingerprints()
+
+    Platform.OS === 'android' ?
+      this.showAndroidAlert() :
+      this.scanFingerprint()
+  }
 
   render () {
-    const {view} = this.state
+    const {isPassCodeActive, isSetPassCode} = this.state
+    const securityList = [{
+      key: 'isPassCodeActive',
+      txt: i18n.t('lock_pw'),
+    }, {
+      key: 'isFingerPrintActive',
+      txt: i18n.t('lock_finger'),
+    }]
+
+    !isPassCodeActive && securityList.pop()
 
     return (
       <View style={styles.container}>
         {
-          view ? (
-            <SecurityDetailView
-              view={view}
-              onVerifySuccess={this.handleVerifySuccess} />
-          ) :
-            this.state.isVerify ?
-              <>
-                <TouchableOpacity
-                  key={0}
-                  style={styles.listItem}
-                  onPress={() => this.handleSetView('pin')}>
-                  <Text>{i18n.t('lock_pw')}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  key={1}
-                  style={styles.listItem}
-                  onPress={() => this.handleSetView('finger')}>
-                  <Text>{i18n.t('lock_finger')}</Text>
-                </TouchableOpacity>
-              </> : (
-                <PassCodeView
-                  needVerify
-                  onVerifySuccess={this.handleVerifySuccess} />
-              )}
+          isSetPassCode ?
+            <PassCodeView onSetPassCode={this.handleSetPassCode}/> :
+            <FlatList
+              data={securityList}
+              renderItem={({item}) => <View style={styles.listItem}>
+                <Text>{item.txt}</Text>
+                <Switch style={styles.switch}
+                        value={this.state[item.key]}
+                        onValueChange={val => this.handleChangeSwitch(item.key, val)}/>
+              </View>}/>
+        }
       </View>
     )
   }
@@ -77,4 +103,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#eaeaea',
   },
+  switch: {
+    textAlign: 'right',
+    marginLeft: 'auto',
+  }
 })
