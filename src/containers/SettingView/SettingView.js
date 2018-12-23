@@ -5,7 +5,7 @@ import { UserStore } from '../../store'
 import { SecurityView } from '..'
 
 const SettingTouchableView = (props => {
-  const { viewName, onSetView } = props
+  const { viewName, onSetView, updateSetting } = props
   const list = {
     LanguageView: [{
       txt: i18n.t('lang_ko'),
@@ -28,7 +28,7 @@ const SettingTouchableView = (props => {
     const name = viewName === 'LanguageView' ? 'language' : 'currency'
     if (name === 'language') i18n.locale = val
 
-    this.store.updateSetting(name, val)
+    updateSetting(name, val)
     onSetView('Setting')
   }
 
@@ -102,7 +102,9 @@ export default class SettingView extends React.Component {
           viewName === 'SettingView' ?
             this.onRenderSettingList() :
             viewName === 'SecurityView' ?
-              <SecurityView updateSetting={(name, val) => this.store.updateSetting(name, val)}/> :
+              <SecurityView
+                getFingerPrint={this.store.getFingerPrint}
+                updateSetting={(name, val) => this.store.updateSetting(name, val)}/> :
               viewName === 'ResetView' ?
                 Alert.alert(
                   i18n.t('reset_mainTxt'),
@@ -115,7 +117,8 @@ export default class SettingView extends React.Component {
                 ) : (
                   <SettingTouchableView
                     viewName={viewName}
-                    onSetView={this.handleSetView}/>
+                    onSetView={this.handleSetView}
+                    updateSetting={(name, val) => this.store.updateSetting(name, val)}/>
                 )}
       </View>
     )

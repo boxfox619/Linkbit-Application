@@ -12,20 +12,12 @@ export default class SecurityView extends React.Component {
       isFingerPrintActive: false,
       creatingPassCode: false,
       creatingFingerprint: false,
-      compatible: false,
     }
   }
 
-  checkDeviceForHardware = async () => {
-    const compatible = await Expo.Fingerprint.hasHardwareAsync()
-    this.setState({compatible})
-  }
-  checkForFingerprints = async () => {
+  enrolledFingerPrint = async () => {
     const fingerprint = await Expo.Fingerprint.isEnrolledAsync()
-    this.props.updateSetting('fingerprint', fingerprint)
-  }
-  scanFingerprint = async () => {
-    await Expo.Fingerprint.authenticateAsync(i18n.t('confirm_fingerprint'))
+    this.props.updateSetting('fingerPrint', fingerprint)
   }
   showAndroidAlert = () => {
     Alert.alert(
@@ -36,6 +28,21 @@ export default class SecurityView extends React.Component {
         {text: 'Cancel', onPress: () => this.handleChangeSwitch('isFingerPrintActive', false), style: 'cancel'}
       ]
     )
+  }
+  scanFingerprint = async () => {
+    const result = await Expo.Fingerprint.authenticateAsync(i18n.t('confirm_fingerprint'))
+    if (result.success) {
+      alert('success')
+      this.props.isUnlocked()
+    } else {
+      alert('failed')
+      console.log(result)
+    }
+  }
+  authFingerPrint = () => {
+    Platform.OS === 'android' ?
+      this.showAndroidAlert() :
+      this.scanFingerprint()
   }
 
   handleChangeSwitch = (key, val) => {
@@ -53,15 +60,17 @@ export default class SecurityView extends React.Component {
     })
   }
   handleSetFingerPrint = () => {
-    this.checkDeviceForHardware()
-    this.checkForFingerprints()
+    this.enrolledFingerPrint()
+    this.authFingerPrint()
+  }
+  handleAuthProcess = isLocked => {
+    this.props.getFingerPrint() && this.authFingerPrint()
 
-    Platform.OS === 'android' ?
-      this.showAndroidAlert() :
-      this.scanFingerprint()
+    return <PassCodeView onVerify={isLocked ? this.props.isUnlocked : this.handleSetPassCode}/>
   }
 
   render () {
+    const { isLocked } = this.props
     const {isPassCodeActive, creatingPassCode} = this.state
     const securityList = [{
       key: 'isPassCodeActive',
@@ -76,8 +85,8 @@ export default class SecurityView extends React.Component {
     return (
       <View style={styles.container}>
         {
-          creatingPassCode ?
-            <PassCodeView onSetPassCode={this.handleSetPassCode}/> :
+          isLocked || creatingPassCode ?
+            this.handleAuthProcess(isLocked) :
             <FlatList
               data={securityList}
               renderItem={({item}) => <View style={styles.listItem}>

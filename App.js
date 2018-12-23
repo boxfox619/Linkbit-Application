@@ -1,29 +1,49 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import { createAppContainer } from 'react-navigation'
-import { Provider } from 'mobx-react'
+import {StyleSheet, View} from 'react-native'
+import {createAppContainer} from 'react-navigation'
+import {Provider} from 'mobx-react'
 import Navigator from './src/containers/Navigator'
-import { WalletStore, CoinPriceStore, AddressStore } from './src/store'
-
-const store = {
-  wallet: WalletStore,
-  coin: CoinPriceStore,
-  address: AddressStore,
-}
-const AppContainer = createAppContainer(Navigator)
+import {UserStore, WalletStore, CoinPriceStore, AddressStore} from './src/store'
+import SecurityView from './src/containers/SecurityView/SecurityView'
 
 export default class App extends React.Component {
+  store = {
+    user: UserStore,
+    wallet: WalletStore,
+    coin: CoinPriceStore,
+    address: AddressStore,
+  }
+  state = {
+    isLocked: this.store.user.getIsLocked
+  }
+
   componentWillMount() {
-    store.address.loadAddressList()
-    store.wallet.loadWalletList()
-    store.coin.refreshCoins()
+    const { address, wallet, coin } = this.store
+
+    address.loadAddressList()
+    wallet.loadWalletList()
+    coin.refreshCoins()
+  }
+
+  handleUnlocked = () => {
+    this.setState({
+      isLocked: false
+    })
   }
 
   render() {
+    const AppContainer = createAppContainer(Navigator)
+
     return (
-      <Provider {...store}>
+      <Provider {...this.store}>
         <View style={styles.container}>
-          <AppContainer />
+          {
+            this.state.isLocked ?
+              <SecurityView isLocked
+                            isUnlocked={this.handleUnlocked}
+                            getFingerPrint={this.store.getFingerPrint}/> :
+              <AppContainer/>
+          }
         </View>
       </Provider>
     )

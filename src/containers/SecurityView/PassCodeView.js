@@ -16,7 +16,7 @@ export default class PassCodeView extends React.Component {
     }
   }
 
-  handleVerifyPassCode = (inputPin, onVerifySuccess) => {
+  handleVerifyPassCode = (inputPin, onVerify) => {
     const targetPin = this.state.newPin || this.state.originPin
 
     if (targetPin === inputPin) {
@@ -24,7 +24,7 @@ export default class PassCodeView extends React.Component {
         originPin: inputPin,
       })
       this.store.updateSetting('passCode', inputPin)
-      onVerifySuccess()
+      onVerify()
     } else {
       this.setState({
         label: i18n.t('verify_PassCode'),
@@ -41,7 +41,7 @@ export default class PassCodeView extends React.Component {
   }
 
   render () {
-    const { needVerify, onSetPassCode } = this.props
+    const { needVerify, onVerify } = this.props
     const { label, newPin } = this.state
 
     return (
@@ -52,7 +52,7 @@ export default class PassCodeView extends React.Component {
         <PassCodeInput
           style={styles.pin}
           onComplete={(val, clear) => newPin || needVerify ?
-            this.handleVerifyPassCode(val, onSetPassCode, clear()) :
+            this.handleVerifyPassCode(val, onVerify, clear()) :
             this.handleChangePassCode(val, clear())}
           pinLength={5}
           inputActiveBgColor='#e8a93a' />
