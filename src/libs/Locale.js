@@ -1,4 +1,5 @@
 import { Localization } from 'expo-localization'
+import { Platform } from 'react-native'
 import i18n from 'i18n-js'
 
 const en = {
@@ -21,12 +22,15 @@ const en = {
   bill_krw: 'KRW - Korea Won',
   lock_mainTxt: 'Security',
   lock_subTxt: 'You can set up security methods',
-  lock_pw: 'Change Passcode',
-  lock_finger: 'Change Fingerprint',
+  lock_pw: 'Passcode',
+  lock_finger: Platform.OS === 'android' ? 'Fingerprint' : 'Touch ID',
   check_passcode: 'Enter your Passcode',
   old_passcode: 'Enter your old passcode',
   new_passcode: 'Enter your new passcode',
   verify_passcode: 'Verify your new passcode',
+  title_fingerprint: 'Scan fingerprint for LinkBit',
+  add_fingerprint: 'Place your finger over the touch sensor and press scan',
+  confirm_fingerprint: 'Please confirm yourself',
   reset_mainTxt: 'Reset',
   reset_subTxt: 'We destroy all accounts and information',
   wallet_delete: 'Are you sure delete the wallet?',
@@ -56,12 +60,15 @@ const ko = {
   bill_krw: 'KRW - 한국 원',
   lock_mainTxt: '보안 설정',
   lock_subTxt: '보안 방법을 설정할 수 있습니다',
-  lock_pw: '암호 변경',
-  lock_finger: '지문 변경',
+  lock_pw: '암호',
+  lock_finger: Platform.OS === 'android' ? '지문 사용' : 'Touch ID',
   check_passcode: '암호를 입력해주세요',
   old_passcode: '기존 암호를 입력해주세요',
   new_passcode: '새 암호를 입력해주세요',
   verify_passcode: '다시 입력해주세요',
+  title_fingerprint: '지문 추가',
+  add_fingerprint: '터치센서에 손가락을 놓아주세요',
+  confirm_fingerprint: '본인확인을 해주세요',
   reset_mainTxt: '초기화',
   reset_subTxt: '모든 계정과 정보를 파기합니다',
   wallet_delete: '연결된 지갑을 삭제하시겠습니까?',
