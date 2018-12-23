@@ -26,6 +26,7 @@ export default class SecurityView extends React.Component {
   }
   scanFingerprint = async () => {
     const fingerprint = await Expo.Fingerprint.authenticateAsync(i18n.t('confirm_fingerprint'))
+    this.props.updateSetting('fingerprint', fingerprint)
   }
   showAndroidAlert = () => {
     Alert.alert(

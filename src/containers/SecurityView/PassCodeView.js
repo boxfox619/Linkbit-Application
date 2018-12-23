@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
+import UserStore from '../../store/UserStore'
 import i18n from '../../libs/Locale'
 import { PassCodeInput } from '../../components'
 
@@ -7,9 +8,10 @@ export default class PassCodeView extends React.Component {
 
   constructor (props) {
     super(props)
+    this.store = UserStore
     this.state = {
       label: i18n.t('new_passcode'),
-      originPin: '11111',
+      originPin: this.store.getPassCode,
       newPin: undefined,
     }
   }
@@ -21,6 +23,7 @@ export default class PassCodeView extends React.Component {
       this.setState({
         originPin: inputPin,
       })
+      this.store.updateSetting('passCode', inputPin)
       onVerifySuccess()
     } else {
       this.setState({

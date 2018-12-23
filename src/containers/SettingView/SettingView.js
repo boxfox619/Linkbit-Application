@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Alert, View, TouchableOpacity, Text } from 'react-native'
 import i18n from '../../libs/Locale'
+import { UserStore } from '../../store'
 import { SecurityView } from '..'
 
 const SettingTouchableView = (props => {
@@ -24,8 +25,10 @@ const SettingTouchableView = (props => {
   }
 
   const handleSettingDetail = val => {
-    if (viewName === 'LanguageView') i18n.locale = val
+    const name = viewName === 'LanguageView' ? 'language' : 'currency'
+    if (name === 'language') i18n.locale = val
 
+    this.store.updateSetting(name, val)
     onSetView('Setting')
   }
 
@@ -49,6 +52,7 @@ export default class SettingView extends React.Component {
 
   constructor (props) {
     super(props)
+    this.store = new UserStore()
     this.state = {
       view: 'Setting',
     }
@@ -98,7 +102,7 @@ export default class SettingView extends React.Component {
           viewName === 'SettingView' ?
             this.onRenderSettingList() :
             viewName === 'SecurityView' ?
-              <SecurityView /> :
+              <SecurityView updateSetting={(name, val) => this.store.updateSetting(name, val)}/> :
               viewName === 'ResetView' ?
                 Alert.alert(
                   i18n.t('reset_mainTxt'),
