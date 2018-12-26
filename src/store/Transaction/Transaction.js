@@ -8,14 +8,9 @@ export default class Transaction {
   @observable amount
   @observable status
   @observable date
-  @observable email
   @observable address
   @observable coin
   @observable confirm
-
-  constructor (store) {
-    this.store = store
-  }
 
   @computed get asJson () {
     return {
@@ -36,7 +31,6 @@ export default class Transaction {
     this.amount = json.amount
     this.status = json.status
     this.date = json.date
-    this.email = json.email
     this.address = json.address
     this.coin = json.coin
     this.confirm = json.confirm

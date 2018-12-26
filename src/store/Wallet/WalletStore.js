@@ -1,31 +1,35 @@
 import {observable, computed, runInAction} from 'mobx'
-import WalletApi from '../../api/Wallet/WalletApi'
 import Wallet from './Wallet'
+import WalletStorageApi from "../../api/Wallet/WalletStorageApi"
+import WalletNetworkApi from "../../api/Wallet/WalletNetworkApi";
 
 class WalletStore {
     @observable wallets = []
-    walletApi
+    walletStorageApi
+    walletNetworkApi
 
     constructor() {
-        this.walletApi = WalletApi.create()
+        this.walletStorageApi = new WalletStorageApi()
+        this.walletNetworkApi = new WalletNetworkApi()
     }
 
     loadWalletList = async () => {
-        const wallets = await this.walletApi.fetchWallets()
+        const wallets = await this.walletStorageApi.loadWallets()
         runInAction(() => {
             this.wallets = wallets.map(json => {
                 const wallet = new Wallet()
                 wallet.updateFromJson(json)
-
                 return wallet
             })
         })
     }
 
     createWallet = async (symbol, name, password) => {
-        const walletData = await this.walletApi.createWallet(symbol, password)
+        const walletData = await this.walletNetworkApi.createWallet(symbol, password)
+        const wallet = {...walletData, name}
+        this.walletStorageApi.addWallet(wallet)
         runInAction(() => {
-            this.wallets = [...this.wallets, {...walletData, name}]
+            this.wallets = [...this.wallets, wallet]
         })
     }
 
