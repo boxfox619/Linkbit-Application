@@ -1,29 +1,12 @@
-import {AsyncStorage, fetch} from 'react-native';
-import {HOST} from "../../libs/Constraints";
+import {AsyncStorage} from 'react-native';
+
+const WALLET_STORAGE_KEY = "wallets";
 
 export default class WalletStorageApi {
 
-    createWallet = async (symbol, password) => {
-        try {
-            const res = await await fetch(`${HOST}/wallet`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': '',
-                },
-                body: JSON.stringify({
-                    symbol,
-                    password
-                }),
-            });
-            return res;
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
     loadWallets = async () => {
         try {
-            const wallets = await AsyncStorage.getItem('Wallets');
+            const wallets = await AsyncStorage.getItem(WALLET_STORAGE_KEY);
             return wallets || [];
         } catch (error) {
             console.log(error);
@@ -32,9 +15,9 @@ export default class WalletStorageApi {
 
     addWallet = async (walletData) => {
         try {
-            const wallets = await AsyncStorage.getItem('Wallets') || [];
+            const wallets = await AsyncStorage.getItem(WALLET_STORAGE_KEY) || [];
             wallets.push(walletData);
-            AsyncStorage.setItem('Wallets', wallets);
+            AsyncStorage.setItem(WALLET_STORAGE_KEY, wallets);
         } catch (error) {
             console.log(error);
         }
@@ -42,10 +25,10 @@ export default class WalletStorageApi {
 
     removeWallet = async (symbol, address) => {
         try {
-            const wallets = await AsyncStorage.getItem('Wallets') || [];
+            const wallets = await AsyncStorage.getItem(WALLET_STORAGE_KEY) || [];
             const idx = wallets.findIndex(w => (w.symbol === symbol && w.address === address));
             wallets.splice(idx, 1);
-            AsyncStorage.setItem('Wallets', wallets);
+            AsyncStorage.setItem(WALLET_STORAGE_KEY, wallets);
         } catch (error) {
             console.log(error);
         }

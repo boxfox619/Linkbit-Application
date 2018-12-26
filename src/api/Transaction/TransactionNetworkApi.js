@@ -3,29 +3,9 @@ import {HOST} from '../../libs/Constraints'
 
 export default class TransactionNetworkApi {
 
-    fetchTransactions = async (page, count) => {
-        try {
-            const res = await fetch(`${HOST}/transactions?page=${page}&count=${count}`,
-                {method: 'GET'});
-            return res.json();
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    fetchTransactionByWallet = async (symbol, address, page, count) => {
+    fetchTransaction = async (symbol, address, page, count) => {
         try {
             const res = await fetch(`${HOST}/wallet/${symbol}/transactions?address=${address}&page=${page}&count=${count}`,
-                {method: 'GET'});
-            return res.json();
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    fetchTransactionBySymbol = async (symbol, page, count) => {
-        try {
-            const res = await fetch(`${HOST}/transactions/${symbol}?page=${page}&count=${count}`,
                 {method: 'GET'});
             return res.json();
         } catch (error) {
