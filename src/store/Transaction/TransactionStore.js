@@ -45,6 +45,20 @@ export default class TransactionStore {
         })
     }
 
+    updateTransaction = async (transaction) => {
+        this.transactionStorageApi.save([transaction], this.transactionStorageApi.getLastBlock())
+        runInAction(() => {
+            const currentTransactions = [...this.transactions]
+            const idx = this.transactions.findIndex(tr2 => tr2.hash === transaction.hash)
+            if(idx > 0){
+                currentTransactions.splice(idx, 1, tr)
+            }else{
+                currentTransactions.push(transaction)
+            }
+            this.transactions = currentTransactions
+        })
+    }
+
     @computed get transactionCount() {
         return this.transactions.length
     }
