@@ -7,19 +7,6 @@ export default class Wallet {
   @observable balance
   @observable symbol
 
-  updateWallet = null
-  store
-
-  constructor (store) {
-    this.store = store
-    this.updateWallet = reaction(
-      () => this.asJson,
-      (json) => {
-        this.store.walletApi.updateWallet(json)
-      },
-    )
-  }
-
   @action setName (name) {
     this.name = name
   }

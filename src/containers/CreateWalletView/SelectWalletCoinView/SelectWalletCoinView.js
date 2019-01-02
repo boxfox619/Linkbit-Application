@@ -37,19 +37,17 @@ export default class SelectWalletCoinView extends React.Component {
     navigateToNext = () => {
         const { coinList } = this.coinStore
         const { selectedCoin } = this.state
-
         const coin = coinList.find(c => c.symbol === selectedCoin)
-
         if (!coin) {
             alert('생성할 코인을 선택해주세요')
             return
         }
-
-        if (coin.subCoins) {
+        /*if (coin.subCoins) {
             this.props.navigation.navigate('CreateWallet.SelectWalletToken', { coin })
         } else {
             this.props.navigation.navigate('CreateWallet.EnterWalletDetail', { coin })
-        }
+        }*/
+        this.props.navigation.navigate('CreateWallet.EnterWalletDetail', { coin })
 
     }
 }

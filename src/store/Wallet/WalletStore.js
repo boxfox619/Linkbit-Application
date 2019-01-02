@@ -1,7 +1,7 @@
 import {observable, computed, runInAction} from 'mobx'
 import Wallet from './Wallet'
 import WalletStorageApi from "../../api/Wallet/WalletStorageApi"
-import WalletNetworkApi from "../../api/Wallet/WalletNetworkApi";
+import WalletNetworkApi from "../../api/Wallet/WalletNetworkApi"
 
 class WalletStore {
     @observable wallets = []

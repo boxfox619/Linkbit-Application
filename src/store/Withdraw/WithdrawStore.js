@@ -11,7 +11,6 @@ export default class WithdrawStore {
     walletStore
     transactionStore
     withdrawApi
-    //@TODO Impl withdraw api
 
     constructor() {
         this.withdrawApi = new WithdrawNetworkApi()
