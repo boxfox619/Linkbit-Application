@@ -1,10 +1,9 @@
-import {fetch} from "react-native";
 import {HOST} from "../../libs/Constraints";
 
 export default class WalletNetworkApi {
     createWallet = async (symbol, password) => {
         try {
-            const res = await await fetch(`${HOST}/wallet`, {
+            const res = await fetch(`${HOST}/wallet`, {
                 method: 'POST',
                 headers: {
                     'Authorization': '',
@@ -14,15 +13,15 @@ export default class WalletNetworkApi {
                     password
                 }),
             });
-            return res;
+            return res.json();
         } catch (error) {
-            console.log(error);
+            alert(error);
         }
     }
 
     getBalance = async (symbol, address) => {
         try {
-            const res = await await fetch(`${HOST}/wallet/balance?symbol=${symbol}&address=${address}`, {method: 'GET'});
+            const res = await fetch(`${HOST}/wallet/balance?symbol=${symbol}&address=${address}`, {method: 'GET'});
             return res;
         } catch (error) {
             console.log(error);

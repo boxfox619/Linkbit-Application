@@ -26,7 +26,9 @@ class WalletStore {
 
     createWallet = async (symbol, name, password) => {
         const walletData = await this.walletNetworkApi.createWallet(symbol, password)
-        const wallet = {...walletData, name}
+        alert(JSON.stringify(walletData))
+        const wallet = new Wallet()
+        wallet.updateFromJson({...walletData, name, balance: 0})
         this.walletStorageApi.addWallet(wallet)
         runInAction(() => {
             this.wallets = [...this.wallets, wallet]
