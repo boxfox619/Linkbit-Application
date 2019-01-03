@@ -1,22 +1,20 @@
 import {HOST} from "../../libs/Constraints";
+import encoding from '../../libs/UrlEncoder';
 
 export default class WalletNetworkApi {
     createWallet = async (symbol, password) => {
-        try {
             const res = await fetch(`${HOST}/wallet`, {
                 method: 'POST',
                 headers: {
                     'Authorization': '',
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: JSON.stringify({
+                body: encoding({
                     symbol,
                     password
                 }),
             });
             return res.json();
-        } catch (error) {
-            alert(error);
-        }
     }
 
     getBalance = async (symbol, address) => {
