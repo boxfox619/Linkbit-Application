@@ -14,7 +14,7 @@ class WalletStore {
     }
 
     loadWalletList = async () => {
-        const wallets = await this.walletStorageApi.loadWallets()
+        const wallets = await this.walletStorageApi.getWalletList()
         runInAction(() => {
             this.wallets = wallets.map(json => {
                 const wallet = new Wallet()

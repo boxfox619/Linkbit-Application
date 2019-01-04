@@ -3,39 +3,42 @@ import {AsyncStorage} from 'react-native';
 const WALLET_STORAGE_KEY = "wallets";
 
 export default class WalletStorageApi {
-
-    loadWallets = async () => {
-        try {
-            const wallets = await this.getWalletList();
-            return wallets || [];
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    addWallet = async (walletData) => {
-        try {
-            const wallets = await this.getWalletList();
-            wallets.push(walletData);
-            AsyncStorage.setItem(WALLET_STORAGE_KEY, JSON.stringify(wallets));
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    removeWallet = async (symbol, address) => {
-        try {
-            const wallets = await this.getWalletList();
-            const idx = wallets.findIndex(w => (w.symbol === symbol && w.address === address));
-            wallets.splice(idx, 1);
-            AsyncStorage.setItem(WALLET_STORAGE_KEY, JSON.stringify(wallets));
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    walletList = []
 
     getWalletList = async () => {
-        const wallets = await AsyncStorage.getItem(WALLET_STORAGE_KEY) || '[]'
-        return JSON.parse(wallets)
+        if(!this.walletList || this.walletList.length === 0){
+            await this.loadWalletList();
+        }
+        return this.walletList
+    }
+
+    updateWallet = async (walletData) => {
+        const walletList = await this.getWalletList();
+        const idx = walletList.findIndex(w => (w.symbol === symbol && w.address === address));
+        walletList.splice(idx, 1, walletData);
+        await this.saveWalletList(walletList);
+    }
+
+    addWallet = async (walletData) => {
+        const walletList = await this.getWalletList();
+        walletList.push(walletData);
+        await this.saveWalletList(walletList);
+    }
+
+    removeWallet = async (symbol, address) => {
+        const walletList = await this.getWalletList();
+        const idx = walletList.findIndex(w => (w.symbol === symbol && w.address === address));
+        walletList.splice(idx, 1);
+        await this.saveWalletList(walletList);
+    }
+
+    saveWalletList = async (walletList) => {
+        this.walletList = walletList;
+        AsyncStorage.setItem(WALLET_STORAGE_KEY, JSON.stringify(walletList));
+    }
+
+    loadWalletList = async () => {
+        const walletList = await AsyncStorage.getItem(WALLET_STORAGE_KEY) || '[]'
+        this.walletList = JSON.parse(walletList)
     }
 }
