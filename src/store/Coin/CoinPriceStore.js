@@ -1,42 +1,43 @@
 import { observable, computed, runInAction, action } from 'mobx'
 import CoinApi from '../../api/Coin/CoinApi'
 import Coin from './Coin'
+import CoinNetworkApi from './../../api/Coin/CoinNetworkApi';
 
 class CoinPriceStore {
   @observable coinList = []
-    @observable isLoading = false
-    coinApi
+  @observable isLoading = false
+  coinNetworkApi
 
-    constructor() {
-        this.coinApi = CoinApi.create()
-    }
+  constructor() {
+    this.coinNetworkApi = new CoinNetworkApi()
+  }
 
-    loadCoins(symbols) {
-        runInAction(() => {
-            symbols.forEach(symbol => this.coinList.push(new Coin(symbol)))
-        })
-        this.refreshCoins()
-    }
+  loadCoins(symbols) {
+    runInAction(() => {
+      symbols.forEach(symbol => this.coinList.push(new Coin(symbol)))
+    })
+    this.refreshCoins()
+  }
 
-    refreshCoins = async () => {
-        this.isLoading = true
-        const coins = await this.coinApi.fetchCoins(this.coinList.map(coin => coin.symbol))
-        runInAction(() => {
-            coins.forEach(json => this.updateCoinPrice(json))
-            this.isLoading = false
-        })
-    }
+  refreshCoins = async () => {
+    this.isLoading = true
+    const coins = await this.coinNetworkApi.fetchCoins(this.coinList.map(coin => coin.symbol))
+    runInAction(() => {
+      coins.forEach(json => this.updateCoinPrice(json))
+      this.isLoading = false
+    })
+  }
 
-    loadCoin = async (symbol) => {
-        this.isLoading = true
-        const coins = await this.coinApi.fetchCoins([symbol])
-        runInAction(() => {
-            coins.forEach(json => this.updateCoinPrice(json))
-            this.isLoading = false
-        })
-    }
+  loadCoin = async (symbol) => {
+    this.isLoading = true
+    const coins = await this.coinNetworkApi.fetchCoins([symbol])
+    runInAction(() => {
+      coins.forEach(json => this.updateCoinPrice(json))
+      this.isLoading = false
+    })
+  }
 
-  @action updateCoinPrice (json) {
+  @action updateCoinPrice(json) {
     let coin = this.coinList.find(coin => coin.symbol === json.symbol)
     if (!coin) {
       coin = new Coin(json.symbol)
@@ -45,11 +46,11 @@ class CoinPriceStore {
     coin.updateFromJson(json)
   }
 
-  @computed get coinLists () {
+  @computed get coinLists() {
     return this.coinList
   }
 
-  getCoin (symbol) {
+  getCoin(symbol) {
     let coin = this.coinList.find(coin => coin.symbol === symbol)
     if (!coin) {
       runInAction(() => {

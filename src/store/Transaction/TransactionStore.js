@@ -14,7 +14,7 @@ export default class TransactionStore {
     }
 
     loadTransactions = async () => {
-        const transactions = await this.transactionStorageApi.load()
+        const transactions = this.transactionStorageApi.getTransactions()
         runInAction(() => {
             this.transactions = transactions.map(transaction => {
                 const transactionModel = new Transaction()
@@ -25,28 +25,21 @@ export default class TransactionStore {
     }
 
     fetchNewTransactions = async () => {
-        const lastBlockNum = await this.transactionStorageApi.getLastBlock()
+        const lastBlockNum = this.transactionStorageApi.getLastBlock()
         const res = await this.transactionNetworkApi.fetchNewTransactions(lastBlockNum)
-        await this.transactionStorageApi.save(res.transactions, res.blockNum)
+        await this.transactionStorageApi.updateTransactions(res.transactions, res.blockNum)
         await this.loadTransactions()
     }
 
     refreshProcessingTransactions = async () => {
         const txList = this.transactions.filter(tr => tr.status === 'progress').map(tr => tr.hash)
         const resultTransactions = await this.transactionNetworkApi.fetchTransactions(txList)
-        await this.transactionStorageApi.save(resultTransactions)
-        runInAction(() => {
-            const currentTransactions = [...this.transactions]
-            resultTransactions.forEach(tr => {
-                const idx = this.transactions.findIndex(tr2 => tr2.hash === tr.hash)
-                currentTransactions.splice(idx, 1, tr)
-            })
-            this.transactions = currentTransactions
-        })
+        await this.transactionStorageApi.updateTransactions(resultTransactions)
+        await this.loadTransactions()
     }
 
     updateTransaction = async (transaction) => {
-        this.transactionStorageApi.save([transaction], this.transactionStorageApi.getLastBlock())
+        this.transactionStorageApi.updateTransactions([transaction])
         runInAction(() => {
             const currentTransactions = [...this.transactions]
             const idx = this.transactions.findIndex(tr2 => tr2.hash === transaction.hash)
