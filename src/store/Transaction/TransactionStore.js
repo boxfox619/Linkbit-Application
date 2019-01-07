@@ -14,6 +14,7 @@ export default class TransactionStore {
     }
 
     loadTransactions = async () => {
+        await this.transactionStorageApi.loadTransactionMap()
         const transactions = this.transactionStorageApi.getTransactions()
         runInAction(() => {
             this.transactions = transactions.map(transaction => {
@@ -44,7 +45,7 @@ export default class TransactionStore {
             const currentTransactions = [...this.transactions]
             const idx = this.transactions.findIndex(tr2 => tr2.hash === transaction.hash)
             if(idx > 0){
-                currentTransactions.splice(idx, 1, tr)
+                currentTransactions.splice(idx, 1, transaction)
             }else{
                 currentTransactions.push(transaction)
             }

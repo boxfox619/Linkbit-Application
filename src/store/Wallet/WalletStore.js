@@ -41,6 +41,12 @@ class WalletStore {
     @computed get walletCount() {
         return this.wallets.length
     }
+
+    @computed get symbols() {
+        const symbols = []
+        this.wallets.forEach(w => !symbols.includes(w.symbol) && symbols.push(w.symbol))
+        return symbols
+    }
 }
 
 export default new WalletStore()

@@ -21,21 +21,15 @@ export default class CoinNetworkApi {
         }
     };
     fetchCoins = async (symbols) => {
-      try {
-        const res = await fetch(`${HOST}/coin/list`, {
-          method: 'POST',
-          headers: {
-            'Authorization': '',
-          },
-          body: JSON.stringify({
-            coins: symbols,
-          }),
+        const res = await fetch(`${HOST}/coins`, {
+            method: 'POST',
+            headers: {
+                'Authorization': '',
+            },
+            body: JSON.stringify({
+                symbols: symbols,
+            }),
         })
-        const resJson = res.json()
-        
-        return resJson
-      } catch (error) {
-        console.log(error)
-      }
+        return res.json()
     }
 }
