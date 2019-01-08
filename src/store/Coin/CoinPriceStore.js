@@ -1,31 +1,40 @@
 import {observable, computed, runInAction, action} from 'mobx'
 import Coin from './Coin'
-import CoinNetworkApi from './../../api/Coin/CoinNetworkApi';
+import CoinNetworkApi from './../../api/Coin/CoinNetworkApi'
+import CoinStorageApi from './../../api/Coin/CoinStorageApi'
 
 class CoinPriceStore {
     @observable coinList = []
     @observable isLoading = false
     coinNetworkApi
+    coinStorageApi
 
     constructor() {
         this.coinNetworkApi = new CoinNetworkApi()
+        this.coinStorageApi = new CoinStorageApi()
     }
 
-    loadCoins = async(symbols) => {
+    loadCoins = async () => {
+        const savedCoinList = await this.coinStorageApi.getCoins()
         runInAction(() => {
-            symbols.forEach(symbol => this.coinList.push(new Coin(symbol)))
+            this.coinList = savedCoinList.map(c => {
+                const coin = new Coin(c.symbol)
+                coin.updateFromJson(C)
+                return coin
+            })
         })
         await this.refreshCoins()
     }
 
     refreshCoins = async () => {
         this.isLoading = true
-        const coins = await this.coinNetworkApi.fetchCoins(this.coinList.map(coin => coin.symbol))
-        alert(coins)
+        const symbols = this.coinList.map(coin => coin.symbol)
+        const coins = await this.coinNetworkApi.fetchCoins(symbols)
         runInAction(() => {
             coins.forEach(json => this.updateCoinPrice(json))
             this.isLoading = false
         })
+        await this.coinStorageApi.updateCoins(this.coins)
     }
 
     loadCoin = async (symbol) => {
@@ -35,6 +44,7 @@ class CoinPriceStore {
             coins.forEach(json => this.updateCoinPrice(json))
             this.isLoading = false
         })
+        await this.coinStorageApi.updateCoin(coins.find(c => c.symbol === symbol))
     }
 
     @action updateCoinPrice(json) {

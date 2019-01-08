@@ -2,6 +2,7 @@ import {observable, computed, runInAction} from 'mobx'
 import Wallet from './Wallet'
 import WalletStorageApi from "../../api/Wallet/WalletStorageApi"
 import WalletNetworkApi from "../../api/Wallet/WalletNetworkApi"
+import CoinPriceStore from '../Coin/CoinPriceStore'
 
 class WalletStore {
     @observable wallets = []
@@ -32,6 +33,7 @@ class WalletStore {
         runInAction(() => {
             this.wallets = [...this.wallets, wallet]
         })
+        await CoinPriceStore.loadCoin(symbol)
     }
 
     @computed get walletList() {
@@ -40,12 +42,6 @@ class WalletStore {
 
     @computed get walletCount() {
         return this.wallets.length
-    }
-
-    @computed get symbols() {
-        const symbols = []
-        this.wallets.forEach(w => !symbols.includes(w.symbol) && symbols.push(w.symbol))
-        return symbols
     }
 }
 

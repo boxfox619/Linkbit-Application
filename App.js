@@ -14,8 +14,9 @@ const AppContainer = createAppContainer(Navigator)
 
 export default class App extends React.Component {
   componentWillMount() {
-    Promise.all([store.address.loadAddressList(), store.wallet.loadWalletList(), store.coin.loadCoins(store.wallet.symbols)])
-        .catch(err => alert(err))
+      store.address.loadAddressList()
+      store.wallet.loadWalletList()
+      store.coin.loadCoins()
   }
 
   render() {
