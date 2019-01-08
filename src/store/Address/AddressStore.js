@@ -1,4 +1,4 @@
-import {observable, runInAction} from 'mobx'
+import {observable, runInAction, action} from 'mobx'
 import AddressNetworkApi from '../../api/Address/AddressNetworkApi'
 import AddressStorageApi from '../../api/Address/AddressStorageApi'
 import LinkedAddress from './LinkedAddress'
@@ -7,7 +7,7 @@ class AddressStore {
     @observable linkedAddressList = []
     addressNetworkApi
     addressStorageApi
-    isLoading = false
+    @observable isLoading = false
 
     constructor() {
         this.addressNetworkApi = new AddressNetworkApi()
@@ -27,13 +27,14 @@ class AddressStore {
         })
     }
 
-    updateAddress = async (json) => {
+
+    @action updateAddress = async (json) => {
         let linkedAddress = this.linkedAddressList.find(linked => linked.address === json.address)
         if (!linkedAddress) {
             linkedAddress = new LinkedAddress()
             this.linkedAddressList = [...this.linkedAddressList, linkedAddress]
             await this.addressStorageApi.addAddress(json)
-        }else{
+        } else {
             await this.addressStorageApi.updateAddress(json)
         }
         linkedAddress.updateFromJson(json)

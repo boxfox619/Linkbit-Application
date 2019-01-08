@@ -1,36 +1,43 @@
-import { observable, action, computed } from 'mobx'
-import WalletStore from '../Wallet/WalletStore'
+import {observable, action, computed} from 'mobx'
 
 export default class LinkedAddress {
-  @observable address
-  @observable accountAddressList = []
+    @observable linkAddress
+    @observable accountAddressMap = {}
 
-  @computed get asJson () {
-    return {
-      address: this.address,
-      accountAddressList: this.accountAddressList,
+    @computed get asJson() {
+        return {
+            address: this.address,
+            accountAddressList: this.accountAddressList,
+        }
     }
-  }
 
-  getAccountAddress = (symbol) => {
-    return this.accountAddressList.find(account => account.symbol === symbol)
-  }
-
-  @action addAddress (symbol, address) {
-    if (!this.getAccountAddress(symbol)) {
-      this.accountAddressList.push({symbol, address})
+    getAccountAddress = (symbol) => {
+        return this.accountAddressList.find(account => account.symbol === symbol)
     }
-  }
 
-  @action deleteAddress (symbol, address) {
-    if (this.getAccountAddress(symbol)) {
-      this.accountAddressList.splice(this.accountAddressList.indexOf(address), 1)
+    @action addAddress(symbol, address) {
+        if (!this.getAccountAddress(symbol)) {
+            this.accountAddressList.push({symbol, address})
+        }
     }
-  }
 
-  @action updateFromJson (json) {
-    this.address = json.address
-    this.accountAddressList = json.accountAddressList
-  }
+    @action deleteAddress(symbol, address) {
+        if (this.getAccountAddress(symbol)) {
+            this.accountAddressList.splice(this.accountAddressList.indexOf(address), 1)
+        }
+    }
+
+    @action updateFromJson(json) {
+        this.linkAddress = json.linkAddress
+        this.accountAddressMap = json.accountAddressMap || {}
+    }
+
+    @computed get accountAddressList() {
+        return Object.values(this.accountAddressMap)
+    }
+
+    @computed get address() {
+        return this.linkAddress
+    }
 
 }
