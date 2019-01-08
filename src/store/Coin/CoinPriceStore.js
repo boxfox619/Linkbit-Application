@@ -29,7 +29,7 @@ class CoinPriceStore {
     refreshCoins = async () => {
         this.isLoading = true
         const symbols = this.coinList.map(coin => coin.symbol)
-        const coins = await this.coinNetworkApi.fetchCoins(symbols)
+        const coins = await this.coinNetworkApi.fetchCoinPrices(symbols)
         runInAction(() => {
             coins.forEach(json => this.updateCoinPrice(json))
             this.isLoading = false
@@ -40,7 +40,7 @@ class CoinPriceStore {
     loadCoin = async (symbol) => {
         this.isLoading = true
         try {
-            const coins = await this.coinNetworkApi.fetchCoins([symbol])
+            const coins = await this.coinNetworkApi.fetchCoinPrices([symbol])
             runInAction(() => {
                 coins.forEach(json => this.updateCoinPrice(json))
                 this.isLoading = false

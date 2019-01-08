@@ -3,7 +3,7 @@ import encoding from '../../libs/UrlEncoder'
 
 export default class CoinNetworkApi {
 
-    fetchAllCoinsPrice = async () => {
+    fetchCoins= async () => {
         try {
             const res = await fetch(`${HOST}/coins`, {method: 'GET'});
             return res.json();
@@ -12,17 +12,8 @@ export default class CoinNetworkApi {
         }
     };
 
-    fetchCoinPrice = async (symbol) => {
-        try {
-            const res = await fetch(`${HOST}/coins/${symbol}`, {method: 'GET'});
-            return res.json();
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    fetchCoins = async (symbols) => {
-        const res = await fetch(`${HOST}/coins`, {
+    fetchCoinPrices = async (symbols) => {
+        const res = await fetch(`${HOST}/coins/price`, {
             method: 'POST',
             headers: {
                 'Authorization': '',
