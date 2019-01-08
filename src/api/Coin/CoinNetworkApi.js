@@ -1,5 +1,5 @@
-import {fetch} from 'react-native'
 import {HOST} from '../../libs/Constraints'
+import encoding from '../../libs/UrlEncoder'
 
 export default class CoinNetworkApi {
 
@@ -20,15 +20,15 @@ export default class CoinNetworkApi {
             console.log(error);
         }
     };
+
     fetchCoins = async (symbols) => {
         const res = await fetch(`${HOST}/coins`, {
             method: 'POST',
             headers: {
                 'Authorization': '',
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: JSON.stringify({
-                symbols: symbols,
-            }),
+            body: encoding({symbols}),
         })
         return res.json()
     }

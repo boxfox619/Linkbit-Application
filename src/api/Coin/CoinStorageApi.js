@@ -38,7 +38,7 @@ export default class CoinStorageApi {
         await this.save()
     }
 
-    loadCoins = async() => {
+    loadCoins = async () => {
         this.coinList = JSON.parse(await AsyncStorage.getItem(COIN_STORAGE_KEY) || '[]')
     }
 
