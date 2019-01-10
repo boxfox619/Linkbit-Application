@@ -8,7 +8,7 @@ import {PRIMARY_COLOR} from '../../../libs/Constraints'
 export default class AddressBuyFinishView extends React.Component {
 
     onFinish = () => {
-        this.props.navigation.navigate('Address')
+        this.props.navigation.goBack(null)
     }
 
     render() {

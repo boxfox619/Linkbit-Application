@@ -20,10 +20,8 @@ export default class WalletListView extends React.Component {
     }
   }
 
-  openWalletDetail = (w) => {
-    //@TODO imp
-    //
-    // lement wallet detail open
+  openWalletDetail = (wallet) => {
+    this.props.navigation.navigate('WalletDetail', { wallet })
   }
 
   render () {

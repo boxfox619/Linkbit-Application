@@ -10,11 +10,10 @@ export default class TransactionStore {
 
     constructor(symbol, address) {
         this.transactionStorageApi = new TransactionStorageApi(symbol, address)
-        this.transactionNetworkApi = new TransactionNetworkApi(symbol, address)
+        this.transactionNetworkApi = new TransactionNetworkApi()
     }
 
     loadTransactions = async () => {
-        await this.transactionStorageApi.loadTransactionMap()
         const transactions = this.transactionStorageApi.getTransactions()
         runInAction(() => {
             this.transactions = transactions.map(transaction => {
@@ -29,18 +28,17 @@ export default class TransactionStore {
         const lastBlockNum = this.transactionStorageApi.getLastBlock()
         const res = await this.transactionNetworkApi.fetchNewTransactions(lastBlockNum)
         await this.transactionStorageApi.updateTransactions(res.transactions, res.blockNum)
-        await this.loadTransactions()
+        res.transactions.forEach(tr => this.updateTransaction(tr))
     }
 
     refreshProcessingTransactions = async () => {
         const txList = this.transactions.filter(tr => tr.status === 'progress').map(tr => tr.hash)
         const resultTransactions = await this.transactionNetworkApi.fetchTransactions(txList)
         await this.transactionStorageApi.updateTransactions(resultTransactions)
-        await this.loadTransactions()
+        resultTransactions.forEach(tr => this.updateTransaction(tr))
     }
 
-    updateTransaction = async (transaction) => {
-        this.transactionStorageApi.updateTransactions([transaction])
+    updateTransaction = (transaction) => {
         runInAction(() => {
             const currentTransactions = [...this.transactions]
             const idx = this.transactions.findIndex(tr2 => tr2.hash === transaction.hash)

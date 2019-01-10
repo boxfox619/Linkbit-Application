@@ -6,6 +6,7 @@ import { observable } from 'mobx'
 import { PRIMARY_COLOR } from '../../libs/Constraints'
 import i18n from '../../libs/Locale'
 import AddressCard from '../../components/Card/AddressCard'
+import ActionButton from "react-native-action-button";
 
 @inject(['address'])
 @observer
@@ -42,10 +43,10 @@ export default class AddressListView extends React.Component {
                 })}/>
             )
           }}/>
-        <Button
-          title={i18n.t('add_address')}
-          buttonStyle={styles.getAddressButton}
-          onPress={() => this.props.navigation.navigate('AddressBuy')}/>
+          <ActionButton buttonColor={PRIMARY_COLOR}
+                        onPress={() => this.props.navigation.navigate("AddressBuy")}
+                        offsetX={0}
+                        offsetY={0} />
       </View>
     )
   }
@@ -53,16 +54,9 @@ export default class AddressListView extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 0,
-    paddingBottom: 20,
+      flex: 1
   },
   list: {
-    padding: 10,
     flex: 1,
   },
-  getAddressButton: {
-    backgroundColor: PRIMARY_COLOR,
-  },
-
 })

@@ -3,10 +3,10 @@ import {View, StyleSheet, Text, SafeAreaView} from 'react-native'
 import {Header} from 'react-native-elements'
 import {PRIMARY_COLOR} from '../../libs/Constraints'
 import {Navbar} from '../../components'
-import TransactionListView from '../TransactionListView/TransactionListView'
 import WalletListView from './WalletListView'
-import SettingView from '../SettingView/SettingView'
+import SettingView from './SettingView'
 import i18n from '../../libs/Locale'
+import AddressListView from "./AddressListView";
 
 export default class MainTabView extends React.Component {
 
@@ -52,7 +52,7 @@ export default class MainTabView extends React.Component {
             case 0:
                 return <WalletListView navigation={this.props.navigation}/>
             case 1:
-                return <TransactionListView/>
+                return <AddressListView navigation={this.props.navigation}/>
             case 2:
                 return <SettingView/>
         }
@@ -79,7 +79,7 @@ export default class MainTabView extends React.Component {
                 }
                 break
             case 1:
-                state.headerTitle = 'transaction'
+                state.headerTitle = 'address'
                 state.headerIcon = undefined
                 break
             case 2:
