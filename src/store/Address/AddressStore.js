@@ -31,13 +31,13 @@ class AddressStore {
     @action updateAddress = async (json) => {
         let linkedAddress = this.linkedAddressList.find(linked => linked.address === json.address)
         if (!linkedAddress) {
-            linkedAddress = new LinkedAddress()
+            linkedAddress = new LinkedAddress(json)
             this.linkedAddressList = [...this.linkedAddressList, linkedAddress]
             await this.addressStorageApi.addAddress(json)
         } else {
+            linkedAddress.updateFromJson(json)
             await this.addressStorageApi.updateAddress(json)
         }
-        linkedAddress.updateFromJson(json)
     }
 
     getLinkedAddress = (symbol, accountAddress) => {

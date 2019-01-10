@@ -4,6 +4,12 @@ export default class LinkedAddress {
     @observable linkAddress
     @observable accountAddressMap = {}
 
+    constructor(json) {
+        if(!!json){
+            this.updateFromJson(json)
+        }
+    }
+
     @computed get asJson() {
         return {
             address: this.address,
