@@ -3,47 +3,59 @@ import {observable, action, computed} from 'mobx'
 export default class LinkedAddress {
     @observable linkAddress
     @observable accountAddressMap = {}
+    store
 
-    constructor(json) {
+    constructor(store, json) {
+        this.store = store
         if(!!json){
             this.updateFromJson(json)
         }
     }
 
+    getAccountAddress = (symbol) => {
+        return this.accountAddressMap[symbol]
+    }
+
     @computed get asJson() {
         return {
-            address: this.address,
-            accountAddressList: this.accountAddressList,
+            linkAddress: this.linkAddress,
+            accountAddressMap: this.accountAddressMap
         }
     }
 
-    getAccountAddress = (symbol) => {
-        return this.accountAddressList.find(account => account.symbol === symbol)
+    @computed get symbols() {
+        return Object.keys(this.accountAddressMap)
     }
 
-    @action addAddress(symbol, address) {
+    addAddress = async (symbol, address) => {
         if (!this.getAccountAddress(symbol)) {
-            this.accountAddressList.push({symbol, address})
+            return await this.store.addAddress(this.linkAddress, symbol, address)
         }
+        return false
     }
 
-    @action deleteAddress(symbol, address) {
+    deleteAddress = async (symbol) => {
         if (this.getAccountAddress(symbol)) {
-            this.accountAddressList.splice(this.accountAddressList.indexOf(address), 1)
+            return await this.store.deleteAddress(this.linkAddress, symbol)
+        }
+        return false
+    }
+
+    @action setAccountAddress = (symbol, address) => {
+        if(!!address){
+            this.accountAddressMap[symbol] = address
+        }else{
+            delete this.accountAddressMap[symbol]
         }
     }
 
     @action updateFromJson(json) {
-        this.linkAddress = json.linkAddress
+        this.linkAddress = json.linkAddress.replace(/\"/gi, '')
         this.accountAddressMap = json.accountAddressMap || {}
     }
 
     @computed get accountAddressList() {
         return Object.values(this.accountAddressMap)
-    }
-
-    @computed get address() {
-        return this.linkAddress
     }
 
 }

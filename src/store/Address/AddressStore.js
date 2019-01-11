@@ -19,7 +19,7 @@ class AddressStore {
         const addressList = await this.addressStorageApi.getAddressList()
         runInAction(() => {
             this.linkedAddressList = addressList.map(addressData => {
-                let linkedAddress = new LinkedAddress()
+                let linkedAddress = new LinkedAddress(this)
                 linkedAddress.updateFromJson(addressData)
                 return linkedAddress
             })
@@ -29,9 +29,9 @@ class AddressStore {
 
 
     @action updateAddress = async (json) => {
-        let linkedAddress = this.linkedAddressList.find(linked => linked.address === json.address)
+        let linkedAddress = this.linkedAddressList.find(linked => linked.linkAddress === json.linkAddress)
         if (!linkedAddress) {
-            linkedAddress = new LinkedAddress(json)
+            linkedAddress = new LinkedAddress(this, json)
             this.linkedAddressList = [...this.linkedAddressList, linkedAddress]
             await this.addressStorageApi.addAddress(json)
         } else {
@@ -40,10 +40,30 @@ class AddressStore {
         }
     }
 
-    getLinkedAddress = (symbol, accountAddress) => {
-        const linkedAddressList = this.linkedAddressList.filter(linked => linked.getAccountAddress(symbol) === accountAddress)
+    addAddress = async (linkAddress, symbol, address) => {
+        const res = await this.addressNetworkApi.registerAddress(linkAddress, symbol, address)
+        if (res) {
+            this.linkedAddressList.find(linked => linked.linkAddress === linkAddress).setAccountAddress(symbol, address)
+            await this.save()
+        }
+        return res
+    }
 
-        return linkedAddressList
+    deleteAddress = async (linkAddress, symbol) => {
+        const res = await this.addressNetworkApi.unregisterAddress(linkAddress, symbol)
+        if (res) {
+            this.linkedAddressList.find(linked => linked.linkAddress === linkAddress).setAccountAddress(symbol, undefined)
+            await this.save()
+        }
+        return res
+    }
+
+    save = () => {
+        this.addressStorageApi.saveAddressList(this.linkedAddressList.map(link => link.asJson)).catch(err => alert(err))
+    }
+
+    getLinkedAddress = (symbol, accountAddress) => {
+        return this.linkedAddressList.filter(linked => linked.getAccountAddress(symbol) === accountAddress)
     }
 }
 

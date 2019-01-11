@@ -26,28 +26,32 @@ export default class AddressNetworkApi {
     registerAddress = async (linkAddress, symbol, accountAddress) => {
         const res = await fetch(`${HOST}/address/account`, {
             method: 'PUT',
-            headers: {'Authorization': ''},
-            body: JSON.stringify({
+            headers: {
+                'Authorization': '',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: encoding({
                 linkAddress: linkAddress,
                 symbol: symbol,
                 accountAddress: accountAddress
             })
         });
-        let resJson = res.json();
-        return resJson;
+        return res.ok
     }
 
     unregisterAddress = async (linkAddress, symbol) => {
         const res = await fetch(`${HOST}/address/account`, {
             method: 'DELETE',
-            headers: {'Authorization': ''},
-            body: JSON.stringify({
+            headers: {
+                'Authorization': '',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: encoding({
                 linkAddress: linkAddress,
                 symbol: symbol
             })
         });
-        let resJson = res.json();
-        return resJson;
+        return res.ok
     }
 
     checkLinkAddressExists = async (linkAddress) => {

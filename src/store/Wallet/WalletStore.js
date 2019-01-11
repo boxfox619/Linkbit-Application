@@ -36,6 +36,10 @@ class WalletStore {
         await CoinPriceStore.loadCoin(symbol)
     }
 
+    getWallet(address) {
+        return this.wallets.find(w => w.address === address)
+    }
+
     @computed get walletList() {
         return this.wallets
     }

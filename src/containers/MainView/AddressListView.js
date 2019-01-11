@@ -29,17 +29,17 @@ export default class AddressListView extends React.Component {
       <View style={styles.container}>
         <FlatList
           style={styles.list}
-          keyExtractor={(item) => item.address}
+          keyExtractor={(item) => item.linkAddress}
           data={linkedAddressList}
           extraData={linkedAddressSize}
           renderItem={({item}) => {
             return (
               <AddressCard
-                address={item.address}
+                address={item.linkAddress}
                 linkedAddressCount={item.accountAddressList.length}
                 onPress={() => this.props.navigation.navigate({
                   routeName: 'AddressManagement',
-                  params: {address: item.address},
+                  params: {linkAddress: item.linkAddress},
                 })}/>
             )
           }}/>
