@@ -7,6 +7,7 @@ import AddressBuyContainer from './AddressView/AddressBuyContainer/AddressBuyCon
 import SelectWalletCoinView from './CreateWalletView/SelectWalletCoinView/SelectWalletCoinView'
 import SelectWalletTokenView from './CreateWalletView/SelectWalletTokenView/SelectWalletTokenView'
 import EnterWalletDetailView from "./CreateWalletView/EnterWalletDetailView/EnterWalletDetailView"
+import RemittanceView from "./RemittanceView/RemittanceView";
 
 export default createStackNavigator({
         Main: {
@@ -19,6 +20,7 @@ export default createStackNavigator({
         AddressManagement: AddressManagementView,
         WalletSearch: WalletSearchView,
         WalletDetail: WalletDetailView,
+        Withdraw: RemittanceView,
         "CreateWallet.SelectWalletCoin": SelectWalletCoinView,
         "CreateWallet.SelectWalletToken": SelectWalletTokenView,
         "CreateWallet.EnterWalletDetail": EnterWalletDetailView
