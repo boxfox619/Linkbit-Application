@@ -3,24 +3,19 @@ import PropTypes from 'prop-types'
 import { View, StyleSheet, Text } from 'react-native'
 
 export default class TransactionCard extends React.Component {
-  static propTypes = {
-    date: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    address: PropTypes.string.isRequired,
-    amount: PropTypes.number.isRequired,
-    symbol: PropTypes.string.isRequired,
-    confirm: PropTypes.number.isRequired,
-  }
+    static propTypes = {
+      transaction: PropTypes.object.isRequired
+    }
 
   render () {
-    const {date, email, address, amount, symbol, confirm} = this.props
+    const {date, targetAddress, targetUser, amount, symbol, confirm} = this.props.transaction
 
     return (
       <View style={styles.transactionRow}>
         <Text style={styles.date}>{date}</Text>
         <View style={styles.accountContainer}>
-          <Text style={styles.email}>{email}</Text>
-          <Text style={styles.address}>{address}</Text>
+          <Text style={styles.email}>{targetUser}</Text>
+          <Text style={styles.address}>{targetAddress}</Text>
         </View>
         <View style={styles.amountContainer}>
           <Text style={[styles.amount, this.getAmountColor()]}>{`${amount} ${symbol}`}</Text>
@@ -31,7 +26,7 @@ export default class TransactionCard extends React.Component {
   }
 
   getAmountColor = () => {
-    if (this.props.amount > 0) {
+    if (this.props.transaction.benefit) {
       return {color: '#0088FF'}
     } else {
       return {color: 'red'}

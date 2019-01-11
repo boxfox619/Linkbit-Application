@@ -5,6 +5,7 @@ import TransactionNetworkApi from "../../api/Transaction/TransactionNetworkApi";
 
 export default class TransactionStore {
     @observable transactions = []
+    @observable loading = false
     transactionStorageApi
     transactionNetworkApi
 
@@ -14,7 +15,8 @@ export default class TransactionStore {
     }
 
     loadTransactions = async () => {
-        const transactions = this.transactionStorageApi.getTransactions()
+        this.loading = true
+        const transactions = await this.transactionStorageApi.getTransactions()
         runInAction(() => {
             this.transactions = transactions.map(transaction => {
                 const transactionModel = new Transaction()
@@ -22,20 +24,25 @@ export default class TransactionStore {
                 return transactionModel
             })
         })
+        this.loading = false
     }
 
     fetchNewTransactions = async () => {
+        this.loading = true
         const lastBlockNum = this.transactionStorageApi.getLastBlock()
         const res = await this.transactionNetworkApi.fetchNewTransactions(lastBlockNum)
         await this.transactionStorageApi.updateTransactions(res.transactions, res.blockNum)
         res.transactions.forEach(tr => this.updateTransaction(tr))
+        this.loading = false
     }
 
     refreshProcessingTransactions = async () => {
+        this.loading = true
         const txList = this.transactions.filter(tr => tr.status === 'progress').map(tr => tr.hash)
         const resultTransactions = await this.transactionNetworkApi.fetchTransactions(txList)
         await this.transactionStorageApi.updateTransactions(resultTransactions)
         resultTransactions.forEach(tr => this.updateTransaction(tr))
+        this.loading = false
     }
 
     updateTransaction = (transaction) => {

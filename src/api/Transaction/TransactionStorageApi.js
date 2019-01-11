@@ -33,7 +33,32 @@ export default class TransactionStorageApi {
 
     getTransactions = async () => {
         const transactionMap = await this.getTransactionMap()
-        return transactionMap.values().sort((tr, tr2) => tr2.block - tr.block)
+        const transactionList = Object.values(transactionMap).sort((tr, tr2) => tr2.block - tr.block)
+        transactionList.push({
+            hash: 'hash',
+            symbol: 'ETH',
+            benefit: false,
+            targetAddress: 'Linkbit-1234',
+            targetUser: 'Boxfox',
+            amount: 13.221,
+            status: true,
+            date: '2018.12.12',
+            address: '0xasasdasd',
+            confirm: 11111
+        },
+            {
+                hash: 'hash2',
+                symbol: 'ETH',
+                benefit: true,
+                targetAddress: 'Linkbit-1234',
+                targetUser: 'Boxfox',
+                amount: 13.221,
+                status: true,
+                date: '2018.12.12',
+                address: '0xasasdasd',
+                confirm: 11111
+            })
+        return transactionList
     }
 
     getLastBlock = async () => {

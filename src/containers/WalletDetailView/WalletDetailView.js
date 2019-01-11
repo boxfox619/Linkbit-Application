@@ -2,7 +2,9 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { WalletSummaryCard, TransactionList } from '../../components/index'
 import { TransactionStore } from '../../store/index'
+import { observer } from 'mobx-react'
 
+@observer
 export default class WalletDetailView extends React.Component {
 
     constructor (props) {
@@ -20,8 +22,8 @@ export default class WalletDetailView extends React.Component {
         const wallet = this.props.navigation.getParam('wallet', {})
         return (
             <View style={styles.container}>
-                <WalletSummaryCard symbol={wallet.symbol} accountAddress={wallet.address} linkedAddress={wallet.linkedAddress} balance={wallet.balance}/>
-                <TransactionList fetchTransaction={() => {}} data={this.store.transactions}/>
+                <WalletSummaryCard wallet={wallet}/>
+                <TransactionList refreshing={this.store.loading} data={this.store.transactions}/>
             </View>
         )
     }
@@ -29,8 +31,7 @@ export default class WalletDetailView extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
-        height: '100%',
-        paddingVertical: 0,
+        flex: 1,
+        padding: 10
     },
 })
