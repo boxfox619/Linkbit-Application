@@ -50,7 +50,7 @@ export default class LinkedAddress {
     }
 
     @action updateFromJson(json) {
-        this.linkAddress = json.linkAddress.replace(/\"/gi, '')
+        this.linkAddress = json.linkAddress
         this.accountAddressMap = json.accountAddressMap || {}
     }
 
