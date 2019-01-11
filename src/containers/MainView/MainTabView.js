@@ -23,23 +23,21 @@ export default class MainTabView extends React.Component {
         const {headerTitle, headerIcon, selectedIndex} = this.state
 
         return (
-            <SafeAreaView style={styles.safeArea}>
-                <View style={styles.container}>
-                    <Header
-                        backgroundColor="#ffffff"
-                        leftComponent={<Text style={styles.title}>{i18n.t(headerTitle)}</Text>}
-                        rightComponent={headerIcon}
-                        outerContainerStyles={{borderBottomWidth: 0, height: 80}}/>
-                    <View style={styles.content}>
-                        {this.renderContents()}
-                    </View>
-                    <Navbar
-                        onTabSelected={this.updateIndex}
-                        selectedIndex={selectedIndex}
-                        tabs={this.tabs}
-                        containerStyle={styles.containerStyle}/>
+            <View style={styles.container}>
+                <Header
+                    backgroundColor="#ffffff"
+                    leftComponent={<Text style={styles.title}>{i18n.t(headerTitle)}</Text>}
+                    rightComponent={headerIcon}
+                    outerContainerStyles={{borderBottomWidth: 0, height: 80}}/>
+                <View style={styles.content}>
+                    {this.renderContents()}
                 </View>
-            </SafeAreaView>
+                <Navbar
+                    onTabSelected={this.updateIndex}
+                    selectedIndex={selectedIndex}
+                    tabs={this.tabs}
+                    containerStyle={styles.containerStyle}/>
+            </View>
         )
     }
 
