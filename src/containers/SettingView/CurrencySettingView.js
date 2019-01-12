@@ -22,8 +22,8 @@ export default class CurrencySettingView extends React.Component {
         )
     }
 
-    handleCurrencySetting = (val) => {
-        this.props.setting.setCurrency(val)
+    handleCurrencySetting = async (val) => {
+        await this.props.setting.setCurrency(val)
         this.props.navigation.goBack(null)
     }
 }

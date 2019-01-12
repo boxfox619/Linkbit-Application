@@ -40,6 +40,15 @@ class WalletStore {
         return this.wallets.find(w => w.address === address)
     }
 
+    @computed get totalPrice() {
+        let totalPrice = 0
+        this.wallets.forEach(w => {
+            const coin = CoinPriceStore.getCoin(w.symbol)
+            totalPrice += w.balance * coin.price
+        })
+        return totalPrice
+    }
+
     @computed get walletList() {
         return this.wallets
     }

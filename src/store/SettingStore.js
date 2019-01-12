@@ -19,6 +19,7 @@ class SettingStore {
             this.language = obj.language || 'ko'
             this.currency = obj.currency || 'USD'
             this.pin = obj.pin
+            this.useFingerprint = (obj.useFingerprint || false) === 'true'
         })
     }
 
@@ -47,7 +48,8 @@ class SettingStore {
         await AsyncStorageApi.saveObject({
             language: this.language,
             currency: this.currency,
-            pin: this.pin
+            pin: this.pin,
+            useFingerprint: this.useFingerprint
         })
     }
 }

@@ -3,8 +3,8 @@ import {AsyncStorage} from 'react-native';
 export default AsyncStorageApi = {
 
     saveObject: async (obj) => {
-        for (const key in obj) {
-            await AsyncStorage.setItem(key, obj[key])
+        for (let key in obj) {
+            await AsyncStorage.setItem(key, String(obj[key]))
         }
     },
 

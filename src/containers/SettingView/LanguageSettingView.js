@@ -23,8 +23,8 @@ export default class LanguageSettingView extends React.Component {
         )
     }
 
-    handleLanguageSetting = (val) => {
-        this.props.setting.setLanguage(val)
+    handleLanguageSetting = async (val) => {
+        await this.props.setting.setLanguage(val)
         this.props.navigation.goBack(null)
     }
 }

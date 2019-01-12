@@ -1,4 +1,4 @@
-import {fetch} from "react-native"
+import {AsyncStorage} from "react-native"
 import {HOST} from "../../libs/Constraints"
 
 const WITHDRAW_CACHE_KEY = 'withdraw'
