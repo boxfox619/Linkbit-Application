@@ -7,7 +7,7 @@ const KeyboardView = ({keyboardOnPress, pinLength, onComplete, bgColor, returnTy
     let style
     let onPressActive
     let component
-    if (item == 'empty') {
+    if (item === 'empty') {
       return (<View style={[styles[0]]}/>)
     }
     if (item === deleteText) {
@@ -30,7 +30,6 @@ const KeyboardView = ({keyboardOnPress, pinLength, onComplete, bgColor, returnTy
 
     return (
       <TouchableOpacity
-        activeOpacity={0.85}
         onPress={() => keyboardOnPress(item, returnType, pinLength, onComplete)}
         disabled={onPressActive}>
         <Animated.View style={[
