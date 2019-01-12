@@ -8,7 +8,7 @@ export default StyleSheet.create({
         position: 'relative'
     },
     title: {
-        fontSize: 25,
+        fontSize: 18,
         textAlign: 'center',
         marginBottom: 30,
         width: Dimensions.get('window').width,

@@ -9,9 +9,9 @@ export default class SettingListView extends React.Component {
     }
 
     render() {
-        const {list, onItemSelected} = this.props
+        const {list, onItemSelected, style} = this.props
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, style]}>
                 {
                     list.map(item => (
                         <TouchableOpacity

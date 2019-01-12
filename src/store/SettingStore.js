@@ -6,16 +6,19 @@ import AsyncStorageApi from "../api/AsyncStorageApi";
 class SettingStore {
     @observable language = 'ko'
     @observable currency = 'USD'
+    @observable pin = '11111'
+    @observable useFingerprint = false
 
     @observable.struct windowDimensions = {
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height,
     }
 
-    constructor(){
+    constructor() {
         AsyncStorageApi.getObject(['language', 'currency']).then(obj => {
             this.language = obj.language || 'ko'
             this.currency = obj.currency || 'USD'
+            this.pin = obj.pin
         })
     }
 
@@ -30,10 +33,21 @@ class SettingStore {
         await this.save()
     }
 
+    @action setPin = async (val) => {
+        this.pin = val
+        await this.save()
+    }
+
+    @action setFingerprint = async (val) => {
+        this.useFingerprint = val
+        await this.save()
+    }
+
     save = async () => {
         await AsyncStorageApi.saveObject({
             language: this.language,
-            currency: this.currency
+            currency: this.currency,
+            pin: this.pin
         })
     }
 }

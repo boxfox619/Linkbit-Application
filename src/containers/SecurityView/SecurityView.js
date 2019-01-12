@@ -1,79 +1,80 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import PinCodeView from './PinCodeView'
+import {View, StyleSheet} from 'react-native'
 import FingerPrintView from './FingerPrintView'
+import PinCodeCreateView from "../PinCodeInputView/PinCodeCreateView"
+import {inject, observer} from "mobx-react"
+import {observable} from 'mobx'
+import SettingListView from "../SettingView/SettingListView"
+import PinCodeView from "../../components/PinCodeInput"
 
-const SecurityDetailView = (props => {
-  const {view, onVerifySuccess} = props
-
-  return (
-    <>
-      {
-        view === 'pin' ?
-          <PinCodeView onVerifySuccess={() => onVerifySuccess(false)}/> :
-          <FingerPrintView onVerifySuccess={() => onVerifySuccess(false)}/>
-      }
-    </>
-  )
-})
-
+@inject(['setting'])
+@observer
 export default class SecurityView extends React.Component {
+    @observable label = '설정을 위해 PIN 번호를 입력해주세요'
+    @observable view = 'verify'
 
-  constructor (props) {
-    super(props)
-    this.state = {
-      isVerify: false,
-      view: false,
+    componentDidMount() {
+        const pin = this.props.setting.pin
+        this.view = (!!pin) ? 'verify' : 'menu'
     }
-  }
 
-  handleSetView = view => this.setState({view})
-  handleVerifySuccess = view => this.setState({view, isVerify: true})
+    handleViewSetting = view => this.view = view
+    handleSetNewPin = async pin => {
+        await this.props.setting.setPin(pin)
+        this.view = 'menu'
+    }
+    handleSetFingerprint = () => {
+        //@TODO setting fingerprint use
+        this.view = 'menu'
+    }
+    onPinVerify = (pin) => {
+        if (this.props.setting.pin === pin) {
+            this.view = 'menu'
+        } else {
+            this.label = 'PIN 번호가 일치하지 않습니다'
+        }
+    }
 
-  render () {
-    const {view} = this.state
+    render() {
+        const view = this.view
 
-    return (
-      <View style={styles.container}>
-        {
-          view ? (
-              <SecurityDetailView
-                view={view}
-                onVerifySuccess={this.handleVerifySuccess}/>
-            ) :
-            this.state.isVerify ?
-              <>
-                <TouchableOpacity
-                  key={0}
-                  style={styles.listItem}
-                  onPress={() => this.handleSetView('pin')}>
-                  <Text>핀 코드 변경</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  key={1}
-                  style={styles.listItem}
-                  onPress={() => this.handleSetView('finger')}>
-                  <Text>지문 변경</Text>
-                </TouchableOpacity>
-              </> : (
-                <PinCodeView
-                  needVerify
-                  onVerifySuccess={this.handleVerifySuccess}/>
-              )}
-      </View>
-    )
-  }
+        return (
+            <View style={styles.container}>
+                {view === 'pin' && (<PinCodeCreateView onPinEntered={this.handleSetNewPin}/>)}
+                {view === 'finger' && (<FingerPrintView onVerifySuccess={this.handleSetFingerprint}/>)}
+                {view === 'menu' && (
+                    <SettingListView list={this.settings}
+                                     style={{padding: 20}}
+                                     onItemSelected={this.handleViewSetting}/>
+                )}
+                {view === 'verify' && (
+                    <PinCodeView
+                        label={this.label}
+                        onComplete={(val, clear) => this.onPinVerify(val, clear())}
+                        pinLength={5}/>
+                )}
+            </View>
+        )
+    }
+
+    get settings() {
+        const {pin, useFingerprint} = this.props.setting
+        return [
+            {
+                labelText: '핀 코드 변경',
+                subLabelText: (!!pin) ? '설정됨' : '설정되지 않음',
+                key: 'pin',
+            }, {
+                labelText: '지문 변경',
+                subLabelText: (useFingerprint) ? '사용중' : '사용하지 않음',
+                key: 'finger',
+            }
+        ]
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  listItem: {
-    padding: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eaeaea',
-  },
+    container: {
+        flex: 1
+    }
 })
