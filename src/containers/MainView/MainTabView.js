@@ -9,6 +9,7 @@ import i18n from '../../libs/Locale'
 import AddressListView from "./AddressListView";
 
 export default class MainTabView extends React.Component {
+    static navigationOptions = { header: null } 
 
     constructor() {
         super()
