@@ -19,7 +19,7 @@ export default class LanguageSettingView extends React.Component {
 
     render() {
         return (
-            <SettingListView list={language} onItemSelected={this.handleLanguageSetting}/>
+            <SettingListView style={{padding: 20}} list={language} onItemSelected={this.handleLanguageSetting}/>
         )
     }
 

@@ -18,7 +18,7 @@ export default class CurrencySettingView extends React.Component {
             }
         ]
         return (
-            <SettingListView list={currency} onItemSelected={this.handleCurrencySetting}/>
+            <SettingListView style={{padding: 20}} list={currency} onItemSelected={this.handleCurrencySetting}/>
         )
     }
 
