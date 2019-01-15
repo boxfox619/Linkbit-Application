@@ -1,24 +1,26 @@
-import {fetch} from 'react-native'
 import {HOST} from '../../libs/Constraints'
+import encoding from '../../libs/UrlEncoder'
 
 export default class CoinNetworkApi {
 
-    fetchCoins = async (symbols) => {
-      try {
-        const res = await fetch(`${HOST}/coin/list`, {
-          method: 'POST',
-          headers: {
-            'Authorization': '',
-          },
-          body: JSON.stringify({
-            coins: symbols,
-          }),
+    fetchCoins= async () => {
+        try {
+            const res = await fetch(`${HOST}/coins`, {method: 'GET'});
+            return res.json();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    fetchCoinPrices = async (symbols) => {
+        const res = await fetch(`${HOST}/coins/price`, {
+            method: 'POST',
+            headers: {
+                'Authorization': '',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: encoding({symbols}),
         })
-        const resJson = res.json()
-        
-        return resJson
-      } catch (error) {
-        console.log(error)
-      }
+        return res.json()
     }
 }

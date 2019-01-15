@@ -1,67 +1,66 @@
 import React from 'react'
-import { View, StyleSheet, TextInput } from 'react-native'
+import PropTypes from 'prop-types'
+import {View, StyleSheet, TextInput} from 'react-native'
 import DropdownMenu from 'react-native-dropdown-menu'
 
 export default class AmountInput extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      amount: props.value,
+    static propTypes = {
+        symbols: PropTypes.array.isRequired,
+        amount: PropTypes.any.isRequired,
+        onChangeAmount: PropTypes.func.isRequired,
+        onChangeSymbol: PropTypes.func.isRequired
     }
-  }
 
-  componentWillReceiveProps (props) {
-    this.setState({amount: props.value})
-  }
 
-  render () {
-    const {amount} = this.state
-    const {data, onChangeText, onOptionChange} = this.props
+    constructor(props) {
+        super(props)
+    }
 
-    return (
-      <View style={styles.amountContainer}>
-        <TextInput
-          style={styles.unitInput}
-          value={amount}
-          onChangeText={text => onChangeText(text)}/>
-        <View style={styles.unitPicker}>
-          <DropdownMenu
-            bgColor="transparent"
-            tintColor="#594343"
-            activityTintColor="#594343"
-            // arrowImg={}
-            // checkImage={}
-            optionTextStyle={{color: '#594343', backgroundColor: '#ffffff', zIndex: 2}}
-            titleStyle={{color: '#594343'}}
-            // maxHeight={300}
-            handler={onOptionChange}
-            data={data}/>
-        </View>
-      </View>
-    )
-  }
+    render() {
+        const {amount, symbols, onChangeAmount, onChangeSymbol} = this.props
+
+        return (
+            <View style={styles.amountContainer}>
+                <TextInput
+                    style={styles.unitInput}
+                    keyboardType='numeric'
+                    value={String(amount)}
+                    onChangeText={text => onChangeAmount(text)}/>
+                <View style={styles.unitPicker}>
+                    <DropdownMenu
+                        bgColor="transparent"
+                        tintColor="#594343"
+                        activityTintColor="#594343"
+                        optionTextStyle={{color: '#594343', backgroundColor: '#ffffff', zIndex: 2}}
+                        titleStyle={{color: '#594343'}}
+                        handler={(selection, row) => onChangeSymbol(symbols[selection][row])}
+                        data={symbols}/>
+                </View>
+            </View>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
-  amountContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    zIndex: 2,
-  },
-  unitInput: {
-    height: 53,
-    flexGrow: 1,
-    borderRadius: 5,
-    borderWidth: 3,
-    borderColor: '#594343',
-    paddingHorizontal: 6,
-  },
-  unitPicker: {
-    height: 53,
-    width: 100,
-    marginLeft: 6,
-    borderRadius: 5,
-    borderWidth: 3,
-    borderColor: '#594343',
-  },
+    amountContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        zIndex: 2,
+    },
+    unitInput: {
+        height: 53,
+        flexGrow: 1,
+        borderRadius: 5,
+        borderWidth: 3,
+        borderColor: '#594343',
+        paddingHorizontal: 6,
+    },
+    unitPicker: {
+        height: 53,
+        width: 100,
+        marginLeft: 6,
+        borderRadius: 5,
+        borderWidth: 3,
+        borderColor: '#594343',
+    },
 })

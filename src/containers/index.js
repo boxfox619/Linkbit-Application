@@ -1,12 +1,11 @@
-import SettingView from './SettingView/SettingView'
+import SettingView from './MainView/SettingView'
 import FingerPrintView from './SecurityView/FingerPrintView'
 import GuideView from './GuideView/GuideView'
 import PinCodeInputView from './PinCodeInputView/PinCodeInputView'
 import SecurityView from './SecurityView/SecurityView'
 import TermsOfServiceView from './TermsOfServiceView'
 import MainTabView from './MainView/MainTabView'
-import AddressListView from './AddressView/AddressListView'
-import TransactionListView from './TransactionListView/TransactionListView'
+import AddressListView from './MainView/AddressListView'
 
 export {
   FingerPrintView,
@@ -16,6 +15,5 @@ export {
   TermsOfServiceView,
   MainTabView,
   AddressListView,
-  TransactionListView,
   SettingView
 }

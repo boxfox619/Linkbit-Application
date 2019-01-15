@@ -1,18 +1,18 @@
 import {observable, runInAction} from "mobx";
-import CoinApi from "../../api/Coin/CoinApi";
+import CoinNetworkApi from "../../api/Coin/CoinNetworkApi";
 
 class CoinStore {
     @observable coinList = []
     @observable isLoading = true
-    coinApi
+    coinNetworkApi
 
     constructor() {
-        this.coinApi = CoinApi.create()
+        this.coinNetworkApi = new CoinNetworkApi()
     }
 
     fetchCoins = async () => {
         this.isLoading = true;
-        const coins = await this.coinApi.fetchCoinSymbols()
+        const coins = await this.coinNetworkApi.fetchCoins()
         runInAction(() => {
             this.coinList = coins;
             this.isLoading = false;

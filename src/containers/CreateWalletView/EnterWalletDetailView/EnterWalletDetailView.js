@@ -127,7 +127,7 @@ export default class EnterWalletDetailView extends React.Component {
             this.props.navigation.navigate('Main')
         }).catch(e => {
             this.setState({ progress: false })
-            alert(`지갑 생성 실패 ${e}`)
+            alert(`지갑 생성 실패`)
         })
     }
 }

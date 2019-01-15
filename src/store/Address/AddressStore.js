@@ -1,39 +1,70 @@
-import { observable, computed, runInAction } from 'mobx'
-import AddressApi from '../../api/Address/AddressApi'
+import {observable, runInAction, action} from 'mobx'
+import AddressNetworkApi from '../../api/Address/AddressNetworkApi'
+import AddressStorageApi from '../../api/Address/AddressStorageApi'
 import LinkedAddress from './LinkedAddress'
 
 class AddressStore {
-  @observable linkedAddressList = []
-  addressApi
-  isLoading = false
+    @observable linkedAddressList = []
+    addressNetworkApi
+    addressStorageApi
+    @observable isLoading = false
 
-  constructor () {
-    this.addressApi = AddressApi.create()
-  }
-
-  loadAddressList = async () => {
-    this.isLoading = true
-    const addressList = await this.addressApi.fetchOwnAddressList()
-    runInAction(() => {
-      addressList.forEach(json => this.updateAddress(json))
-      this.isLoading = false
-    })
-  }
-
-  updateAddress = (json) => {
-    let linkedAddress = this.linkedAddressList.find(linked => linked.address === json.address)
-    if (!linkedAddress) {
-      linkedAddress = new LinkedAddress()
-      this.linkedAddressList = [...this.linkedAddressList, linkedAddress]
+    constructor() {
+        this.addressNetworkApi = new AddressNetworkApi()
+        this.addressStorageApi = new AddressStorageApi()
     }
-    linkedAddress.updateFromJson(json)
-  }
 
-  getLinkedAddress = (symbol, accountAddress) => {
-    const linkedAddressList = this.linkedAddressList.filter(linked => linked.getAccountAddress(symbol) === accountAddress)
+    loadAddressList = async () => {
+        this.isLoading = true
+        const addressList = await this.addressStorageApi.getAddressList()
+        runInAction(() => {
+            this.linkedAddressList = addressList.map(addressData => {
+                let linkedAddress = new LinkedAddress(this)
+                linkedAddress.updateFromJson(addressData)
+                return linkedAddress
+            })
+            this.isLoading = false
+        })
+    }
 
-    return linkedAddressList
-  }
+
+    @action updateAddress = async (json) => {
+        let linkedAddress = this.linkedAddressList.find(linked => linked.linkAddress === json.linkAddress)
+        if (!linkedAddress) {
+            linkedAddress = new LinkedAddress(this, json)
+            this.linkedAddressList = [...this.linkedAddressList, linkedAddress]
+            await this.addressStorageApi.addAddress(json)
+        } else {
+            linkedAddress.updateFromJson(json)
+            await this.addressStorageApi.updateAddress(json)
+        }
+    }
+
+    addAddress = async (linkAddress, symbol, address) => {
+        const res = await this.addressNetworkApi.registerAddress(linkAddress, symbol, address)
+        if (res) {
+            this.linkedAddressList.find(linked => linked.linkAddress === linkAddress).setAccountAddress(symbol, address)
+            await this.save()
+        }
+        return res
+    }
+
+    deleteAddress = async (linkAddress, symbol) => {
+        const res = await this.addressNetworkApi.unregisterAddress(linkAddress, symbol)
+        if (res) {
+            this.linkedAddressList.find(linked => linked.linkAddress === linkAddress).setAccountAddress(symbol, undefined)
+            await this.save()
+        }
+        return res
+    }
+
+    save = () => {
+        this.addressStorageApi.saveAddressList(this.linkedAddressList.map(link => link.asJson)).catch(err => alert(err))
+    }
+
+    getLinkedAddress = (symbol, accountAddress) => {
+        return this.linkedAddressList.filter(linked => linked.getAccountAddress(symbol) === accountAddress)
+    }
 }
 
 export default new AddressStore()

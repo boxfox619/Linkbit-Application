@@ -1,64 +1,28 @@
-import {fetch} from 'react-native'
-import {HOST} from '../../libs/Constraints'
+import {HOST} from "../../libs/Constraints";
+import encoding from '../../libs/UrlEncoder';
 
 export default class WalletNetworkApi {
-  fetchWallets = async () => {
-    try {
-      const res = await fetch(`${HOST}/wallet/list`, {
-        method: 'GET',
-        headers: {
-          'Authorization': '',
-        },
-      })
-      const resJson = res.json()
-      
-      return resJson
-    } catch (error) {
-      console.log(error)
+    createWallet = async (symbol, password) => {
+            const res = await fetch(`${HOST}/wallet`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': '',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: encoding({
+                    symbol,
+                    password
+                }),
+            });
+            return res.json();
     }
-  }
 
-  updateWallet = async (address, name, password, description) => {
-    try {
-      const res = await fetch(`${HOST}/wallet`, {
-        method: 'PUT',
-        headers: {
-          'Authorization': '',
-        },
-        body: JSON.stringify({
-          address,
-          name,
-          password,
-          description,
-        }),
-      })
-      const resJson = res.json()
-      
-      return resJson
-    } catch (error){
-      console.log(error)
+    getBalance = async (symbol, address) => {
+        try {
+            const res = await fetch(`${HOST}/wallet/balance?symbol=${symbol}&address=${address}`, {method: 'GET'});
+            return res;
+        } catch (error) {
+            console.log(error);
+        }
     }
-  }
-
-  createWallet = async (address, name, password, description) => {
-    try {
-      const res = await fetch(`${HOST}/wallet/new`, {
-        method: 'POST',
-        headers: {
-          'Authorization': '',
-        },
-        body: JSON.stringify({
-          address,
-          name,
-          password,
-          description,
-        }),
-      })
-      const resJson = res.json()
-      
-      return resJson
-    } catch (error) {
-      console.log(error)
-    }
-  }
 }
