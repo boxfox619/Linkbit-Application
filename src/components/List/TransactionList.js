@@ -43,7 +43,7 @@ export default class TransactionList extends React.Component {
     render() {
         return (
             <FlatList
-                style={styles.transactionListView}
+                style={[styles.transactionListView, this.props.style]}
                 data={this.props.data}
                 extraData={this.props.data.length}
                 initialNumToRender={10}

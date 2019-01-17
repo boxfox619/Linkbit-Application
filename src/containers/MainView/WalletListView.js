@@ -6,7 +6,7 @@ import { PRIMARY_COLOR } from '../../libs/Constraints'
 import ActionButton from 'react-native-action-button'
 import i18n from '../../libs/Locale'
 
-@inject(['wallet'])
+@inject('wallet', 'setting')
 @observer
 export default class WalletListView extends React.Component {
 
@@ -14,7 +14,6 @@ export default class WalletListView extends React.Component {
     super(props)
     this.state = {
       test: false,
-      totalBalance: 123124,
       linkedAddress: 'Linkbit-3156-3266',
       moneySymbol: 'KRW',
     }
@@ -31,8 +30,8 @@ export default class WalletListView extends React.Component {
           <Text style={styles.totalBalanceLabel}>{i18n.t('wallet_total')}</Text>
           <Text style={styles.totalBalanceAddressLabel}>{this.state.linkedAddress}</Text>
           <View style={styles.balanceGroup}>
-            <Text style={styles.balance}>{this.state.totalBalance}</Text>
-            <Text style={styles.moneySymbol}>{this.state.moneySymbol}</Text>
+            <Text style={styles.balance}>{this.props.wallet.totalPrice}</Text>
+            <Text style={styles.moneySymbol}>{this.props.setting.currency}</Text>
           </View>
         </View>
         <WalletList

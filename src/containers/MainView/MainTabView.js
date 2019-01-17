@@ -9,6 +9,7 @@ import i18n from '../../libs/Locale'
 import AddressListView from "./AddressListView";
 
 export default class MainTabView extends React.Component {
+    static navigationOptions = { header: null } 
 
     constructor() {
         super()
@@ -52,7 +53,7 @@ export default class MainTabView extends React.Component {
             case 1:
                 return <AddressListView navigation={this.props.navigation}/>
             case 2:
-                return <SettingView/>
+                return <SettingView navigation={this.props.navigation}/>
         }
     }
 
@@ -69,12 +70,7 @@ export default class MainTabView extends React.Component {
         switch (selectedIndex) {
             case 0:
                 state.headerTitle = 'wallet'
-                state.headerIcon = {
-                    icon: 'payment',
-                    color: '#000000',
-                    marginRight: 10,
-                    onPress: () => this.props.navigation.navigate('Address')
-                }
+                state.headerIcon = undefined
                 break
             case 1:
                 state.headerTitle = 'address'

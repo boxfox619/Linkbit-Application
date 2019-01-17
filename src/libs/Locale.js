@@ -1,5 +1,5 @@
-import { Localization } from 'expo-localization'
 import i18n from 'i18n-js'
+import SettingStore from '../store/SettingStore'
 
 const en = {
   wallet: 'WALLET',
@@ -51,6 +51,6 @@ const ko = {
 
 i18n.fallbacks = true
 i18n.translations = {en, ko}
-i18n.locale = Localization.locale
+i18n.locale = SettingStore.language
 
 export default i18n

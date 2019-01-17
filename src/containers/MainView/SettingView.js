@@ -1,145 +1,64 @@
 import React from 'react'
-import { StyleSheet, Alert, View, TouchableOpacity, Text } from 'react-native'
+import {StyleSheet, Alert} from 'react-native'
 import i18n from '../../libs/Locale'
-import { SecurityView } from '../index'
+import SettingListView from "../SettingView/SettingListView";
+import {inject, observer} from "mobx-react/index";
 
-const SettingTouchableView = (props => {
-  const {viewName, onSetView} = props
-  const list = {
-    LanguageView: [
-      {
-        txt: i18n.t('lang_ko'),
-        val: 'ko',
-      }, {
-        txt: i18n.t('lang_en'),
-        val: 'en',
-      }],
-    CurrencyView: [
-      {
-        txt: i18n.t('bill_krw'),
-        val: 'KRW',
-      }, {
-        txt: i18n.t('bill_usd'),
-        val: 'USD',
-      }],
-  }
-
-  const handleSettingDetail = val => {
-    if (viewName === 'LanguageView') i18n.locale = val
-
-    onSetView('Setting')
-  }
-
-  return (
-    <View style={styles.container}>
-      {
-        list[viewName].map(item => (
-          <TouchableOpacity
-            key={item.txt}
-            style={styles.listItem}
-            onPress={() => handleSettingDetail(item.val)}>
-            <Text>{item.txt}</Text>
-          </TouchableOpacity>
-        ))
-      }
-    </View>
-  )
-})
-
+@inject(['setting'])
+@observer
 export default class SettingView extends React.Component {
 
-  constructor (props) {
-    super(props)
-    this.state = {
-      view: 'Setting',
+    constructor(props) {
+        super(props)
     }
-  }
 
-  handleSetView = name => this.setState({view: name})
+    render() {
+        const locale = this.props.setting.language
+        const {currency} = this.props.setting
+        const settingList = [
+            {
+                key: 'Setting.Language',
+                labelText: i18n.t('lang_mainTxt', {locale}),
+                subLabelText: locale,
+            }, {
+                key: 'Setting.Currency',
+                labelText: i18n.t('bill_mainTxt', {locale}),
+                subLabelText: currency,
+            }, {
+                key: 'Security',
+                labelText: i18n.t('lock_mainTxt', {locale}),
+                subLabelText: i18n.t('lock_subTxt', {locale}),
+            }, {
+                key: 'reset',
+                labelText: i18n.t('reset_mainTxt', {locale}),
+                labelStyle: styles.reset,
+                subLabelText: i18n.t('reset_subTxt', {locale}),
+            }
+        ]
+        return (
+            <SettingListView list={settingList} onItemSelected={this.handleSettingSelected}/>
+        )
+    }
 
-  onRenderSettingList = () => {
-    const settingList = [
-      {
-        name: i18n.t('lang_mainTxt', {locale: 'en'}),
-        mainTxt: i18n.t('lang_mainTxt'),
-        subTxt: i18n.t('lang_subTxt'),
-      }, {
-        name: i18n.t('bill_mainTxt', {locale: 'en'}),
-        mainTxt: i18n.t('bill_mainTxt'),
-        subTxt: i18n.t('bill_subTxt'),
-      }, {
-        name: i18n.t('lock_mainTxt', {locale: 'en'}),
-        mainTxt: i18n.t('lock_mainTxt'),
-        subTxt: i18n.t('lock_subTxt'),
-      }, {
-        name: i18n.t('reset_mainTxt', {locale: 'en'}),
-        mainTxt: i18n.t('reset_mainTxt'),
-        subTxt: i18n.t('reset_subTxt'),
-      }]
-
-    return (
-      settingList.map((item, idx) => (
-        <TouchableOpacity
-          key={idx}
-          style={styles.listItem}
-          onPress={() => this.handleSetView(item.name)}>
-          <Text style={[styles.mainTxt, item.mainTxt === i18n.t('reset_mainTxt') && styles.reset]}>{item.mainTxt}</Text>
-          <Text style={styles.subTxt}>{item.subTxt}</Text>
-        </TouchableOpacity>
-      ))
-    )
-  }
-
-  render () {
-    const viewName = `${this.state.view}View`
-
-    return (
-      <View style={styles.container}>
-        {
-          viewName === 'SettingView' ?
-            this.onRenderSettingList() :
-            viewName === 'SecurityView' ?
-              <SecurityView/> :
-              viewName === 'ResetView' ?
-                Alert.alert(
-                  i18n.t('reset_mainTxt'),
-                  i18n.t('reset_subTxt'),
-                  [
-                    {text: i18n.t('cancel'), onPress: () => this.handleSetView('Setting'), style: 'cancel'},
+    handleSettingSelected = (key) => {
+        if (key === 'reset') {
+            Alert.alert(
+                i18n.t('reset_mainTxt'),
+                i18n.t('reset_subTxt'),
+                [
+                    {text: i18n.t('cancel'), style: 'cancel'},
                     {text: i18n.t('reset_mainTxt').toLowerCase(), onPress: () => this.handleSetView('Setting')},
-                  ],
-                  {cancelable: false},
-                ) : (
-                  <SettingTouchableView
-                    viewName={viewName}
-                    onSetView={this.handleSetView}/>
-                )}
-      </View>
-    )
-  }
+                ],
+                {cancelable: false},
+            )
+        } else {
+            this.props.navigation.navigate(key)
+        }
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  listItem: {
-    padding: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eaeaea',
-  },
-  reset: {
-    color: '#ff6767',
-  },
-  mainTxt: {
-    fontSize: 14,
-  },
-  subTxt: {
-    fontSize: 10,
-    color: '#808080',
-    textAlign: 'right',
-    marginLeft: 'auto',
-  },
+    reset: {
+        color: '#ff6767',
+    }
 })
