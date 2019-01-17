@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Alert, View, TouchableOpacity, Text } from 'react-native'
 import i18n from '../../libs/Locale'
-import { SecurityView } from '..'
+import { SecurityView } from '../index'
 
 const SettingTouchableView = (props => {
   const {viewName, onSetView} = props

@@ -1,36 +1,61 @@
-import { observable, action, computed } from 'mobx'
-import WalletStore from '../Wallet/WalletStore'
+import {observable, action, computed} from 'mobx'
 
 export default class LinkedAddress {
-  @observable address
-  @observable accountAddressList = []
+    @observable linkAddress
+    @observable accountAddressMap = {}
+    store
 
-  @computed get asJson () {
-    return {
-      address: this.address,
-      accountAddressList: this.accountAddressList,
+    constructor(store, json) {
+        this.store = store
+        if(!!json){
+            this.updateFromJson(json)
+        }
     }
-  }
 
-  getAccountAddress = (symbol) => {
-    return this.accountAddressList.find(account => account.symbol === symbol)
-  }
-
-  @action addAddress (symbol, address) {
-    if (!this.getAccountAddress(symbol)) {
-      this.accountAddressList.push({symbol, address})
+    getAccountAddress = (symbol) => {
+        return this.accountAddressMap[symbol]
     }
-  }
 
-  @action deleteAddress (symbol, address) {
-    if (this.getAccountAddress(symbol)) {
-      this.accountAddressList.splice(this.accountAddressList.indexOf(address), 1)
+    @computed get asJson() {
+        return {
+            linkAddress: this.linkAddress,
+            accountAddressMap: this.accountAddressMap
+        }
     }
-  }
 
-  @action updateFromJson (json) {
-    this.address = json.address
-    this.accountAddressList = json.accountAddressList
-  }
+    @computed get symbols() {
+        return Object.keys(this.accountAddressMap)
+    }
+
+    addAddress = async (symbol, address) => {
+        if (!this.getAccountAddress(symbol)) {
+            return await this.store.addAddress(this.linkAddress, symbol, address)
+        }
+        return false
+    }
+
+    deleteAddress = async (symbol) => {
+        if (this.getAccountAddress(symbol)) {
+            return await this.store.deleteAddress(this.linkAddress, symbol)
+        }
+        return false
+    }
+
+    @action setAccountAddress = (symbol, address) => {
+        if(!!address){
+            this.accountAddressMap[symbol] = address
+        }else{
+            delete this.accountAddressMap[symbol]
+        }
+    }
+
+    @action updateFromJson(json) {
+        this.linkAddress = json.linkAddress
+        this.accountAddressMap = json.accountAddressMap || {}
+    }
+
+    @computed get accountAddressList() {
+        return Object.values(this.accountAddressMap)
+    }
 
 }

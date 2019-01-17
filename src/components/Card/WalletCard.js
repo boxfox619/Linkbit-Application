@@ -45,7 +45,8 @@ export default class WalletCard extends React.Component {
   }
 
   getTextColor = () => {
-    return {color: this.props.themeColor}
+    const themeColor = this.props.themeColor
+    return {color: themeColor.length === 0 ? PRIMARY_COLOR : themeColor}
   }
 }
 

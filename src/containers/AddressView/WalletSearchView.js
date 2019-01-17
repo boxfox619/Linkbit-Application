@@ -30,9 +30,13 @@ export default class WalletSearchView extends React.Component {
     this.wallets = resultWallets.filter(w => excludeSymbolList.indexOf(w.symbol) === -1).filter(w => excludeAddressList.indexOf(w.address) === -1)
   }
 
-  render () {
-    const {onWalletSelected} = this.props.navigation.state.params
+  onWalletSelected = (wallet) => {
+      const {onWalletSelected} = this.props.navigation.state.params
+      onWalletSelected(wallet)
+      this.props.navigation.goBack(null)
+  }
 
+  render () {
     return (
       <View style={styles.container}>
         <SearchBar
@@ -51,7 +55,7 @@ export default class WalletSearchView extends React.Component {
                 name={item.address}
                 symbol={item.symbol}
                 moneySymbol="KRW"
-                onPress={() => onWalletSelected(item)}/>
+                onPress={() => this.onWalletSelected(item)}/>
             )
           }}/>
       </View>

@@ -1,45 +1,52 @@
-import { observable, computed, runInAction } from 'mobx'
-import WalletApi from '../../api/Wallet/WalletApi'
+import {observable, computed, runInAction} from 'mobx'
 import Wallet from './Wallet'
+import WalletStorageApi from "../../api/Wallet/WalletStorageApi"
+import WalletNetworkApi from "../../api/Wallet/WalletNetworkApi"
+import CoinPriceStore from '../Coin/CoinPriceStore'
 
 class WalletStore {
-  @observable wallets = []
-  walletApi
+    @observable wallets = []
+    walletStorageApi
+    walletNetworkApi
 
-  constructor () {
-    this.walletApi = WalletApi.create()
-  }
-
-  loadWalletList = async () => {
-    const wallets = await this.walletApi.fetchWallets()
-    runInAction(() => {
-      this.wallets = wallets.map(json => {
-        const wallet = new Wallet()
-        wallet.updateFromJson(json)
-
-        return wallet
-      })
-    })
-  }
-
-  addWallet = async (wallet) => {
-    const result = await this.walletApi.createWallet(wallet.asJson())
-    if (result) {
-      runInAction(() => {
-        this.wallets = [...this.wallets, wallet]
-      })
-    } else {
-      //@TODO implement fail create wallet
+    constructor() {
+        this.walletStorageApi = new WalletStorageApi()
+        this.walletNetworkApi = new WalletNetworkApi()
     }
-  }
 
-  @computed get walletList () {
-    return this.wallets
-  }
+    loadWalletList = async () => {
+        const wallets = await this.walletStorageApi.getWalletList()
+        runInAction(() => {
+            this.wallets = wallets.map(json => {
+                const wallet = new Wallet()
+                wallet.updateFromJson(json)
+                return wallet
+            })
+        })
+    }
 
-  @computed get walletCount () {
-    return this.wallets.length
-  }
+    createWallet = async (symbol, name, password) => {
+        const walletData = await this.walletNetworkApi.createWallet(symbol, password)
+        const wallet = new Wallet()
+        wallet.updateFromJson({...walletData, name, balance: 0, symbol})
+        this.walletStorageApi.addWallet(wallet.asJson)
+        runInAction(() => {
+            this.wallets = [...this.wallets, wallet]
+        })
+        await CoinPriceStore.loadCoin(symbol)
+    }
+
+    getWallet(address) {
+        return this.wallets.find(w => w.address === address)
+    }
+
+    @computed get walletList() {
+        return this.wallets
+    }
+
+    @computed get walletCount() {
+        return this.wallets.length
+    }
 }
 
 export default new WalletStore()
