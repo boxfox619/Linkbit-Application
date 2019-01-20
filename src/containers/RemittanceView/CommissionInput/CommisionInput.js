@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     },
     description:{
         width: '100%',
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 'bold',
         color: '#A7A8AC',
         textAlign: 'center',

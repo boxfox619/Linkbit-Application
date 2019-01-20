@@ -6,13 +6,15 @@ import AddressInput from './AddressInput/AddressInput'
 import AmountInput from './AmountInput/AmountInput'
 import AmountBox from './AmountBox/AmountBox'
 import RemittanceType from '../../store/RemittanceType'
-import WalletSummaryCard from "../../components/Card/WalletSummaryCard"
+import WalletSummaryCard from '../../components/Card/WalletSummaryCard'
 import CommissionInput from "./CommissionInput/CommisionInput"
+import PinCodeView from '../../components/PinCodeInput'
 import { inject, observer } from "mobx-react/index"
 import { observable } from 'mobx'
 import WithdrawStore from '../../store/Withdraw/WithdrawStore'
 
 @inject(['coin'])
+@inject(['setting'])
 @observer
 export default class RemmittanceView extends React.Component {
     @observable step = 1
@@ -20,6 +22,7 @@ export default class RemmittanceView extends React.Component {
     @observable calculateSymbol = 'USD'
     @observable commission = 0
     @observable ratio = 0.1582
+    @observable label = 'PIN 번호를 입력해주세요'
 
     constructor(props) {
         super(props)
@@ -50,7 +53,9 @@ export default class RemmittanceView extends React.Component {
                     this.step += 1
                     break;
                 case 4:
-                    this.withdrawStore.withdraw('1234')
+                    this.step += 1
+                    break;
+                case 5:
                     break;
             }
         }
@@ -62,60 +67,70 @@ export default class RemmittanceView extends React.Component {
         const wallet = this.wallet
         return (
             <View style={styles.container}>
-                <View style={styles.wrapper}>
-                    <Text style={styles.title}>출금 지갑</Text>
-                    <WalletSummaryCard wallet={wallet} />
-                    {step < 2 && method === RemittanceType.Wallet && (
-                        <React.Fragment>
-                            <Text style={styles.title}>받는 주소</Text>
-                            <AddressInput
-                                address={destAddress}
-                                onChangeText={destAddress => this.withdrawStore.setTargetAddress(destAddress)} />
-                        </React.Fragment>
-                    )
-                    }
-                    {
-                        step >= 2 && method === RemittanceType.Wallet && (
+                {
+                    step < 5 &&
+                    <View style={styles.wrapper}>
+                        <Text style={styles.title}>출금 지갑</Text>
+                        <WalletSummaryCard wallet={wallet} />
+                        {
+                            step < 2 && method === RemittanceType.Wallet &&
                             <React.Fragment>
                                 <Text style={styles.title}>받는 주소</Text>
-                                <AddressBox address={destAddress} />
+                                <AddressInput
+                                    address={destAddress}
+                                    onChangeText={destAddress => this.withdrawStore.setTargetAddress(destAddress)} />
                             </React.Fragment>
-                        )
-                    }
-                    {
-                        step >= 2 &&
-                        <Text style={styles.title}>보낼 금액</Text>
-                    }
-                    {
-                        step === 2 &&
-                        <AmountInput
-                            symbols={[[wallet.symbol, moneySymbol]]}
-                            amount={(calculateSymbol === symbol) ? amount : price}
-                            onChangeAmount={this.handleChangeAmount}
-                            onChangeSymbol={(item) => this.calculateSymbol = item} />
-                    }
-                    {
-                        step >= 3 &&
-                        <AmountBox price={price}
-                            moneySymbol={moneySymbol}
-                            symbol={symbol}
-                            amount={amount} />
-                    }
-                    {
-                        step === 4 &&
-                        <React.Fragment>
-                            <View style={styles.commissionHeader}>
-                                <Text style={styles.title}>수수료</Text>
-                                <Text style={[styles.title, { fontSize: 18 }]}>{`${symbol} ${commission * ratio}`}</Text>
-                            </View>
-                            <CommissionInput commission={commission}
-                                onValueChange={this.onCommissionChanged} />
-                        </React.Fragment>
-                    }
-                </View>
-                <NavigationButton
-                    title={step === 4 ? '송금하기' : '다음'}
-                    onPress={this.nextStep} />
+                        }
+                        {
+                            step >= 2 && method === RemittanceType.Wallet && (
+                                <React.Fragment>
+                                    <Text style={styles.title}>받는 주소</Text>
+                                    <AddressBox address={destAddress} />
+                                </React.Fragment>
+                            )
+                        }
+                        {
+                            step >= 2 &&
+                            <Text style={styles.title}>보낼 금액</Text>
+                        }
+                        {
+                            step === 2 &&
+                            <AmountInput
+                                symbols={[[wallet.symbol, moneySymbol]]}
+                                amount={(calculateSymbol === symbol) ? amount : price}
+                                onChangeAmount={this.handleChangeAmount}
+                                onChangeSymbol={(item) => this.calculateSymbol = item} />
+                        }
+                        {
+                            step >= 3 &&
+                            <AmountBox price={price}
+                                moneySymbol={moneySymbol}
+                                symbol={symbol}
+                                amount={amount} />
+                        }
+                        {
+                            step === 4 &&
+                            <React.Fragment>
+                                <View style={styles.commissionHeader}>
+                                    <Text style={styles.title}>수수료</Text>
+                                    <Text style={[styles.title, { fontSize: 18 }]}>{`${symbol} ${commission * ratio}`}</Text>
+                                </View>
+                                <CommissionInput commission={commission}
+                                    onValueChange={this.onCommissionChanged} />
+                            </React.Fragment>
+                        }
+                    </View>
+                }
+                {
+                    step === 5 ?
+                        <PinCodeView
+                            label={this.label}
+                            pinLength={5}
+                            onComplete={(val, clear) => this.onPinVerify(val, clear())} /> :
+                        <NavigationButton
+                            title={step === 4 ? '송금하기' : '다음'}
+                            onPress={this.nextStep} />
+                }
             </View>
         )
     }
@@ -135,6 +150,16 @@ export default class RemmittanceView extends React.Component {
 
     onCommissionChanged = (value) => {
         this.commission = value
+    }
+
+    onPinVerify = (pin) => {
+        if (this.props.setting.pin === pin) {
+            this.view = 'menu'
+            this.withdrawStore.withdraw(pin)
+        } else {
+            this.label = 'PIN 번호가 일치하지 않습니다'
+        }
+
     }
 }
 
