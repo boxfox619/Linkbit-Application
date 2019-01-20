@@ -8,12 +8,11 @@ import {observable} from 'mobx'
 @inject(['setting'])
 @observer
 export default class SettingView extends React.Component {
-    @observable settingList = []
 
-    componentDidMount() {
+    get settingList() {
         const locale = this.props.setting.language
         const {currency} = this.props.setting
-        this.settingList = [
+        return [
             {
                 key: 'Setting.Language',
                 labelText: i18n.t('lang_mainTxt', {locale}),
@@ -26,7 +25,7 @@ export default class SettingView extends React.Component {
                 key: 'SelectCoin',
                 params: {nextPath : 'WalletImport'},
                 labelText: i18n.t('import_wallet_mainTxt', {locale}),
-                subLabelText: currency,
+                subLabelText: i18n.t('import_wallet_subTxt', {locale})
             }, {
                 key: 'Security',
                 labelText: i18n.t('lock_mainTxt', {locale}),

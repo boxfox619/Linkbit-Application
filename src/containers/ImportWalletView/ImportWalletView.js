@@ -52,9 +52,17 @@ export default class ImportWalletView extends React.Component {
     }
 
     importWallet = () => {
-        const {coin} = this.props.navigation.state.params
         const importType = importMethods[this.selectedMethodIndex]
-        this.props.wallet.importWallet(coin, this.walletName, {type: importType, data: this.value})
+        if (this.walletName.length === 0) {
+            alert('지갑 이름을 입력해주세요')
+        } else if (this.value.length === 0) {
+            alert(`${importType}을 입력해주세요`)
+        } else {
+            const {coin} = this.props.navigation.state.params
+            this.props.wallet.importWallet(coin, this.walletName, {type: importType, data: this.value})
+                .then(res => this.props.navigation.navigate('Main'))
+                .catch(err => alert('지갑 연동에 실패했습니다'))
+        }
     }
 }
 const styles = StyleSheet.create({
