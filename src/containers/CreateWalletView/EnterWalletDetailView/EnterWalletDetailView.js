@@ -2,13 +2,11 @@ import React from 'react'
 import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native'
 import NavigationButton from '../../../components/NavigationButton/NavigationButton'
 import Input from '../../../components/Input/Input'
-import SegmentedControl from '../../../components/SegmentedControl/SegmentedControl'
 import withTitle from '../../../components/HOC/withTitle'
 import { inject, observer } from 'mobx-react'
 import CoinItem from "../../../components/Card/CoinItem";
 
 const InputWithTitle = withTitle(Input)
-const SegmentedControlWithTitle = withTitle(SegmentedControl)
 
 @inject(['wallet'])
 @observer

@@ -11,6 +11,7 @@ import RemittanceView from "./RemittanceView/RemittanceView"
 import SecurityView from './SecurityView/SecurityView'
 import LanguageSettingView from './SettingView/LanguageSettingView'
 import CurrencySettingView from './SettingView/CurrencySettingView'
+import ImportWalletView from './ImportWalletView/ImportWalletView'
 
 export default createStackNavigator({
         Main: MainTabView,
@@ -38,6 +39,7 @@ export default createStackNavigator({
         WalletDetail: WalletDetailView,
         Withdraw: RemittanceView,
         Security: SecurityView,
+        WalletImport: ImportWalletView,
         "Setting.Language": LanguageSettingView,
         "Setting.Currency": CurrencySettingView,
         "CreateWallet.SelectWalletCoin": SelectWalletCoinView,
