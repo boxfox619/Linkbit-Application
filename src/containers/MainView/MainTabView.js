@@ -24,7 +24,7 @@ export default class MainTabView extends React.Component {
         const {headerTitle, headerIcon, selectedIndex} = this.state
 
         return (
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 <Header
                     backgroundColor="#ffffff"
                     leftComponent={<Text style={styles.title}>{i18n.t(headerTitle)}</Text>}
@@ -38,11 +38,12 @@ export default class MainTabView extends React.Component {
                     selectedIndex={selectedIndex}
                     tabs={this.tabs}
                     containerStyle={styles.containerStyle}/>
-            </View>
+            </SafeAreaView>
         )
     }
 
     componentDidMount() {
+        this.props.navigation.navigate('WalletImport')
         this.updateIndex(0)
     }
 
@@ -60,7 +61,7 @@ export default class MainTabView extends React.Component {
     get tabs() {
         return [
             {icon: 'payment', label: 'Wallet'},
-            {icon: 'swap-horiz', label: 'Transaction'},
+            {icon: 'swap-horiz', label: 'Address'},
             {icon: 'settings', label: 'Settings'},
         ]
     }

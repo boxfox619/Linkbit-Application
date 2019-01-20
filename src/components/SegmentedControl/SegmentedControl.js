@@ -12,6 +12,7 @@ export default class SegmentedControl extends React.Component {
 
         return (options.map((option, index) => (
             <TouchableOpacity
+                key={option}
                 style={
                     [
                         styles.option,
