@@ -27,6 +27,19 @@ class WalletStore {
 
     createWallet = async (symbol, name, password) => {
         const walletData = await this.walletNetworkApi.createWallet(symbol, password)
+        await this.addWalletData(symbol, name, walletData)
+    }
+
+    getWallet(address) {
+        return this.wallets.find(w => w.address === address)
+    }
+
+    importWallet = async (symbol, name, data) => {
+        const walletData = await this.walletNetworkApi.importWallet(symbol, data)
+        await this.addWalletData(symbol, name, walletData)
+    }
+
+    addWalletData = async (symbol, name, walletData) => {
         const wallet = new Wallet()
         wallet.updateFromJson({...walletData, name, balance: 0, symbol})
         this.walletStorageApi.addWallet(wallet.asJson)
@@ -34,10 +47,6 @@ class WalletStore {
             this.wallets = [...this.wallets, wallet]
         })
         await CoinPriceStore.loadCoin(symbol)
-    }
-
-    getWallet(address) {
-        return this.wallets.find(w => w.address === address)
     }
 
     @computed get totalPrice() {

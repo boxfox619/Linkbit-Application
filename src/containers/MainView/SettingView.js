@@ -2,20 +2,18 @@ import React from 'react'
 import {StyleSheet, Alert} from 'react-native'
 import i18n from '../../libs/Locale'
 import SettingListView from "../SettingView/SettingListView";
-import {inject, observer} from "mobx-react/index";
+import {inject, observer} from "mobx-react";
+import {observable} from 'mobx'
 
 @inject(['setting'])
 @observer
 export default class SettingView extends React.Component {
+    @observable settingList = []
 
-    constructor(props) {
-        super(props)
-    }
-
-    render() {
+    componentDidMount() {
         const locale = this.props.setting.language
         const {currency} = this.props.setting
-        const settingList = [
+        this.settingList = [
             {
                 key: 'Setting.Language',
                 labelText: i18n.t('lang_mainTxt', {locale}),
@@ -23,6 +21,11 @@ export default class SettingView extends React.Component {
             }, {
                 key: 'Setting.Currency',
                 labelText: i18n.t('bill_mainTxt', {locale}),
+                subLabelText: currency,
+            }, {
+                key: 'SelectCoin',
+                params: {nextPath : 'WalletImport'},
+                labelText: i18n.t('import_wallet_mainTxt', {locale}),
                 subLabelText: currency,
             }, {
                 key: 'Security',
@@ -35,8 +38,11 @@ export default class SettingView extends React.Component {
                 subLabelText: i18n.t('reset_subTxt', {locale}),
             }
         ]
+    }
+
+    render() {
         return (
-            <SettingListView list={settingList} onItemSelected={this.handleSettingSelected}/>
+            <SettingListView list={this.settingList} onItemSelected={this.handleSettingSelected}/>
         )
     }
 
@@ -52,7 +58,7 @@ export default class SettingView extends React.Component {
                 {cancelable: false},
             )
         } else {
-            this.props.navigation.navigate(key)
+            this.props.navigation.navigate(key, this.settingList.find(setting => setting.key === key).params)
         }
     }
 }

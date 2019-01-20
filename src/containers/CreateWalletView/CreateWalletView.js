@@ -1,16 +1,16 @@
 import React from 'react'
 import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native'
-import NavigationButton from '../../../components/NavigationButton/NavigationButton'
-import Input from '../../../components/Input/Input'
-import withTitle from '../../../components/HOC/withTitle'
+import NavigationButton from '../../components/NavigationButton/NavigationButton'
+import Input from '../../components/Input/Input'
+import withTitle from '../../components/HOC/withTitle'
 import { inject, observer } from 'mobx-react'
-import CoinItem from "../../../components/Card/CoinItem";
+import CoinItem from "../../components/Card/CoinItem";
 
 const InputWithTitle = withTitle(Input)
 
 @inject(['wallet'])
 @observer
-export default class EnterWalletDetailView extends React.Component {
+export default class CreateWalletView extends React.Component {
     state = {
         progress: false,
         selectedIndex: 0,
@@ -29,7 +29,7 @@ export default class EnterWalletDetailView extends React.Component {
     }
 
     render() {
-        const { selectedIndex,
+        const {
             coin,
             walletName,
             invalidWalletName,

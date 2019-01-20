@@ -43,7 +43,6 @@ export default class MainTabView extends React.Component {
     }
 
     componentDidMount() {
-        this.props.navigation.navigate('WalletImport')
         this.updateIndex(0)
     }
 

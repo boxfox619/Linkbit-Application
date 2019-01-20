@@ -4,9 +4,8 @@ import AddressManagementView from './AddressView/AddressManagementView'
 import WalletSearchView from './AddressView/WalletSearchView'
 import WalletDetailView from './WalletDetailView/WalletDetailView'
 import AddressBuyContainer from './AddressView/AddressBuyContainer/AddressBuyContainer'
-import SelectWalletCoinView from './CreateWalletView/SelectWalletCoinView/SelectWalletCoinView'
-import SelectWalletTokenView from './CreateWalletView/SelectWalletTokenView/SelectWalletTokenView'
-import EnterWalletDetailView from "./CreateWalletView/EnterWalletDetailView/EnterWalletDetailView"
+import SelectCoinView from './SelectCoinView/SelectCoinView'
+import CreateWalletView from "./CreateWalletView/CreateWalletView"
 import RemittanceView from "./RemittanceView/RemittanceView"
 import SecurityView from './SecurityView/SecurityView'
 import LanguageSettingView from './SettingView/LanguageSettingView'
@@ -42,9 +41,8 @@ export default createStackNavigator({
         WalletImport: ImportWalletView,
         "Setting.Language": LanguageSettingView,
         "Setting.Currency": CurrencySettingView,
-        "CreateWallet.SelectWalletCoin": SelectWalletCoinView,
-        "CreateWallet.SelectWalletToken": SelectWalletTokenView,
-        "CreateWallet.EnterWalletDetail": EnterWalletDetailView
+        "SelectCoin": SelectCoinView,
+        "CreateWallet": CreateWalletView
     },
     {
         initialRouteName: 'Main',
