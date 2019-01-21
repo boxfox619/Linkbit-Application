@@ -26,7 +26,7 @@ export default class WalletNetworkApi {
             },
             body: encoding({
                 symbol,
-                ...data
+                data
             }),
         });
         return res.json();

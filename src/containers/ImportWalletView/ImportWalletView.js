@@ -6,7 +6,16 @@ import {observable} from 'mobx'
 import withTitle from '../../components/HOC/withTitle'
 import NavigationButton from "../../components/NavigationButton/NavigationButton";
 
-const importMethods = ['Mnemonic', 'Private Key']
+const importMethods = [
+    {
+        type: 'Mnemonic',
+        form: [
+            {key: 'mnemonic', label: 'Mnemonic', type: 'string'},
+            {key: 'password', label: 'Password', type: 'password'}
+        ]
+    },
+    {type: 'Private Key', form: [{key: 'privateKey', label: 'Private Key', type: 'string'}]}
+]
 
 const TitledSegmentedControl = withTitle(SegmentedControl)
 const InputWithTitle = withTitle(Input)
@@ -15,7 +24,7 @@ const InputWithTitle = withTitle(Input)
 @observer
 export default class ImportWalletView extends React.Component {
     @observable selectedMethodIndex = 0
-    @observable value = ''
+    @observable value = {}
     @observable walletName = ''
 
     render() {
@@ -28,13 +37,17 @@ export default class ImportWalletView extends React.Component {
                                         onChangeText={text => this.walletName = text}/>
                         <TitledSegmentedControl
                             title={'Import type'}
-                            options={importMethods}
+                            options={importMethods.map(m => m.type)}
                             selectedIndex={this.selectedMethodIndex}
                             onChange={this.handleMethodChange}/>
-                        <InputWithTitle
-                            value={this.value}
-                            title={importMethods[this.selectedMethodIndex]}
-                            onChangeText={this.handleChangeText}/>
+                        {importMethods[this.selectedMethodIndex].form.map(input => (
+                            <InputWithTitle
+                                key={input.key}
+                                secureTextEntry={input.type === 'password'}
+                                value={this.value[input.key]}
+                                title={input.label}
+                                onChangeText={this.handleChangeText(input.key)}/>
+                        ))}
                     </View>
                     <NavigationButton title={'불러오기'} onPress={this.importWallet}/>
                 </View>
@@ -44,11 +57,11 @@ export default class ImportWalletView extends React.Component {
 
     handleMethodChange = (idx) => {
         this.selectedMethodIndex = idx
-        this.value = ''
+        this.value = {}
     }
 
-    handleChangeText = (text) => {
-        this.value = text
+    handleChangeText = (key) => (text) => {
+        this.value[key] = text
     }
 
     importWallet = () => {
