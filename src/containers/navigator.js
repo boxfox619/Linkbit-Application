@@ -11,8 +11,6 @@ import RemittanceView from "./RemittanceView/RemittanceView"
 import SecurityView from './SecurityView/SecurityView'
 import LanguageSettingView from './SettingView/LanguageSettingView'
 import CurrencySettingView from './SettingView/CurrencySettingView'
-import React from 'react'
-import { Button } from 'react-native'
 
 export default createStackNavigator({
     Main: MainTabView,
