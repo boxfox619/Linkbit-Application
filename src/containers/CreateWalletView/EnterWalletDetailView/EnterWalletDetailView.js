@@ -5,7 +5,9 @@ import Input from '../../../components/Input/Input'
 import SegmentedControl from '../../../components/SegmentedControl/SegmentedControl'
 import withTitle from '../../../components/HOC/withTitle'
 import { inject, observer } from 'mobx-react'
-import CoinItem from "../../../components/Card/CoinItem";
+import CoinItem from "../../../components/Card/CoinItem"
+import { PRIMARY_COLOR } from '../../../libs/Constraints'
+import CommonStyle from '../../../libs/CommonStyle'
 
 const InputWithTitle = withTitle(Input)
 const SegmentedControlWithTitle = withTitle(SegmentedControl)
@@ -42,39 +44,42 @@ export default class EnterWalletDetailView extends React.Component {
         } = this.state
 
         return (
-            <SafeAreaView>
-                <View style={styles.container}>
-                    <ScrollView style={styles.scrollContainer}>
-                        <View style={styles.formContainer}>
-                            <CoinItem name={coin.name}
-                                      symbol={coin.symbol}
-                                      themeColor={coin.themeColor}
-                                      onPress={() => { }}
-                                      activate={true} />
-                            <InputWithTitle title={'지갑 이름'}
-                                value={walletName}
-                                onChangeText={text => this.setState({ walletName: text })}
-                                isError={invalidWalletName} />
-                            {/* <InputWithTitle title={'지갑 설명'} /> */}
-                            <InputWithTitle title={'비밀번호'}
-                                secureTextEntry={true}
-                                value={password}
-                                onChangeText={text => this.setState({ password: text })}
-                                isError={invalidPassword} />
-                            <InputWithTitle title={'비밀번호 재입력'}
-                                secureTextEntry={true}
-                                value={confirmPassword}
-                                onChangeText={this.checkConfirmPassword}
-                                isError={invalidConfirmPassword} />
-                            {/* <SegmentedControlWithTitle title={'공개범위 설정'}
+            <React.Fragment>
+                <SafeAreaView style={{ flex: 0, backgroundColor: '#fff' }} />
+                <SafeAreaView style={[CommonStyle.safeArea, { backgroundColor: PRIMARY_COLOR }]}>
+                    <View style={styles.container}>
+                        <ScrollView style={styles.scrollContainer}>
+                            <View style={styles.formContainer}>
+                                <CoinItem name={coin.name}
+                                    symbol={coin.symbol}
+                                    themeColor={coin.themeColor}
+                                    onPress={() => { }}
+                                    activate={true} />
+                                <InputWithTitle title={'지갑 이름'}
+                                    value={walletName}
+                                    onChangeText={text => this.setState({ walletName: text })}
+                                    isError={invalidWalletName} />
+                                {/* <InputWithTitle title={'지갑 설명'} /> */}
+                                <InputWithTitle title={'비밀번호'}
+                                    secureTextEntry={true}
+                                    value={password}
+                                    onChangeText={text => this.setState({ password: text })}
+                                    isError={invalidPassword} />
+                                <InputWithTitle title={'비밀번호 재입력'}
+                                    secureTextEntry={true}
+                                    value={confirmPassword}
+                                    onChangeText={this.checkConfirmPassword}
+                                    isError={invalidConfirmPassword} />
+                                {/* <SegmentedControlWithTitle title={'공개범위 설정'}
                                 options={['소유자 정보', '지갑 정보']}
                                 selectedIndex={selectedIndex}
                                 onChange={index => this.setState({ selectedIndex: index })} /> */}
-                        </View>
-                    </ScrollView>
-                    <NavigationButton title={'생성하기'} onPress={this.createWallet} />
-                </View>
-            </SafeAreaView>
+                            </View>
+                        </ScrollView>
+                        <NavigationButton title={'생성하기'} onPress={this.createWallet} />
+                    </View>
+                </SafeAreaView>
+            </React.Fragment>
         )
     }
 
@@ -136,6 +141,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: '100%',
+        backgroundColor: '#fff'
     },
     scrollContainer: {
         height: '100%',

@@ -1,7 +1,9 @@
 import React from 'react'
 import { StyleSheet, SafeAreaView, View } from 'react-native'
 import NavigationButton from '../../../components/NavigationButton/NavigationButton'
-import SelectCoinView from "../../../components/List/SelectCoinView";
+import SelectCoinView from "../../../components/List/SelectCoinView"
+import { PRIMARY_COLOR } from '../../../libs/Constraints'
+import CommonStyle from '../../../libs/CommonStyle'
 
 export default class SelectWalletTokenView extends React.Component {
     state = {
@@ -19,16 +21,19 @@ export default class SelectWalletTokenView extends React.Component {
         const coins = parentCoin ? parentCoin.subCoins : undefined
 
         return (
-            <SafeAreaView>
-                <View style={styles.container}>
-                    <SelectCoinView coins={coins}
-                        style={styles.list}
-                        selectedCoin={selectedCoinSymbol}
-                        onSelectCoin={symbol => this.setState({ selectedCoinSymbol: symbol })}/>
-                    <NavigationButton title={'다음'}
-                        onPress={this.navigateToNext} />
-                </View>
-            </SafeAreaView>
+            <React.Fragment>
+                <SafeAreaView style={{ flex: 0, backgroundColor: '#fff' }} />
+                <SafeAreaView style={[CommonStyle.safeArea, { backgroundColor: PRIMARY_COLOR }]}>
+                    <View style={styles.container}>
+                        <SelectCoinView coins={coins}
+                            style={styles.list}
+                            selectedCoin={selectedCoinSymbol}
+                            onSelectCoin={symbol => this.setState({ selectedCoinSymbol: symbol })} />
+                        <NavigationButton title={'다음'}
+                            onPress={this.navigateToNext} />
+                    </View>
+                </SafeAreaView>
+            </React.Fragment>
         )
     }
 
@@ -36,7 +41,7 @@ export default class SelectWalletTokenView extends React.Component {
         const { parentCoin, selectedCoinSymbol } = this.state
         const selectedCoin = parentCoin.subCoins.find(coin => coin.symbol === selectedCoinSymbol)
 
-        if(!selectedCoin){
+        if (!selectedCoin) {
             alert("생성할 코인을 선택해주세요")
             return
         }
