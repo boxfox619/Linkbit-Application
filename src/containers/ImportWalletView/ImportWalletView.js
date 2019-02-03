@@ -8,13 +8,13 @@ import NavigationButton from "../../components/NavigationButton/NavigationButton
 
 const importMethods = [
     {
-        type: 'Mnemonic',
+        type: 'mnemonic',
         form: [
             {key: 'mnemonic', label: 'Mnemonic', type: 'string'},
             {key: 'password', label: 'Password', type: 'password'}
         ]
     },
-    {type: 'Private Key', form: [{key: 'privateKey', label: 'Private Key', type: 'string'}]}
+    {type: 'privateKey', form: [{key: 'privateKey', label: 'Private Key', type: 'string'}]}
 ]
 
 const TitledSegmentedControl = withTitle(SegmentedControl)
@@ -65,14 +65,14 @@ export default class ImportWalletView extends React.Component {
     }
 
     importWallet = () => {
-        const importType = importMethods[this.selectedMethodIndex]
+        const importType = importMethods[this.selectedMethodIndex].type
         if (this.walletName.length === 0) {
             alert('지갑 이름을 입력해주세요')
         } else if (this.value.length === 0) {
             alert(`${importType}을 입력해주세요`)
         } else {
             const {coin} = this.props.navigation.state.params
-            this.props.wallet.importWallet(coin, this.walletName, {type: importType, data: this.value})
+            this.props.wallet.importWallet(coin, this.walletName, importType, this.value)
                 .then(res => this.props.navigation.navigate('Main'))
                 .catch(err => alert('지갑 연동에 실패했습니다'))
         }

@@ -34,9 +34,9 @@ class WalletStore {
         return this.wallets.find(w => w.address === address)
     }
 
-    importWallet = async (symbol, name, data) => {
-        const walletData = await this.walletNetworkApi.importWallet(symbol, data)
-        await this.addWalletData(symbol, name, walletData)
+    importWallet = async (coin, name, type, data) => {
+        const walletData = await this.walletNetworkApi.importWallet(coin.symbol, type, data)
+        await this.addWalletData(coin.symbol, name, walletData)
     }
 
     addWalletData = async (symbol, name, walletData) => {

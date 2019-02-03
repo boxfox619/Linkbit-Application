@@ -17,7 +17,7 @@ export default class WalletNetworkApi {
             return res.json();
     }
 
-    importWallet = async (symbol, data) => {
+    importWallet = async (symbol, type, data) => {
         const res = await fetch(`${HOST}/wallet/import`, {
             method: 'POST',
             headers: {
@@ -26,10 +26,11 @@ export default class WalletNetworkApi {
             },
             body: encoding({
                 symbol,
+                type,
                 data
             }),
         });
-        return res.json();
+        return res.json()
     }
 
     getBalance = async (symbol, address) => {
