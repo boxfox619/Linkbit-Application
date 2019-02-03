@@ -1,9 +1,9 @@
 import React from 'react'
 import {View, StyleSheet} from 'react-native'
-import FingerPrintView from './FingerPrintView'
 import PinCodeCreateView from "../PinCodeInputView/PinCodeCreateView"
 import {inject, observer} from "mobx-react"
 import {observable} from 'mobx'
+import {checkForFingerprints} from '../../libs/Fingerprint'
 import SettingListView from "../SettingView/SettingListView"
 import PinCodeView from "../../components/PinCodeInput"
 
@@ -23,9 +23,10 @@ export default class SecurityView extends React.Component {
         await this.props.setting.setPin(pin)
         this.view = 'menu'
     }
-    handleSetFingerprint = () => {
-        //@TODO setting fingerprint use
-        this.view = 'menu'
+    handleSetFingerprint = async () => {
+      let finger = await checkForFingerprints(true)
+      await this.props.setting.setFingerprint(finger)
+      this.view = 'menu'
     }
     onPinVerify = (pin) => {
         if (this.props.setting.pin === pin) {
@@ -40,8 +41,8 @@ export default class SecurityView extends React.Component {
 
         return (
             <View style={styles.container}>
+                {view === 'finger' && this.handleSetFingerprint()}
                 {view === 'pin' && (<PinCodeCreateView onPinEntered={this.handleSetNewPin}/>)}
-                {view === 'finger' && (<FingerPrintView onVerifySuccess={this.handleSetFingerprint}/>)}
                 {view === 'menu' && (
                     <SettingListView list={this.settings}
                                      style={{padding: 20}}
