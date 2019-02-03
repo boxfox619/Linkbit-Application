@@ -12,7 +12,7 @@ export default class CoinStorageApi {
     }
 
     updateCoins = async(coinData) => {
-        coinData.array.forEach(coinData => this.update(coinData));
+        coinData.forEach(coinData => this.update(coinData));
         await this.save()
     }
 

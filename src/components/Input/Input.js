@@ -1,19 +1,13 @@
 import React from 'react'
 import { View, StyleSheet, TextInput } from 'react-native'
 
-export default class AddressInput extends React.Component {
+export default class Input extends React.Component {
     render() {
-        const { value, onChangeText, placeholder, secureTextEntry } = this.props
 
         return (
             <View>
                 <View style={styles.inputContainer}>
-                    <TextInput
-                        secureTextEntry={secureTextEntry}
-                        style={styles.input}
-                        value={value}
-                        onChangeText={onChangeText}
-                        placeholder={placeholder} />
+                    <TextInput style={styles.input} {...this.props} />
                 </View>
             </View>
         )
