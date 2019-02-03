@@ -4,6 +4,7 @@ import {createAppContainer} from 'react-navigation'
 import {Provider} from 'mobx-react'
 import Navigator from './src/containers/navigator'
 import {WalletStore, CoinPriceStore, AddressStore, SettingStore} from './src/store'
+import {checkForFingerprints} from './src/libs/Fingerprint'
 
 const store = {
     wallet: WalletStore,
@@ -14,10 +15,15 @@ const store = {
 const AppContainer = createAppContainer(Navigator)
 
 export default class App extends React.Component {
-    componentWillMount() {
-        store.address.loadAddressList()
-        store.wallet.loadWalletList()
-        store.coin.loadCoins()
+    componentDidMount() {
+      const {pin, useFingerprint} = store.setting
+
+      store.address.loadAddressList()
+      store.wallet.loadWalletList()
+      store.coin.loadCoins()
+
+      //TODO if use fingerprint or pin
+      useFingerprint && checkForFingerprints()
     }
 
     render() {
