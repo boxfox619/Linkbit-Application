@@ -19,7 +19,7 @@ export default class SettingView extends React.Component {
             {
                 key: 'Setting.Language',
                 labelText: i18n.t('lang_mainTxt', {locale}),
-                subLabelText: locale,
+                subLabelText: locale === 'ko' ? '한국어' : 'English',
             }, {
                 key: 'Setting.Currency',
                 labelText: i18n.t('bill_mainTxt', {locale}),
