@@ -34,7 +34,7 @@ class CoinPriceStore {
             coins.forEach(json => this.updateCoinPrice(json))
             this.isLoading = false
         })
-        await this.coinStorageApi.updateCoins(this.coins)
+        await this.coinStorageApi.updateCoins(coins)
     }
 
     loadCoin = async (symbol) => {
