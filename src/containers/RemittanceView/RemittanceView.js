@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, AlertIOS, Platform, TextInput } from 'react-native'
 import NavigationButton from '../../components/NavigationButton/NavigationButton'
 import AddressBox from './AddressBox/AddressBox'
 import AddressInput from './AddressInput/AddressInput'
@@ -8,16 +8,18 @@ import AmountBox from './AmountBox/AmountBox'
 import RemittanceType from '../../store/RemittanceType'
 import WalletSummaryCard from '../../components/Card/WalletSummaryCard'
 import CommissionInput from "./CommissionInput/CommisionInput"
-import PinCodeView from '../../components/PinCodeInput'
 import { inject, observer } from "mobx-react/index"
 import { observable } from 'mobx'
 import WithdrawStore from '../../store/Withdraw/WithdrawStore'
+import Dialog from 'react-native-dialog'
 
 @inject(['coin'])
 @inject(['setting'])
 @observer
 export default class RemmittanceView extends React.Component {
     @observable step = 1
+    @observable modalVisibility = false
+    @observable userPasswordInput = ''
     @observable method = RemittanceType.Wallet
     @observable calculateSymbol = 'USD'
     @observable commission = 0
@@ -58,6 +60,10 @@ export default class RemmittanceView extends React.Component {
                 case 5:
                     break;
             }
+
+            if (this.step > 4) {
+                this.modalVisibility = true
+            }
         }
     }
 
@@ -66,9 +72,8 @@ export default class RemmittanceView extends React.Component {
         const { destAddress, amount, price, symbol, moneySymbol } = this.withdrawStore
         const wallet = this.wallet
         return (
-            <View style={styles.container}>
-                {
-                    step < 5 &&
+            <React.Fragment>
+                <View style={styles.container}>
                     <View style={styles.wrapper}>
                         <Text style={styles.title}>출금 지갑</Text>
                         <WalletSummaryCard wallet={wallet} />
@@ -78,7 +83,8 @@ export default class RemmittanceView extends React.Component {
                                 <Text style={styles.title}>받는 주소</Text>
                                 <AddressInput
                                     address={destAddress}
-                                    onChangeText={destAddress => this.withdrawStore.setTargetAddress(destAddress)} />
+                                    onChangeText={destAddress => this.withdrawStore.setTargetAddress(destAddress)}
+                                    onBlur={this.checkValidAddress}/>
                             </React.Fragment>
                         }
                         {
@@ -109,7 +115,7 @@ export default class RemmittanceView extends React.Component {
                                 amount={amount} />
                         }
                         {
-                            step === 4 &&
+                            step >= 4 &&
                             <React.Fragment>
                                 <View style={styles.commissionHeader}>
                                     <Text style={styles.title}>수수료</Text>
@@ -120,19 +126,37 @@ export default class RemmittanceView extends React.Component {
                             </React.Fragment>
                         }
                     </View>
-                }
-                {
-                    step === 5 ?
-                        <PinCodeView
-                            label={this.label}
-                            pinLength={5}
-                            onComplete={(val, clear) => this.onPinVerify(val, clear())} /> :
-                        <NavigationButton
-                            title={step === 4 ? '송금하기' : '다음'}
-                            onPress={this.nextStep} />
-                }
-            </View>
+                    <NavigationButton
+                        title={step === 4 ? '송금하기' : '다음'}
+                        onPress={this.nextStep} />
+                    <Dialog.Container visible={this.modalVisibility}>
+                        <Dialog.Title>Verify wallet password</Dialog.Title>
+                        <Dialog.Input value={this.userPasswordInput}
+                            onChangeText={text => this.userPasswordInput = text}
+                            secureTextEntry={true}/>
+                        <Dialog.Button label="Cancel"
+                            onPress={this.onCancel} />
+                        <Dialog.Button label="Submit"
+                            onPress={this.onSubmit} />
+                    </Dialog.Container>
+                </View>
+            </React.Fragment>
         )
+    }
+
+    onCancel = () => {
+        this.modalVisibility = false
+    }
+
+    onSubmit = () => {
+        // check 
+        if (this.userPasswordInput === 'wallet password') {
+            this.props.navigation.navigate('Main')
+        }
+        else {
+            alert('Password is incorrect')
+        }
+        this.modalVisibility = false
     }
 
     handleChangeAmount = (amount) => {
@@ -160,6 +184,10 @@ export default class RemmittanceView extends React.Component {
             this.label = 'PIN 번호가 일치하지 않습니다'
         }
 
+    }
+
+    checkValidAddress = () => {
+        //add checking address api
     }
 }
 
