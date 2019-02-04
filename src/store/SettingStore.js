@@ -23,23 +23,23 @@ class SettingStore {
         })
     }
 
-    @action setLanguage = async (val) => {
+    @action setLanguage = async val => {
         this.language = val
         i18n.locale = val
         await this.save()
     }
 
-    @action setCurrency = async (val) => {
+    @action setCurrency = async val => {
         this.currency = val
         await this.save()
     }
 
-    @action setPin = async (val) => {
+    @action setPin = async val => {
         this.pin = val
         await this.save()
     }
 
-    @action setFingerprint = async (val) => {
+    @action setFingerprint = async val => {
         this.useFingerprint = val
         await this.save()
     }

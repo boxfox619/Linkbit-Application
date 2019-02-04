@@ -15,7 +15,7 @@ export default class SecurityView extends React.Component {
 
     componentDidMount() {
         const pin = this.props.setting.pin
-        this.view = (!!pin) ? 'verify' : 'menu'
+        this.view = !!pin ? 'verify' : 'menu'
     }
 
     handleViewSetting = view => this.view = view
@@ -24,7 +24,7 @@ export default class SecurityView extends React.Component {
         this.view = 'menu'
     }
     handleSetFingerprint = async () => {
-      let finger = await checkForFingerprints(true)
+      const finger = await checkForFingerprints(true)
       await this.props.setting.setFingerprint(finger)
       this.view = 'menu'
     }
@@ -41,7 +41,7 @@ export default class SecurityView extends React.Component {
 
         return (
             <View style={styles.container}>
-                {view === 'finger' && this.handleSetFingerprint()}
+                {view === 'finger' && this.handleSetFingerprint}
                 {view === 'pin' && (<PinCodeCreateView onPinEntered={this.handleSetNewPin}/>)}
                 {view === 'menu' && (
                     <SettingListView list={this.settings}
@@ -63,11 +63,11 @@ export default class SecurityView extends React.Component {
         return [
             {
                 labelText: '핀 코드 변경',
-                subLabelText: (!!pin) ? '설정됨' : '설정되지 않음',
+                subLabelText: !!pin ? '설정됨' : '설정되지 않음',
                 key: 'pin',
             }, {
                 labelText: '지문 변경',
-                subLabelText: (useFingerprint) ? '사용중' : '사용하지 않음',
+                subLabelText: useFingerprint ? '사용중' : '사용하지 않음',
                 key: 'finger',
             }
         ]
