@@ -1,12 +1,12 @@
 import React from 'react'
 import { StyleSheet, FlatList, SafeAreaView, Text, View } from 'react-native'
-import NavigationButton from '../../../components/NavigationButton/NavigationButton'
+import NavigationButton from '../../components/NavigationButton/NavigationButton'
 import { observer } from "mobx-react/index";
-import CoinStore from "../../../store/Coin/CoinStore";
-import SelectCoinView from "../../../components/List/SelectCoinView";
+import CoinStore from "../../store/Coin/CoinStore";
+import SelectCoinListView from "../../components/List/SelectCoinView";
 
 @observer
-export default class SelectWalletCoinView extends React.Component {
+export default class SelectCoinView extends React.Component {
     state = {
         selectedCoin: undefined,
     }
@@ -21,7 +21,7 @@ export default class SelectWalletCoinView extends React.Component {
         return (
             <SafeAreaView>
                 <View style={styles.container}>
-                    <SelectCoinView
+                    <SelectCoinListView
                         style={styles.coinList}
                         coins={coinList}
                         isLoading={this.coinStore.isLoading}
@@ -37,17 +37,13 @@ export default class SelectWalletCoinView extends React.Component {
     navigateToNext = () => {
         const { coinList } = this.coinStore
         const { selectedCoin } = this.state
+        const {nextPath} = this.props.navigation.state.params
         const coin = coinList.find(c => c.symbol === selectedCoin)
         if (!coin) {
-            alert('생성할 코인을 선택해주세요')
+            alert('코인을 선택해주세요')
             return
         }
-        /*if (coin.subCoins) {
-            this.props.navigation.navigate('CreateWallet.SelectWalletToken', { coin })
-        } else {
-            this.props.navigation.navigate('CreateWallet.EnterWalletDetail', { coin })
-        }*/
-        this.props.navigation.navigate('CreateWallet.EnterWalletDetail', { coin })
+        this.props.navigation.navigate(nextPath, { coin })
 
     }
 }
