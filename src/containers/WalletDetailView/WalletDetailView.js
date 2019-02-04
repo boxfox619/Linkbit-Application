@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, SafeAreaView } from 'react-native'
+import { View, StyleSheet, SafeAreaView, Image, Text, Clipboard } from 'react-native'
 import { WalletSummaryCard, TransactionList } from '../../components/index'
 import { TransactionStore } from '../../store/index'
 import { observer } from 'mobx-react'
@@ -10,6 +10,24 @@ import { Icon } from 'react-native-elements'
 
 @observer
 export default class WalletDetailView extends React.Component {
+    static navigationOptions = ({ navigation }) => {
+        const { params = { wallet } } = navigation.state
+
+        return {
+            title: 'Details',
+            headerTitleStyle: { color: 'black' },
+            headerStyle: { backgroundColor: 'white' },
+            headerRight: <Icon name={'share'}
+                style={{ color: '#fff' }}
+                containerStyle={{ marginRight: 10 }}
+                onPress={() => {
+                    const address = params.wallet.address
+                    Clipboard.setString(address)
+
+                    alert('Copied wallet address to clipboard')
+                }} />
+        }
+    }
 
     constructor(props) {
         super(props)

@@ -11,7 +11,7 @@ import i18n from '../../libs/Locale'
 @observer
 export default class WalletListView extends React.Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       test: false,
@@ -24,7 +24,7 @@ export default class WalletListView extends React.Component {
     this.props.navigation.navigate('WalletDetail', { wallet })
   }
 
-  render () {
+  render() {
     return (
       <View style={[styles.container, CommonStyle.mainTabViewContent]}>
         <View style={styles.totalBalanceCard}>
@@ -40,7 +40,7 @@ export default class WalletListView extends React.Component {
           wallets={this.props.wallet.walletList}
           onWalletSelected={w => this.openWalletDetail(w)} />
         <ActionButton buttonColor={PRIMARY_COLOR}
-          onPress={() => this.props.navigation.navigate("CreateWallet.SelectWalletCoin")}
+          onPress={() => this.props.navigation.navigate("SelectCoin", { nextPath: 'CreateWallet' })}
           offsetX={20}
           offsetY={20} />
       </View>

@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { View, FlatList } from 'react-native'
-import CoinItem from "../Card/CoinItem";
+import CoinItem from '../Card/CoinItem'
 
-export default class SelectCoinView extends React.Component {
+export default class SelectCoinListView extends React.Component {
 
     static propTypes = {
         coins: PropTypes.array.isRequired,
