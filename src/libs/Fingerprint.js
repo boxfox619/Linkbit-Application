@@ -16,23 +16,17 @@ export const checkForFingerprints = async isSetting => {
 
 export const handleLoginPress = () => {
   if (Platform.OS === 'android') {
-    this.showAndroidAlert()
+    return showAndroidAlert()
   } else {
-    this.scanFingerprint()
+    return scanFingerprint()
   }
 }
 
 export const showAndroidAlert = () => {
   Alert.alert('Fingerprint Scan', 'Place your finger over the touch sensor.')
-  this.scanFingerprint()
+  return scanFingerprint()
 }
 
-export const scanFingerprint = async () => {
-  let result = await Expo.LocalAuthentication.authenticateAsync('Biometric Scan.')
-  if (!result.success) {
-    //TODO Try Again 뜨는지 확인
-    //TODO Enter Password 작동확인
-    // Cancel
-    alert('error')
-  }
+export const scanFingerprint = () => {
+  return Expo.LocalAuthentication.authenticateAsync('Biometric Scan.')
 }
