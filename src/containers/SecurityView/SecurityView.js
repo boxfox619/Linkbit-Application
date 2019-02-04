@@ -18,17 +18,29 @@ export default class SecurityView extends React.Component {
         this.view = !!pin ? 'verify' : 'menu'
     }
 
-    handleViewSetting = view => this.view = view
     handleSetNewPin = async pin => {
         await this.props.setting.setPin(pin)
         this.view = 'menu'
+    handleViewSetting = view =>{
+      this.view = view
+      if(view === 'finger') {
+        this.handleSetFingerprint()
+      }
     }
-    handleSetFingerprint = async () => {
-      const finger = await checkForFingerprints(true)
-      await this.props.setting.setFingerprint(finger)
-      this.view = 'menu'
     }
     onPinVerify = (pin) => {
+  handleSetFingerprint = async () => {
+      const {getFingerprint, setFingerprint}=this.props.settings
+      if (await getFingerprint) {
+        return this.handleOffFingerprint()
+      }
+      const finger = await checkForFingerprints(true)
+    await setFingerprint(finger)
+    this.view = await 'menu'
+  }
+  handleOffFingerprint = async () => {
+    return this.props.setting.setFingerprint(false)
+  }
         if (this.props.setting.pin === pin) {
             this.view = 'menu'
         } else {
@@ -41,9 +53,8 @@ export default class SecurityView extends React.Component {
 
         return (
             <View style={styles.container}>
-                {view === 'finger' && this.handleSetFingerprint}
                 {view === 'pin' && (<PinCodeCreateView onPinEntered={this.handleSetNewPin}/>)}
-                {view === 'menu' && (
+                {(view === 'menu' || view === 'finger') && (
                     <SettingListView list={this.settings}
                                      style={{padding: 20}}
                                      onItemSelected={this.handleViewSetting}/>
