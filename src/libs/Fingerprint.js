@@ -3,13 +3,15 @@ import {Platform} from 'react-native'
 export const checkForFingerprints = async isSetting => {
   let records = await Expo.LocalAuthentication.isEnrolledAsync()
 
-  if (isSetting) {
-    return records
-  } else if (records) {
-    return this.handleLoginPress()
-  } else {
+  if (!records) {
+    isSetting &&
     alert('Please ensure you have set up biometrics in your OS settings.')
+  } else {
+    await handleLoginPress()
+    records = await Expo.LocalAuthentication.isEnrolledAsync()
   }
+
+  return records
 }
 
 export const handleLoginPress = () => {
