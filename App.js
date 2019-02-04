@@ -5,7 +5,7 @@ import {Provider} from 'mobx-react'
 import Navigator from './src/containers/navigator'
 import PinCodeView from './src/components/PinCodeInput'
 import {WalletStore, CoinPriceStore, AddressStore, SettingStore} from './src/store'
-import {checkForFingerprints} from './src/libs/Fingerprint'
+import {checkForFingerprint} from './src/libs/Fingerprint'
 import {observer} from 'mobx-react/index'
 import {observable} from 'mobx/lib/mobx'
 
@@ -30,13 +30,13 @@ export default class App extends React.Component {
     const saveFingerPrint = store.setting.getFingerprint()
     const savePin = store.setting.getPin()
     if (saveFingerPrint) {
-      this.isVerify = checkForFingerprints()
+      this.isVerify = checkForFingerprint()
     } else if (savePin) {
       this.isVerify = false
     }
   }
 
-  onPinVerify = pin => {
+  handlePinVerify = pin => {
     const savePin = store.setting.getPin()
     //TODO 왜 savePin 안 나올까요..?
     if (savePin === pin) {
@@ -54,7 +54,7 @@ export default class App extends React.Component {
             !this.isVerify ?
               <PinCodeView
                 label={this.label}
-                onComplete={(val, clear) => this.onPinVerify(val, clear())}
+                onComplete={(val, clear) => this.handlePinVerify(val, clear())}
                 pinLength={5}/> :
               <AppContainer/>
           }

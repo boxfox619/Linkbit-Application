@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native'
 import PinCodeCreateView from '../PinCodeInputView/PinCodeCreateView'
 import {inject, observer} from 'mobx-react'
 import {observable} from 'mobx'
-import {checkForFingerprints} from '../../libs/Fingerprint'
+import {checkForFingerprint} from '../../libs/Fingerprint'
 import SettingListView from '../SettingView/SettingListView'
 import PinCodeView from '../../components/PinCodeInput'
 
@@ -24,28 +24,28 @@ export default class SecurityView extends React.Component {
       this.handleSetFingerprint()
     }
   }
-  handleSetNewPin = async pin => {
+  handleSetPin = async pin => {
     await this.props.setting.setPin(pin)
     this.view = 'menu'
+  }
+  handlePinVerify = (pin) => {
+    if (this.props.setting.pin === pin) {
+      this.view = 'menu'
+    } else {
+      this.label = 'PIN 번호가 일치하지 않습니다'
+    }
   }
   handleSetFingerprint = async () => {
     const {getFingerprint, setFingerprint} = this.props.settings
     if (await getFingerprint) {
       return this.handleOffFingerprint()
     }
-    const finger = await checkForFingerprints(true)
+    const finger = await checkForFingerprint(true)
     await setFingerprint(finger)
     this.view = await 'menu'
   }
   handleOffFingerprint = async () => {
     return this.props.setting.setFingerprint(false)
-  }
-  onPinVerify = (pin) => {
-    if (this.props.setting.pin === pin) {
-      this.view = 'menu'
-    } else {
-      this.label = 'PIN 번호가 일치하지 않습니다'
-    }
   }
 
   render() {
@@ -53,7 +53,7 @@ export default class SecurityView extends React.Component {
 
     return (
       <View style={styles.container}>
-        {view === 'pin' && (<PinCodeCreateView onPinEntered={this.handleSetNewPin}/>)}
+        {view === 'pin' && (<PinCodeCreateView onPinEntered={this.handleSetPin}/>)}
         {(view === 'menu' || view === 'finger') && (
           <SettingListView list={this.settings}
                            style={{padding: 20}}
@@ -62,7 +62,7 @@ export default class SecurityView extends React.Component {
         {view === 'verify' && (
           <PinCodeView
             label={this.label}
-            onComplete={(val, clear) => this.onPinVerify(val, clear())}
+            onComplete={(val, clear) => this.handlePinVerify(val, clear())}
             pinLength={5}/>
         )}
       </View>
