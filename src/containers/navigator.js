@@ -40,9 +40,8 @@ export default createStackNavigator({
     Security: SecurityView,
     "Setting.Language": LanguageSettingView,
     "Setting.Currency": CurrencySettingView,
-    "CreateWallet.SelectWalletCoin": SelectWalletCoinView,
-    "CreateWallet.SelectWalletToken": SelectWalletTokenView,
-    "CreateWallet.EnterWalletDetail": EnterWalletDetailView
+    SelectCoin: SelectCoinView,
+    CreateWallet: CreateWalletView
 },
     {
         initialRouteName: 'Main',
