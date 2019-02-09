@@ -53,7 +53,7 @@ export default class App extends React.Component {
             !this.isVerify ?
               <PinCodeView
                 label={this.label}
-                onComplete={(val, clear) => this.handlePinVerify(val, clear())}
+                onComplete={this.handlePinVerify}
                 pinLength={5}/> :
               <AppContainer/>
           }

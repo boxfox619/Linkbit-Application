@@ -62,7 +62,7 @@ export default class SecurityView extends React.Component {
         {view === 'verify' && (
           <PinCodeView
             label={this.label}
-            onComplete={(val, clear) => this.handlePinVerify(val, clear())}
+            onComplete={this.handlePinVerify}
             pinLength={5}/>
         )}
       </View>
