@@ -53,18 +53,25 @@ export default class SecurityView extends React.Component {
 
     return (
       <View style={styles.container}>
-        {view === 'pin' && (<PinCodeCreateView onPinEntered={this.handleSetPin}/>)}
-        {(view === 'menu' || view === 'finger') && (
-          <SettingListView list={this.settings}
-                           style={{padding: 20}}
-                           onItemSelected={this.handleViewSetting}/>
-        )}
-        {view === 'verify' && (
+        {
+          view === 'pin' &&
+          <PinCodeCreateView
+            onPinEntered={this.handleSetPin}/>
+        }
+        {
+          (view === 'menu' || view === 'finger') &&
+          <SettingListView
+            list={this.settings}
+            style={{padding: 20}}
+            onItemSelected={this.handleViewSetting}/>
+        }
+        {
+          view === 'verify' &&
           <PinCodeView
             label={this.label}
             onComplete={this.handlePinVerify}
             pinLength={5}/>
-        )}
+        }
       </View>
     )
   }
