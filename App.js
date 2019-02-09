@@ -38,7 +38,6 @@ export default class App extends React.Component {
 
   handlePinVerify = pin => {
     const savePin = store.setting.getPin()
-    //TODO 왜 savePin 안 나올까요..?
     if (savePin === pin) {
       this.isVerify = true
     } else {
