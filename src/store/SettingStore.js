@@ -6,7 +6,7 @@ import AsyncStorageApi from "../api/AsyncStorageApi";
 class SettingStore {
     @observable language = 'ko'
     @observable currency = 'USD'
-    @observable pin = '11111'
+    @observable pin = ''
     @observable useFingerprint = false
 
     @observable.struct windowDimensions = {
