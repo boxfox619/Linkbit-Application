@@ -8,6 +8,7 @@ import {WalletStore, CoinPriceStore, AddressStore, SettingStore} from './src/sto
 import {checkForFingerprint} from './src/libs/Fingerprint'
 import {observer} from 'mobx-react/index'
 import {observable} from 'mobx/lib/mobx'
+import i18n from './src/libs/Locale'
 
 const store = {
   wallet: WalletStore,
@@ -19,7 +20,7 @@ const AppContainer = createAppContainer(Navigator)
 
 @observer
 export default class App extends React.Component {
-  @observable label = 'PIN 번호를 입력해주세요'
+  @observable label = i18n.t('pin_verify')
   @observable isVerify = true
 
   componentDidMount() {
@@ -40,7 +41,7 @@ export default class App extends React.Component {
     if (pin === inputPin) {
       this.isVerify = true
     } else {
-      this.label = 'PIN 번호가 일치하지 않습니다'
+      this.label = i18n.t('pin_wrong')
     }
   }
 

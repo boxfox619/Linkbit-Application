@@ -4,13 +4,14 @@ import {inject, observer} from 'mobx-react/index'
 import WalletCard from '../../components/Card/WalletCard'
 import AddressCard from '../../components/Card/AddressCard'
 import {PRIMARY_COLOR} from "../../libs/Constraints";
+import i18n from '../../libs/Locale'
 
 @inject('address', 'wallet')
 @observer
 export default class AddressManagementView extends React.Component {
 
     static get options() {
-        return {topBar: {title: {text: '주소 관리'}}}
+        return {topBar: {title: {text: i18n.t('edit_address')}}}
     }
 
     render() {

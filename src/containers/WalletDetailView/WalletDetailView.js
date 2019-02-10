@@ -7,6 +7,7 @@ import { PRIMARY_COLOR } from "../../libs/Constraints"
 import CommonStyle from '../../libs/CommonStyle'
 import ActionButton from "react-native-action-button"
 import { Icon } from 'react-native-elements'
+import i18n from '../../libs/Locale'
 
 @observer
 export default class WalletDetailView extends React.Component {
@@ -24,7 +25,7 @@ export default class WalletDetailView extends React.Component {
                     const address = params.wallet.address
                     Clipboard.setString(address)
 
-                    alert('Copied wallet address to clipboard')
+                    alert(i18n.t('copied_addr'))
                 }} />
         }
     }
