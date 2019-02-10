@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, View} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 import {createAppContainer} from 'react-navigation'
 import {Provider} from 'mobx-react'
 import Navigator from './src/containers/navigator'
@@ -48,7 +48,7 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider {...store}>
-        <View style={styles.container}>
+        <View style={[styles.container, !this.isVerify && styles.paddingTop]}>
           {
             !this.isVerify ?
               <PinCodeView
@@ -66,6 +66,9 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
+  paddingTop: {
+    paddingTop: 90
+  }
 })
