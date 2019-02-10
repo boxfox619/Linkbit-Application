@@ -52,9 +52,6 @@ class SettingStore {
             useFingerprint: this.useFingerprint
         })
     }
-
-    getPin = () => this.pin
-    getFingerprint = () => this.useFingerprint
 }
 
 export default new SettingStore()

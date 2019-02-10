@@ -27,18 +27,17 @@ export default class App extends React.Component {
     store.wallet.loadWalletList()
     store.coin.loadCoins()
 
-    const saveFingerPrint = store.setting.getFingerprint()
-    const savePin = store.setting.getPin()
-    if (saveFingerPrint) {
+    const {pin, useFingerprint} = store.setting
+    if (useFingerprint) {
       this.isVerify = checkForFingerprint()
-    } else if (savePin) {
+    } else if (pin) {
       this.isVerify = false
     }
   }
 
-  handlePinVerify = pin => {
-    const savePin = store.setting.getPin()
-    if (savePin === pin) {
+  handlePinVerify = inputPin => {
+    const pin = store.setting.pin
+    if (pin === inputPin) {
       this.isVerify = true
     } else {
       this.label = 'PIN 번호가 일치하지 않습니다'
