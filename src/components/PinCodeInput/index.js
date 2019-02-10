@@ -97,7 +97,7 @@ class PinCodeView extends React.Component {
                             animatedDeleteButton={this.state.animatedDeleteButton}
                             pinLength={pinLength}
                             deleteText={deleteText}
-                            onComplete={onComplete}
+                            onComplete={(val, clear) => onComplete(val, clear())}
                             animatedDeleteButtonOnPress={this.state.animatedDeleteButtonOnPress}
                             keyboardOnPress={this.keyboardOnPress}
                             returnType={returnType}/>

@@ -32,7 +32,7 @@ export default class PinCodeCreateView extends React.Component {
         return (
             <PinCodeView
                 label={this.label}
-                onComplete={(val, clear) => this.onPinEntered(val, clear())}
+                onComplete={this.onPinEntered}
                 pinLength={5}/>
         )
     }
