@@ -12,6 +12,8 @@ import { observable } from 'mobx'
 import WithdrawStore from '../../store/Withdraw/WithdrawStore'
 import { PRIMARY_COLOR } from "../../libs/Constraints"
 import CommonStyle from '../../libs/CommonStyle'
+import {BehaviorSubject} from "rxjs"
+import { debounceTime } from 'rxjs/operators'
 
 @inject(['coin'])
 @observer
@@ -19,6 +21,7 @@ export default class RemmittanceView extends React.Component {
     @observable step = 1
     @observable method = RemittanceType.Wallet
     @observable calculateSymbol = 'USD'
+    addressSource$
 
     constructor(props) {
         super(props)
@@ -26,6 +29,7 @@ export default class RemmittanceView extends React.Component {
         this.withdrawStore.setSoruceWallet(this.wallet.symbol, this.wallet.address)
         this.withdrawStore.setMoneySymbol('USD')
         this.calculateSymbol = this.wallet.symbol
+        this.addressSource$ = new BehaviorSubject('');
     }
 
     nextStep = () => {
@@ -69,7 +73,8 @@ export default class RemmittanceView extends React.Component {
                                     <Text style={styles.title}>받는 주소</Text>
                                     <AddressInput
                                         address={destAddress}
-                                        onChangeText={destAddress => this.withdrawStore.setTargetAddress(destAddress)} />
+                                        error={this.withdrawStore.destAddressError}
+                                        onChangeText={destAddress => this.addressSource$.next(destAddress)} />
                                 </React.Fragment>
                             )
                             }
@@ -108,6 +113,18 @@ export default class RemmittanceView extends React.Component {
                 </SafeAreaView>
             </React.Fragment>
         )
+    }
+
+    componentDidMount() {
+        this.subscription = this.addressSource$
+            .pipe(debounceTime(1000))
+            .subscribe(text => {
+                this.withdrawStore.setTargetAddress(text)
+            })
+    }
+
+    componentWillUnmount() {
+        this.subscription.unsubscribe();
     }
 
     handleChangeAmount = (amount) => {

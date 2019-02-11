@@ -3,6 +3,7 @@ import WalletStore from "../Wallet/WalletStore";
 import TransactionStore from "../Transaction/TransactionStore";
 import WithdrawNetworkApi from "../../api/Withdraw/WithdrawNetworkApi";
 import CoinPriceStore from '../Coin/CoinPriceStore'
+import AddressNetworkApi from "../../api/Address/AddressNetworkApi";
 
 export default class WithdrawStore {
     @observable symbol
@@ -11,11 +12,14 @@ export default class WithdrawStore {
     @observable amount = 0
     @observable price = 0
     @observable moneySymbol
+    @observable destAddressError
     transactionStore
     withdrawApi
+    addressApi
 
     constructor() {
         this.withdrawApi = new WithdrawNetworkApi()
+        this.addressApi = new AddressNetworkApi()
     }
 
     @action setSoruceWallet(symbol, address) {
@@ -25,6 +29,13 @@ export default class WithdrawStore {
 
     @action setTargetAddress(address) {
         this.destAddress = address
+        if (address.length === 0) {
+            this.destAddressError = 'Please enter dest address'
+            return
+        }
+        this.addressApi.checkAddressValid(address).then(res => {
+            this.destAddressError = undefined;
+        }).catch(err => this.destAddressError = 'address is not valid')
     }
 
     @action setAmount(amount) {
@@ -43,12 +54,6 @@ export default class WithdrawStore {
 
     @computed get coinPrice() {
         return CoinPriceStore.getCoin(this.symbol).price
-    }
-
-    @computed get destAddressError() {
-        if (this.destAddress.length === 0) {
-            return 'Please enter dest address'
-        }
     }
 
     @computed get amountError() {

@@ -59,4 +59,9 @@ export default class AddressNetworkApi {
         let resJson = res.json();
         return resJson;
     }
+
+    checkAddressValid = async (symbol, address) => {
+        const res = await fetch(`${HOST}/address/valid?symbol=${symbol}&address=${address}`, {method: 'GET'});
+        return res.json();
+    }
 }

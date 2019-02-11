@@ -3,7 +3,7 @@ import { View, StyleSheet, TextInput } from 'react-native'
 
 export default class AddressInput extends React.Component {
   render () {
-    const {address, onChangeText} = this.props
+    const {address, onChangeText, error} = this.props
 
     return (
       <View style={styles.addressContainer}>
@@ -12,6 +12,7 @@ export default class AddressInput extends React.Component {
           value={address}
           onChangeText={onChangeText}
           placeholder="Type address here"/>
+          {error}
       </View>
     )
   }

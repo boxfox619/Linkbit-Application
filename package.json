@@ -24,7 +24,8 @@
     "react-native-elements": "^0.19.1",
     "react-native-navigation": "^2.0.2641",
     "react-native-svg-uri": "^1.2.3",
-    "react-navigation": "^3.0.2"
+    "react-navigation": "^3.0.2",
+    "rxjs": "^6.4.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
