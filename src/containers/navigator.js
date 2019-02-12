@@ -35,6 +35,7 @@ export default createStackNavigator({
             headerBackTitle: 'wallet_search',
         })
     },
+    WalletImport: ImportWalletView,
     WalletDetail: WalletDetailView,
     Withdraw: RemittanceView,
     Security: SecurityView,

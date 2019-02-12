@@ -63,7 +63,8 @@ export default class TransactionStorageApi {
 
     getLastBlock = async () => {
         const transactionMap = await this.getTransactionMap()
-        return transactionMap[LAST_LOADED_BLOCK] || 0
+        const block = transactionMap[LAST_LOADED_BLOCK]
+        return  !!block ? block : 0
     }
 
     saveTransactionMap = async (transactionMap) => {

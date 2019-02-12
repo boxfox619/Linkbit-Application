@@ -11,7 +11,7 @@ export default class TransactionStore {
 
     constructor(symbol, address) {
         this.transactionStorageApi = new TransactionStorageApi(symbol, address)
-        this.transactionNetworkApi = new TransactionNetworkApi()
+        this.transactionNetworkApi = new TransactionNetworkApi(symbol, address)
     }
 
     loadTransactions = async () => {
@@ -29,7 +29,7 @@ export default class TransactionStore {
 
     fetchNewTransactions = async () => {
         this.loading = true
-        const lastBlockNum = this.transactionStorageApi.getLastBlock()
+        const lastBlockNum = await this.transactionStorageApi.getLastBlock()
         const res = await this.transactionNetworkApi.fetchNewTransactions(lastBlockNum)
         await this.transactionStorageApi.updateTransactions(res.transactions, res.blockNum)
         res.transactions.forEach(tr => this.updateTransaction(tr))

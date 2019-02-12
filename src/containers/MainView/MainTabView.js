@@ -94,6 +94,7 @@ export default class MainTabView extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#fff'
     },
     title: {
         fontSize: 20,

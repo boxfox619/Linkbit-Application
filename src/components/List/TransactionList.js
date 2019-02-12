@@ -13,31 +13,15 @@ export default class TransactionList extends React.Component {
 
     static defaultProps = {
         data: [],
-        refreshing: false,
-        fetchTransaction: () => {}
-    }
-
-    constructor(props) {
-        super(props)
-        this.state = {
-            page: 1,
-        }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (this.props.data !== nextProps.data) {
-            this.setState({refreshing: false})
-        }
+        refreshing: false
     }
 
     onEndReached = () => {
-        this.props.fetchTransaction(this.state.page + 1, 10)
-        this.setState(state => ({page: state.page + 1}))
+        this.props.fetchTransaction()
     }
 
     onRefresh = () => {
-        this.props.fetchTransaction(1, 10)
-        this.setState({page: 1})
+        this.props.fetchTransaction()
     }
 
     render() {
