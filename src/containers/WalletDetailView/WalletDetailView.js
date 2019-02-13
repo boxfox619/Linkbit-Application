@@ -46,7 +46,8 @@ export default class WalletDetailView extends React.Component {
                     <WalletSummaryCard wallet={wallet} />
                     <TransactionList style={{ padding: 10 }}
                                      refreshing={this.store.loading}
-                                     data={this.store.transactions}
+                                     data={this.store.transactionList}
+                                     symbol={wallet.symbol}
                                      fetchTransaction={this.store.fetchNewTransactions}/>
                     <ActionButton buttonColor={PRIMARY_COLOR}
                         onPress={() => this.props.navigation.navigate("Withdraw", { wallet })}

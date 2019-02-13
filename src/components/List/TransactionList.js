@@ -9,6 +9,7 @@ export default class TransactionList extends React.Component {
         fetchTransaction: PropTypes.func.isRequired,
         refreshing: PropTypes.bool.isRequired,
         data: PropTypes.array.isRequired,
+        symbol: PropTypes.string.isRequired
     }
 
     static defaultProps = {
@@ -37,9 +38,15 @@ export default class TransactionList extends React.Component {
                 onRefresh={this.onRefresh}
                 keyExtractor={(item) => item.hash}
                 renderItem={({item}) => (
-                    <TransactionCard transaction={item}/>
+                    <TransactionCard key={item.hash} symbol={this.props.symbol} transaction={item}/>
                 )}/>
         )
+    }
+
+    componentDidMount() {
+        if(this.props.data.length === 0){
+            this.props.fetchTransaction()
+        }
     }
 }
 
