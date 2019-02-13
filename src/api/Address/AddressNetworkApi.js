@@ -55,13 +55,12 @@ export default class AddressNetworkApi {
     }
 
     checkLinkAddressExists = async (linkAddress) => {
-        const res = await fetch(`${HOST}/address/valid?address=${linkAddress}`, {method: 'GET'});
-        let resJson = res.json();
-        return resJson;
+        const res = await fetch(`${HOST}/address/exist?address=${linkAddress}`, {method: 'GET'});
+        return res.json();
     }
 
     checkAddressValid = async (symbol, address) => {
         const res = await fetch(`${HOST}/address/valid?symbol=${symbol}&address=${address}`, {method: 'GET'});
-        return res.json();
+        return res;
     }
 }

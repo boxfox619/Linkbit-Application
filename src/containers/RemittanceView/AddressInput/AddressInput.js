@@ -1,18 +1,17 @@
 import React from 'react'
-import { View, StyleSheet, TextInput } from 'react-native'
+import { View, StyleSheet, TextInput, Text } from 'react-native'
 
 export default class AddressInput extends React.Component {
   render () {
-    const {address, onChangeText, error} = this.props
+    const {address, onChangeText} = this.props
 
     return (
       <View style={styles.addressContainer}>
         <TextInput
           style={styles.addressInput}
-          value={address}
+          defaultValue={address}
           onChangeText={onChangeText}
           placeholder="Type address here"/>
-          {error}
       </View>
     )
   }
