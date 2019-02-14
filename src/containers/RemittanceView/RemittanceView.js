@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Text, AlertIOS, Platform, TextInput } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 import NavigationButton from '../../components/NavigationButton/NavigationButton'
 import AddressBox from './AddressBox/AddressBox'
 import AddressInput from './AddressInput/AddressInput'
