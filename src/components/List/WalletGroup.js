@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import {View, StyleSheet} from 'react-native'
 import {CoinCard, WalletCard} from '..'
 import {observer, inject} from 'mobx-react'
-import {observable, runInAction} from 'mobx'
 import {dollarFormat} from '../../libs/NumberFormatter'
 
 @inject('coin')
@@ -25,29 +24,25 @@ export default class WalletGroup extends React.Component {
         },
     }
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            coin: this.props.coin.getCoin(this.props.coinSymbol),
-        }
-    }
-
     render() {
-        const {coin} = this.state
         return (
             <View style={styles.container}>
                 <CoinCard
                     activate={this.props.activated}
-                    coinName={coin.name}
-                    themeColor={coin.themeColor}
+                    coinName={this.coin.name}
+                    themeColor={this.coin.themeColor}
                     symbol={this.props.coinSymbol}
                     moneySymbol={this.props.moneySymbol}
                     balance={this.totalBalance.toFixed(3)}
-                    price={dollarFormat((this.totalBalance * coin.price).toFixed(3))}
+                    price={dollarFormat((this.totalBalance * this.coin.price).toFixed(3))}
                     onClick={() => this.props.onToggled(this.props.coinSymbol)}/>
-                {this.props.activated && this.renderWallets(coin)}
+                {this.props.activated && this.renderWallets(this.coin)}
             </View>
         )
+    }
+
+    get coin() {
+        return this.props.coin.getCoin(this.props.coinSymbol)
     }
 
     get totalBalance() {

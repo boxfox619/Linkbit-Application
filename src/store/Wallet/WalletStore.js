@@ -1,4 +1,5 @@
 import {observable, computed, runInAction} from 'mobx'
+import { observer } from 'mobx-react'
 import Wallet from './Wallet'
 import WalletStorageApi from "../../api/Wallet/WalletStorageApi"
 import WalletNetworkApi from "../../api/Wallet/WalletNetworkApi"

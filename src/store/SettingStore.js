@@ -2,6 +2,7 @@ import {observable, action} from 'mobx'
 import i18n from 'i18n-js'
 import {Dimensions} from 'react-native'
 import AsyncStorageApi from "../api/AsyncStorageApi";
+import CoinPriceStore from './Coin/CoinPriceStore';
 
 class SettingStore {
     @observable language = 'ko'
@@ -32,6 +33,7 @@ class SettingStore {
     @action setCurrency = async val => {
         this.currency = val
         await this.save()
+        await CoinPriceStore.refreshCoins()
     }
 
     @action setPin = async val => {

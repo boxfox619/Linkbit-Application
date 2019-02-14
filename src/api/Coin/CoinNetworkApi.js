@@ -12,14 +12,14 @@ export default class CoinNetworkApi {
         }
     };
 
-    fetchCoinPrices = async (symbols) => {
+    fetchCoinPrices = async (symbols, currency) => {
         const res = await fetch(`${HOST}/coins/price`, {
             method: 'POST',
             headers: {
                 'Authorization': '',
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: encoding({symbols}),
+            body: encoding({symbols, currency}),
         })
         return res.json()
     }
