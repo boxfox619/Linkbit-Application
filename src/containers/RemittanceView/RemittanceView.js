@@ -9,7 +9,7 @@ import RemittanceType from '../../store/RemittanceType'
 import WalletSummaryCard from '../../components/Card/WalletSummaryCard'
 import CommissionInput from "./CommissionInput/CommisionInput"
 import { inject, observer } from "mobx-react/index"
-import { observable } from 'mobx'
+import { observable, action } from 'mobx'
 import WithdrawStore from '../../store/Withdraw/WithdrawStore'
 import Dialog from 'react-native-dialog'
 
@@ -84,7 +84,7 @@ export default class RemmittanceView extends React.Component {
                                 <AddressInput
                                     address={destAddress}
                                     onChangeText={destAddress => this.withdrawStore.setTargetAddress(destAddress)}
-                                    onBlur={this.checkValidAddress}/>
+                                    onBlur={this.checkValidAddress} />
                             </React.Fragment>
                         }
                         {
@@ -133,7 +133,7 @@ export default class RemmittanceView extends React.Component {
                         <Dialog.Title>Verify wallet password</Dialog.Title>
                         <Dialog.Input value={this.userPasswordInput}
                             onChangeText={text => this.userPasswordInput = text}
-                            secureTextEntry={true}/>
+                            secureTextEntry={true} />
                         <Dialog.Button label="Cancel"
                             onPress={this.onCancel} />
                         <Dialog.Button label="Submit"
@@ -149,14 +149,14 @@ export default class RemmittanceView extends React.Component {
     }
 
     onSubmit = () => {
-        // check 
+        // check
         if (this.userPasswordInput === 'wallet password') {
             this.props.navigation.navigate('Main')
+            this.modalVisibility = false
         }
         else {
             alert('Password is incorrect')
         }
-        this.modalVisibility = false
     }
 
     handleChangeAmount = (amount) => {

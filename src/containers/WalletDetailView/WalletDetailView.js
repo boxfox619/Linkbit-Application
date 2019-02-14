@@ -1,9 +1,10 @@
 import React from 'react'
-import { View, StyleSheet, Image, Text, Clipboard } from 'react-native'
+import { View, StyleSheet, SafeAreaView, Image, Text, Clipboard } from 'react-native'
 import { WalletSummaryCard, TransactionList } from '../../components/index'
 import { TransactionStore } from '../../store/index'
 import { observer } from 'mobx-react'
 import { PRIMARY_COLOR } from "../../libs/Constraints"
+import CommonStyle from '../../libs/CommonStyle'
 import ActionButton from "react-native-action-button"
 import { Icon } from 'react-native-elements'
 
@@ -42,16 +43,18 @@ export default class WalletDetailView extends React.Component {
     render() {
         const wallet = this.props.navigation.getParam('wallet', {})
         return (
-            <View style={styles.container}>
-                <WalletSummaryCard wallet={wallet} />
-                <TransactionList style={{ padding: 10 }} refreshing={this.store.loading} data={this.store.transactions} />
-                <ActionButton buttonColor={PRIMARY_COLOR}
-                    onPress={() => this.props.navigation.navigate("Withdraw", { wallet })}
-                    offsetX={10}
-                    offsetY={10}
-                    renderIcon={() => <Icon name="account-balance-wallet" color="#fff" />}
-                />
-            </View>
+            <SafeAreaView style={CommonStyle.safeArea}>
+                <View style={styles.container}>
+                    <WalletSummaryCard wallet={wallet} />
+                    <TransactionList style={{ padding: 10 }} refreshing={this.store.loading} data={this.store.transactions} />
+                    <ActionButton buttonColor={PRIMARY_COLOR}
+                        onPress={() => this.props.navigation.navigate("Withdraw", { wallet })}
+                        offsetX={20}
+                        offsetY={20}
+                        renderIcon={() => <Icon name="account-balance-wallet" color="#fff" />}
+                    />
+                </View>
+            </SafeAreaView>
         )
     }
 }

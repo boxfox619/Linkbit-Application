@@ -3,6 +3,7 @@ import { View, StyleSheet, Text } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import { WalletList } from '../../components'
 import { PRIMARY_COLOR } from '../../libs/Constraints'
+import CommonStyle from '../../libs/CommonStyle'
 import ActionButton from 'react-native-action-button'
 import i18n from '../../libs/Locale'
 
@@ -10,7 +11,7 @@ import i18n from '../../libs/Locale'
 @observer
 export default class WalletListView extends React.Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       test: false,
@@ -23,9 +24,9 @@ export default class WalletListView extends React.Component {
     this.props.navigation.navigate('WalletDetail', { wallet })
   }
 
-  render () {
+  render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, CommonStyle.mainTabViewContent]}>
         <View style={styles.totalBalanceCard}>
           <Text style={styles.totalBalanceLabel}>{i18n.t('wallet_total')}</Text>
           <Text style={styles.totalBalanceAddressLabel}>{this.state.linkedAddress}</Text>
@@ -39,9 +40,9 @@ export default class WalletListView extends React.Component {
           wallets={this.props.wallet.walletList}
           onWalletSelected={w => this.openWalletDetail(w)} />
         <ActionButton buttonColor={PRIMARY_COLOR}
-          onPress={() => this.props.navigation.navigate("SelectCoin", {nextPath: 'CreateWallet'})}
-          offsetX={0}
-          offsetY={0} />
+          onPress={() => this.props.navigation.navigate("SelectCoin", { nextPath: 'CreateWallet' })}
+          offsetX={20}
+          offsetY={20} />
       </View>
     )
   }
@@ -50,6 +51,7 @@ export default class WalletListView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff'
   },
   totalBalanceCard: {
     backgroundColor: PRIMARY_COLOR,

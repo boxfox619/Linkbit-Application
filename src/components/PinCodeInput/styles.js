@@ -4,14 +4,13 @@ export default StyleSheet.create({
     //passwordInputView
     container: {
         flex: 1,
-        paddingTop: 60,
         position: 'relative'
     },
     title: {
         fontSize: 18,
         textAlign: 'center',
-        marginBottom: 30,
         width: Dimensions.get('window').width,
+        lineHeight: Dimensions.get('window').height / 3,
     },
     pin: {
         position: 'absolute',

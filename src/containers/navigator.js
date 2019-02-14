@@ -8,6 +8,8 @@ import RemittanceView from "./RemittanceView/RemittanceView"
 import SecurityView from './SecurityView/SecurityView'
 import LanguageSettingView from './SettingView/LanguageSettingView'
 import CurrencySettingView from './SettingView/CurrencySettingView'
+import SelectCoinView from './SelectCoinView/SelectCoinView'
+import CreateWalletView from './CreateWalletView/CreateWalletView'
 
 export default createStackNavigator({
     Main: MainTabView,
@@ -37,9 +39,8 @@ export default createStackNavigator({
     Security: SecurityView,
     "Setting.Language": LanguageSettingView,
     "Setting.Currency": CurrencySettingView,
-    "CreateWallet.SelectWalletCoin": SelectWalletCoinView,
-    "CreateWallet.SelectWalletToken": SelectWalletTokenView,
-    "CreateWallet.EnterWalletDetail": EnterWalletDetailView
+    SelectCoin: SelectCoinView,
+    CreateWallet: CreateWalletView
 },
     {
         initialRouteName: 'Main',
