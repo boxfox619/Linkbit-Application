@@ -23,6 +23,18 @@ class WalletStore {
                 return wallet
             })
         })
+        await this.loadAllBalance()
+    }
+
+    loadAllBalance = async () => {
+        for(const i in this.wallets){
+            const wallet = this.wallets[i]
+            try {
+                const res = await this.walletNetworkApi.getBalance(wallet.symbol, wallet.address)
+                wallet.balance = res
+            }catch(err){}
+        }
+        await this.walletStorageApi.saveWalletList(this.wallets.map(w => w.asJson))
     }
 
     createWallet = async (symbol, name, password) => {
@@ -55,7 +67,7 @@ class WalletStore {
             const coin = CoinPriceStore.getCoin(w.symbol)
             totalPrice += w.balance * coin.price
         })
-        return totalPrice
+        return totalPrice.toFixed(3);
     }
 
     @computed get walletList() {

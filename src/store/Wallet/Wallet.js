@@ -3,7 +3,7 @@ import {observable, computed, action, reaction} from 'mobx'
 export default class Wallet {
     @observable address
     @observable name
-    @observable balance
+    @observable balance = 0
     @observable symbol
     @observable walletFileName
     @observable walletData

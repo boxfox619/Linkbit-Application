@@ -34,11 +34,7 @@ export default class WalletNetworkApi {
     }
 
     getBalance = async (symbol, address) => {
-        try {
-            const res = await fetch(`${HOST}/wallet/balance?symbol=${symbol}&address=${address}`, {method: 'GET'});
-            return res;
-        } catch (error) {
-            console.log(error);
-        }
+        const res = await fetch(`${HOST}/wallet/balance?symbol=${symbol}&address=${address}`, {method: 'GET'});
+        return res.json()
     }
 }
