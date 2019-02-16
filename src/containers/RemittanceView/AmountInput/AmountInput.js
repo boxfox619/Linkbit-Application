@@ -24,6 +24,7 @@ export default class AmountInput extends React.Component {
                 <TextInput
                     style={styles.unitInput}
                     keyboardType='numeric'
+                    returnKeyType='done'
                     value={String(amount)}
                     onChangeText={text => onChangeAmount(text)}/>
                 <View style={styles.unitPicker}>

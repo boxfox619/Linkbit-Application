@@ -9,17 +9,23 @@ import RemittanceType from '../../store/RemittanceType'
 import WalletSummaryCard from "../../components/Card/WalletSummaryCard"
 import {inject, observer} from "mobx-react/index"
 import {observable} from 'mobx'
-import WithdrawStore from '../../store/Withdraw/WithdrawStore'
 import {PRIMARY_COLOR} from "../../libs/Constraints"
 import CommonStyle from '../../libs/CommonStyle'
-import {BehaviorSubject} from "rxjs"
+import CommissionInput from "./CommissionInput/CommisionInput"
+import WithdrawStore from '../../store/Withdraw/WithdrawStore'
+import Dialog from 'react-native-dialog'
 
-@inject(['coin'])
+@inject(['setting'])
 @observer
 export default class RemmittanceView extends React.Component {
     @observable step = 1
+    @observable modalVisibility = false
+    @observable userPasswordInput = ''
     @observable method = RemittanceType.Wallet
     @observable calculateSymbol = 'USD'
+    @observable commission = 0
+    @observable ratio = 0.1582
+    @observable label = 'PIN 번호를 입력해주세요'
 
     constructor(props) {
         super(props)
@@ -27,30 +33,6 @@ export default class RemmittanceView extends React.Component {
         this.withdrawStore.setSourceWallet(this.wallet.symbol, this.wallet.address)
         this.withdrawStore.setMoneySymbol('USD')
         this.calculateSymbol = this.wallet.symbol
-    }
-
-    nextStep = () => {
-        if (this.method === RemittanceType.Wallet) {
-            switch (this.step) {
-                case 1:
-                    if (this.withdrawStore.destAddressError) {
-                        alert(this.withdrawStore.destAddressError)
-                        break;
-                    }
-                    this.step += 1
-                    break;
-                case 2:
-                    if (this.withdrawStore.amountError) {
-                        alert(this.withdrawStore.amountError)
-                        break;
-                    }
-                    this.step += 1
-                    break;
-                case 3:
-                    this.withdrawStore.withdraw('1234')
-                    break;
-            }
-        }
     }
 
     render() {
@@ -110,14 +92,81 @@ export default class RemmittanceView extends React.Component {
                                            symbol={symbol}
                                            amount={amount}/>
                             }
+                            {
+                                step >= 4 &&
+                                <React.Fragment>
+                                    <View style={styles.commissionHeader}>
+                                        <Text style={styles.title}>수수료</Text>
+                                        <Text style={[styles.title, { fontSize: 18 }]}>{`${symbol} ${commission * ratio}`}</Text>
+                                    </View>
+                                    <CommissionInput commission={commission}
+                                                     onValueChange={this.onCommissionChanged} />
+                                </React.Fragment>
+                            }
                         </View>
-                        <NavigationButton
-                            title={step === 3 ? '송금하기' : '다음'}
-                            onPress={this.nextStep}/>
                     </View>
+                    <NavigationButton
+                        title={step === 4 ? '송금하기' : '다음'}
+                        onPress={this.nextStep} />
+                    <Dialog.Container visible={this.modalVisibility}>
+                        <Dialog.Title>Verify wallet password</Dialog.Title>
+                        <Dialog.Input value={this.userPasswordInput}
+                                      onChangeText={text => this.userPasswordInput = text}
+                                      secureTextEntry={true} />
+                        <Dialog.Button label="Cancel"
+                                       onPress={this.onCancel} />
+                        <Dialog.Button label="Submit"
+                                       onPress={this.onSubmit} />
+                    </Dialog.Container>
                 </SafeAreaView>
             </React.Fragment>
         )
+    }
+
+    nextStep = () => {
+        if (this.method === RemittanceType.Wallet) {
+            switch (this.step) {
+                case 1:
+                    if (this.withdrawStore.destAddressError) {
+                        alert(this.withdrawStore.destAddressError)
+                        break;
+                    }
+                    this.step += 1
+                    break;
+                case 2:
+                    if (this.withdrawStore.amountError) {
+                        alert(this.withdrawStore.amountError)
+                        break;
+                    }
+                    this.step += 1
+                    break;
+                case 3:
+                    this.step += 1
+                    break;
+                case 4:
+                    this.withdrawStore.withdraw('1234')
+                    break;
+            }
+
+            if (this.step > 4) {
+                this.modalVisibility = true
+            }
+        }
+    }
+
+    onCancel = () => {
+        this.modalVisibility = false
+    }
+
+    onSubmit = () => {
+        // check
+        if (this.userPasswordInput === 'wallet password') {
+            this.props.navigation.navigate('Main')
+            this.modalVisibility = false
+        }
+        else {
+            alert('Password is incorrect')
+        }
     }
 
     handleChangeAmount = (amount) => {
@@ -131,6 +180,20 @@ export default class RemmittanceView extends React.Component {
 
     get wallet() {
         return this.props.navigation.getParam("wallet")
+    }
+
+    onCommissionChanged = (value) => {
+        this.commission = value
+    }
+
+    onPinVerify = (pin) => {
+        if (this.props.setting.pin === pin) {
+            this.view = 'menu'
+            this.withdrawStore.withdraw(pin)
+        } else {
+            this.label = 'PIN 번호가 일치하지 않습니다'
+        }
+
     }
 }
 
@@ -165,6 +228,14 @@ const styles = StyleSheet.create({
         position: 'absolute',
         color: 'red',
         right: 0,
-        top: 0
+        top: 0,
+        marginHorizontal: 'auto',
+        marginTop: 20,
+        marginBottom: 5,
+    },
+    commissionHeader: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     }
 })
