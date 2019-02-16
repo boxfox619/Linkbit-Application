@@ -39,8 +39,11 @@ export default class WithdrawStore {
     })
 
     checkAddressValid = () => {
+        if(this.destAddress.length === 0){
+            return 
+        }
         this.addressApi.checkAddressValid(this.symbol, this.destAddress)
-            .then(res => runInAction(() => this.destAddressError = undefined))
+            .then(res => runInAction(() => this.destAddressError = res ? undefined : 'address is not valid'))
             .catch(err => runInAction(() => this.destAddressError = 'address is not valid'))
     }
 
