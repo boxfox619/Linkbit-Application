@@ -10,6 +10,7 @@ import LanguageSettingView from './SettingView/LanguageSettingView'
 import CurrencySettingView from './SettingView/CurrencySettingView'
 import SelectCoinView from './SelectCoinView/SelectCoinView'
 import CreateWalletView from './CreateWalletView/CreateWalletView'
+import ImportWalletView from './ImportWalletView/ImportWalletView'
 
 export default createStackNavigator({
     Main: MainTabView,
@@ -34,6 +35,7 @@ export default createStackNavigator({
             headerBackTitle: 'wallet_search',
         })
     },
+    WalletImport: ImportWalletView,
     WalletDetail: WalletDetailView,
     Withdraw: RemittanceView,
     Security: SecurityView,

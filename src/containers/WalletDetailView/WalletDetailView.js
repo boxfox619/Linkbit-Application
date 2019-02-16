@@ -23,7 +23,6 @@ export default class WalletDetailView extends React.Component {
                 onPress={() => {
                     const address = params.wallet.address
                     Clipboard.setString(address)
-
                     alert('Copied wallet address to clipboard')
                 }} />
         }
@@ -36,8 +35,7 @@ export default class WalletDetailView extends React.Component {
     }
 
     componentDidMount() {
-        this.store.loadTransactions()
-            .catch(e => alert(e))
+        this.store.loadTransactions().catch(e => alert(e))
     }
 
     render() {
@@ -46,7 +44,11 @@ export default class WalletDetailView extends React.Component {
             <SafeAreaView style={CommonStyle.safeArea}>
                 <View style={styles.container}>
                     <WalletSummaryCard wallet={wallet} />
-                    <TransactionList style={{ padding: 10 }} refreshing={this.store.loading} data={this.store.transactions} />
+                    <TransactionList style={{ padding: 10 }}
+                                     refreshing={this.store.loading}
+                                     data={this.store.transactionList}
+                                     symbol={wallet.symbol}
+                                     fetchTransaction={this.store.fetchNewTransactions}/>
                     <ActionButton buttonColor={PRIMARY_COLOR}
                         onPress={() => this.props.navigation.navigate("Withdraw", { wallet })}
                         offsetX={20}

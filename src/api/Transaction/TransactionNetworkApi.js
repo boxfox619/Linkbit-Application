@@ -3,14 +3,19 @@ import encoding from '../../libs/UrlEncoder'
 
 export default class TransactionNetworkApi {
 
-    fetchNewTransactions = async (symbol, address, lastBlockNumber) => {
-        const res = await fetch(`${HOST}/wallet/${this.symbol}/transactions?symbol=${symbol}address=${address}&lastBlock=${lastBlockNumber}`,
-            {method: 'GET'});
-        return res.json();
+    constructor(symbol, address){
+        this.symbol = symbol
+        this.address = address
+    }
+
+    fetchNewTransactions = async (lastBlockNumber) => {
+        const res = await fetch(`${HOST}/transactions/${this.symbol}?address=${this.address}&lastBlock=${lastBlockNumber}`,
+            {method: 'GET'})
+        return res.json()
     };
 
     fetchTransactions = async (txHashList) => {
-        const res = await fetch(`${HOST}/transaction/${this.symbol}?txHash=${txHash}`,
+        const res = await fetch(`${HOST}/transaction/${this.symbol}`,
             {
                 method: 'POST',
                 headers: {
@@ -20,11 +25,11 @@ export default class TransactionNetworkApi {
                 body: encoding({transactions: txHashList})
             }
         );
-        return res.json();
+        return res.json()
     }
 
     fetchTransaction = async (txHash) => {
         const res = await fetch(`${HOST}/transaction/${this.symbol}?txHash=${txHash}`, {method: 'GET'});
-        return res.json();
+        return {...res.json(), symbol : this.symbol};
     };
 }

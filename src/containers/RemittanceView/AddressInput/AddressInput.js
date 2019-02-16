@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, TextInput } from 'react-native'
+import { View, StyleSheet, TextInput, Text } from 'react-native'
 
 export default class AddressInput extends React.Component {
   render () {
@@ -9,7 +9,7 @@ export default class AddressInput extends React.Component {
       <View style={styles.addressContainer}>
         <TextInput
           style={styles.addressInput}
-          value={address}
+          defaultValue={address}
           onChangeText={onChangeText}
           onBlur={onBlur}
           placeholder="Type address here"/>

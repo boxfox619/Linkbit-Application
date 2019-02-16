@@ -15,7 +15,7 @@ export default class Transaction {
             hash: this.hash,
             symbol: this.symbol,
             targetAddress: this.targetAddress,
-            targetUser: this.targetUser,
+            sourceAddress: this.sourceAddress,
             amount: this.amount,
             status: this.status,
             date: this.date,
@@ -26,9 +26,8 @@ export default class Transaction {
     updateFromJson(json) {
         this.hash = json.hash
         this.symbol = json.symbol
-        this.benefit = json.benefit
+        this.sourceAddress = json.sourceAddress
         this.targetAddress = json.targetAddress
-        this.targetUser = json.targetUser
         this.amount = json.amount
         this.status = json.status
         this.date = json.date
