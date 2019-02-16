@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {View, StyleSheet, TextInput} from 'react-native'
 import DropdownMenu from 'react-native-dropdown-menu'
 import AmountBox from "../AmountBox/AmountBox";
+import Input from "../../../components/Input/Input";
 
 export default class AmountInput extends React.Component {
     static propTypes = {
@@ -25,8 +26,7 @@ export default class AmountInput extends React.Component {
             <View style={styles.amountContainer}>
                 {edit ? (
                     <>
-                        <TextInput
-                            style={styles.unitInput}
+                        <Input
                             keyboardType='numeric'
                             returnKeyType='done'
                             value={String(amountValue)}
@@ -59,14 +59,6 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         zIndex: 2,
-    },
-    unitInput: {
-        height: 53,
-        flexGrow: 1,
-        borderRadius: 5,
-        borderWidth: 3,
-        borderColor: '#594343',
-        paddingHorizontal: 6,
     },
     unitPicker: {
         height: 53,

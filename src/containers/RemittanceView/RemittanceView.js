@@ -9,9 +9,9 @@ import {inject, observer} from "mobx-react/index"
 import {observable} from 'mobx'
 import {PRIMARY_COLOR} from "../../libs/Constraints"
 import CommonStyle from '../../libs/CommonStyle'
-import CommissionInput from "./CommissionInput/CommisionInput"
 import WithdrawStore from '../../store/Withdraw/WithdrawStore'
 import Dialog from 'react-native-dialog'
+import Input from "../../components/Input/Input";
 
 @inject(['setting'])
 @observer
@@ -35,7 +35,7 @@ export default class RemittanceView extends React.Component {
 
     render() {
         const {method, calculateSymbol, step} = this
-        const {destAddress, amount, price, symbol, moneySymbol} = this.withdrawStore
+        const {destAddress, amount, price, symbol, password, moneySymbol} = this.withdrawStore
         const wallet = this.wallet
         return (
             <SafeAreaView style={[CommonStyle.safeArea, {backgroundColor: PRIMARY_COLOR}]}>
@@ -83,6 +83,23 @@ export default class RemittanceView extends React.Component {
                             )
                         }
                         {
+                            step >= 3 && (
+                                <>
+                                    <View style={styles.label}>
+                                        <Text style={styles.title}>지갑 비밀번호</Text>
+                                    </View>
+                                    <View style={styles.addressContainer}>
+                                        <Input
+                                            secureTextEntry={true}
+                                            defaultValue={password}
+                                            onChangeText={this.withdrawStore.setPassword}
+                                            placeholder="Type wallet password"/>
+
+                                    </View>
+                                </>
+                            )
+                        }
+                        {/*                        {
                             step >= 3 &&
                             <React.Fragment>
                                 <View style={styles.label}>
@@ -93,10 +110,10 @@ export default class RemittanceView extends React.Component {
                                 </View>
                                 <CommissionInput commission={this.commission} onValueChange={this.onCommissionChanged}/>
                             </React.Fragment>
-                        }
+                        }*/}
                     </View>
                     <NavigationButton
-                        title={step === 4 ? '송금하기' : '다음'}
+                        title={step === 3 ? '송금하기' : '다음'}
                         onPress={this.nextStep}/>
                     <Dialog.Container visible={this.modalVisibility}>
                         <Dialog.Title>Verify wallet password</Dialog.Title>
@@ -131,10 +148,9 @@ export default class RemittanceView extends React.Component {
                     this.step += 1
                     break;
                 case 3:
-                    this.step += 1
-                    break;
-                case 4:
-                    this.withdrawStore.withdraw('1234')
+                    this.withdrawStore.withdraw()
+                        .then(res => alert('송금 성공'))
+                        .catch(err => alert('송금 실패'))
                     break;
             }
 
@@ -220,5 +236,17 @@ const styles = StyleSheet.create({
         right: 0,
         top: 0,
         marginHorizontal: 'auto',
+    },
+    password: {
+        flexGrow: 1,
+        borderRadius: 5,
+        borderWidth: 3,
+        borderColor: '#594343',
+        paddingHorizontal: 6,
+    },
+    addressContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%'
     }
 })
