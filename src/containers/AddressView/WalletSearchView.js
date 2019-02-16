@@ -26,12 +26,25 @@ export default class WalletSearchView extends React.Component {
 
     if (!!text && text.length > 0) {
       text = text.toLowerCase()
-      resultWallets = resultWallets.filter(w => (
-        w.address.toLowerCase().includes(text) ||
-        w.linkedAddress.toLowerCase().includes(text) ||
-        w.name.toLowerCase().includes(text)
-      ))
+      resultWallets = resultWallets.filter(w => {
+        let isMatched = false
+
+        const a = w.address
+        if (a && a.toLowerCase().includes(text))
+          isMatched = true
+
+        const l = w.linkedAddress
+        if (l && l.toLowerCase().includes(text))
+          isMatched = true
+
+        const n = w.address
+        if (n && n.toLowerCase().includes(text))
+          isMatched = true
+
+        return isMatched
+      })
     }
+
     this.wallets = resultWallets.filter(w => excludeSymbolList.indexOf(w.symbol) === -1).filter(w => excludeAddressList.indexOf(w.address) === -1)
   }
 
@@ -48,7 +61,7 @@ export default class WalletSearchView extends React.Component {
           onChangeText={this.onChangeText}
           onClearText={this.onChangeText}
           placeholder='Wallet name or address...' />
-        <Text>{'주소 목록'}</Text>
+        <Text style={styles.header}>{'주소 목록'}</Text>
         <FlatList
           style={styles.list}
           data={this.wallets}
@@ -71,6 +84,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 10,
+  },
+  header: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 16,
+    paddingTop: 20,
+    paddingBottom: 10,
+    paddingLeft: 2
   },
   list: {
     flex: 1,
