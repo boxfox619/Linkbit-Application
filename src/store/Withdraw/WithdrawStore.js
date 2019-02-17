@@ -40,7 +40,7 @@ export default class WithdrawStore {
     })
 
     checkAddressValid = () => {
-        if(this.destAddress.length === 0){
+        if (this.destAddress.length === 0) {
             return
         }
         this.addressApi.checkAddressValid(this.symbol, this.destAddress)
@@ -79,10 +79,24 @@ export default class WithdrawStore {
         }
     }
 
+    @computed get wallet() {
+        return WalletStore.walletList.find(w => w.address === this.sourceAddress || w.linkedAddress === this.sourceAddress)
+    }
+
+    @computed get passwordRequired() {
+        const password = this.wallet.walletData.password
+        return !(!!password && password === false)
+    }
+
     withdraw = async () => {
-        const wallet = WalletStore.walletList.filter(w => w.address === this.sourceAddress || w.linkedAddress === this.sourceAddress)
         this.transactionStore = new TransactionStore(this.symbol, this.sourceAddress)
-        const resTransaction = this.withdrawApi.withdraw(wallet, this.password, this.amount, this.destAddress)
-        this.transactionStore.fetchTransaction(resTransaction)
+        const walletData = {...JSON.parse(this.wallet.walletData), password: this.password}
+        const res = await this.withdrawApi.withdraw(this.symbol, walletData, this.amount, this.destAddress)
+        alert(JSON.stringify(res))
+        if (res.status === 200 ) {
+            await this.transactionStore.fetchNewTransactions()
+        } else {
+            throw "송금 실패"
+        }
     }
 }

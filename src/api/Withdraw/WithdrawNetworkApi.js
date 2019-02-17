@@ -1,23 +1,24 @@
 import {AsyncStorage} from "react-native"
 import {HOST} from "../../libs/Constraints"
+import encoding from "../../libs/UrlEncoder";
 
 const WITHDRAW_CACHE_KEY = 'withdraw'
 
 export default class WalletNetworkApi {
-    withdraw = async (wallet, password, amount, targetAddress) => {
-        const res = await fetch(`${HOST}/withdraw`, {
+    withdraw = async (symbol, walletData, amount, targetAddress) => {
+        return await fetch(`${HOST}/withdraw`, {
             method: 'POST',
             headers: {
                 'Authorization': '',
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: JSON.stringify({
-                wallet,
-                password,
+            body: encoding({
+                symbol,
+                walletData,
                 amount,
-                target: targetAddress
+                targetAddress
             }),
-        });
-        return res;
+        })
     }
 
     saveWithdraw = async (wallet, password, amount, targetAddress) => {
