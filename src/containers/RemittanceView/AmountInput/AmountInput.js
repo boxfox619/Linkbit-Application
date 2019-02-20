@@ -27,6 +27,7 @@ export default class AmountInput extends React.Component {
                 {edit ? (
                     <>
                         <Input
+                            placeholder='0'
                             keyboardType='numeric'
                             returnKeyType='done'
                             value={String(amountValue)}

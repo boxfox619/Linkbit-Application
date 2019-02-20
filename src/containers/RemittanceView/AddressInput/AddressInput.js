@@ -11,6 +11,7 @@ export default class AddressInput extends React.Component {
             <View style={styles.addressContainer}>
                 {edit ? (
                     <Input
+                        returnKeyType='done'
                         defaultValue={address}
                         onChangeText={onChangeText}
                         placeholder="Type address here"/>
