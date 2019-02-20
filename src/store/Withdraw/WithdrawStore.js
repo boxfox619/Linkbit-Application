@@ -77,6 +77,9 @@ export default class WithdrawStore {
         if (isNaN(value) || value <= 0) {
             return 'Please enter valid amount'
         }
+        if(value > this.wallet.balance){
+            return `Up to a maximum of ${this.wallet.balance} can be sent.`
+        }
     }
 
     @computed get wallet() {
