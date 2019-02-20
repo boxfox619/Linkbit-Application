@@ -11,4 +11,4 @@ before_script:
 script:
   - npm install
   - npm ci
-  - npx jest --ci
+  - npx jest --ci --passWithNoTests
