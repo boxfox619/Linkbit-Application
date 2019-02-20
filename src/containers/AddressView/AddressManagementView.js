@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, StyleSheet, FlatList, Alert, Button} from 'react-native'
+import {View, StyleSheet, SafeAreaView, FlatList, Alert, Button} from 'react-native'
 import {inject, observer} from 'mobx-react/index'
 import WalletCard from '../../components/Card/WalletCard'
 import AddressCard from '../../components/Card/AddressCard'
@@ -16,29 +16,31 @@ export default class AddressManagementView extends React.Component {
     render() {
         const addressList = this.currentAddressItem.accountAddressList.map(address => this.props.wallet.getWallet(address))
         return (
-            <View style={styles.container}>
-                <AddressCard address={this.currentAddressItem.linkAddress}
-                             linkedAddressCount={addressList.length} activate/>
-                <FlatList
-                    style={styles.list}
-                    data={addressList}
-                    extraData={{size: addressList.length}}
-                    keyExtractor={(item, idx) => (!!item) ? item.address : idx}
-                    renderItem={({item}) => {
-                        return item && (<WalletCard
-                                key={item.address}
-                                onPress={() => this.handleWalletDelete(item)}
-                                name={item.name}
-                                symbol={item.symbol} moneySymbol="USD"/>
-                        )
-                    }}/>
+            <SafeAreaView style={{flex: 1}}>
+                <View style={styles.container}>
+                    <AddressCard address={this.currentAddressItem.linkAddress}
+                                 linkedAddressCount={addressList.length} activate/>
+                    <FlatList
+                        style={styles.list}
+                        data={addressList}
+                        extraData={{size: addressList.length}}
+                        keyExtractor={(item, idx) => (!!item) ? item.address : idx}
+                        renderItem={({item}) => {
+                            return item && (<WalletCard
+                                    key={item.address}
+                                    onPress={() => this.handleWalletDelete(item)}
+                                    name={item.name}
+                                    symbol={item.symbol} moneySymbol="USD"/>
+                            )
+                        }}/>
 
-                <Button
-                    title="Link new wallet"
-                    color="#594343"
-                    overrides={{backgroundColor: '#594343'}}
-                    onPress={() => this.onLinkNewWallet()}/>
-            </View>
+                    <Button
+                        title="Link new wallet"
+                        color="#594343"
+                        overrides={{backgroundColor: '#594343'}}
+                        onPress={() => this.onLinkNewWallet()}/>
+                </View>
+            </SafeAreaView>
         )
     }
 
@@ -59,7 +61,7 @@ export default class AddressManagementView extends React.Component {
 
     addWallet = (wallet) => {
         this.currentAddressItem.addAddress(wallet.symbol, wallet.address).then(res => {
-            if(!res){
+            if (!res) {
                 alert('주소 추가에 실패했습니다')
             }
         }).catch(e => alert(e))
@@ -67,7 +69,7 @@ export default class AddressManagementView extends React.Component {
 
     deleteWallet = (wallet) => {
         this.currentAddressItem.deleteAddress(wallet.symbol).then(res => {
-            if(!res){
+            if (!res) {
                 alert('주소 삭제에 실패했습니다')
             }
         }).catch(e => alert(e))

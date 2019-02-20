@@ -7,6 +7,7 @@ import { PRIMARY_COLOR } from '../../libs/Constraints'
 import i18n from '../../libs/Locale'
 import AddressCard from '../../components/Card/AddressCard'
 import ActionButton from "react-native-action-button";
+import CommonStyle from "../../libs/CommonStyle";
 
 @inject(['address'])
 @observer
@@ -26,7 +27,7 @@ export default class AddressListView extends React.Component {
     const linkedAddressSize = linkedAddressList.reduce((count, value) => count + value.accountAddressList.length, 0)
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, CommonStyle.mainTabViewContent ]}>
         <FlatList
           style={styles.list}
           keyExtractor={(item) => item.linkAddress}
@@ -45,8 +46,8 @@ export default class AddressListView extends React.Component {
           }}/>
           <ActionButton buttonColor={PRIMARY_COLOR}
                         onPress={() => this.props.navigation.navigate("AddressBuy")}
-                        offsetX={0}
-                        offsetY={0} />
+                        offsetX={20}
+                        offsetY={20} />
       </View>
     )
   }

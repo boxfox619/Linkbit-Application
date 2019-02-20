@@ -16,7 +16,6 @@ export default class WalletListView extends React.Component {
     this.state = {
       test: false,
       linkedAddress: 'Linkbit-3156-3266',
-      moneySymbol: 'KRW',
     }
   }
 
@@ -36,7 +35,7 @@ export default class WalletListView extends React.Component {
           </View>
         </View>
         <WalletList
-          moneySymbol={this.state.moneySymbol}
+          moneySymbol={this.props.setting.currency}
           wallets={this.props.wallet.walletList}
           onWalletSelected={w => this.openWalletDetail(w)} />
         <ActionButton buttonColor={PRIMARY_COLOR}
