@@ -14,6 +14,7 @@ export default class WithdrawStore {
     @observable price = 0
     @observable moneySymbol
     @observable destAddressError
+    @observable password
     transactionStore
     withdrawApi
     addressApi
@@ -39,8 +40,11 @@ export default class WithdrawStore {
     })
 
     checkAddressValid = () => {
+        if(this.destAddress.length === 0){
+            return
+        }
         this.addressApi.checkAddressValid(this.symbol, this.destAddress)
-            .then(res => runInAction(() => this.destAddressError = undefined))
+            .then(res => runInAction(() => this.destAddressError = res ? undefined : 'address is not valid'))
             .catch(err => runInAction(() => this.destAddressError = 'address is not valid'))
     }
 
@@ -60,6 +64,10 @@ export default class WithdrawStore {
         this.amount = price / this.coinPrice
     })
 
+    setPassword = action((password) => {
+        this.password = password
+    })
+
     @computed get coinPrice() {
         return CoinPriceStore.getCoin(this.symbol).price
     }
@@ -71,10 +79,10 @@ export default class WithdrawStore {
         }
     }
 
-    withdraw = async (password) => {
+    withdraw = async () => {
         const wallet = WalletStore.walletList.filter(w => w.address === this.sourceAddress || w.linkedAddress === this.sourceAddress)
         this.transactionStore = new TransactionStore(this.symbol, this.sourceAddress)
-        const resTransaction = this.withdrawApi.withdraw(wallet, password, this.amount, this.destAddress)
+        const resTransaction = this.withdrawApi.withdraw(wallet, this.password, this.amount, this.destAddress)
         this.transactionStore.fetchTransaction(resTransaction)
     }
 }

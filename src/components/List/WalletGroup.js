@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {View, StyleSheet} from 'react-native'
 import {CoinCard, WalletCard} from '..'
 import {observer, inject} from 'mobx-react'
-import {dollarFormat} from '../../libs/NumberFormatter'
+import {dollarFormat, fixed} from '../../libs/NumberFormatter'
 
 @inject('coin')
 @observer
@@ -33,8 +33,8 @@ export default class WalletGroup extends React.Component {
                     themeColor={this.coin.themeColor}
                     symbol={this.props.coinSymbol}
                     moneySymbol={this.props.moneySymbol}
-                    balance={this.totalBalance.toFixed(3)}
-                    price={dollarFormat((this.totalBalance * this.coin.price).toFixed(3))}
+                    balance={fixed(this.totalBalance, 3)}
+                    price={dollarFormat(fixed((this.totalBalance * this.coin.price),3))}
                     onClick={() => this.props.onToggled(this.props.coinSymbol)}/>
                 {this.props.activated && this.renderWallets(this.coin)}
             </View>
@@ -63,7 +63,7 @@ export default class WalletGroup extends React.Component {
                     moneySymbol={this.props.moneySymbol}
                     balance={wallet.balance}
                     themeColor={coin.themeColor}
-                    price={dollarFormat((wallet.balance * coin.price).toFixed(3))}
+                    price={dollarFormat(fixed((wallet.balance * coin.price),3))}
                     onPress={() => this.props.onWalletSelected(wallet)}/>
             )
         })

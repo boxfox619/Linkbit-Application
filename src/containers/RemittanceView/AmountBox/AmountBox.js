@@ -1,20 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {View, StyleSheet, Text} from 'react-native'
+import {View, StyleSheet, Text, TouchableOpacity} from 'react-native'
 
 export default class AmountBox extends React.Component {
     static propTypes = {
         price: PropTypes.any.isRequired,
         moneySymbol: PropTypes.string.isRequired,
         symbol: PropTypes.string.isRequired,
-        amount: PropTypes.any.isRequired
+        amount: PropTypes.any.isRequired,
+        onPress: PropTypes.func.isRequired
     }
 
 
     render() {
-        const { price, moneySymbol, symbol, amount} = this.props
+        const { price, moneySymbol, symbol, amount, onPress} = this.props
         return (
-            <View style={styles.toAmountContainer}>
+            <TouchableOpacity onPress={onPress} style={styles.toAmountContainer}>
                 <View style={{display: 'flex', flexDirection: 'row'}}>
                     <Text style={styles.toAmountSymbol}>{moneySymbol}</Text>
                     <Text style={styles.toAmount}>{price}</Text>
@@ -23,7 +24,7 @@ export default class AmountBox extends React.Component {
                     <Text style={styles.toAmountSymbol}>{symbol}</Text>
                     <Text style={styles.toAmount}>{amount}</Text>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 }

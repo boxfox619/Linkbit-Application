@@ -9,17 +9,8 @@ export default class CommissionInput extends React.Component {
         onValueChange: PropTypes.func.isRequired
     }
 
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            commission: props.commission,
-            onValueChange: props.onValueChange
-        }
-    }
-
     render() {
-        const { commission, onValueChange } = this.state
+        const { commission, onValueChange } = this.props
 
         return (
             <View style={styles.container}>
@@ -62,10 +53,10 @@ const styles = StyleSheet.create({
     },
     description:{
         width: '100%',
-        fontSize: 18,
+        fontSize: 14,
         fontWeight: 'bold',
         color: '#A7A8AC',
         textAlign: 'center',
-        paddingVertical: 40,
+        paddingVertical: 20,
     }
 })

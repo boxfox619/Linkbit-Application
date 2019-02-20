@@ -61,6 +61,6 @@ export default class AddressNetworkApi {
 
     checkAddressValid = async (symbol, address) => {
         const res = await fetch(`${HOST}/address/valid?symbol=${symbol}&address=${address}`, {method: 'GET'});
-        return res;
+        return res.status === 200;
     }
 }

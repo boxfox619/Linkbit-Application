@@ -1,9 +1,9 @@
 import {observable, computed, runInAction} from 'mobx'
-import { observer } from 'mobx-react'
 import Wallet from './Wallet'
 import WalletStorageApi from "../../api/Wallet/WalletStorageApi"
 import WalletNetworkApi from "../../api/Wallet/WalletNetworkApi"
 import CoinPriceStore from '../Coin/CoinPriceStore'
+import {fixed} from '../../libs/NumberFormatter'
 
 class WalletStore {
     @observable wallets = []
@@ -68,7 +68,7 @@ class WalletStore {
             const coin = CoinPriceStore.getCoin(w.symbol)
             totalPrice += w.balance * coin.price
         })
-        return totalPrice.toFixed(3);
+        return fixed(totalPrice, 3)
     }
 
     @computed get walletList() {
