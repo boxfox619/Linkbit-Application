@@ -7,8 +7,8 @@ cache:
   directories:
     - ~/.npm
 before_script:
-  - npm install
   - npm install -g npm@latest
 script:
+  - npm install
   - npm ci
   - npx jest --ci
