@@ -1,13 +1,13 @@
 import React from 'react'
-import {View, StyleSheet, Text, SafeAreaView} from 'react-native'
+import { View, StyleSheet, Text, SafeAreaView, ActivityIndicator } from 'react-native'
 import NavigationButton from '../../components/NavigationButton/NavigationButton'
 import AddressInput from './AddressInput/AddressInput'
 import AmountInput from './AmountInput/AmountInput'
 import RemittanceType from '../../store/RemittanceType'
 import WalletSummaryCard from "../../components/Card/WalletSummaryCard"
-import {inject, observer} from "mobx-react/index"
-import {observable} from 'mobx'
-import {PRIMARY_COLOR} from "../../libs/Constraints"
+import { inject, observer } from "mobx-react/index"
+import { observable } from 'mobx'
+import { PRIMARY_COLOR } from "../../libs/Constraints"
 import CommonStyle from '../../libs/CommonStyle'
 import WithdrawStore from '../../store/Withdraw/WithdrawStore'
 import Dialog from 'react-native-dialog'
@@ -24,6 +24,7 @@ export default class RemittanceView extends React.Component {
     @observable commission = 0
     @observable ratio = 0.1582
     @observable label = 'PIN 번호를 입력해주세요'
+    @observable isLoading = false
 
     constructor(props) {
         super(props)
@@ -34,72 +35,73 @@ export default class RemittanceView extends React.Component {
     }
 
     render() {
-        const {method, calculateSymbol, step} = this
-        const {destAddress, amount, price, symbol, password, moneySymbol} = this.withdrawStore
+        const { method, calculateSymbol, step } = this
+        const { destAddress, amount, price, symbol, password, moneySymbol } = this.withdrawStore
         const wallet = this.wallet
         return (
-            <SafeAreaView style={[CommonStyle.safeArea, {backgroundColor: PRIMARY_COLOR}]}>
-                <View style={styles.container}>
-                    <View style={styles.wrapper}>
-                        <View style={styles.label}>
-                            <Text style={styles.title}>출금 지갑</Text>
-                        </View>
-                        <WalletSummaryCard wallet={wallet}/>
-                        {method === RemittanceType.Wallet && (
-                            <React.Fragment>
-                                <View style={styles.label}>
-                                    <Text style={styles.title}>받는 주소</Text>
-                                    <Text style={styles.error}>{this.withdrawStore.destAddressError}</Text>
-                                </View>
-                                <AddressInput
-                                    address={destAddress}
-                                    edit={step < 2}
-                                    onChangeText={this.withdrawStore.setTargetAddress}
-                                    onPress={() => {
-                                        this.step = 1
-                                    }}/>
-                            </React.Fragment>
-                        )
-                        }
-                        {
-                            step >= 2 && (
-                                <>
+            <React.Fragment>
+                <SafeAreaView style={[CommonStyle.safeArea, { backgroundColor: PRIMARY_COLOR }]}>
+                    <View style={styles.container}>
+                        <View style={styles.wrapper}>
+                            <View style={styles.label}>
+                                <Text style={styles.title}>출금 지갑</Text>
+                            </View>
+                            <WalletSummaryCard wallet={wallet} />
+                            {method === RemittanceType.Wallet && (
+                                <React.Fragment>
                                     <View style={styles.label}>
-                                        <Text style={styles.title}>보낼 금액</Text>
+                                        <Text style={styles.title}>받는 주소</Text>
+                                        <Text style={styles.error}>{this.withdrawStore.destAddressError}</Text>
                                     </View>
-                                    <AmountInput
-                                        symbol={wallet.symbol}
-                                        moneySymbol={moneySymbol}
-                                        price={price}
-                                        amount={amount}
-                                        selectedSymbol={calculateSymbol}
-                                        onChangeAmount={this.handleChangeAmount}
-                                        onChangeSymbol={(item) => this.calculateSymbol = item}
-                                        edit={step === 2}
+                                    <AddressInput
+                                        address={destAddress}
+                                        edit={step < 2}
+                                        onChangeText={this.withdrawStore.setTargetAddress}
                                         onPress={() => {
-                                            this.step = 2
-                                        }}/>
-                                </>
+                                            this.step = 1
+                                        }} />
+                                </React.Fragment>
                             )
-                        }
-                        {
-                            step >= 3 && (
-                                <>
-                                    <View style={styles.label}>
-                                        <Text style={styles.title}>지갑 비밀번호</Text>
-                                    </View>
-                                    <View style={styles.addressContainer}>
-                                        <Input
-                                            secureTextEntry={true}
-                                            defaultValue={password}
-                                            onChangeText={this.withdrawStore.setPassword}
-                                            placeholder="Type wallet password"/>
+                            }
+                            {
+                                step >= 2 && (
+                                    <>
+                                        <View style={styles.label}>
+                                            <Text style={styles.title}>보낼 금액</Text>
+                                        </View>
+                                        <AmountInput
+                                            symbol={wallet.symbol}
+                                            moneySymbol={moneySymbol}
+                                            price={price == 0 ? '' : price}
+                                            amount={amount == 0 ? '' : amount}
+                                            selectedSymbol={calculateSymbol}
+                                            onChangeAmount={this.handleChangeAmount}
+                                            onChangeSymbol={(item) => this.calculateSymbol = item}
+                                            edit={step === 2}
+                                            onPress={() => {
+                                                this.step = 2
+                                            }} />
+                                    </>
+                                )
+                            }
+                            {
+                                step >= 3 && (
+                                    <>
+                                        <View style={styles.label}>
+                                            <Text style={styles.title}>지갑 비밀번호</Text>
+                                        </View>
+                                        <View style={styles.addressContainer}>
+                                            <Input
+                                                secureTextEntry={true}
+                                                defaultValue={password}
+                                                onChangeText={this.withdrawStore.setPassword}
+                                                placeholder="Type wallet password" />
 
-                                    </View>
-                                </>
-                            )
-                        }
-                        {/*                        {
+                                        </View>
+                                    </>
+                                )
+                            }
+                            {/*                        {
                             step >= 3 &&
                             <React.Fragment>
                                 <View style={styles.label}>
@@ -111,22 +113,31 @@ export default class RemittanceView extends React.Component {
                                 <CommissionInput commission={this.commission} onValueChange={this.onCommissionChanged}/>
                             </React.Fragment>
                         }*/}
+                        </View>
+                        <NavigationButton
+                            title={step === 3 ? '송금하기' : '다음'}
+                            onPress={this.nextStep} />
+                        <Dialog.Container visible={this.modalVisibility}>
+                            <Dialog.Title>Verify wallet password</Dialog.Title>
+                            <Dialog.Input value={this.userPasswordInput}
+                                onChangeText={text => this.userPasswordInput = text}
+                                secureTextEntry={true} />
+                            <Dialog.Button label="Cancel"
+                                onPress={this.onCancel} />
+                            <Dialog.Button label="Submit"
+                                onPress={this.onSubmit} />
+                        </Dialog.Container>
                     </View>
-                    <NavigationButton
-                        title={step === 3 ? '송금하기' : '다음'}
-                        onPress={this.nextStep}/>
-                    <Dialog.Container visible={this.modalVisibility}>
-                        <Dialog.Title>Verify wallet password</Dialog.Title>
-                        <Dialog.Input value={this.userPasswordInput}
-                                      onChangeText={text => this.userPasswordInput = text}
-                                      secureTextEntry={true}/>
-                        <Dialog.Button label="Cancel"
-                                       onPress={this.onCancel}/>
-                        <Dialog.Button label="Submit"
-                                       onPress={this.onSubmit}/>
-                    </Dialog.Container>
-                </View>
-            </SafeAreaView>
+                </SafeAreaView>
+                {
+                    this.isLoading &&
+                    <View style={styles.indicatorBackground}>
+                        <ActivityIndicator style={styles.indicator}
+                            size="large"
+                            color="#cccccc"/>
+                    </View>
+                }
+            </React.Fragment>
         )
     }
 
@@ -139,19 +150,21 @@ export default class RemittanceView extends React.Component {
                         break;
                     }
                     this.step += 1
-                    break;
+                    break
                 case 2:
                     if (this.withdrawStore.amountError) {
                         alert(this.withdrawStore.amountError)
                         break;
                     }
                     this.step += 1
-                    break;
+                    break
                 case 3:
+                    this.isLoading = true
                     this.withdrawStore.withdraw()
                         .then(res => alert('송금 성공'))
                         .catch(err => alert('송금 실패'))
-                    break;
+                    this.isLoading = false
+                    break
             }
 
             if (this.step > 4) {
@@ -176,7 +189,7 @@ export default class RemittanceView extends React.Component {
     }
 
     handleChangeAmount = (amount) => {
-        const {symbol} = this.withdrawStore
+        const { symbol } = this.withdrawStore
         if (this.calculateSymbol === symbol) {
             this.withdrawStore.setAmount(amount)
         } else {
@@ -248,5 +261,18 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         width: '100%'
+    },
+    indicatorBackground: {
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        position: 'absolute',
+    },
+    indicator: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
     }
 })
