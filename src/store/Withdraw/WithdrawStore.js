@@ -36,6 +36,10 @@ export default class WithdrawStore {
             this.destAddressError = 'Please enter dest address'
             return
         }
+        if (address === this.sourceAddress){
+            this.destAddressError = 'source address & target address is same'
+            return
+        }
         this.checkAddressValidDebounce()
     })
 
