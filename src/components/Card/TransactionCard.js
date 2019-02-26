@@ -18,7 +18,7 @@ export default class TransactionCard extends React.Component {
                     <Text style={styles.address}>{address}</Text>
                 </View>
                 <View style={styles.amountContainer}>
-                    <Text style={[styles.amount, this.getAmountColor()]}>{`${amount} ${symbol}`}</Text>
+                    <Text style={[styles.amount, this.getAmountColor()]}>{(!this.props.transaction.benefit && '- ')}{`${amount} ${symbol}`}</Text>
                     <Text style={styles.confirm}>{confirm}</Text>
                 </View>
             </View>
