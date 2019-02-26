@@ -7,6 +7,7 @@ import { inject, observer } from 'mobx-react'
 import CoinItem from '../../components/Card/CoinItem'
 import { PRIMARY_COLOR } from '../../libs/Constraints'
 import CommonStyle from '../../libs/CommonStyle'
+import Loading from '../../components/Loading/Loading'
 
 const InputWithTitle = withTitle(Input)
 
@@ -23,6 +24,7 @@ export default class CreateWalletView extends React.Component {
         invalidPassword: false,
         confirmPassword: '',
         invalidConfirmPassword: false,
+        isLoading: false,
     }
 
     componentWillMount() {
@@ -38,7 +40,8 @@ export default class CreateWalletView extends React.Component {
             password,
             confirmPassword,
             invalidPassword,
-            invalidConfirmPassword
+            invalidConfirmPassword,
+            isLoading,
         } = this.state
 
         return (
@@ -77,6 +80,7 @@ export default class CreateWalletView extends React.Component {
                         <NavigationButton title={'생성하기'} onPress={this.createWallet} />
                     </View>
                 </SafeAreaView>
+                <Loading isLoading={isLoading} />
             </React.Fragment>
         )
     }
@@ -94,7 +98,7 @@ export default class CreateWalletView extends React.Component {
         }
     }
 
-    createWallet = () => {
+    createWallet = async () => {
         this.setState({ progress: true })
         const { coin, walletName, password, confirmPassword } = this.state
 
@@ -125,13 +129,15 @@ export default class CreateWalletView extends React.Component {
             this.setState({ invalidConfirmPassword: false })
         }
 
-        this.props.wallet.createWallet(coin.symbol, walletName, password).then(() => {
+        await this.setState({ isLoading: true })
+        await this.props.wallet.createWallet(coin.symbol, walletName, password).then(() => {
             this.setState({ progress: false })
             this.props.navigation.navigate('Main')
         }).catch(e => {
             this.setState({ progress: false })
             alert(`지갑 생성 실패`)
         })
+        await this.setState({ isLoading: false })
     }
 }
 
