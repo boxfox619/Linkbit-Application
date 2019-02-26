@@ -35,7 +35,11 @@ export default class WalletDetailView extends React.Component {
     }
 
     componentDidMount() {
-        this.store.loadTransactions().catch(e => alert(e))
+        this.store.loadTransactions().then(() => {
+            if(this.store.transactions.length === 0){
+                this.store.fetchNewTransactions().catch(e => alert(e));
+            }
+        }).catch(e => alert(e))
     }
 
     render() {
