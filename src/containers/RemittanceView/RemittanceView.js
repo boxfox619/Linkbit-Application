@@ -11,7 +11,8 @@ import { PRIMARY_COLOR } from "../../libs/Constraints"
 import CommonStyle from '../../libs/CommonStyle'
 import WithdrawStore from '../../store/Withdraw/WithdrawStore'
 import Dialog from 'react-native-dialog'
-import Input from "../../components/Input/Input";
+import Input from '../../components/Input/Input'
+import Loading from '../../components/Loading/Loading'
 
 @inject(['setting'])
 @observer
@@ -129,14 +130,7 @@ export default class RemittanceView extends React.Component {
                         </Dialog.Container>
                     </View>
                 </SafeAreaView>
-                {
-                    this.isLoading &&
-                    <View style={styles.indicatorBackground}>
-                        <ActivityIndicator style={styles.indicator}
-                            size="large"
-                            color="#cccccc"/>
-                    </View>
-                }
+                <Loading isLoading={this.isLoading} />
             </React.Fragment>
         )
     }
@@ -262,17 +256,4 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%'
     },
-    indicatorBackground: {
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        position: 'absolute',
-    },
-    indicator: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,
-    }
 })
