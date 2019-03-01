@@ -44,7 +44,7 @@ export default class WalletSearchView extends React.Component {
           lightTheme
           onChangeText={this.onChangeText}
           onClearText={this.onChangeText}
-          placeholder='Wallet name or address...'/>
+          placeholder={i18n('search_wallet')}/>
         <FlatList
           style={styles.list}
           data={this.wallets}

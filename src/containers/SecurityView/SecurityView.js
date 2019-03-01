@@ -31,7 +31,7 @@ export default class SecurityView extends React.Component {
     if (this.props.setting.pin === pin) {
       this.view = 'menu'
     } else {
-      this.label = i18n.t('pin_wrong')
+      this.label = i18n.t('wrong_pin')
     }
   }
   handleSetFingerprint = async () => {
@@ -76,11 +76,11 @@ export default class SecurityView extends React.Component {
     const {pin, useFingerprint} = this.props.setting
     return [
       {
-        labelText: i18n.t('pin_change'),
+        labelText: i18n.t('pin'),
         subLabelText: !!pin ? i18n.t('set') : i18n.t('unset'),
         key: 'pin',
       }, {
-        labelText: i18n.t('finger_change'),
+        labelText: i18n.t('finger'),
         subLabelText: useFingerprint ? i18n.t('set') : i18n.t('unset'),
         key: 'finger',
       }

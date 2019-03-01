@@ -7,6 +7,7 @@ import { inject, observer } from 'mobx-react'
 import CoinItem from '../../components/Card/CoinItem'
 import { PRIMARY_COLOR } from '../../libs/Constraints'
 import CommonStyle from '../../libs/CommonStyle'
+import i18n from '../../libs/Locale'
 
 const InputWithTitle = withTitle(Input)
 
@@ -53,17 +54,17 @@ export default class CreateWalletView extends React.Component {
                                     themeColor={coin.themeColor}
                                     onPress={() => { }}
                                     activate={true} />
-                                <InputWithTitle title={'지갑 이름'}
+                                <InputWithTitle title={i18n('wallet_name')}
                                     value={walletName}
                                     onChangeText={text => this.setState({ walletName: text })}
                                     isError={invalidWalletName} />
                                 {/* <InputWithTitle title={'지갑 설명'} /> */}
-                                <InputWithTitle title={'비밀번호'}
+                                <InputWithTitle title={i18n('pin')}
                                     secureTextEntry={true}
                                     value={password}
                                     onChangeText={text => this.setState({ password: text })}
                                     isError={invalidPassword} />
-                                <InputWithTitle title={'비밀번호 재입력'}
+                                <InputWithTitle title={i18n('verify_pin')}
                                     secureTextEntry={true}
                                     value={confirmPassword}
                                     onChangeText={this.checkConfirmPassword}
@@ -74,7 +75,7 @@ export default class CreateWalletView extends React.Component {
                                 onChange={index => this.setState({ selectedIndex: index })} /> */}
                             </View>
                         </ScrollView>
-                        <NavigationButton title={'생성하기'} onPress={this.createWallet} />
+                        <NavigationButton title={i18n('add')} onPress={this.createWallet} />
                     </View>
                 </SafeAreaView>
             </React.Fragment>
@@ -100,7 +101,7 @@ export default class CreateWalletView extends React.Component {
 
         if (!walletName) {
             this.setState({ invalidWalletName: true })
-            alert('이름을 입력해주세요')
+            alert(i18n('enter_name'))
             return
         }
         else {
@@ -109,7 +110,7 @@ export default class CreateWalletView extends React.Component {
 
         if (!password) {
             this.setState({ invalidPassword: true })
-            alert('비밀번호를 입력해주세요')
+            alert(i18n('enter_pin'))
             return
         }
         else {
@@ -118,7 +119,7 @@ export default class CreateWalletView extends React.Component {
 
         if (password !== confirmPassword) {
             this.setState({ invalidConfirmPassword: true })
-            alert('비밀번호가 일치하지 않습니다')
+            alert(i18n('wrong_pin'))
             return
         }
         else {
@@ -130,7 +131,7 @@ export default class CreateWalletView extends React.Component {
             this.props.navigation.navigate('Main')
         }).catch(e => {
             this.setState({ progress: false })
-            alert(`지갑 생성 실패`)
+            alert(i18n('fail_add_wallet'))
         })
     }
 }

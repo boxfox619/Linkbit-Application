@@ -35,7 +35,7 @@ export default class AddressManagementView extends React.Component {
                     }}/>
 
                 <Button
-                    title="Link new wallet"
+                    title={i18n('link_wallet')}
                     color="#594343"
                     overrides={{backgroundColor: '#594343'}}
                     onPress={() => this.onLinkNewWallet()}/>
@@ -61,7 +61,7 @@ export default class AddressManagementView extends React.Component {
     addWallet = (wallet) => {
         this.currentAddressItem.addAddress(wallet.symbol, wallet.address).then(res => {
             if(!res){
-                alert('주소 추가에 실패했습니다')
+                alert(i18n('fail_add_address'))
             }
         }).catch(e => alert(e))
     }
@@ -69,18 +69,18 @@ export default class AddressManagementView extends React.Component {
     deleteWallet = (wallet) => {
         this.currentAddressItem.deleteAddress(wallet.symbol).then(res => {
             if(!res){
-                alert('주소 삭제에 실패했습니다')
+                alert(i18n('fail_delete_address'))
             }
         }).catch(e => alert(e))
     }
 
     handleWalletDelete = (wallet) => {
         Alert.alert(
-            '지갑 삭제',
-            '연결된 지갑을 삭제하시겠습니까?',
+            i18n('delete_address'),
+            i18n('confirm_delete_address'),
             [
-                {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                {text: 'OK', onPress: () => this.deleteWallet(wallet)},
+                {text: i18n('cancel'), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                {text: i18n('agree'), onPress: () => this.deleteWallet(wallet)},
             ],
             {cancelable: false},
         )

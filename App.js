@@ -41,7 +41,7 @@ export default class App extends React.Component {
     if (pin === inputPin) {
       this.isVerify = true
     } else {
-      this.label = i18n.t('pin_wrong')
+      this.label = i18n.t('wrong_pin')
     }
   }
 

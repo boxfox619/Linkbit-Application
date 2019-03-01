@@ -4,6 +4,7 @@ import {FormLabel, FormInput, FormValidationMessage, Button} from 'react-native-
 import {observer} from 'mobx-react'
 import {PRIMARY_COLOR} from '../../../libs/Constraints'
 import AddressBuyStore from '../../../store/Address/AddressBuyStore'
+import i18n from '../../../libs/Locale'
 
 @observer
 export default class AddressBuyView extends React.Component {
@@ -14,7 +15,7 @@ export default class AddressBuyView extends React.Component {
     }
 
     static get options() {
-        return {topBar: {title: {text: '주소 구매'}}}
+        return {topBar: {title: {text: i18n('purchase_address')}}}
     }
 
     onNext = () => {
@@ -40,7 +41,7 @@ export default class AddressBuyView extends React.Component {
                     }
                 </View>
                 <Button
-                    title="다음"
+                    title={i18n('next')}
                     onPress={this.onNext}
                     buttonStyle={styles.getAddressButton}
                     disabled={this.addressBuyStore.valid}/>
