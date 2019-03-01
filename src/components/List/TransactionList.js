@@ -9,35 +9,20 @@ export default class TransactionList extends React.Component {
         fetchTransaction: PropTypes.func.isRequired,
         refreshing: PropTypes.bool.isRequired,
         data: PropTypes.array.isRequired,
+        symbol: PropTypes.string.isRequired
     }
 
     static defaultProps = {
         data: [],
-        refreshing: false,
-        fetchTransaction: () => {}
-    }
-
-    constructor(props) {
-        super(props)
-        this.state = {
-            page: 1,
-        }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (this.props.data !== nextProps.data) {
-            this.setState({refreshing: false})
-        }
+        refreshing: false
     }
 
     onEndReached = () => {
-        this.props.fetchTransaction(this.state.page + 1, 10)
-        this.setState(state => ({page: state.page + 1}))
+        this.props.fetchTransaction()
     }
 
     onRefresh = () => {
-        this.props.fetchTransaction(1, 10)
-        this.setState({page: 1})
+        this.props.fetchTransaction()
     }
 
     render() {
@@ -53,9 +38,15 @@ export default class TransactionList extends React.Component {
                 onRefresh={this.onRefresh}
                 keyExtractor={(item) => item.hash}
                 renderItem={({item}) => (
-                    <TransactionCard transaction={item}/>
+                    <TransactionCard key={item.hash} symbol={this.props.symbol} transaction={item}/>
                 )}/>
         )
+    }
+
+    componentDidMount() {
+        if(this.props.data.length === 0){
+            this.props.fetchTransaction()
+        }
     }
 }
 

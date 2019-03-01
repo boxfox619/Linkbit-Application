@@ -3,6 +3,7 @@ import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native'
 import NavigationButton from '../../components/NavigationButton/NavigationButton'
 import Input from '../../components/Input/Input'
 import withTitle from '../../components/HOC/withTitle'
+import Loading from '../../components/Loading/Loading'
 import { inject, observer } from 'mobx-react'
 import CoinItem from '../../components/Card/CoinItem'
 import { PRIMARY_COLOR } from '../../libs/Constraints'
@@ -24,6 +25,7 @@ export default class CreateWalletView extends React.Component {
         invalidPassword: false,
         confirmPassword: '',
         invalidConfirmPassword: false,
+        isLoading: false,
     }
 
     componentWillMount() {
@@ -39,7 +41,8 @@ export default class CreateWalletView extends React.Component {
             password,
             confirmPassword,
             invalidPassword,
-            invalidConfirmPassword
+            invalidConfirmPassword,
+            isLoading,
         } = this.state
 
         return (
@@ -78,6 +81,7 @@ export default class CreateWalletView extends React.Component {
                         <NavigationButton title={i18n('add')} onPress={this.createWallet} />
                     </View>
                 </SafeAreaView>
+                <Loading isLoading={isLoading} />
             </React.Fragment>
         )
     }
@@ -95,7 +99,7 @@ export default class CreateWalletView extends React.Component {
         }
     }
 
-    createWallet = () => {
+    createWallet = async () => {
         this.setState({ progress: true })
         const { coin, walletName, password, confirmPassword } = this.state
 
@@ -126,13 +130,15 @@ export default class CreateWalletView extends React.Component {
             this.setState({ invalidConfirmPassword: false })
         }
 
-        this.props.wallet.createWallet(coin.symbol, walletName, password).then(() => {
+        await this.setState({ isLoading: true })
+        await this.props.wallet.createWallet(coin.symbol, walletName, password).then(() => {
             this.setState({ progress: false })
             this.props.navigation.navigate('Main')
         }).catch(e => {
             this.setState({ progress: false })
             alert(i18n('fail_add_wallet'))
         })
+        await this.setState({ isLoading: false })
     }
 }
 

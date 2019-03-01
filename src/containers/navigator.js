@@ -4,12 +4,12 @@ import AddressManagementView from './AddressView/AddressManagementView'
 import WalletSearchView from './AddressView/WalletSearchView'
 import WalletDetailView from './WalletDetailView/WalletDetailView'
 import AddressBuyContainer from './AddressView/AddressBuyContainer/AddressBuyContainer'
-import SelectCoinView from './SelectCoinView/SelectCoinView'
-import CreateWalletView from "./CreateWalletView/CreateWalletView"
 import RemittanceView from "./RemittanceView/RemittanceView"
 import SecurityView from './SecurityView/SecurityView'
 import LanguageSettingView from './SettingView/LanguageSettingView'
 import CurrencySettingView from './SettingView/CurrencySettingView'
+import SelectCoinView from './SelectCoinView/SelectCoinView'
+import CreateWalletView from './CreateWalletView/CreateWalletView'
 import ImportWalletView from './ImportWalletView/ImportWalletView'
 
 export default createStackNavigator({
@@ -35,6 +35,7 @@ export default createStackNavigator({
             headerBackTitle: 'wallet_search',
         })
     },
+    WalletImport: ImportWalletView,
     WalletDetail: WalletDetailView,
     Withdraw: RemittanceView,
     Security: SecurityView,

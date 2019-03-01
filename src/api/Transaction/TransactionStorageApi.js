@@ -26,52 +26,33 @@ export default class TransactionStorageApi {
             transactionMap[transaction.hash] = transaction
         })
         if (!!blockNum) {
-            transactionMap[TRANSACTION_STORAGE_KEY] = blockNum
+            transactionMap[LAST_LOADED_BLOCK] = blockNum
         }
         await this.saveTransactionMap(transactionMap)
     }
 
     getTransactions = async () => {
         const transactionMap = await this.getTransactionMap()
-        const transactionList = Object.values(transactionMap).sort((tr, tr2) => tr2.block - tr.block)
-        transactionList.push({
-            hash: 'hash',
-            symbol: 'ETH',
-            benefit: false,
-            targetAddress: 'Linkbit-1234',
-            targetUser: 'Boxfox',
-            amount: 13.221,
-            status: true,
-            date: '2018.12.12',
-            address: '0xasasdasd',
-            confirm: 11111
-        },
-            {
-                hash: 'hash2',
-                symbol: 'ETH',
-                benefit: true,
-                targetAddress: 'Linkbit-1234',
-                targetUser: 'Boxfox',
-                amount: 13.221,
-                status: true,
-                date: '2018.12.12',
-                address: '0xasasdasd',
-                confirm: 11111
-            })
-        return transactionList
+        return Object.values(transactionMap).filter(t => typeof t === "object").sort((tr, tr2) => tr2.block - tr.block)
     }
 
     getLastBlock = async () => {
         const transactionMap = await this.getTransactionMap()
-        return transactionMap[LAST_LOADED_BLOCK] || 0
+        const block = transactionMap[LAST_LOADED_BLOCK]
+        return  !!block ? block : 0
     }
 
     saveTransactionMap = async (transactionMap) => {
-        const symbolMap = transactionMap[this.symbol] || {}
-        symbolMap[this.address] = this.transactionMap
-        transactionMap[this.symbol] = symbolMap
+        const transactionStorage = JSON.parse(await AsyncStorage.getItem(TRANSACTION_STORAGE_KEY) || '{}')
+        const symbolMap = transactionStorage[this.symbol] || {}
+        symbolMap[this.address] = transactionMap
+        transactionStorage[this.symbol] = symbolMap
         this.transactionMap = transactionMap
-        await AsyncStorage.setItem(TRANSACTION_STORAGE_KEY, JSON.stringify(transactionMap))
+        await AsyncStorage.setItem(TRANSACTION_STORAGE_KEY, JSON.stringify(transactionStorage))
+    }
+
+    clear = async () => {
+        await AsyncStorage.setItem(TRANSACTION_STORAGE_KEY, JSON.stringify({}))
     }
 
 }

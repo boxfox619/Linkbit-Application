@@ -3,6 +3,7 @@ import Wallet from './Wallet'
 import WalletStorageApi from "../../api/Wallet/WalletStorageApi"
 import WalletNetworkApi from "../../api/Wallet/WalletNetworkApi"
 import CoinPriceStore from '../Coin/CoinPriceStore'
+import {fixed} from '../../libs/NumberFormatter'
 
 class WalletStore {
     @observable wallets = []
@@ -23,6 +24,18 @@ class WalletStore {
                 return wallet
             })
         })
+        await this.loadAllBalance()
+    }
+
+    loadAllBalance = async () => {
+        for(const i in this.wallets){
+            const wallet = this.wallets[i]
+            try {
+                const res = await this.walletNetworkApi.getBalance(wallet.symbol, wallet.address)
+                wallet.balance = res
+            }catch(err){}
+        }
+        await this.walletStorageApi.saveWalletList(this.wallets.map(w => w.asJson))
     }
 
     createWallet = async (symbol, name, password) => {
@@ -55,7 +68,7 @@ class WalletStore {
             const coin = CoinPriceStore.getCoin(w.symbol)
             totalPrice += w.balance * coin.price
         })
-        return totalPrice
+        return fixed(totalPrice, 3)
     }
 
     @computed get walletList() {

@@ -1,14 +1,15 @@
 import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { TouchableOpacity, StyleSheet, Text } from 'react-native'
 
 export default class AddressBox extends React.Component {
+
   render () {
-    const {address} = this.props
+    const {address, onPress} = this.props
 
     return (
-      <View style={styles.toAddressContainer}>
+      <TouchableOpacity onPress={onPress} style={styles.toAddressContainer}>
         <Text style={styles.toAddressText}>{address}</Text>
-      </View>
+      </TouchableOpacity>
     )
   }
 }
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     height: 53,
     width: '100%',
-    paddingLeft: 13,
+    paddingHorizontal: 13,
     alignContent: 'center',
     alignItems: 'center',
   },

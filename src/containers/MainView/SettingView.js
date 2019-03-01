@@ -3,7 +3,7 @@ import {StyleSheet, Alert} from 'react-native'
 import i18n from '../../libs/Locale'
 import SettingListView from "../SettingView/SettingListView";
 import {inject, observer} from "mobx-react";
-import {observable} from 'mobx'
+import CommonStyle from "../../libs/CommonStyle";
 
 @inject(['setting'])
 @observer
@@ -41,7 +41,7 @@ export default class SettingView extends React.Component {
 
     render() {
         return (
-            <SettingListView list={this.settingList} onItemSelected={this.handleSettingSelected}/>
+            <SettingListView style={[CommonStyle.mainTabViewContent]} list={this.settingList} onItemSelected={this.handleSettingSelected}/>
         )
     }
 
