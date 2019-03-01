@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, SafeAreaView, Image, Text, Clipboard } from 'react-native'
+import { View, StyleSheet, SafeAreaView, Clipboard } from 'react-native'
 import { WalletSummaryCard, TransactionList } from '../../components/index'
 import { TransactionStore } from '../../store/index'
 import { observer } from 'mobx-react'
@@ -7,6 +7,7 @@ import { PRIMARY_COLOR } from "../../libs/Constraints"
 import CommonStyle from '../../libs/CommonStyle'
 import ActionButton from "react-native-action-button"
 import { Icon } from 'react-native-elements'
+import { from  } from 'rxjs'
 
 @observer
 export default class WalletDetailView extends React.Component {
@@ -35,7 +36,12 @@ export default class WalletDetailView extends React.Component {
     }
 
     componentDidMount() {
-        this.store.loadTransactions().catch(e => alert(e))
+        const errorMsg = '송금을 실패했습니다'
+        this.store.loadTransactions().then(() => {
+            if (this.store.transactions.length === 0) {
+                this.store.fetchNewTransactions().catch(e => alert(errorMsg));
+            }
+        }).catch(e => alert(errorMsg))
     }
 
     render() {
