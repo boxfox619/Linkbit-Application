@@ -11,6 +11,9 @@ export default class TransactionNetworkApi {
     fetchNewTransactions = async (lastBlockNumber) => {
         const res = await fetch(`${HOST}/transactions/${this.symbol}?address=${this.address}&lastBlock=${lastBlockNumber}`,
             {method: 'GET'})
+        if(!res.ok){
+            throw Error('신규 트렌잭션 로드 실패')
+        }
         return res.json()
     };
 
@@ -25,11 +28,17 @@ export default class TransactionNetworkApi {
                 body: encoding({transactions: txHashList})
             }
         );
+        if(!res.ok){
+            throw Error('트렌잭션 업데이트 실패')
+        }
         return res.json()
     }
 
     fetchTransaction = async (txHash) => {
         const res = await fetch(`${HOST}/transaction/${this.symbol}?txHash=${txHash}`, {method: 'GET'});
+        if(!res.ok){
+            throw Error('트렌잭션 로드 실패')
+        }
         return {...res.json(), symbol : this.symbol};
     };
 }

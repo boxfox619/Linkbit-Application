@@ -11,6 +11,8 @@ export default class TransactionStorageApi {
     }
 
     getTransactionMap = async () => {
+        AsyncStorage.setItem(TRANSACTION_STORAGE_KEY, '{}')
+        AsyncStorage.setItem(LAST_LOADED_BLOCK, '0')
         if(!this.transactionMap){
             const transactionStorage = JSON.parse(await AsyncStorage.getItem(TRANSACTION_STORAGE_KEY) || '{}')
             const symbolMap = transactionStorage[this.symbol] || {}

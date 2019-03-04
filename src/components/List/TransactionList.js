@@ -17,10 +17,6 @@ export default class TransactionList extends React.Component {
         refreshing: false
     }
 
-    onEndReached = () => {
-        this.props.fetchTransaction()
-    }
-
     onRefresh = () => {
         this.props.fetchTransaction()
     }
@@ -33,7 +29,6 @@ export default class TransactionList extends React.Component {
                 extraData={this.props.data.length}
                 initialNumToRender={10}
                 onEndReachedThreshold={1}
-                onEndReached={this.onEndReached}
                 refreshing={this.props.refreshing}
                 onRefresh={this.onRefresh}
                 keyExtractor={(item) => item.hash}
@@ -41,12 +36,6 @@ export default class TransactionList extends React.Component {
                     <TransactionCard key={item.hash} symbol={this.props.symbol} transaction={item}/>
                 )}/>
         )
-    }
-
-    componentDidMount() {
-        if(this.props.data.length === 0){
-            this.props.fetchTransaction()
-        }
     }
 }
 
