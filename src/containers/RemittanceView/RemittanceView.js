@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, StyleSheet, Text, SafeAreaView, ActivityIndicator} from 'react-native'
+import {View, StyleSheet, Text, SafeAreaView} from 'react-native'
 import NavigationButton from '../../components/NavigationButton/NavigationButton'
 import AddressInput from './AddressInput/AddressInput'
 import AmountInput from './AmountInput/AmountInput'
@@ -28,7 +28,7 @@ export default class RemittanceView extends React.Component {
         super(props)
         this.withdrawStore = new WithdrawStore()
         this.withdrawStore.setSourceWallet(this.wallet.symbol, this.wallet.address)
-        this.withdrawStore.setMoneySymbol('USD')
+        this.withdrawStore.setMoneySymbol(props.setting.currency)
         this.calculateSymbol = this.wallet.symbol
     }
 
@@ -70,8 +70,8 @@ export default class RemittanceView extends React.Component {
                                         <AmountInput
                                             symbol={wallet.symbol}
                                             moneySymbol={moneySymbol}
-                                            price={price == 0 ? '' : price}
-                                            amount={amount == 0 ? '' : amount}
+                                            price={price === 0 ? '' : price}
+                                            amount={amount === 0 ? '' : amount}
                                             selectedSymbol={calculateSymbol}
                                             onChangeAmount={this.handleChangeAmount}
                                             onChangeSymbol={(item) => this.calculateSymbol = item}
@@ -139,7 +139,7 @@ export default class RemittanceView extends React.Component {
         this.withdrawStore.withdraw()
             .then(res => {
                 this.isLoading = false
-                this.props.navigation.navigate('Main')
+                this.props.navigation.goBack()
             })
             .catch(err => {
                 this.isLoading = false

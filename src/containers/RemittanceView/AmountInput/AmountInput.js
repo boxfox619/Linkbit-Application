@@ -4,6 +4,7 @@ import {View, StyleSheet, TextInput} from 'react-native'
 import DropdownMenu from 'react-native-dropdown-menu'
 import AmountBox from "../AmountBox/AmountBox";
 import Input from "../../../components/Input/Input";
+import {debounce} from 'lodash'
 
 export default class AmountInput extends React.Component {
     static propTypes = {
@@ -22,6 +23,7 @@ export default class AmountInput extends React.Component {
         const {amount, price, symbol, selectedSymbol, moneySymbol, onChangeAmount, onChangeSymbol, edit, onPress} = this.props
         const symbols = [[symbol, moneySymbol]];
         const amountValue = selectedSymbol === symbol ? amount : price;
+        const onChangeAmountDebounce = debounce(onChangeAmount, 800)
         return (
             <View style={styles.amountContainer}>
                 {edit ? (
@@ -30,8 +32,8 @@ export default class AmountInput extends React.Component {
                             placeholder='0'
                             keyboardType='numeric'
                             returnKeyType='done'
-                            value={String(amountValue)}
-                            onChangeText={text => onChangeAmount(text)}/>
+                            defaultValue={String(amountValue)}
+                            onChangeText={text => onChangeAmountDebounce(text)}/>
                         <View style={styles.unitPicker}>
                             <DropdownMenu
                                 bgColor="transparent"

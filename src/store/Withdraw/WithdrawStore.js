@@ -98,12 +98,7 @@ export default class WithdrawStore {
     withdraw = async () => {
         this.transactionStore = new TransactionStore(this.symbol, this.sourceAddress)
         const walletData = {...JSON.parse(this.wallet.walletData), password: this.password}
-        const res = await this.withdrawApi.withdraw(this.symbol, walletData, this.amount, this.destAddress)
-        alert(JSON.stringify(res))
-        if (res.status === 200 ) {
-            await this.transactionStore.fetchNewTransactions()
-        } else {
-            throw "송금 실패"
-        }
+        await this.withdrawApi.withdraw(this.symbol, walletData, this.amount, this.destAddress)
+        await this.transactionStore.refreshTransactions()
     }
 }
