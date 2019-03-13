@@ -5,6 +5,7 @@ import WalletSearchView from './AddressView/WalletSearchView'
 import WalletDetailView from './WalletDetailView/WalletDetailView'
 import AddressBuyContainer from './AddressView/AddressBuyContainer/AddressBuyContainer'
 import RemittanceView from "./RemittanceView/RemittanceView"
+import InvoiceView from './RemittanceView/InvoiceView/InvoiceView'
 import SecurityView from './SecurityView/SecurityView'
 import LanguageSettingView from './SettingView/LanguageSettingView'
 import CurrencySettingView from './SettingView/CurrencySettingView'
@@ -38,6 +39,7 @@ export default createStackNavigator({
     WalletImport: ImportWalletView,
     WalletDetail: WalletDetailView,
     Withdraw: RemittanceView,
+    Invoice: InvoiceView,
     Security: SecurityView,
     "Setting.Language": LanguageSettingView,
     "Setting.Currency": CurrencySettingView,
