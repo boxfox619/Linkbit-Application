@@ -1,22 +1,17 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { fixed } from '../../../libs/NumberFormatter'
 import NavigationButton from '../../../components/NavigationButton/NavigationButton'
 import CommonStyle from '../../../libs/CommonStyle'
 import { PRIMARY_COLOR } from '../../../libs/Constraints'
 import { View, StyleSheet, Image, Text, SafeAreaView } from 'react-native'
 
 export default class InvoiceView extends React.Component {
-    static propTypes = {
-        // symbol: PropTypes.string.isRequired,
-        // moneySymbol: PropTypes.string.isRequired,
-        // amount: PropTypes.any.isRequired,
-        // price: PropTypes.any.isRequired,
-        // withDrawWalletName: PropTypes.string.isRequired,
-        // balance: PropTypes.number.isRequired,
-        // destAddress: PropTypes.string.isRequired
-    }
-
     render() {
+        const { symbol, amount, destAddress, withDrawWalletName, balance } = this.props.navigation.state.params
+
+        const formattedAmount = fixed(amount, 3)
+        const formattedBalance = fixed(balance, 3)
+
         return (
             <React.Fragment>
                 <SafeAreaView style={{ flex: 0, backgroundColor: '#fff' }} />
@@ -31,26 +26,31 @@ export default class InvoiceView extends React.Component {
                                 </View>
                                 <Text style={styles.name}>
                                     <Text>{'해당 주소로\n'}</Text>
-                                    <Text style={{ fontWeight: "bold" }}>{'ETH 35.315 '}</Text>
+                                    <Text style={{ fontWeight: "bold" }}>{`${symbol} ${formattedAmount} `}</Text>
                                     <Text>{'송금 완료!'}</Text>
                                 </Text>
-                                <Text style={styles.destAddress}>{'받는 주소 6xbnbexlai13tbajfldxze'}</Text>
+                                <Text style={styles.destAddress}>{`받는 주소 ${destAddress}`}</Text>
                                 <View style={styles.description}>
                                     <Text style={styles.key}>{'출금 지갑'}</Text>
-                                    <Text style={styles.value}>{'나의 이더리움 지갑1'}</Text>
+                                    <Text style={styles.value}>{`${withDrawWalletName}`}</Text>
                                 </View>
                                 <View style={styles.divider} />
                                 <View style={styles.description}>
                                     <Text style={styles.key}>{'송금 후 잔액'}</Text>
-                                    <Text style={styles.value}>{'99.848 ETH'}</Text>
+                                    <Text style={styles.value}>{`${symbol} ${formattedBalance}`}</Text>
                                 </View>
                             </View>
                         </View>
-                        <NavigationButton title={'확인'} onPress={() => { }} />
+                        <NavigationButton title={'확인'}
+                            onPress={this.goToMain} />
                     </View>
                 </SafeAreaView>
             </React.Fragment >
         )
+    }
+
+    goToMain = () => {
+        this.props.navigation.navigate('Main')
     }
 }
 
