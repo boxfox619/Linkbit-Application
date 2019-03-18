@@ -4,6 +4,7 @@ import WalletStorageApi from "../../api/Wallet/WalletStorageApi"
 import WalletNetworkApi from "../../api/Wallet/WalletNetworkApi"
 import CoinPriceStore from '../Coin/CoinPriceStore'
 import {fixed} from '../../libs/NumberFormatter'
+import {web3} from '../../libs/EthereumApi'
 
 class WalletStore {
     @observable wallets = []
@@ -31,8 +32,10 @@ class WalletStore {
         for(const i in this.wallets){
             const wallet = this.wallets[i]
             try {
-                const res = await this.walletNetworkApi.getBalance(wallet.symbol, wallet.address)
-                wallet.balance = res
+                alert('asa')
+                const balance = web3.fromWei(web3.eth.getBalance(wallet.address), 'ether')
+                alert(balance+'asa')
+                wallet.balance = balance
             }catch(err){}
         }
         await this.walletStorageApi.saveWalletList(this.wallets.map(w => w.asJson))
