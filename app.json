@@ -21,9 +21,9 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "packagerOpts": {
+      "config": "./rn-cli.config.js"
     }
-  },
-  "packagerOpts": {
-    "config": "./rn-cli.config.js"
   }
 }

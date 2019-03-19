@@ -1,5 +1,8 @@
-const extraNodeModules = require('node-libs-browser');
+const nodeLibs = require('node-libs-react-native');
+nodeLibs.vm  = require.resolve('vm-browserify');
 
 module.exports = {
-  extraNodeModules,
+  resolver: {
+    extraNodeModules: nodeLibs
+  },
 };

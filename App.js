@@ -9,6 +9,7 @@ import {checkForFingerprint} from './src/libs/Fingerprint'
 import {handleError} from "./src/libs/ErrorHandler"
 import {observer} from 'mobx-react/index'
 import {observable} from 'mobx/lib/mobx'
+import 'node-libs-react-native/globals'
 import './global'
 
 const store = {
