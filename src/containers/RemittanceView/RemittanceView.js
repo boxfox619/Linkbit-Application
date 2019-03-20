@@ -147,6 +147,7 @@ export default class RemittanceView extends React.Component {
                         amount: this.withdrawStore.amount,
                         destAddress: this.withdrawStore.name,
                         withDrawWalletName: this.wallet,
+                        // TODO: 잔액을 불러와야 함
                         balance: 3.1415926535,
                     },
                 })

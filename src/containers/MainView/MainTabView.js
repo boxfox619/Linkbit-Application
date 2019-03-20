@@ -8,7 +8,6 @@ import WalletListView from './WalletListView'
 import SettingView from './SettingView'
 import i18n from '../../libs/Locale'
 import AddressListView from './AddressListView'
-import InvoiceView from '../RemittanceView/InvoiceView/InvoiceView'
 
 export default class MainTabView extends React.Component {
     static navigationOptions = { header: null }
