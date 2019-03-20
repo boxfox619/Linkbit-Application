@@ -14,8 +14,8 @@ export default class AddressBuyFinishView extends React.Component {
     }
 
     render() {
-        // const address = this.props.navigation.state.params.address
-        const address = 'Address Value'
+        const address = this.props.navigation.state.params.address
+
         return (
             <React.Fragment>
                 <SafeAreaView style={{ flex: 0, backgroundColor: '#fff' }} />
@@ -28,7 +28,7 @@ export default class AddressBuyFinishView extends React.Component {
                         </View>
                         <NavigationButton
                             title="Finish"
-                            onPress={this.nextStep}/>
+                            onPress={this.onFinish}/>
                     </View>
                 </SafeAreaView>
             </React.Fragment>
