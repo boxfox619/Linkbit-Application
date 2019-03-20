@@ -1,8 +1,10 @@
 import React from 'react'
-import {View, StyleSheet, Text} from 'react-native'
-import {Button} from 'react-native-elements'
-import {observer} from 'mobx-react'
-import {PRIMARY_COLOR} from '../../../libs/Constraints'
+import { View, StyleSheet, Text, Image, SafeAreaView } from 'react-native'
+import { Button } from 'react-native-elements'
+import { observer } from 'mobx-react'
+import { PRIMARY_COLOR } from '../../../libs/Constraints'
+import CommonStyle from '../../../libs/CommonStyle'
+import NavigationButton from '../../../components/NavigationButton/NavigationButton'
 
 @observer
 export default class AddressBuyFinishView extends React.Component {
@@ -12,21 +14,24 @@ export default class AddressBuyFinishView extends React.Component {
     }
 
     render() {
-        const address = this.props.navigation.state.params.address
+        // const address = this.props.navigation.state.params.address
+        const address = 'Address Value'
         return (
-            <View style={styles.container}>
-                <View style={styles.content}>
-                    <Text>Success Address Buy</Text>
-                    <Text>
-                        Your Address :
-                        {address}
-                    </Text>
-                </View>
-                <Button
-                    title="finish"
-                    onPress={this.onFinish}
-                    buttonStyle={styles.getAddressButton}/>
-            </View>
+            <React.Fragment>
+                <SafeAreaView style={{ flex: 0, backgroundColor: '#fff' }} />
+                <SafeAreaView style={[CommonStyle.safeArea, { backgroundColor: PRIMARY_COLOR }]}>
+                    <View style={styles.container}>
+                        <View style={styles.content}>
+                            <Image style={{ width: 100, height: 100 }} source={require('./img/checked.png')} />
+                            <Text style={styles.title}>Success to purchasing address!</Text>
+                            <Text style={styles.subTitle}>{address}</Text>
+                        </View>
+                        <NavigationButton
+                            title="Finish"
+                            onPress={this.nextStep}/>
+                    </View>
+                </SafeAreaView>
+            </React.Fragment>
         )
     }
 }
@@ -35,6 +40,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingBottom: 20,
+        backgroundColor: 'white'
     },
     content: {
         flex: 1,
@@ -44,4 +50,14 @@ const styles = StyleSheet.create({
     getAddressButton: {
         backgroundColor: PRIMARY_COLOR,
     },
+    title: {
+        marginTop: 20,
+        color: 'black',
+        fontSize: 20
+    },
+    subTitle: {
+        color: PRIMARY_COLOR,
+        fontSize: 20,
+        fontWeight: 'bold',
+    }
 })

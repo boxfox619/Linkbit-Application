@@ -45,7 +45,8 @@ export default class AddressListView extends React.Component {
             )
           }}/>
           <ActionButton buttonColor={PRIMARY_COLOR}
-                        onPress={() => this.props.navigation.navigate("AddressBuy")}
+                        onPress={() => 
+                          this.props.navigation.navigate('AddressBuyFinish')}
                         offsetX={20}
                         offsetY={20} />
       </View>
