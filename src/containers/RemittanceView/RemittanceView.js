@@ -1,17 +1,18 @@
 import React from 'react'
-import {View, StyleSheet, Text, SafeAreaView, ActivityIndicator} from 'react-native'
+import { View, StyleSheet, Text, SafeAreaView, ActivityIndicator } from 'react-native'
 import NavigationButton from '../../components/NavigationButton/NavigationButton'
 import AddressInput from './AddressInput/AddressInput'
 import AmountInput from './AmountInput/AmountInput'
 import RemittanceType from '../../store/RemittanceType'
 import WalletSummaryCard from "../../components/Card/WalletSummaryCard"
-import {inject, observer} from "mobx-react/index"
-import {observable} from 'mobx'
-import {PRIMARY_COLOR} from "../../libs/Constraints"
+import { inject, observer } from "mobx-react/index"
+import { observable } from 'mobx'
+import { PRIMARY_COLOR } from "../../libs/Constraints"
 import CommonStyle from '../../libs/CommonStyle'
 import WithdrawStore from '../../store/Withdraw/WithdrawStore'
 import Input from '../../components/Input/Input'
 import Loading from '../../components/Loading/Loading'
+import { WalletStore } from '../../store';
 
 @inject(['setting'])
 @observer
@@ -33,18 +34,18 @@ export default class RemittanceView extends React.Component {
     }
 
     render() {
-        const {method, calculateSymbol, step} = this
-        const {destAddress, amount, price, symbol, password, moneySymbol} = this.withdrawStore
+        const { method, calculateSymbol, step } = this
+        const { destAddress, amount, price, symbol, password, moneySymbol } = this.withdrawStore
         const wallet = this.wallet
         return (
             <React.Fragment>
-                <SafeAreaView style={[CommonStyle.safeArea, {backgroundColor: PRIMARY_COLOR}]}>
+                <SafeAreaView style={[CommonStyle.safeArea, { backgroundColor: PRIMARY_COLOR }]}>
                     <View style={styles.container}>
                         <View style={styles.wrapper}>
                             <View style={styles.label}>
                                 <Text style={styles.title}>출금 지갑</Text>
                             </View>
-                            <WalletSummaryCard wallet={wallet}/>
+                            <WalletSummaryCard wallet={wallet} />
                             {method === RemittanceType.Wallet && (
                                 <React.Fragment>
                                     <View style={styles.label}>
@@ -57,7 +58,7 @@ export default class RemittanceView extends React.Component {
                                         onChangeText={this.withdrawStore.setTargetAddress}
                                         onPress={() => {
                                             this.step = 1
-                                        }}/>
+                                        }} />
                                 </React.Fragment>
                             )
                             }
@@ -78,7 +79,7 @@ export default class RemittanceView extends React.Component {
                                             edit={step === 2}
                                             onPress={() => {
                                                 this.step = 2
-                                            }}/>
+                                            }} />
                                     </>
                                 )
                             }
@@ -93,13 +94,13 @@ export default class RemittanceView extends React.Component {
                                                 secureTextEntry={true}
                                                 defaultValue={password}
                                                 onChangeText={this.withdrawStore.setPassword}
-                                                placeholder="Type wallet password"/>
+                                                placeholder="Type wallet password" />
                                         </View>
                                     </>
                                 )
                             }
                         </View>
-                        <NavigationButton title={this.buttonLabel} onPress={this.nextStep}/>
+                        <NavigationButton title={this.buttonLabel} onPress={this.nextStep} />
                     </View>
                 </SafeAreaView>
                 <Loading isLoading={this.isLoading} />
@@ -139,7 +140,17 @@ export default class RemittanceView extends React.Component {
         this.withdrawStore.withdraw()
             .then(res => {
                 this.isLoading = false
-                this.props.navigation.navigate('Main')
+                this.props.navigation.navigate({
+                    routeName: 'Invoice',
+                    params: {
+                        symbol: this.withdrawStore.symbol,
+                        amount: this.withdrawStore.amount,
+                        destAddress: this.withdrawStore.name,
+                        withDrawWalletName: this.wallet,
+                        // TODO: 잔액을 불러와야 함
+                        balance: 3.1415926535,
+                    },
+                })
             })
             .catch(err => {
                 this.isLoading = false
@@ -148,7 +159,7 @@ export default class RemittanceView extends React.Component {
     }
 
     handleChangeAmount = (amount) => {
-        const {symbol} = this.withdrawStore
+        const { symbol } = this.withdrawStore
         if (this.calculateSymbol === symbol) {
             this.withdrawStore.setAmount(amount)
         } else {
