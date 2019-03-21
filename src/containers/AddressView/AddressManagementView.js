@@ -35,7 +35,7 @@ export default class AddressManagementView extends React.Component {
                             )
                         }}/>
                     <Button
-                        title={i18n('link_wallet')}
+                        title={i18n.t('link_wallet')}
                         color="#594343"
                         overrides={{backgroundColor: '#594343'}}
                         onPress={() => this.onLinkNewWallet()}/>
@@ -62,7 +62,7 @@ export default class AddressManagementView extends React.Component {
     addWallet = (wallet) => {
         this.currentAddressItem.addAddress(wallet.symbol, wallet.address).then(res => {
             if(!res){
-                alert(i18n('fail_add_address'))
+                alert(i18n.t('fail_add_address'))
             }
         }).catch(e => alert(e))
     }
@@ -70,18 +70,18 @@ export default class AddressManagementView extends React.Component {
     deleteWallet = (wallet) => {
         this.currentAddressItem.deleteAddress(wallet.symbol).then(res => {
             if(!res){
-                alert(i18n('fail_delete_address'))
+                alert(i18n.t('fail_delete_address'))
             }
         }).catch(e => alert(e))
     }
 
     handleWalletDelete = (wallet) => {
         Alert.alert(
-            i18n('delete_address'),
-            i18n('confirm_delete_address'),
+            i18n.t('delete_address'),
+            i18n.t('confirm_delete_address'),
             [
-                {text: i18n('cancel'), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                {text: i18n('agree'), onPress: () => this.deleteWallet(wallet)},
+                {text: i18n.t('cancel'), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                {text: i18n.t('agree'), onPress: () => this.deleteWallet(wallet)},
             ],
             {cancelable: false},
         )

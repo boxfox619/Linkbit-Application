@@ -15,7 +15,7 @@ export default class AddressBuyView extends React.Component {
     }
 
     static get options() {
-        return {topBar: {title: {text: i18n('purchase_address')}}}
+        return {topBar: {title: {text: i18n.t('purchase_address')}}}
     }
 
     onNext = () => {
@@ -41,7 +41,7 @@ export default class AddressBuyView extends React.Component {
                     }
                 </View>
                 <Button
-                    title={i18n('next')}
+                    title={i18n.t('next')}
                     onPress={this.onNext}
                     buttonStyle={styles.getAddressButton}
                     disabled={this.addressBuyStore.valid}/>
