@@ -20,7 +20,7 @@ export default class AddressBuyView extends React.Component {
     }
 
     onNext = () => {
-        if (this.addressBuyStore.valid) {
+        if (!this.addressBuyStore.valid) {
             this.addressBuyStore.getNewAddress().then(res => {
                 this.props.navigation.navigate('AddressBuyFinish', { address: this.addressBuyStore.linkAddress })
             }).catch(err => alert(err))

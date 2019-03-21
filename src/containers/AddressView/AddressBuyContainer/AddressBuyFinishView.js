@@ -6,6 +6,8 @@ import { PRIMARY_COLOR } from '../../../libs/Constraints'
 import CommonStyle from '../../../libs/CommonStyle'
 import NavigationButton from '../../../components/NavigationButton/NavigationButton'
 
+const checkedIcon = require('./img/checked.png')
+
 @observer
 export default class AddressBuyFinishView extends React.Component {
 
@@ -22,13 +24,14 @@ export default class AddressBuyFinishView extends React.Component {
                 <SafeAreaView style={[CommonStyle.safeArea, { backgroundColor: PRIMARY_COLOR }]}>
                     <View style={styles.container}>
                         <View style={styles.content}>
-                            <Image style={{ width: 100, height: 100 }} source={require('./img/checked.png')} />
+                            <Image style={styles.image}
+                                source={checkedIcon} />
                             <Text style={styles.title}>Success to purchasing address!</Text>
                             <Text style={styles.subTitle}>{address}</Text>
                         </View>
                         <NavigationButton
                             title="Finish"
-                            onPress={this.onFinish}/>
+                            onPress={this.onFinish} />
                     </View>
                 </SafeAreaView>
             </React.Fragment>
@@ -49,6 +52,10 @@ const styles = StyleSheet.create({
     },
     getAddressButton: {
         backgroundColor: PRIMARY_COLOR,
+    },
+    image: {
+        width: 100,
+        height: 100,
     },
     title: {
         marginTop: 20,
