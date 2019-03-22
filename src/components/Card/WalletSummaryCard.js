@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import { View, StyleSheet, Text, Image } from 'react-native'
 import { inject, observer } from "mobx-react/index";
 import { HOST } from "../../libs/Constraints";
+import {dollarFormat, fixed} from "../../libs/NumberFormatter";
 
-@inject('coin')
+@inject('coin', 'setting')
 @observer
 export default class WalletSummaryCard extends React.Component {
     static propTypes = {
@@ -27,12 +28,21 @@ export default class WalletSummaryCard extends React.Component {
                         <Text style={styles.symbol}>{symbol}</Text>
                         <Text style={styles.balance}>{balance}</Text>
                     </View>
+                    <View style={styles.coinContainer}>
+                        <Text style={styles.symbol}>{this.props.setting.currency}</Text>
+                        <Text style={styles.balance}>{dollarFormat(fixed((balance * this.coin.price),3))}</Text>
+                    </View>
                     <View>
                         <Text style={styles.accountAddress}>{address}</Text>
                     </View>
                 </View>
             </View>
         )
+    }
+
+    get coin() {
+        const { symbol } = this.props.wallet
+        return this.props.coin.getCoin(symbol)
     }
 }
 
@@ -70,6 +80,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
+        marginBottom: 3
     },
     coinContainer: {
         display: 'flex',
@@ -96,5 +107,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 12,
         letterSpacing: -0.5,
+        marginTop: 3,
+        marginBottom: 2
     },
 })
