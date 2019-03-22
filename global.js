@@ -1,11 +1,8 @@
-import url from "url";
+// Inject node globals into React Native global scope.
 global.Buffer = require('buffer').Buffer;
 global.process = require('process');
-global.URL = class URL {
-  constructor(inputUrl) {
-    return url.parse(inputUrl);
-  }
-};
+global.process.versions = { http_parser: '', node: '', v8: '', uv: '', zlib: '', ares: '', icu: '', modules: '', openssl: '' };
+global.location = { protocol: 'https:' }
 
 if (typeof btoa === 'undefined') {
   global.btoa = function (str) {

@@ -10,7 +10,7 @@ export default class CoinCard extends React.Component {
     coinName: PropTypes.string.isRequired,
     symbol: PropTypes.string.isRequired,
     moneySymbol: PropTypes.string.isRequired,
-    balance: PropTypes.number,
+    balance: PropTypes.string,
     price: PropTypes.string,
     themeColor: PropTypes.string,
     activate: PropTypes.bool,

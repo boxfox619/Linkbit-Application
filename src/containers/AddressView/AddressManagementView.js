@@ -4,8 +4,9 @@ import {inject, observer} from 'mobx-react/index'
 import WalletCard from '../../components/Card/WalletCard'
 import AddressCard from '../../components/Card/AddressCard'
 import {PRIMARY_COLOR} from "../../libs/Constraints";
+import {dollarFormat, fixed} from '../../libs/NumberFormatter'
 
-@inject('address', 'wallet')
+@inject('address', 'wallet', 'coin')
 @observer
 export default class AddressManagementView extends React.Component {
 
@@ -26,10 +27,14 @@ export default class AddressManagementView extends React.Component {
                         extraData={{size: addressList.length}}
                         keyExtractor={(item, idx) => (!!item) ? item.address : idx}
                         renderItem={({item}) => {
+                            const coin = this.props.coin.getCoin(item.symbol);
                             return item && (<WalletCard
                                     key={item.address}
                                     onPress={() => this.handleWalletDelete(item)}
+                                    themeColor={coin.themeColor}
                                     name={item.name}
+                                    balance={item.balance}
+                                    price={dollarFormat(fixed((item.balance * coin.price),3))}
                                     symbol={item.symbol} moneySymbol="USD"/>
                             )
                         }}/>

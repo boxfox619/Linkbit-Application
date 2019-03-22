@@ -45,6 +45,10 @@ export default class WalletListView extends React.Component {
       </View>
     )
   }
+
+  componentDidMount(){
+    this.props.wallet.loadWalletList().catch(err => handleError(err))
+  }
 }
 
 const styles = StyleSheet.create({
