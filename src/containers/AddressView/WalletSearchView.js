@@ -60,8 +60,8 @@ export default class WalletSearchView extends React.Component {
         <SearchBar
           onChangeText={this.onChangeText}
           onClearText={this.onChangeText}
-          placeholder={i18n('search_wallet')}/>
-        <Text style={styles.header}>{i18n('address_list')}</Text>
+          placeholder={i18n.t('search_wallet')}/>
+        <Text style={styles.header}>{i18n.t('address_list')}</Text>
         <FlatList
           style={styles.list}
           data={this.wallets}
