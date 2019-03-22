@@ -1,10 +1,10 @@
-import {observable, action, computed, runInAction} from 'mobx'
+import { observable, action, computed, runInAction } from 'mobx'
 import WalletStore from "../Wallet/WalletStore"
 import TransactionStore from "../Transaction/TransactionStore"
 import WithdrawNetworkApi from "../../api/Withdraw/WithdrawNetworkApi"
 import CoinPriceStore from '../Coin/CoinPriceStore'
 import AddressNetworkApi from "../../api/Address/AddressNetworkApi"
-import {debounce} from 'lodash'
+import { debounce } from 'lodash'
 
 export default class WithdrawStore {
     @observable symbol
@@ -36,7 +36,7 @@ export default class WithdrawStore {
             this.destAddressError = 'Please enter dest address'
             return
         }
-        if (address === this.sourceAddress){
+        if (address === this.sourceAddress) {
             this.destAddressError = 'source address & target address is same'
             return
         }
@@ -81,7 +81,7 @@ export default class WithdrawStore {
         if (isNaN(value) || value <= 0) {
             return 'Please enter valid amount'
         }
-        if(value > this.wallet.balance){
+        if (value > this.wallet.balance) {
             return `Up to a maximum of ${this.wallet.balance} can be sent.`
         }
     }
@@ -97,13 +97,27 @@ export default class WithdrawStore {
 
     withdraw = async () => {
         this.transactionStore = new TransactionStore(this.symbol, this.sourceAddress)
-        const walletData = {...JSON.parse(this.wallet.walletData), password: this.password}
+        const walletData = { ...JSON.parse(this.wallet.walletData), password: this.password }
         const res = await this.withdrawApi.withdraw(this.symbol, walletData, this.amount, this.destAddress)
         alert(JSON.stringify(res))
-        if (res.status === 200 ) {
+        if (res.status === 200) {
             await this.transactionStore.fetchNewTransactions()
         } else {
             throw "송금 실패"
         }
     }
+
+    get symbol() {
+        return this.symbol
+    }
+
+    get amount() {
+        return this.amount
+    }
+
+    get address(){
+        return this.destAddress
+    }
+
+    get 
 }
