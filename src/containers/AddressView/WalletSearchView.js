@@ -1,10 +1,10 @@
 import React from 'react'
 import { View, StyleSheet, FlatList, Text } from 'react-native'
-// import { SearchBar } from 'react-native-elements'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import { observer, inject } from 'mobx-react'
 import { observable } from 'mobx'
 import WalletCard from '../../components/Card/WalletCard'
+import i18n from '../../libs/Locale'
 
 @inject(['wallet'])
 @observer
@@ -60,8 +60,8 @@ export default class WalletSearchView extends React.Component {
         <SearchBar
           onChangeText={this.onChangeText}
           onClearText={this.onChangeText}
-          placeholder='Wallet name or address...' />
-        <Text style={styles.header}>{'주소 목록'}</Text>
+          placeholder={i18n.t('search_wallet')}/>
+        <Text style={styles.header}>{i18n.t('address_list')}</Text>
         <FlatList
           style={styles.list}
           data={this.wallets}

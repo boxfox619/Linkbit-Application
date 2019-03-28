@@ -71,8 +71,8 @@ export default class RemittanceView extends React.Component {
                                         <AmountInput
                                             symbol={wallet.symbol}
                                             moneySymbol={moneySymbol}
-                                            price={price == 0 ? '' : price}
-                                            amount={amount == 0 ? '' : amount}
+                                            price={price || ''}
+                                            amount={amount || ''}
                                             selectedSymbol={calculateSymbol}
                                             onChangeAmount={this.handleChangeAmount}
                                             onChangeSymbol={(item) => this.calculateSymbol = item}

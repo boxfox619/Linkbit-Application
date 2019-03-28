@@ -2,10 +2,11 @@ import React from 'react'
 import { View, StyleSheet, SafeAreaView } from 'react-native'
 import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements'
 import { observer } from 'mobx-react'
-import { PRIMARY_COLOR } from '../../../libs/Constraints'
-import AddressBuyStore from '../../../store/Address/AddressBuyStore'
-import CommonStyle from '../../../libs/CommonStyle'
+import i18n from '../../../libs/Locale'
 import NavigationButton from '../../../components/NavigationButton/NavigationButton'
+import AddressBuyStore from '../../../store/Address/AddressBuyStore'
+import { PRIMARY_COLOR } from '../../../libs/Constraints'
+import CommonStyle from '../../../libs/CommonStyle'
 
 @observer
 export default class AddressBuyView extends React.Component {
@@ -16,7 +17,7 @@ export default class AddressBuyView extends React.Component {
     }
 
     static get options() {
-        return { topBar: { title: { text: '주소 구매' } } }
+        return {topBar: {title: {text: i18n.t('purchase_address')}}}
     }
 
     onNext = () => {
@@ -26,7 +27,7 @@ export default class AddressBuyView extends React.Component {
             }).catch(err => alert(err))
         }
         else {
-            alert("올바른 주소를 입력해주세요")
+            alert(i18n.t('err_addr'))
         }
     }
 
@@ -41,14 +42,14 @@ export default class AddressBuyView extends React.Component {
                 <SafeAreaView style={[CommonStyle.safeArea, { backgroundColor: PRIMARY_COLOR }]}>
                     <View style={styles.container}>
                         <View style={styles.form}>
-                            <FormLabel>Address</FormLabel>
+                            <FormLabel>{i18n.t('address_lower')}</FormLabel>
                             <FormInput onChangeText={this.addressValidCheck} />
                             {this.addressBuyStore.error &&
                                 <FormValidationMessage>{this.addressBuyStore.error}</FormValidationMessage>
                             }
                         </View>
                         <NavigationButton
-                            title="다음"
+                            title={i18n.t('next')}
                             onPress={this.onNext} />
                     </View>
                 </SafeAreaView>

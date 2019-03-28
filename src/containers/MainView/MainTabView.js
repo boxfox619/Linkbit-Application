@@ -65,9 +65,9 @@ export default class MainTabView extends React.Component {
 
     get tabs() {
         return [
-            { icon: 'payment', label: 'Wallet' },
-            { icon: 'swap-horiz', label: 'Transaction' },
-            { icon: 'settings', label: 'Settings' },
+            { icon: 'payment', label: i18n.t('wallet') },
+            { icon: 'swap-horiz', label: i18n.t('transaction') },
+            { icon: 'settings', label:i18n.t('setting') },
         ]
     }
 

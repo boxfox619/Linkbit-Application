@@ -1,13 +1,13 @@
 import React from 'react'
-import { View, StyleSheet, SafeAreaView, Clipboard } from 'react-native'
-import { WalletSummaryCard, TransactionList } from '../../components/index'
-import { TransactionStore } from '../../store/index'
 import { observer } from 'mobx-react'
-import { PRIMARY_COLOR } from "../../libs/Constraints"
-import CommonStyle from '../../libs/CommonStyle'
+import { View, StyleSheet, SafeAreaView, Clipboard } from 'react-native'
 import ActionButton from "react-native-action-button"
 import { Icon } from 'react-native-elements'
-import { from  } from 'rxjs'
+import { WalletSummaryCard, TransactionList } from '../../components/index'
+import { TransactionStore } from '../../store/index'
+import { PRIMARY_COLOR } from "../../libs/Constraints"
+import CommonStyle from '../../libs/CommonStyle'
+import i18n from '../../libs/Locale'
 
 @observer
 export default class WalletDetailView extends React.Component {
@@ -15,7 +15,7 @@ export default class WalletDetailView extends React.Component {
         const { params = { wallet } } = navigation.state
 
         return {
-            title: 'Details',
+            title: i18n.t('detail'),
             headerTitleStyle: { color: 'black' },
             headerStyle: { backgroundColor: 'white' },
             headerRight: <Icon name={'share'}
@@ -24,7 +24,7 @@ export default class WalletDetailView extends React.Component {
                 onPress={() => {
                     const address = params.wallet.address
                     Clipboard.setString(address)
-                    alert('Copied wallet address to clipboard')
+                    alert(i18n.t('copied_addr'))
                 }} />
         }
     }
