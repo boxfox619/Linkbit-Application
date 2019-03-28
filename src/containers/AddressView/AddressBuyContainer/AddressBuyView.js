@@ -27,7 +27,7 @@ export default class AddressBuyView extends React.Component {
             }).catch(err => alert(err))
         }
         else {
-            alert("올바른 주소를 입력해주세요")
+            alert(i18n.t('err_addr'))
         }
     }
 
@@ -42,7 +42,7 @@ export default class AddressBuyView extends React.Component {
                 <SafeAreaView style={[CommonStyle.safeArea, { backgroundColor: PRIMARY_COLOR }]}>
                     <View style={styles.container}>
                         <View style={styles.form}>
-                            <FormLabel>Address</FormLabel>
+                            <FormLabel>{i18n.t('address_lower')}</FormLabel>
                             <FormInput onChangeText={this.addressValidCheck} />
                             {this.addressBuyStore.error &&
                                 <FormValidationMessage>{this.addressBuyStore.error}</FormValidationMessage>

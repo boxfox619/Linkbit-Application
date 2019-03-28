@@ -2,6 +2,7 @@ import {observable, action, computed} from 'mobx'
 import AddressStore from './AddressStore'
 import AddressNetworkApi from "../../api/Address/AddressNetworkApi"
 import AddressStorageApi from "../../api/Address/AddressStorageApi"
+import i18n from '../../libs/Locale'
 
 export default class AddressBuyStore {
     @observable linkAddress = ''
@@ -27,7 +28,7 @@ export default class AddressBuyStore {
 
     @computed get error() {
         if (this.linkAddress.length < 8) {
-            return 'Please enter more than 8 characters'
+            return i18n.t('err_8char')
         }
     }
 

@@ -1,10 +1,10 @@
 import React from 'react'
 import { View, StyleSheet, FlatList, Text } from 'react-native'
-// import { SearchBar } from 'react-native-elements'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import { observer, inject } from 'mobx-react'
 import { observable } from 'mobx'
 import WalletCard from '../../components/Card/WalletCard'
+import i18n from '../../libs/Locale'
 
 @inject(['wallet'])
 @observer

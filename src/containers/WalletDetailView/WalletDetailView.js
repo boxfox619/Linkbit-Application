@@ -1,5 +1,4 @@
 import React from 'react'
-import { from  } from 'rxjs'
 import { observer } from 'mobx-react'
 import { View, StyleSheet, SafeAreaView, Clipboard } from 'react-native'
 import ActionButton from "react-native-action-button"
@@ -16,7 +15,7 @@ export default class WalletDetailView extends React.Component {
         const { params = { wallet } } = navigation.state
 
         return {
-            title: 'Details',
+            title: i18n.t('detail'),
             headerTitleStyle: { color: 'black' },
             headerStyle: { backgroundColor: 'white' },
             headerRight: <Icon name={'share'}
