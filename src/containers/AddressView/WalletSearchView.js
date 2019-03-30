@@ -11,6 +11,14 @@ import i18n from '../../libs/Locale'
 export default class WalletSearchView extends React.Component {
   @observable wallets
 
+  static navigationOptions = () => {
+    return {
+      title: 'Searching wallet',
+      headerTitleStyle: { color: 'black' },
+      headerStyle: { backgroundColor: 'white' },
+    }
+  }
+
   componentDidMount() {
     this.onChangeText()
   }

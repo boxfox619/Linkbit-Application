@@ -22,21 +22,15 @@ export default createStackNavigator({
             headerBackTitle: 'address_buy',
         })
     },
-    AddressManagement: {
-        screen: AddressManagementView,
+    AddressManagement: AddressManagementView,
+    WalletSearch: WalletSearchView,
+    WalletImport: {
+        screen: ImportWalletView,
         navigationOptions: () => ({
-            title: '',
-            headerBackTitle: 'address_management'
+            title: 'asdf',
+            headerBackTitle: 'address_buy',
         })
     },
-    WalletSearch: {
-        screen: WalletSearchView,
-        navigationOptions: () => ({
-            title: '',
-            headerBackTitle: 'wallet_search',
-        })
-    },
-    WalletImport: ImportWalletView,
     WalletDetail: WalletDetailView,
     Withdraw: RemittanceView,
     Invoice: InvoiceView,
@@ -50,8 +44,8 @@ export default createStackNavigator({
         initialRouteName: 'Main',
         defaultNavigationOptions: {
             headerStyle: {
-                marginTop: 5,
-                marginLeft: 5,
+                // marginTop: 5,
+                // marginLeft: 5,
                 backgroundColor: '#fff',
                 border: 0,
                 // ios
