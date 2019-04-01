@@ -10,6 +10,14 @@ import i18n from '../../libs/Locale'
 
 @observer
 export default class SelectCoinView extends React.Component {
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: 'Select coin to create',
+            headerTitleStyle: { color: 'black' },
+            headerStyle: { backgroundColor: 'white' },
+        }
+    }
+
     state = {
         selectedCoin: undefined,
     }

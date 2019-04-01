@@ -2,6 +2,9 @@ import i18n from 'i18n-js'
 import SettingStore from '../store/SettingStore'
 
 const en = {
+  finish: 'Finish',
+  withdraw: 'Withdraw',
+  gettingAddress: 'Getting Address',
   select_coin: 'Select Coin',
   copied_addr: 'Copied wallet address to clipboard',
   wallet: 'WALLET',
@@ -77,6 +80,9 @@ Linkbit 이용약관
 `
 }
 const ko = {
+  finish: '완료',
+  withdraw: '송금',
+  gettingAddress: '주소 가져오기',
   select_coin: '코인을 선택해주세요',
   wallet: '지갑',
   wallet_name: '지갑 이름',

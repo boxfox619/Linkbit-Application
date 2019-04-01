@@ -10,6 +10,13 @@ const checkedIcon = require('./img/checked.png')
 
 @observer
 export default class AddressBuyFinishView extends React.Component {
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: i18n.t('finish'),
+            headerTitleStyle: { color: 'black' },
+            headerStyle: { backgroundColor: 'white' },
+        }
+    }
 
     onFinish = () => {
         this.props.navigation.goBack(null)

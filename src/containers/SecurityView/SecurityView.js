@@ -11,7 +11,7 @@ import i18n from '../../libs/Locale'
 @inject(['setting'])
 @observer
 export default class SecurityView extends React.Component {
-  static navigationOptions = ({ navigation }) => {
+  static navigationOptions = () => {
     return {
       title: i18n.t('lock_mainTxt'),
       headerTitleStyle: { color: 'black' },

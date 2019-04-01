@@ -3,7 +3,8 @@ import MainTabView from './MainView/MainTabView'
 import AddressManagementView from './AddressView/AddressManagementView'
 import WalletSearchView from './AddressView/WalletSearchView'
 import WalletDetailView from './WalletDetailView/WalletDetailView'
-import AddressBuyContainer from './AddressView/AddressBuyContainer/AddressBuyContainer'
+import AddressBuyView from './AddressView/AddressBuyContainer/AddressBuyView'
+import AddressBuyFinishView from './AddressView/AddressBuyContainer/AddressBuyFinishView'
 import RemittanceView from "./RemittanceView/RemittanceView"
 import InvoiceView from './RemittanceView/InvoiceView/InvoiceView'
 import SecurityView from './SecurityView/SecurityView'
@@ -15,22 +16,11 @@ import ImportWalletView from './ImportWalletView/ImportWalletView'
 
 export default createStackNavigator({
     Main: MainTabView,
-    AddressBuy: {
-        screen: AddressBuyContainer,
-        navigationOptions: () => ({
-            title: '',
-            headerBackTitle: 'address_buy',
-        })
-    },
+    AddressBuy: AddressBuyView,
+    AddressBuyFinish: AddressBuyFinishView,
     AddressManagement: AddressManagementView,
     WalletSearch: WalletSearchView,
-    WalletImport: {
-        screen: ImportWalletView,
-        navigationOptions: () => ({
-            title: 'asdf',
-            headerBackTitle: 'address_buy',
-        })
-    },
+    WalletImport: AddressBuyView,
     WalletDetail: WalletDetailView,
     Withdraw: RemittanceView,
     Invoice: InvoiceView,
