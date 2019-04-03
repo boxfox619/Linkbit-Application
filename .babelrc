@@ -1,4 +1,8 @@
 {
-  "presets": ["babel-preset-expo"],
-  "plugins": ["babel-plugin-react-native-nodeify-hack"]
+  "presets": [
+    "module:metro-react-native-babel-preset"
+  ],
+  "plugins": [
+    ["@babel/plugin-proposal-decorators", { "legacy": true }]
+  ]
 }

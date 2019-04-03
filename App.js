@@ -1,4 +1,3 @@
-import './global'
 import React from 'react'
 import {View, StyleSheet} from 'react-native'
 import {createAppContainer} from 'react-navigation'
@@ -8,7 +7,7 @@ import PinCodeView from './src/components/PinCodeInput'
 import {WalletStore, CoinPriceStore, AddressStore, SettingStore} from './src/store'
 import {checkForFingerprint} from './src/libs/Fingerprint'
 import {handleError} from "./src/libs/ErrorHandler"
-import {observer} from 'mobx-react/index'
+import {observer} from 'mobx-react'
 import {observable} from 'mobx/lib/mobx'
 
 const store = {
