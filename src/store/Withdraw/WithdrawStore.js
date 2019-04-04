@@ -5,6 +5,7 @@ import WithdrawNetworkApi from "../../api/Withdraw/WithdrawNetworkApi"
 import CoinPriceStore from '../Coin/CoinPriceStore'
 import AddressNetworkApi from "../../api/Address/AddressNetworkApi"
 import {debounce} from 'lodash'
+import web3 from '../../libs/Web3';
 
 export default class WithdrawStore {
     @observable symbol
@@ -96,6 +97,7 @@ export default class WithdrawStore {
     }
 
     withdraw = async () => {
+        web3.
         this.transactionStore = new TransactionStore(this.symbol, this.sourceAddress)
         const walletData = {...JSON.parse(this.wallet.walletData), password: this.password}
         await this.withdrawApi.withdraw(this.symbol, walletData, this.amount, this.destAddress)
