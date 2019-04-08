@@ -1,1 +1,1 @@
-export const handleError = (err) => console.warn(err)
+export const handleError = (err) => console.error(err)

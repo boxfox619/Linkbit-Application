@@ -130,7 +130,7 @@ export default class CreateWalletView extends React.Component {
         }
 
         await this.setState({ isLoading: true })
-        await this.props.wallet.createWallet(coin.symbol, walletName, password).then(() => {
+        await this.props.wallet.createNewWallet(coin.symbol, walletName, password).then(() => {
             this.setState({ progress: false })
             this.props.navigation.navigate('Main')
         }).catch(e => {

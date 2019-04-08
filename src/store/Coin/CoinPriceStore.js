@@ -3,6 +3,7 @@ import Coin from './Coin'
 import CoinNetworkApi from './../../api/Coin/CoinNetworkApi'
 import CoinStorageApi from './../../api/Coin/CoinStorageApi'
 import SettingStore from '../SettingStore'
+import { handleError } from '../../libs/ErrorHandler'
 
 class CoinPriceStore {
     @observable coinList = []
@@ -44,7 +45,7 @@ class CoinPriceStore {
             this.setLoading(false)
             await this.coinStorageApi.updateCoin(coins.find(c => c.symbol === symbol))
         } catch (e) {
-            alert(e)
+            handleError(e)
         }
     }
 
