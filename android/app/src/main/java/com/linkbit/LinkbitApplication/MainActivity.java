@@ -1,4 +1,4 @@
-package com.web3withreactnative;
+package com.linkbit.LinkbitApplication;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "web3WithReactNative";
+        return "LinkbitApplication";
     }
 }

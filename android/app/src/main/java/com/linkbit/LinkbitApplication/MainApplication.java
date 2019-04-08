@@ -1,4 +1,4 @@
-package com.web3withreactnative;
+package com.linkbit.LinkbitApplication;
 
 import android.app.Application;
 
