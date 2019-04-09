@@ -1,20 +1,18 @@
 import {observable, computed, runInAction} from 'mobx'
 import Wallet from './Wallet'
 import WalletStorageApi from "../../api/Wallet/WalletStorageApi"
-import WalletNetworkApi from "../../api/Wallet/WalletNetworkApi"
 import CoinPriceStore from '../Coin/CoinPriceStore'
 import {fixed} from '../../libs/NumberFormatter'
 import { handleError } from '../../libs/ErrorHandler'
+import walletManager from '../../libs/wallet'
 import Web3 from 'web3'
 
 class WalletStore {
     @observable wallets = []
     walletStorageApi
-    walletNetworkApi
 
     constructor() {
         this.walletStorageApi = new WalletStorageApi()
-        this.walletNetworkApi = new WalletNetworkApi()
     }
 
     loadWalletList = async () => {
@@ -60,18 +58,19 @@ class WalletStore {
         return this.wallets.find(w => w.address === address)
     }
 
-    importWallet = async (coin, name, type, data) => {
-        const walletData = await this.walletNetworkApi.importWallet(coin.symbol, type, data)
-        await this.addWalletData(coin.symbol, name, walletData)
+    importWallet = async (symbol, name, type, data) => {
+        const walletData = await walletManager[symbol].import(type, data)
+        return await this.addWalletData(symbol, name, walletData)
     }
 
     addWalletData = async (symbol, name, walletData) => {
         const wallet = new Wallet()
         wallet.updateFromJson({...walletData, name, balance: 0, symbol})
-        this.walletStorageApi.addWallet(wallet.asJson)
+        await this.walletStorageApi.addWallet(wallet.asJson)
         runInAction(() => {
             this.wallets = [...this.wallets, wallet]
         })
+        return wallet
     }
 
     @computed get totalPrice() {
