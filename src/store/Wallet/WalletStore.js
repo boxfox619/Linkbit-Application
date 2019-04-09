@@ -44,15 +44,11 @@ class WalletStore {
 
     createNewWallet = async (symbol, name, password) => {
         const walletData = this.createNewWallet(symbol, password)
-        await this.addWalletData(symbol, name, walletData)
-        await CoinPriceStore.loadCoin(symbol)
+        CoinPriceStore.loadCoin(symbol)
+        return await this.addWalletData(symbol, name, walletData)
     }
 
-    createWallet = async (symbol, password) => {
-        const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/326b0d7561824e0b8c4ee1f30e257019'))
-        const walletData = web3.eth.accounts.create(password)
-        return walletData
-    }
+    createWallet = async (symbol, password) => walletManager[symbol].create(password)
 
     getWallet(address) {
         return this.wallets.find(w => w.address === address)

@@ -1,7 +1,6 @@
 import {observable, action, computed, runInAction} from 'mobx'
 import WalletStore from "../Wallet/WalletStore"
 import TransactionStore from "../Transaction/TransactionStore"
-import WithdrawNetworkApi from "../../api/Withdraw/WithdrawNetworkApi"
 import CoinPriceStore from '../Coin/CoinPriceStore'
 import AddressNetworkApi from "../../api/Address/AddressNetworkApi"
 import {debounce} from 'lodash'
@@ -17,11 +16,9 @@ export default class WithdrawStore {
     @observable destAddressError
     @observable password
     transactionStore
-    withdrawApi
     addressApi
 
     constructor() {
-        this.withdrawApi = new WithdrawNetworkApi()
         this.addressApi = new AddressNetworkApi()
     }
 
@@ -97,10 +94,8 @@ export default class WithdrawStore {
     }
 
     withdraw = async () => {
-        web3.
         this.transactionStore = new TransactionStore(this.symbol, this.sourceAddress)
-        const walletData = {...JSON.parse(this.wallet.walletData), password: this.password}
-        await this.withdrawApi.withdraw(this.symbol, walletData, this.amount, this.destAddress)
+        await walletManager[this.symbol].withdraw(this.wallet.privateKey, this.amount, this.destAddress)
         await this.transactionStore.refreshTransactions()
     }
 }
