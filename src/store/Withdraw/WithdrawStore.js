@@ -4,7 +4,6 @@ import TransactionStore from "../Transaction/TransactionStore"
 import CoinPriceStore from '../Coin/CoinPriceStore'
 import AddressNetworkApi from "../../api/Address/AddressNetworkApi"
 import {debounce} from 'lodash'
-import web3 from '../../libs/Web3';
 
 export default class WithdrawStore {
     @observable symbol

@@ -5,14 +5,16 @@ import CoinPriceStore from '../Coin/CoinPriceStore'
 import {fixed} from '../../libs/NumberFormatter'
 import { handleError } from '../../libs/ErrorHandler'
 import walletManager from '../../libs/wallet'
-import Web3 from 'web3'
+import { createWeb3 } from '../../libs/Web3'
 
 class WalletStore {
     @observable wallets = []
     walletStorageApi
+    web3
 
     constructor() {
         this.walletStorageApi = new WalletStorageApi()
+        this.web3 = createWeb3()
     }
 
     loadWalletList = async () => {
@@ -31,9 +33,8 @@ class WalletStore {
         for(const i in this.wallets){
             const wallet = this.wallets[i]
             try {
-                const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/326b0d7561824e0b8c4ee1f30e257019'))
-                const balanceWei = await web3.eth.getBalance(wallet.address)
-                const balance = web3.utils.fromWei(balanceWei, 'ether')
+                const balanceWei = await this.web3.eth.getBalance(wallet.address)
+                const balance = this.web3.utils.fromWei(balanceWei, 'ether')
                 wallet.balance = balance
             }catch(err){
                 handleError(err)
