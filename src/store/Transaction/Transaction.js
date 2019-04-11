@@ -1,6 +1,7 @@
 import {observable, computed, runInAction, reaction} from 'mobx'
 
 export default class Transaction {
+    @observable block
     @observable hash
     @observable symbol
     @observable sourceAddress
@@ -12,6 +13,7 @@ export default class Transaction {
     @observable confirm
 
     constructor(
+        block,
         hash,
         symbol,
         sourceAddress,
@@ -22,6 +24,7 @@ export default class Transaction {
         date,
         confirm
     ){
+        this.block = block
         this.hash = hash
         this.symbol = symbol
         this.sourceAddress = sourceAddress
@@ -35,6 +38,7 @@ export default class Transaction {
 
     @computed get asJson() {
         return {
+            block: this.block,
             hash: this.hash,
             symbol: this.symbol,
             targetAddress: this.targetAddress,
@@ -47,6 +51,7 @@ export default class Transaction {
     }
 
     updateFromJson(json) {
+        this.block = json.block
         this.hash = json.hash
         this.symbol = json.symbol
         this.sourceAddress = json.sourceAddress

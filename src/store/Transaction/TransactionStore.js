@@ -31,15 +31,8 @@ export default class TransactionStore {
 
     refreshTransactions = async () => {
         this.loading = true
-        const lastBlockNum = await this.transactionStorageApi.getLastBlock()
         const res = await walletManager[this.symbol].loadTransaction(this.address)
-        let lastBlock = lastBlockNum
-        res.forEach(t => {
-            if (lastBlock < t.block) {
-                lastBlock = t.block;
-            }
-        })
-        await this.transactionStorageApi.updateTransactions(res, lastBlock + 1)
+        await this.transactionStorageApi.updateTransactions(res)
         res.forEach(tr => this.updateTransaction(tr))
         this.loading = false
     }

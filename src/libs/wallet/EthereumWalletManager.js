@@ -2,8 +2,7 @@ import Web3 from 'web3'
 import Cryptr from 'cryptr'
 import { WalletManager } from './WalletManager'
 import Transaction from '../../store/Transaction/Transaction'
-import { from } from 'rxjs'
-import { map } from 'rxjs/operators'
+import moment from 'moment'
 export const IMPORT_TYPE_PRIVATEKEY = 'privateKey'
 export const IMPORT_TYPE_MNEMONIC = 'mnemonic'
 
@@ -44,36 +43,35 @@ export default class EthereumWalletManager extends WalletManager {
 
   loadTransactionHashList = async (address, start, end) => {
     //it works only blockchain.com api
+    address = '0xa5B5bE1ecB74696eC27E3CA89E5d940c9dbcCc56'
     const url = getTransactionApiUrl(address, start, end)
     const res = await fetch(url)
     const data = await res.json()
-    return data.transactions.map(tr => tr.hash)
+    return data.transactions.map(tr => tr)
   }
 
-  loadTransaction = (address, start, end) =>
-    from(this.loadTransactionHashList(address, start, end)).pipe(
-        map(hash => from(this.web3.eth.getTransaction(hash)).pipe(
-          map(e => {
-            const blockNumber = e.number
-            const txHash = e.hash
-            const from = e.from
-            const to = e.to
-            const date = new Date(block.timestamp * 1000).toGMTString()
-            const amount = e.value
-            const confirm = lastBlock - blockNumber
-            const status = confirm > 10
-            /*
-            const nonce = e.nonce
-            const blockHash = e.blockHash
-            const transactionIndex = e.transactionIndex
-            const value = e.value
-            const gasPrice = e.gasPrice
-            const gas = e.gas
-            const input = e.input
-            */
-            return new Transaction(txHash, 'ETH', from, to, 'undefined', amount, status, date, confirm)
-          })
-        )
-        )
-      ).toPromise()
+  loadTransaction = async (address, start, end) => {
+    const lastBlock = await this.web3.eth.getBlockNumber()
+    const transactions = await this.loadTransactionHashList(address, start, end)
+    return transactions.map(e => {
+      const blockNumber = e.blockNumber
+      const txHash = e.hash
+      const from = e.from
+      const to = e.to
+      const date = moment(new Date(e.timestamp * 1000)).format('YYYY-MM-DD hh:mm:ss')
+      const amount = this.web3.utils.fromWei(e.value, "ether")
+      const confirm = lastBlock - blockNumber
+      const status = e.state
+      /*
+      const nonce = e.nonce
+      const blockHash = e.blockHash
+      const transactionIndex = e.transactionIndex
+      const value = e.value
+      const gasPrice = e.gasPrice
+      const gas = e.gas
+      const input = e.input
+      */
+      return new Transaction(blockNumber, txHash, 'ETH', from, to, 'undefined', amount, status, date, confirm)
+    })
+  }
 }

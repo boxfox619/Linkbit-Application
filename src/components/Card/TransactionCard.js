@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     },
     date: {
         position: 'absolute',
+        fontSize: 11,
         left: 0,
         top: 0,
     },
@@ -56,9 +57,10 @@ const styles = StyleSheet.create({
     },
     email: {
         fontSize: 16,
+        marginBottom: 5
     },
     address: {
-        fontSize: 12,
+        fontSize: 9,
         color: '#555555',
         maxHeight: '70%'
     },
