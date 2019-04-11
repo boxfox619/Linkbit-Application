@@ -1,7 +1,7 @@
 import {observable, computed, runInAction} from 'mobx'
 import Transaction from './Transaction'
 import TransactionStorageApi from "../../api/Transaction/TransactionStorageApi";
-import TransactionNetworkApi from "../../api/Transaction/TransactionNetworkApi";
+import walletManager from '../../libs/wallet'
 
 export default class TransactionStore {
     @observable transactions = []
@@ -9,13 +9,11 @@ export default class TransactionStore {
     symbol
     address
     transactionStorageApi
-    transactionNetworkApi
 
     constructor(symbol, address) {
         this.symbol = symbol
         this.address = address
         this.transactionStorageApi = new TransactionStorageApi(symbol, address)
-        this.transactionNetworkApi = new TransactionNetworkApi(symbol, address)
     }
 
     loadTransactions = async () => {
@@ -34,7 +32,7 @@ export default class TransactionStore {
     refreshTransactions = async () => {
         this.loading = true
         const lastBlockNum = await this.transactionStorageApi.getLastBlock()
-        const res = await this.transactionNetworkApi.fetchNewTransactions(0)
+        const res = await walletManager[this.symbol].loadTransaction(this.address)
         let lastBlock = lastBlockNum
         res.forEach(t => {
             if (lastBlock < t.block) {
