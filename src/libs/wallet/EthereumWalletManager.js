@@ -74,4 +74,35 @@ export default class EthereumWalletManager extends WalletManager {
       return new Transaction(blockNumber, txHash, 'ETH', from, to, 'undefined', amount, status, date, confirm)
     })
   }
+
+  withdraw = async (privateKey, targetAddress, amount, gasPrice, gasLimit) => {
+    const account = this.web3.eth.accounts.privateKeyToAccount(privateKey)
+    const balanceWei = this.web3.eth.getBalance(account.address).toNumber()
+    const balance = this.web3.fromWei(myBalanceWei, 'ether')
+    const nonce = this.web3.eth.getTransactionCount(web3.eth.defaultAccount)
+    const gasPrices = await getCurrentGasPrices()
+
+    const transactionConfig = {
+      from: account.address,
+      to: targetAddress,
+      value: this.web3.toHex(this.web3.toWei(amountToSend, 'ether')),
+      gas: 21000,
+      gasPrice: gasPrices.low * 1000000000, 
+      nonce: nonce,
+      chainId: 4 
+    }
+    const signedTransaction = await account.signTransaction(transactionConfig)
+    const transaction = await this.web3.eth.sendSignedTransaction(signedTransaction)
+    return transaction.transactionHash
+  }
+
+  getCurrentGasPrices = async () => {
+    let response = await axios.get('https://ethgasstation.info/json/ethgasAPI.json')
+    let prices = {
+      low: response.data.safeLow / 10,
+      medium: response.data.average / 10,
+      high: response.data.fast / 10
+    }
+    return prices
+  }
 }
