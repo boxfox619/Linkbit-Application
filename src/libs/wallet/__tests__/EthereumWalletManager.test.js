@@ -24,4 +24,8 @@ describe("EthereumWalletManager", () => {
             console.warn(err)
         })
   })
+
+  it("withdraw test", async () => {
+    const manager = new EthereumWalletManager()
+  })
 })
