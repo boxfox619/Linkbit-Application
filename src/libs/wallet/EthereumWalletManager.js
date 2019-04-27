@@ -9,9 +9,10 @@ export const IMPORT_TYPE_MNEMONIC = 'mnemonic'
 const web3ProviderUrl = 'https://mainnet.infura.io/v3/326b0d7561824e0b8c4ee1f30e257019'
 const getTransactionApiUrl = (address, start = 0, end = 200) => `https://api.blockchain.info/v2/eth/data/account/${address}/transactions?page=${start}&size=${end}`
 export default class EthereumWalletManager extends WalletManager {
-  web3 = new Web3()
+  web3
 
   constructor(providerUrl) {
+    super();
     const provider = new Web3.providers.HttpProvider(providerUrl || web3ProviderUrl)
     this.web3 = new Web3(provider)
   }
@@ -82,8 +83,8 @@ export default class EthereumWalletManager extends WalletManager {
   }
 
   getBalance = async (address) => {
-    const balanceWei = await this.web3.eth.getBalance(account.address)
-    const balance = this.web3.utils.fromWei(myBalanceWei.toNumber(), 'ether').toNumber()
+    const balanceWei = await this.web3.eth.getBalance(address)
+    const balance = this.web3.utils.fromWei(balanceWei, 'ether')
     return balance
   }
 

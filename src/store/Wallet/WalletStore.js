@@ -1,7 +1,7 @@
-import {observable, computed, runInAction} from 'mobx'
+import {observable, action, computed} from 'mobx'
 import Wallet from './Wallet'
 import WalletStorageApi from "../../api/Wallet/WalletStorageApi"
-import CoinPriceStore from '../Coin/CoinPriceStore'
+import coinPriceStore from '../Coin/CoinPriceStore'
 import {fixed} from '../../libs/NumberFormatter'
 import { handleError } from '../../libs/ErrorHandler'
 import walletManager from '../../libs/wallet'
@@ -16,32 +16,32 @@ class WalletStore {
 
     loadWalletList = async () => {
         const wallets = await this.walletStorageApi.getWalletList()
-        runInAction(() => {
-            this.wallets = wallets.map(json => {
-                const wallet = new Wallet()
-                wallet.updateFromJson(json)
-                return wallet
-            })
+        const walletList = wallets.map(json => {
+            const wallet = new Wallet()
+            wallet.updateFromJson(json)
+            return wallet
         })
+        this.setWalletList(walletList)
         await this.loadAllBalance()
     }
 
     loadAllBalance = async () => {
-        for (const wallet of this.wallets) {
+        const promiseList = this.wallets.map(async (wallet) => {
             try {
                 const balance = await walletManager[wallet.symbol].getBalance(wallet.address)
                 wallet.balance = balance
             } catch (err) {
                 handleError(err)
             }
-        }
+        });
+        await Promise.all(promiseList)
         await this.walletStorageApi.saveWalletList(this.wallets.map(w => w.asJson))
     }
 
     createNewWallet = async (symbol, name, password) => {
         const walletData = await this.createWallet(symbol, password)
-        //CoinPriceStore.loadCoin(symbol)
-        return await this.addWalletData(symbol, name, walletData)
+        coinPriceStore.loadCoin(symbol)
+        return await this.addWallet(symbol, name, walletData)
     }
 
     createWallet = async (symbol, password) => walletManager[symbol].create(password)
@@ -52,23 +52,25 @@ class WalletStore {
 
     importWallet = async (symbol, name, type, data) => {
         const walletData = await walletManager[symbol].import(type, data)
-        return await this.addWalletData(symbol, name, walletData)
+        return await this.addWallet(symbol, name, walletData)
     }
 
-    addWalletData = async (symbol, name, walletData) => {
+    addWallet = async (symbol, name, walletData) => {
         const wallet = new Wallet()
         wallet.updateFromJson({...walletData, name, balance: 0, symbol})
         await this.walletStorageApi.addWallet(wallet.asJson)
-        runInAction(() => {
-            this.wallets = [...this.wallets, wallet]
-        })
+        setWalletList([...this.wallets, wallet])
         return wallet
+    }
+
+    @action setWalletList(walletList) {
+        this.wallets = walletList.filter(w => !!w.address)
     }
 
     @computed get totalPrice() {
         let totalPrice = 0
         this.wallets.forEach(w => {
-            const coin = CoinPriceStore.getCoin(w.symbol)
+            const coin = coinPriceStore.getCoin(w.symbol)
             totalPrice += w.balance * coin.price
         })
         return fixed(totalPrice, 3)

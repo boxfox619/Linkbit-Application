@@ -17,8 +17,8 @@ export default class WalletCard extends React.Component {
   }
 
   static defaultProps = {
-    balance: '0',
-    price: '0',
+    balance: 0,
+    price: 0,
     themeColor: PRIMARY_COLOR,
     onPress: () => {},
   }
