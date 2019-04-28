@@ -10,8 +10,8 @@ export default class WalletCard extends React.Component {
     name: PropTypes.string.isRequired,
     symbol: PropTypes.string.isRequired,
     moneySymbol: PropTypes.string.isRequired,
-    balance: PropTypes.number,
-    price: PropTypes.string,
+    balance: PropTypes.any,
+    price: PropTypes.any,
     themeColor: PropTypes.string,
     onPress: PropTypes.func,
   }
