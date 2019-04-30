@@ -1,4 +1,4 @@
-import {observable, computed, runInAction} from 'mobx'
+import {observable, computed, runInAction, action} from 'mobx'
 import Transaction from './Transaction'
 import TransactionStorageApi from "../../api/Transaction/TransactionStorageApi";
 import walletManager from '../../libs/wallet'
@@ -32,22 +32,13 @@ export default class TransactionStore {
     refreshTransactions = async () => {
         this.loading = true
         const res = await walletManager[this.symbol].loadTransaction(this.address)
-        await this.transactionStorageApi.updateTransactions(res)
-        res.forEach(tr => this.updateTransaction(tr))
+        await this.transactionStorageApi.setTransactions(res)
+        this.setTransactions(res)
         this.loading = false
     }
 
-    updateTransaction = (transaction) => {
-        runInAction(() => {
-            const idx = this.transactions.findIndex(tr2 => tr2.hash === transaction.hash)
-            if (idx >= 0) {
-                this.transactions[idx].updateFromJson(transaction)
-            } else {
-                const transactionModel = new Transaction()
-                transactionModel.updateFromJson(transaction)
-                this.transactions.unshift(transactionModel)
-            }
-        })
+    @action setTransactions(transactions) {
+        this.transactions = transactions.map(tr => new Transaction().updateFromJson(tr))
     }
 
     @computed get transactionList() {

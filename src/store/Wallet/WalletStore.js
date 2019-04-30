@@ -40,7 +40,7 @@ class WalletStore {
 
     createNewWallet = async (symbol, name, password) => {
         const walletData = await this.createWallet(symbol, password)
-        coinPriceStore.loadCoin(symbol)
+        coinPriceStore.refreshCoinPrice(symbol)
         return await this.addWallet(symbol, name, walletData)
     }
 

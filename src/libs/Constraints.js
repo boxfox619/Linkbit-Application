@@ -8,7 +8,7 @@ const COIN_INFO = [
   {
     symbol: 'ETH',
     name: 'ethereum',
-    themeColor: '#bbbbbb'
+    themeColor: '#627eea'
   }
 ]
 export {

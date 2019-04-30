@@ -4,10 +4,7 @@ const COIN_STORAGE_KEY = 'coin';
 export default class CoinStorageApi {
     coinPriceMap = {}
 
-    getCoinPrice = async(symbol) => {
-        if(Object.keys(this.coinPriceMap).length === 0){
-            await this.loadCoinPriceMap()
-        }
+    getPrice = (symbol) => {
         return this.coinPriceMap[symbol]
     }
 
@@ -16,7 +13,7 @@ export default class CoinStorageApi {
         await this.save()
     }
 
-    loadCoins = async () => {
+    load = async () => {
         this.coinPriceMap = JSON.parse(await AsyncStorage.getItem(COIN_STORAGE_KEY) || '{}')
     }
 

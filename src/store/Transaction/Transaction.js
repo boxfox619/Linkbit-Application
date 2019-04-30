@@ -60,5 +60,6 @@ export default class Transaction {
         this.status = json.status
         this.date = json.date
         this.confirm = json.confirm
+        return this
     }
 }

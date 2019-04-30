@@ -6,25 +6,39 @@ import { COIN_INFO } from '../../libs/Constraints';
 
 class CoinPriceStore {
     @observable isLoading = false
-    coinPriceMap
     coinNetworkApi
     coinStorageApi
 
     constructor() {
         this.coinNetworkApi = new CoinNetworkApi()
         this.coinStorageApi = new CoinStorageApi()
-        this.coinPriceMap = {}
     }
 
-    refreshCoinsPrice = async () => {
-        const promiseList = COIN_INFO.map(coin => ({...coin, price: this.coinNetworkApi.fetchCoinPrice(coin.symbol, SettingStore.currency)}))
-        const coins = await Promise.all(promiseList)
-        coins.forEach(c => this.setCoinPrice(c.symbol, c.price))
-        await Promise.all(coins.map(c => this.coinStorageApi.updatePrice(c.symbol, c.price)))
+    load = async () => {
+        await this.coinStorageApi.load()
+        await this.refreshCoinPrices()
+    }
+
+    refreshCoinPrices = async () => {
+        for(coin of COIN_INFO){
+            const price = await this.coinNetworkApi.fetchCoinPrice(coin.name, SettingStore.currency)
+            this.setCoinPrice(coin.symbol, price)
+            await this.coinStorageApi.updatePrice(coin.symbol, price)
+        }
+    }
+
+    refreshCoinPrice = async (symbol) => {
+        const coin = COIN_INFO.find(c => c.symbol = symbol);
+        if(!coin){
+            return
+        }
+        const price = await this.coinNetworkApi.fetchCoinPrice(coin.name, SettingStore.currency);
+        this.setCoinPrice(symbol, price)
+        this.coinStorageApi.updatePrice(symbol, price)
     }
 
     @action setCoinPrice = (symbol, price) => {
-        this.coinPriceMap[symbol] = price;
+        this.coinPriceMap = {...this.coinPriceMap, [symbol]: price};
     }
  
     @action setLoading = (status) => {
@@ -34,7 +48,7 @@ class CoinPriceStore {
     getCoin = (symbol) => {
         return computed(() => {
             const coin = COIN_INFO.find(coin => coin.symbol === symbol)
-            const price = this.coinPriceMap[symbol]
+            const price = this.coinStorageApi.getPrice(symbol) || 0
             return {...coin, price}
         }).get()
     }

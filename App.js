@@ -26,7 +26,7 @@ export default class App extends React.Component {
   componentDidMount() {
     store.address.loadAddressList().catch(err => handleError(err))
     store.wallet.loadWalletList().catch(err => handleError(err))
-    store.coin.loadCoins().catch(err => handleError(err))
+    store.coin.load().catch(err => handleError(err))
 
     const {pin, useFingerprint} = store.setting
     if (useFingerprint) {

@@ -50,7 +50,6 @@ export default class EthereumWalletManager extends WalletManager {
 
   loadTransactionHashList = async (address, start, end) => {
     //it works only blockchain.com api
-    address = '0xa5B5bE1ecB74696eC27E3CA89E5d940c9dbcCc56'
     const url = getTransactionApiUrl(address, start, end)
     const res = await fetch(url)
     const data = await res.json()
