@@ -1,9 +1,9 @@
 import React from 'react'
-import {View, StyleSheet} from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import PinCodeCreateView from '../PinCodeInputView/PinCodeCreateView'
-import {inject, observer} from 'mobx-react'
-import {observable} from 'mobx'
-import {checkForFingerprint} from '../../libs/Fingerprint'
+import { inject, observer } from 'mobx-react'
+import { observable } from 'mobx'
+import { checkForFingerprint } from '../../libs/Fingerprint'
 import SettingListView from '../SettingView/SettingListView'
 import PinCodeView from '../../components/PinCodeInput'
 import i18n from '../../libs/Locale'
@@ -11,6 +11,14 @@ import i18n from '../../libs/Locale'
 @inject(['setting'])
 @observer
 export default class SecurityView extends React.Component {
+  static navigationOptions = () => {
+    return {
+      title: i18n.t('lock_mainTxt'),
+      headerTitleStyle: { color: 'black' },
+      headerStyle: { backgroundColor: 'white' },
+    }
+  }
+
   @observable label = i18n.t('pin_verify')
   @observable view = 'verify'
 
@@ -35,7 +43,7 @@ export default class SecurityView extends React.Component {
     }
   }
   handleSetFingerprint = async () => {
-    const {useFingerprint, setFingerprint} = this.props.setting
+    const { useFingerprint, setFingerprint } = this.props.setting
     if (useFingerprint) {
       await setFingerprint(false)
     }
@@ -52,28 +60,28 @@ export default class SecurityView extends React.Component {
         {
           view === 'pin' &&
           <PinCodeCreateView
-            onPinEntered={this.handleSetPin}/>
+            onPinEntered={this.handleSetPin} />
         }
         {
           (view === 'menu' || view === 'finger') &&
           <SettingListView
             list={this.settings}
-            style={{padding: 20}}
-            onItemSelected={this.handleViewSetting}/>
+            style={{ padding: 20 }}
+            onItemSelected={this.handleViewSetting} />
         }
         {
           view === 'verify' &&
           <PinCodeView
             label={this.label}
             onComplete={this.handlePinVerify}
-            pinLength={5}/>
+            pinLength={5} />
         }
       </View>
     )
   }
 
   get settings() {
-    const {pin, useFingerprint} = this.props.setting
+    const { pin, useFingerprint } = this.props.setting
     return [
       {
         labelText: i18n.t('pin'),

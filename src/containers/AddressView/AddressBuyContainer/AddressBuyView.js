@@ -10,6 +10,13 @@ import CommonStyle from '../../../libs/CommonStyle'
 
 @observer
 export default class AddressBuyView extends React.Component {
+    static navigationOptions = () => {
+        return {
+            title: i18n.t('gettingAddress'),
+            headerTitleStyle: { color: 'black' },
+            headerStyle: { backgroundColor: 'white' },
+        }
+    }
 
     constructor(props) {
         super(props)
@@ -17,7 +24,7 @@ export default class AddressBuyView extends React.Component {
     }
 
     static get options() {
-        return {topBar: {title: {text: i18n.t('purchase_address')}}}
+        return { topBar: { title: { text: i18n.t('purchase_address') } } }
     }
 
     onNext = () => {

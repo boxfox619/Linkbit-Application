@@ -16,6 +16,13 @@ const language = [
 @inject(['setting'])
 @observer
 export default class LanguageSettingView extends React.Component {
+    static navigationOptions = () => {
+        return {
+            title: i18n.t('lang_mainTxt'),
+            headerTitleStyle: { color: 'black' },
+            headerStyle: { backgroundColor: 'white' },
+        }
+    }
 
     render() {
         return (
