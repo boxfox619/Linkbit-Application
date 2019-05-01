@@ -1,3 +1,4 @@
+import ethereumIcon from '../assets/ETH.png'
 const HOST = 'http://boxfox2015.cafe24.com:8999'
 const COIN_API_HOST = 'https://api.coingecko.com/api/v3'
 const PRIMARY_COLOR = '#594343'
@@ -8,7 +9,8 @@ const COIN_INFO = [
   {
     symbol: 'ETH',
     name: 'ethereum',
-    themeColor: '#627eea'
+    themeColor: '#627eea',
+    icon: ethereumIcon
   }
 ]
 export {
