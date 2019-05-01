@@ -1,7 +1,7 @@
 import React from 'react'
+import { COIN_INFO } from '../../libs/Constraints'
 import { StyleSheet, SafeAreaView, View } from 'react-native'
 import { observer } from 'mobx-react/index'
-import CoinStore from '../../store/Coin/CoinStore'
 import NavigationButton from '../../components/NavigationButton/NavigationButton'
 import SelectCoinListView from "../../components/List/SelectCoinListView"
 import { PRIMARY_COLOR } from '../../libs/Constraints'
@@ -12,14 +12,8 @@ export default class SelectCoinView extends React.Component {
     state = {
         selectedCoin: undefined,
     }
-    
-    componentWillMount() {
-        this.coinStore = new CoinStore()
-        this.coinStore.fetchCoins()
-    }
 
     render() {
-        const { coinList } = this.coinStore
         const { selectedCoin } = this.state
         return (
             <React.Fragment>
@@ -28,8 +22,7 @@ export default class SelectCoinView extends React.Component {
                     <View style={styles.container}>
                         <SelectCoinListView
                             style={styles.coinList}
-                            coins={coinList}
-                            isLoading={this.coinStore.isLoading}
+                            coins={COIN_INFO}
                             selectedCoin={selectedCoin}
                             onSelectCoin={(symbol) => this.setState({ selectedCoin: symbol })} />
                         <NavigationButton title={'다음'}
@@ -41,10 +34,9 @@ export default class SelectCoinView extends React.Component {
     }
 
     navigateToNext = () => {
-        const { coinList } = this.coinStore
         const { selectedCoin } = this.state
         const { nextPath } = this.props.navigation.state.params
-        const coin = coinList.find(c => c.symbol === selectedCoin)
+        const coin = COIN_INFO.find(c => c.symbol === selectedCoin)
         if (!coin) {
             alert('코인을 선택해주세요')
             return

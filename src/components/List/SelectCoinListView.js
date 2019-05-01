@@ -24,14 +24,10 @@ export default class SelectCoinListView extends React.Component {
                 <FlatList
                     data={coins}
                     extraData={selectedCoin}
-                    keyExtractor={(item, index) => item.symbol}
+                    keyExtractor={(item) => item.symbol}
                     refreshing={isLoading}
-                    renderItem={({item, index}) => (
-                        <CoinItem name={item.name}
-                              symbol={item.symbol}
-                              themeColor={item.themeColor}
-                              activate={selectedCoin === item.symbol}
-                              onPress={() => onSelectCoin(item.symbol)}/>
+                    renderItem={({item}) => (
+                        <CoinItem coin={item} activate={selectedCoin === item.symbol} onPress={() => onSelectCoin(item.symbol)}/>
                     )}/>
             </View>
         )

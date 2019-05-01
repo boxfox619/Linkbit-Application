@@ -43,7 +43,7 @@ export default class TransactionStore {
 
     @computed get transactionList() {
         return this.transactions.map(tr => {
-            const benefit = tr.targetAddress === this.address
+            const benefit = tr.targetAddress.toLowerCase() === this.address.toLowerCase()
             let address = benefit ? tr.sourceAddress : tr.targetAddress
             return {...tr, benefit, address, symbol: this.symbol}
         })

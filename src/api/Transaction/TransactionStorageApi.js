@@ -18,11 +18,11 @@ export default class TransactionStorageApi {
         return this.transactionMap
     }
 
-
     setTransactions = async (transactions) => {
         const data = transactions.reduce((trnasactionMap, transaction) => {
             trnasactionMap[transaction.hash] = transaction
-        }, {})
+            return trnasactionMap
+        }, this.transactionMap)
         await this.saveTransactionMap(data)
     }
 

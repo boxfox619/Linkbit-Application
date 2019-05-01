@@ -51,11 +51,7 @@ export default class CreateWalletView extends React.Component {
                     <View style={styles.container}>
                         <ScrollView style={styles.scrollContainer}>
                             <View style={styles.formContainer}>
-                                <CoinItem name={coin.name}
-                                    symbol={coin.symbol}
-                                    themeColor={coin.themeColor}
-                                    onPress={() => { }}
-                                    activate={true} />
+                                <CoinItem coin={coin} activate={true} />
                                 <InputWithTitle title={'지갑 이름'}
                                     value={walletName}
                                     onChangeText={text => this.setState({ walletName: text })}

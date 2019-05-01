@@ -15,7 +15,7 @@ export default class TransactionCard extends React.Component {
                 <Text style={styles.date}>{date}</Text>
                 <View style={styles.accountContainer}>
                     <Text style={styles.email}>unknown</Text>
-                    <Text style={styles.address}>{address}</Text>
+                    <Text numberOfLines={1} ellipsizeMode='tail' style={styles.address}>{address}</Text>
                 </View>
                 <View style={styles.amountContainer}>
                     <Text style={[styles.amount, this.amountColor]}>{(!this.props.transaction.benefit && '- ')}{`${amount} ${symbol}`}</Text>

@@ -51,6 +51,7 @@ class WalletStore {
     }
 
     importWallet = async (symbol, name, type, data) => {
+        alert(symbol)
         const walletData = await walletManager[symbol].import(type, data)
         return await this.addWallet(symbol, name, walletData)
     }
@@ -59,7 +60,7 @@ class WalletStore {
         const wallet = new Wallet()
         wallet.updateFromJson({...walletData, name, balance: 0, symbol})
         await this.walletStorageApi.addWallet(wallet.asJson)
-        setWalletList([...this.wallets, wallet])
+        this.setWalletList([...this.wallets, wallet])
         return wallet
     }
 
