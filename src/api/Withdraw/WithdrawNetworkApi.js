@@ -6,7 +6,7 @@ const WITHDRAW_CACHE_KEY = 'withdraw'
 
 export default class WalletNetworkApi {
     withdraw = async (symbol, walletData, amount, targetAddress) => {
-        return await fetch(`${HOST}/withdraw`, {
+        const res = await fetch(`${HOST}/withdraw`, {
             method: 'POST',
             headers: {
                 'Authorization': '',
@@ -19,6 +19,10 @@ export default class WalletNetworkApi {
                 targetAddress
             }),
         })
+        if(!res.ok){
+            return res.statusText || '송금을 실패했습니다'
+        }
+        return true
     }
 
     saveWithdraw = async (wallet, password, amount, targetAddress) => {

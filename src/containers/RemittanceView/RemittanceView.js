@@ -38,7 +38,7 @@ export default class RemittanceView extends React.Component {
         super(props)
         this.withdrawStore = new WithdrawStore()
         this.withdrawStore.setSourceWallet(this.wallet.symbol, this.wallet.address)
-        this.withdrawStore.setMoneySymbol('USD')
+        this.withdrawStore.setMoneySymbol(props.setting.currency)
         this.calculateSymbol = this.wallet.symbol
     }
 

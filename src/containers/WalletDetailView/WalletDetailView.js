@@ -1,6 +1,7 @@
 import React from 'react'
-import { observer } from 'mobx-react'
 import { View, StyleSheet, SafeAreaView, Clipboard } from 'react-native'
+import ActionButton from "react-native-action-button"
+import { observer } from 'mobx-react'
 import ActionButton from "react-native-action-button"
 import { Icon } from 'react-native-elements'
 import { WalletSummaryCard, TransactionList } from '../../components/index'
@@ -11,21 +12,21 @@ import i18n from '../../libs/Locale'
 
 @observer
 export default class WalletDetailView extends React.Component {
-    static navigationOptions = ({ navigation }) => {
-        const { params = { wallet } } = navigation.state
+    static navigationOptions = ({navigation}) => {
+        const {params = {wallet}} = navigation.state
 
         return {
             title: i18n.t('detail'),
-            headerTitleStyle: { color: 'black' },
-            headerStyle: { backgroundColor: 'white' },
+            headerTitleStyle: {color: 'black'},
+            headerStyle: {backgroundColor: 'white'},
             headerRight: <Icon name={'share'}
-                style={{ color: '#fff' }}
-                containerStyle={{ marginRight: 10 }}
-                onPress={() => {
-                    const address = params.wallet.address
-                    Clipboard.setString(address)
-                    alert(i18n.t('copied_addr'))
-                }} />
+                               style={{color: '#fff'}}
+                               containerStyle={{marginRight: 10}}
+                               onPress={() => {
+                                   const address = params.wallet.address
+                                   Clipboard.setString(address)
+                                   alert(i18n.t('copied_addr'))
+                               }}/>
         }
     }
 
@@ -36,11 +37,9 @@ export default class WalletDetailView extends React.Component {
     }
 
     componentDidMount() {
-        const errorMsg = '송금을 실패했습니다'
+        const errorMsg = '트랜젝션 정보 업데이트를 실패했습니다'
         this.store.loadTransactions().then(() => {
-            if (this.store.transactions.length === 0) {
-                this.store.fetchNewTransactions().catch(e => alert(errorMsg));
-            }
+            this.store.refreshTransactions().catch(e => alert(errorMsg))
         }).catch(e => alert(errorMsg))
     }
 
@@ -49,21 +48,25 @@ export default class WalletDetailView extends React.Component {
         return (
             <SafeAreaView style={CommonStyle.safeArea}>
                 <View style={styles.container}>
-                    <WalletSummaryCard wallet={wallet} />
-                    <TransactionList style={{ padding: 10 }}
+                    <WalletSummaryCard wallet={wallet}/>
+                    <TransactionList style={{padding: 10}}
                                      refreshing={this.store.loading}
                                      data={this.store.transactionList}
                                      symbol={wallet.symbol}
-                                     fetchTransaction={this.store.fetchNewTransactions}/>
+                                     fetchTransaction={this.handleRefreshTransactions}/>
                     <ActionButton buttonColor={PRIMARY_COLOR}
-                        onPress={() => this.props.navigation.navigate("Withdraw", { wallet })}
-                        offsetX={20}
-                        offsetY={20}
-                        renderIcon={() => <Icon name="account-balance-wallet" color="#fff" />}
+                                  onPress={() => this.props.navigation.navigate("Withdraw", {wallet})}
+                                  offsetX={20}
+                                  offsetY={20}
+                                  renderIcon={() => <Icon name="account-balance-wallet" color="#fff"/>}
                     />
                 </View>
             </SafeAreaView>
         )
+    }
+
+    handleRefreshTransactions = () => {
+        this.store.refreshTransactions().catch(e => alert(e))
     }
 }
 

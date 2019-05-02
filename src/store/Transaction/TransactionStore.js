@@ -31,42 +31,31 @@ export default class TransactionStore {
         this.loading = false
     }
 
-    fetchNewTransactions = async () => {
+    refreshTransactions = async () => {
         this.loading = true
         const lastBlockNum = await this.transactionStorageApi.getLastBlock()
-        const res = await this.transactionNetworkApi.fetchNewTransactions(lastBlockNum)
+        const res = await this.transactionNetworkApi.fetchNewTransactions(0)
         let lastBlock = lastBlockNum
         res.forEach(t => {
             if (lastBlock < t.block) {
                 lastBlock = t.block;
             }
         })
-        await this.transactionStorageApi.updateTransactions(res, lastBlock+1)
+        await this.transactionStorageApi.updateTransactions(res, lastBlock + 1)
         res.forEach(tr => this.updateTransaction(tr))
-        this.loading = false
-    }
-
-    refreshProcessingTransactions = async () => {
-        this.loading = true
-        const txList = this.transactions.filter(tr => tr.status === 'progress').map(tr => tr.hash)
-        const resultTransactions = await this.transactionNetworkApi.fetchTransactions(txList)
-        await this.transactionStorageApi.updateTransactions(resultTransactions)
-        resultTransactions.forEach(tr => this.updateTransaction(tr))
         this.loading = false
     }
 
     updateTransaction = (transaction) => {
         runInAction(() => {
-            const transactionModel = new Transaction()
-            transactionModel.updateFromJson(transaction)
-            const currentTransactions = [...this.transactions]
-            const idx = this.transactions.findIndex(tr2 => tr2.hash === transactionModel.hash)
-            if(idx > 0){
-                currentTransactions.splice(idx, 1, transactionModel)
-            }else{
-                currentTransactions.push(transactionModel)
+            const idx = this.transactions.findIndex(tr2 => tr2.hash === transaction.hash)
+            if (idx >= 0) {
+                this.transactions[idx].updateFromJson(transaction)
+            } else {
+                const transactionModel = new Transaction()
+                transactionModel.updateFromJson(transaction)
+                this.transactions.unshift(transactionModel)
             }
-            this.transactions = currentTransactions
         })
     }
 
