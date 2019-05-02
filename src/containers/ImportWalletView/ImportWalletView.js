@@ -14,7 +14,7 @@ const importMethods = [
             {key: 'password', label: 'Password', type: 'password'}
         ]
     },
-    {type: 'privateKey', form: [{key: 'privateKey', label: 'Private Key', type: 'string'}]}
+    {type: 'privateKey', form: [{key: 'privateKey', label: 'PrivateKey', type: 'string'}]}
 ]
 
 const TitledSegmentedControl = withTitle(SegmentedControl)
@@ -73,18 +73,18 @@ export default class ImportWalletView extends React.Component {
     }
 
     importWallet = () => {
-        const importType = importMethods[this.selectedMethodIndex].type
+        const importMethod = importMethods[this.selectedMethodIndex]
+        const importType = importMethod.type
+        const invalidInput = importMethod.form.find(input => !this.value[input.key] || this.value[input.key].length === 0)
         if (this.walletName.length === 0) {
             alert('지갑 이름을 입력해주세요')
-        } else if (this.value.length === 0) {
-            alert(`${importType}을 입력해주세요`)
+        }else if (invalidInput) {
+            alert(`${invalidInput.label}을 입력해주세요`)
         } else {
             const {coin} = this.props.navigation.state.params
             this.props.wallet.importWallet(coin.symbol, this.walletName, importType, this.value)
                 .then(res => this.props.navigation.navigate('Main'))
-                .catch(err => {
-                    alert(`${err} 지갑 연동에 실패했습니다`)
-                })
+                .catch(err => alert(`지갑 연동에 실패했습니다. 입력한 정보를 확인해주세요`))
         }
     }
 }

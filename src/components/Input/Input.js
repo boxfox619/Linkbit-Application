@@ -1,15 +1,15 @@
 import React from 'react'
-import {View, StyleSheet, TextInput} from 'react-native'
+import { View, StyleSheet, TextInput } from 'react-native'
 
-export default class Input extends React.Component {
-    render() {
-        return (
-            <View style={styles.container}>
-                <TextInput style={styles.input} {...this.props} />
-            </View>
-        )
-    }
+export const Input = ({containerStyle = {}, ...props}) => {
+    return (
+        <View style={{...styles.container, ...containerStyle}}>
+            <TextInput style={styles.input} {...props} />
+        </View>
+    )
 }
+
+export default Input
 
 const styles = StyleSheet.create({
     container: {

@@ -88,8 +88,8 @@ export default class WithdrawStore {
     }
 
     @computed get passwordRequired() {
-        const password = this.wallet.walletData.password
-        return !(!!password && password === false)
+        // @TODO impl password check
+        return false
     }
 
     withdraw = async () => {

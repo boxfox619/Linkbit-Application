@@ -2,7 +2,6 @@ import React from 'react'
 import { View, StyleSheet, SafeAreaView, Clipboard } from 'react-native'
 import ActionButton from "react-native-action-button"
 import { observer } from 'mobx-react'
-import ActionButton from "react-native-action-button"
 import { Icon } from 'react-native-elements'
 import { WalletSummaryCard, TransactionList } from '../../components/index'
 import { TransactionStore } from '../../store/index'

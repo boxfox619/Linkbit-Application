@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {View, StyleSheet, TextInput} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 import DropdownMenu from 'react-native-dropdown-menu'
 import AmountBox from "../AmountBox/AmountBox";
 import Input from "../../../components/Input/Input";
@@ -32,8 +32,9 @@ export default class AmountInput extends React.Component {
                             placeholder='0'
                             keyboardType='numeric'
                             returnKeyType='done'
+                            containerStyle={{ flex: 1 }}
                             defaultValue={String(amountValue)}
-                            onChangeText={text => onChangeAmountDebounce(text)}/>
+                            onChangeText={text => onChangeAmountDebounce(text)} />
                         <View style={styles.unitPicker}>
                             <DropdownMenu
                                 bgColor="transparent"
