@@ -1,15 +1,22 @@
 import React from 'react'
 import { View, StyleSheet, Text, Image, SafeAreaView } from 'react-native'
-import { Button } from 'react-native-elements'
 import { observer } from 'mobx-react'
 import { PRIMARY_COLOR } from '../../../libs/Constraints'
 import CommonStyle from '../../../libs/CommonStyle'
 import NavigationButton from '../../../components/NavigationButton/NavigationButton'
+import i18n from '../../../libs/Locale'
 
 const checkedIcon = require('./img/checked.png')
 
 @observer
 export default class AddressBuyFinishView extends React.Component {
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: i18n.t('finish'),
+            headerTitleStyle: { color: 'black' },
+            headerStyle: { backgroundColor: 'white' },
+        }
+    }
 
     onFinish = () => {
         this.props.navigation.goBack(null)
@@ -26,11 +33,11 @@ export default class AddressBuyFinishView extends React.Component {
                         <View style={styles.content}>
                             <Image style={styles.image}
                                 source={checkedIcon} />
-                            <Text style={styles.title}>Success to purchasing address!</Text>
+                            <Text style={styles.title}>{i18n.t('success_add')}</Text>
                             <Text style={styles.subTitle}>{address}</Text>
                         </View>
                         <NavigationButton
-                            title="Finish"
+                            title={i18n.t('done')}
                             onPress={this.onFinish} />
                     </View>
                 </SafeAreaView>

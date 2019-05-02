@@ -31,6 +31,7 @@ export default class SettingListView extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#fff'
     },
     listItem: {
         padding: 20,

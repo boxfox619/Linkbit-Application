@@ -23,6 +23,14 @@ const InputWithTitle = withTitle(Input)
 @inject(['wallet'])
 @observer
 export default class ImportWalletView extends React.Component {
+    static navigationOptions = () => {
+        return {
+            title: 'Import wallet',
+            headerTitleStyle: { color: 'black' },
+            headerStyle: { backgroundColor: 'white' },
+        }
+    }
+
     @observable selectedMethodIndex = 0
     @observable value = {}
     @observable walletName = ''

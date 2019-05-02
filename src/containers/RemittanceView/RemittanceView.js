@@ -13,10 +13,19 @@ import WithdrawStore from '../../store/Withdraw/WithdrawStore'
 import Input from '../../components/Input/Input'
 import Loading from '../../components/Loading/Loading'
 import { WalletStore } from '../../store';
+import i18n from '../../libs/Locale'
 
 @inject(['setting'])
 @observer
 export default class RemittanceView extends React.Component {
+    static navigationOptions = () => {
+        return {
+          title: i18n.t('withdraw'),
+          headerTitleStyle: { color: 'black' },
+          headerStyle: { backgroundColor: 'white' },
+        }
+      }
+
     @observable step = 1
     @observable method = RemittanceType.Wallet
     @observable calculateSymbol = 'USD'
@@ -71,8 +80,8 @@ export default class RemittanceView extends React.Component {
                                         <AmountInput
                                             symbol={wallet.symbol}
                                             moneySymbol={moneySymbol}
-                                            price={price === 0 ? '' : price}
-                                            amount={amount === 0 ? '' : amount}
+                                            price={price || ''}
+                                            amount={amount || ''}
                                             selectedSymbol={calculateSymbol}
                                             onChangeAmount={this.handleChangeAmount}
                                             onChangeSymbol={(item) => this.calculateSymbol = item}

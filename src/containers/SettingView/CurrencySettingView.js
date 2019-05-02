@@ -6,6 +6,13 @@ import {observer, inject} from 'mobx-react'
 @inject(['setting'])
 @observer
 export default class CurrencySettingView extends React.Component {
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: i18n.t('bill_mainTxt'),
+            headerTitleStyle: { color: 'black' },
+            headerStyle: { backgroundColor: 'white' },
+        }
+    }
 
     render(){
         const currency = [

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { View, StyleSheet, Text } from 'react-native'
 import BorderCard from './BorderCard'
 import { PRIMARY_COLOR } from '../../libs/Constraints'
+import i18n from'../../libs/Locale'
 
 export default class AddressCard extends React.Component {
 
@@ -34,14 +35,12 @@ export default class AddressCard extends React.Component {
           <Text
             style={[styles.connectState, styles.connected, this.activeColor]}>
             {linkedAddressCount}
-            {' '}
-            connected
+            {' ' + i18n.t('connected')}
           </Text>
         )}
         {linkedAddressCount === 0 && (
           <Text style={[styles.connectState, this.activeColor]}>
-            nothing
-            connected
+            {' ' + i18n.t('no_connected')}
           </Text>
         )}
       </BorderCard>
