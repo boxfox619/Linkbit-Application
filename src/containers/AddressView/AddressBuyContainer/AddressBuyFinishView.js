@@ -1,11 +1,22 @@
 import React from 'react'
-import {View, StyleSheet, Text} from 'react-native'
-import {Button} from 'react-native-elements'
-import {observer} from 'mobx-react'
-import {PRIMARY_COLOR} from '../../../libs/Constraints'
+import { View, StyleSheet, Text, Image, SafeAreaView } from 'react-native'
+import { observer } from 'mobx-react'
+import { PRIMARY_COLOR } from '../../../libs/Constraints'
+import CommonStyle from '../../../libs/CommonStyle'
+import NavigationButton from '../../../components/NavigationButton/NavigationButton'
+import i18n from '../../../libs/Locale'
+
+const checkedIcon = require('./img/checked.png')
 
 @observer
 export default class AddressBuyFinishView extends React.Component {
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: i18n.t('finish'),
+            headerTitleStyle: { color: 'black' },
+            headerStyle: { backgroundColor: 'white' },
+        }
+    }
 
     onFinish = () => {
         this.props.navigation.goBack(null)
@@ -13,20 +24,24 @@ export default class AddressBuyFinishView extends React.Component {
 
     render() {
         const address = this.props.navigation.state.params.address
+
         return (
-            <View style={styles.container}>
-                <View style={styles.content}>
-                    <Text>Success Address Buy</Text>
-                    <Text>
-                        Your Address :
-                        {address}
-                    </Text>
-                </View>
-                <Button
-                    title="finish"
-                    onPress={this.onFinish}
-                    buttonStyle={styles.getAddressButton}/>
-            </View>
+            <React.Fragment>
+                <SafeAreaView style={{ flex: 0, backgroundColor: '#fff' }} />
+                <SafeAreaView style={[CommonStyle.safeArea, { backgroundColor: PRIMARY_COLOR }]}>
+                    <View style={styles.container}>
+                        <View style={styles.content}>
+                            <Image style={styles.image}
+                                source={checkedIcon} />
+                            <Text style={styles.title}>{i18n.t('success_add')}</Text>
+                            <Text style={styles.subTitle}>{address}</Text>
+                        </View>
+                        <NavigationButton
+                            title={i18n.t('done')}
+                            onPress={this.onFinish} />
+                    </View>
+                </SafeAreaView>
+            </React.Fragment>
         )
     }
 }
@@ -35,6 +50,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingBottom: 20,
+        backgroundColor: 'white'
     },
     content: {
         flex: 1,
@@ -44,4 +60,18 @@ const styles = StyleSheet.create({
     getAddressButton: {
         backgroundColor: PRIMARY_COLOR,
     },
+    image: {
+        width: 100,
+        height: 100,
+    },
+    title: {
+        marginTop: 20,
+        color: 'black',
+        fontSize: 20
+    },
+    subTitle: {
+        color: PRIMARY_COLOR,
+        fontSize: 20,
+        fontWeight: 'bold',
+    }
 })

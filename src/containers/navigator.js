@@ -3,8 +3,10 @@ import MainTabView from './MainView/MainTabView'
 import AddressManagementView from './AddressView/AddressManagementView'
 import WalletSearchView from './AddressView/WalletSearchView'
 import WalletDetailView from './WalletDetailView/WalletDetailView'
-import AddressBuyContainer from './AddressView/AddressBuyContainer/AddressBuyContainer'
+import AddressBuyView from './AddressView/AddressBuyContainer/AddressBuyView'
+import AddressBuyFinishView from './AddressView/AddressBuyContainer/AddressBuyFinishView'
 import RemittanceView from "./RemittanceView/RemittanceView"
+import InvoiceView from './RemittanceView/InvoiceView/InvoiceView'
 import SecurityView from './SecurityView/SecurityView'
 import LanguageSettingView from './SettingView/LanguageSettingView'
 import CurrencySettingView from './SettingView/CurrencySettingView'
@@ -14,30 +16,14 @@ import ImportWalletView from './ImportWalletView/ImportWalletView'
 
 export default createStackNavigator({
     Main: MainTabView,
-    AddressBuy: {
-        screen: AddressBuyContainer,
-        navigationOptions: () => ({
-            title: '',
-            headerBackTitle: 'address_buy',
-        })
-    },
-    AddressManagement: {
-        screen: AddressManagementView,
-        navigationOptions: () => ({
-            title: '',
-            headerBackTitle: 'address_management'
-        })
-    },
-    WalletSearch: {
-        screen: WalletSearchView,
-        navigationOptions: () => ({
-            title: '',
-            headerBackTitle: 'wallet_search',
-        })
-    },
-    WalletImport: ImportWalletView,
+    AddressBuy: AddressBuyView,
+    AddressBuyFinish: AddressBuyFinishView,
+    AddressManagement: AddressManagementView,
+    WalletSearch: WalletSearchView,
+    WalletImport: AddressBuyView,
     WalletDetail: WalletDetailView,
     Withdraw: RemittanceView,
+    Invoice: InvoiceView,
     Security: SecurityView,
     "Setting.Language": LanguageSettingView,
     "Setting.Currency": CurrencySettingView,
@@ -48,8 +34,8 @@ export default createStackNavigator({
         initialRouteName: 'Main',
         defaultNavigationOptions: {
             headerStyle: {
-                marginTop: 5,
-                marginLeft: 5,
+                // marginTop: 5,
+                // marginLeft: 5,
                 backgroundColor: '#fff',
                 border: 0,
                 // ios

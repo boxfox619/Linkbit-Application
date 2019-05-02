@@ -6,9 +6,18 @@ import NavigationButton from '../../components/NavigationButton/NavigationButton
 import SelectCoinListView from "../../components/List/SelectCoinListView"
 import { PRIMARY_COLOR } from '../../libs/Constraints'
 import CommonStyle from '../../libs/CommonStyle'
+import i18n from '../../libs/Locale'
 
 @observer
 export default class SelectCoinView extends React.Component {
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: 'Select coin to create',
+            headerTitleStyle: { color: 'black' },
+            headerStyle: { backgroundColor: 'white' },
+        }
+    }
+
     state = {
         selectedCoin: undefined,
     }
@@ -25,7 +34,7 @@ export default class SelectCoinView extends React.Component {
                             coins={COIN_INFO}
                             selectedCoin={selectedCoin}
                             onSelectCoin={(symbol) => this.setState({ selectedCoin: symbol })} />
-                        <NavigationButton title={'다음'}
+                        <NavigationButton title={i18n.t('next')}
                             onPress={this.navigateToNext} />
                     </View>
                 </SafeAreaView>
@@ -38,7 +47,7 @@ export default class SelectCoinView extends React.Component {
         const { nextPath } = this.props.navigation.state.params
         const coin = COIN_INFO.find(c => c.symbol === selectedCoin)
         if (!coin) {
-            alert('코인을 선택해주세요')
+            alert(i18n.t('select_coin'))
             return
         }
         this.props.navigation.navigate(nextPath, { coin })

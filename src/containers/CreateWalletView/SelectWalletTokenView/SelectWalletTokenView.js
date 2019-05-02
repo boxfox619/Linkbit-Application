@@ -4,6 +4,7 @@ import NavigationButton from '../../../components/NavigationButton/NavigationBut
 import SelectCoinView from "../../../components/List/SelectCoinView"
 import { PRIMARY_COLOR } from '../../../libs/Constraints'
 import CommonStyle from '../../../libs/CommonStyle'
+import i18n from '../../../libs/Locale'
 
 export default class SelectWalletTokenView extends React.Component {
     state = {
@@ -29,7 +30,7 @@ export default class SelectWalletTokenView extends React.Component {
                             style={styles.list}
                             selectedCoin={selectedCoinSymbol}
                             onSelectCoin={symbol => this.setState({ selectedCoinSymbol: symbol })} />
-                        <NavigationButton title={'다음'}
+                        <NavigationButton title={i18n('next')}
                             onPress={this.navigateToNext} />
                     </View>
                 </SafeAreaView>
@@ -42,7 +43,7 @@ export default class SelectWalletTokenView extends React.Component {
         const selectedCoin = parentCoin.subCoins.find(coin => coin.symbol === selectedCoinSymbol)
 
         if (!selectedCoin) {
-            alert("생성할 코인을 선택해주세요")
+            alert(i18n('select_coin'))
             return
         }
 

@@ -1,9 +1,9 @@
-import {observable, action, computed, runInAction} from 'mobx'
+import { observable, action, computed, runInAction } from 'mobx'
 import WalletStore from "../Wallet/WalletStore"
 import TransactionStore from "../Transaction/TransactionStore"
 import CoinPriceStore from '../Coin/CoinPriceStore'
 import AddressNetworkApi from "../../api/Address/AddressNetworkApi"
-import {debounce} from 'lodash'
+import { debounce } from 'lodash'
 
 export default class WithdrawStore {
     @observable symbol
@@ -33,7 +33,7 @@ export default class WithdrawStore {
             this.destAddressError = 'Please enter dest address'
             return
         }
-        if (address === this.sourceAddress){
+        if (address === this.sourceAddress) {
             this.destAddressError = 'source address & target address is same'
             return
         }
@@ -78,7 +78,7 @@ export default class WithdrawStore {
         if (isNaN(value) || value <= 0) {
             return 'Please enter valid amount'
         }
-        if(value > this.wallet.balance){
+        if (value > this.wallet.balance) {
             return `Up to a maximum of ${this.wallet.balance} can be sent.`
         }
     }
@@ -97,4 +97,18 @@ export default class WithdrawStore {
         await walletManager[this.symbol].withdraw(this.wallet.privateKey, this.amount, this.destAddress)
         await this.transactionStore.refreshTransactions()
     }
+
+    get symbol() {
+        return this.symbol
+    }
+
+    get amount() {
+        return this.amount
+    }
+
+    get address(){
+        return this.destAddress
+    }
+
+    get 
 }
