@@ -1,7 +1,7 @@
-import {observable, computed, runInAction} from 'mobx'
+import {observable, computed, runInAction, action} from 'mobx'
 import Transaction from './Transaction'
 import TransactionStorageApi from "../../api/Transaction/TransactionStorageApi";
-import TransactionNetworkApi from "../../api/Transaction/TransactionNetworkApi";
+import walletManager from '../../libs/wallet'
 
 export default class TransactionStore {
     @observable transactions = []
@@ -9,13 +9,11 @@ export default class TransactionStore {
     symbol
     address
     transactionStorageApi
-    transactionNetworkApi
 
     constructor(symbol, address) {
         this.symbol = symbol
         this.address = address
         this.transactionStorageApi = new TransactionStorageApi(symbol, address)
-        this.transactionNetworkApi = new TransactionNetworkApi(symbol, address)
     }
 
     loadTransactions = async () => {
@@ -33,35 +31,19 @@ export default class TransactionStore {
 
     refreshTransactions = async () => {
         this.loading = true
-        const lastBlockNum = await this.transactionStorageApi.getLastBlock()
-        const res = await this.transactionNetworkApi.fetchNewTransactions(0)
-        let lastBlock = lastBlockNum
-        res.forEach(t => {
-            if (lastBlock < t.block) {
-                lastBlock = t.block;
-            }
-        })
-        await this.transactionStorageApi.updateTransactions(res, lastBlock + 1)
-        res.forEach(tr => this.updateTransaction(tr))
+        const res = await walletManager[this.symbol].loadTransaction(this.address)
+        await this.transactionStorageApi.setTransactions(res)
+        this.setTransactions(res)
         this.loading = false
     }
 
-    updateTransaction = (transaction) => {
-        runInAction(() => {
-            const idx = this.transactions.findIndex(tr2 => tr2.hash === transaction.hash)
-            if (idx >= 0) {
-                this.transactions[idx].updateFromJson(transaction)
-            } else {
-                const transactionModel = new Transaction()
-                transactionModel.updateFromJson(transaction)
-                this.transactions.unshift(transactionModel)
-            }
-        })
+    @action setTransactions(transactions) {
+        this.transactions = transactions.map(tr => new Transaction().updateFromJson(tr))
     }
 
     @computed get transactionList() {
         return this.transactions.map(tr => {
-            const benefit = tr.targetAddress === this.address
+            const benefit = tr.targetAddress.toLowerCase() === this.address.toLowerCase()
             let address = benefit ? tr.sourceAddress : tr.targetAddress
             return {...tr, benefit, address, symbol: this.symbol}
         })

@@ -1,26 +1,16 @@
-import {HOST} from '../../libs/Constraints'
-import encoding from '../../libs/UrlEncoder'
+import {COIN_API_HOST} from '../../libs/Constraints'
 
 export default class CoinNetworkApi {
 
-    fetchCoins= async () => {
-        try {
-            const res = await fetch(`${HOST}/coins`, {method: 'GET'});
-            return res.json();
-        } catch (error) {
-            console.log(error);
-        }
+    fetchCoins = async () => {
+        const res = await fetch(`${COIN_API_HOST}/coins/list`, {method: 'GET'})
+        return res.json()
     };
 
-    fetchCoinPrices = async (symbols, currency) => {
-        const res = await fetch(`${HOST}/coins/price`, {
-            method: 'POST',
-            headers: {
-                'Authorization': '',
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: encoding({symbols, currency}),
-        })
-        return res.json()
+    fetchCoinPrice = async (coinId, currency) => {
+        const res = await fetch(`${COIN_API_HOST}/coins/${coinId}?community_data=false&developer_data=false&tickers=false`, {method: 'GET'})
+        const data = await res.json()
+        const price = data['market_data']['current_price'][currency.toLowerCase()]
+        return price
     }
 }

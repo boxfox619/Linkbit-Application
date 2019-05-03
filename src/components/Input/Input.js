@@ -3,9 +3,8 @@ import {View, StyleSheet, TextInput} from 'react-native'
 
 export default class Input extends React.Component {
     render() {
-
         return (
-            <View style={styles.inputContainer}>
+            <View style={styles.container}>
                 <TextInput style={styles.input} {...this.props} />
             </View>
         )
@@ -13,9 +12,8 @@ export default class Input extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    inputContainer: {
+    container: {
         display: 'flex',
-        flex: 1,
         flexDirection: 'row',
         borderColor: '#594343',
         borderRadius: 5,

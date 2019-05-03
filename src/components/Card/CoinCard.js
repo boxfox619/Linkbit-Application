@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { TouchableOpacity, View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native'
 import { HOST, PRIMARY_COLOR } from '../../libs/Constraints'
 import BorderCard from './BorderCard'
 
@@ -10,8 +10,8 @@ export default class CoinCard extends React.Component {
     coinName: PropTypes.string.isRequired,
     symbol: PropTypes.string.isRequired,
     moneySymbol: PropTypes.string.isRequired,
-    balance: PropTypes.number,
-    price: PropTypes.string,
+    balance: PropTypes.any,
+    price: PropTypes.any,
     themeColor: PropTypes.string,
     activate: PropTypes.bool,
     onClick: PropTypes.func,

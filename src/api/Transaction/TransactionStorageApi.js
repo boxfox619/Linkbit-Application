@@ -1,7 +1,6 @@
 import {AsyncStorage} from 'react-native'
 
 const TRANSACTION_STORAGE_KEY = "transaction"
-const LAST_LOADED_BLOCK = "LastBlock"
 export default class TransactionStorageApi {
     transactionMap
 
@@ -19,27 +18,17 @@ export default class TransactionStorageApi {
         return this.transactionMap
     }
 
-
-    updateTransactions = async (newTransactions, blockNum) => {
-        const transactionMap = await this.getTransactionMap()
-        newTransactions.forEach((transaction) => {
-            transactionMap[transaction.hash] = transaction
-        })
-        if (!!blockNum) {
-            transactionMap[LAST_LOADED_BLOCK] = blockNum
-        }
-        await this.saveTransactionMap(transactionMap)
+    setTransactions = async (transactions) => {
+        const data = transactions.reduce((trnasactionMap, transaction) => {
+            trnasactionMap[transaction.hash] = transaction
+            return trnasactionMap
+        }, this.transactionMap)
+        await this.saveTransactionMap(data)
     }
 
     getTransactions = async () => {
         const transactionMap = await this.getTransactionMap()
         return Object.values(transactionMap).filter(t => typeof t === "object").sort((tr, tr2) => tr2.block - tr.block)
-    }
-
-    getLastBlock = async () => {
-        const transactionMap = await this.getTransactionMap()
-        const block = transactionMap[LAST_LOADED_BLOCK]
-        return  !!block ? block : 0
     }
 
     saveTransactionMap = async (transactionMap) => {

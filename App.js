@@ -7,7 +7,7 @@ import PinCodeView from './src/components/PinCodeInput'
 import {WalletStore, CoinPriceStore, AddressStore, SettingStore} from './src/store'
 import {checkForFingerprint} from './src/libs/Fingerprint'
 import {handleError} from "./src/libs/ErrorHandler"
-import {observer} from 'mobx-react/index'
+import {observer} from 'mobx-react'
 import {observable} from 'mobx/lib/mobx'
 import i18n from './src/libs/Locale'
 
@@ -27,7 +27,7 @@ export default class App extends React.Component {
   componentDidMount() {
     store.address.loadAddressList().catch(err => handleError(err))
     store.wallet.loadWalletList().catch(err => handleError(err))
-    store.coin.loadCoins().catch(err => handleError(err))
+    store.coin.load().catch(err => handleError(err))
 
     const {pin, useFingerprint} = store.setting
     if (useFingerprint) {

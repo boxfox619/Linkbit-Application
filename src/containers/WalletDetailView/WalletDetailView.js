@@ -39,11 +39,11 @@ export default class WalletDetailView extends React.Component {
     componentDidMount() {
         const errorMsg = '트랜젝션 정보 업데이트를 실패했습니다'
         this.store.loadTransactions().then(() => {
-            this.store.refreshTransactions().catch(e => alert(errorMsg))
+            this.store.refreshTransactions().catch(e => alert(e))
         }).catch(e => alert(errorMsg))
     }
 
-    render() {
+    render() {  ``
         const wallet = this.props.navigation.getParam('wallet', {})
         return (
             <SafeAreaView style={CommonStyle.safeArea}>

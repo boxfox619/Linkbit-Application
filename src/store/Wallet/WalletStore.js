@@ -1,71 +1,77 @@
-import {observable, computed, runInAction} from 'mobx'
+import {observable, action, computed} from 'mobx'
 import Wallet from './Wallet'
 import WalletStorageApi from "../../api/Wallet/WalletStorageApi"
-import WalletNetworkApi from "../../api/Wallet/WalletNetworkApi"
-import CoinPriceStore from '../Coin/CoinPriceStore'
+import coinPriceStore from '../Coin/CoinPriceStore'
 import {fixed} from '../../libs/NumberFormatter'
+import { handleError } from '../../libs/ErrorHandler'
+import walletManager from '../../libs/wallet'
 
 class WalletStore {
     @observable wallets = []
     walletStorageApi
-    walletNetworkApi
 
     constructor() {
         this.walletStorageApi = new WalletStorageApi()
-        this.walletNetworkApi = new WalletNetworkApi()
     }
 
     loadWalletList = async () => {
         const wallets = await this.walletStorageApi.getWalletList()
-        runInAction(() => {
-            this.wallets = wallets.map(json => {
-                const wallet = new Wallet()
-                wallet.updateFromJson(json)
-                return wallet
-            })
+        const walletList = wallets.map(json => {
+            const wallet = new Wallet()
+            wallet.updateFromJson(json)
+            return wallet
         })
+        this.setWalletList(walletList)
         await this.loadAllBalance()
     }
 
     loadAllBalance = async () => {
-        for(const i in this.wallets){
-            const wallet = this.wallets[i]
+        const promiseList = this.wallets.map(async (wallet) => {
             try {
-                const res = await this.walletNetworkApi.getBalance(wallet.symbol, wallet.address)
-                wallet.balance = res
-            }catch(err){}
-        }
+                const balance = await walletManager[wallet.symbol].getBalance(wallet.address)
+                wallet.balance = balance
+            } catch (err) {
+                handleError(err)
+            }
+        });
+        await Promise.all(promiseList)
         await this.walletStorageApi.saveWalletList(this.wallets.map(w => w.asJson))
     }
 
-    createWallet = async (symbol, name, password) => {
-        const walletData = await this.walletNetworkApi.createWallet(symbol, password)
-        await this.addWalletData(symbol, name, walletData)
+    createNewWallet = async (symbol, name, password) => {
+        const walletData = await this.createWallet(symbol, password)
+        coinPriceStore.refreshCoinPrice(symbol)
+        return await this.addWallet(symbol, name, walletData)
     }
+
+    createWallet = async (symbol, password) => walletManager[symbol].create(password)
 
     getWallet(address) {
         return this.wallets.find(w => w.address === address)
     }
 
-    importWallet = async (coin, name, type, data) => {
-        const walletData = await this.walletNetworkApi.importWallet(coin.symbol, type, data)
-        await this.addWalletData(coin.symbol, name, walletData)
+    importWallet = async (symbol, name, type, data) => {
+        alert(symbol)
+        const walletData = await walletManager[symbol].import(type, data)
+        return await this.addWallet(symbol, name, walletData)
     }
 
-    addWalletData = async (symbol, name, walletData) => {
+    addWallet = async (symbol, name, walletData) => {
         const wallet = new Wallet()
         wallet.updateFromJson({...walletData, name, balance: 0, symbol})
-        this.walletStorageApi.addWallet(wallet.asJson)
-        runInAction(() => {
-            this.wallets = [...this.wallets, wallet]
-        })
-        await CoinPriceStore.loadCoin(symbol)
+        await this.walletStorageApi.addWallet(wallet.asJson)
+        this.setWalletList([...this.wallets, wallet])
+        return wallet
+    }
+
+    @action setWalletList(walletList) {
+        this.wallets = walletList.filter(w => !!w.address)
     }
 
     @computed get totalPrice() {
         let totalPrice = 0
         this.wallets.forEach(w => {
-            const coin = CoinPriceStore.getCoin(w.symbol)
+            const coin = coinPriceStore.getCoin(w.symbol)
             totalPrice += w.balance * coin.price
         })
         return fixed(totalPrice, 3)

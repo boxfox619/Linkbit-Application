@@ -80,9 +80,11 @@ export default class ImportWalletView extends React.Component {
             alert(`${importType}을 입력해주세요`)
         } else {
             const {coin} = this.props.navigation.state.params
-            this.props.wallet.importWallet(coin, this.walletName, importType, this.value)
+            this.props.wallet.importWallet(coin.symbol, this.walletName, importType, this.value)
                 .then(res => this.props.navigation.navigate('Main'))
-                .catch(err => alert('지갑 연동에 실패했습니다'))
+                .catch(err => {
+                    alert(`${err} 지갑 연동에 실패했습니다`)
+                })
         }
     }
 }

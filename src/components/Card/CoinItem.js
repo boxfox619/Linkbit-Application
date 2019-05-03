@@ -1,17 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {HOST} from "../../libs/Constraints"
 import { View, StyleSheet, Image, Text } from 'react-native'
 import BorderCard from "./BorderCard";
 
 export default class CoinItem extends React.Component {
 
     static propTypes = {
-        name: PropTypes.string.isRequired,
-        symbol: PropTypes.string.isRequired,
-        themeColor: PropTypes.string.isRequired,
-        onPress: PropTypes.func.isRequired,
-        activate: PropTypes.bool.isRequired
+        coin: PropTypes.object.isRequired,
+        activate: PropTypes.bool.isRequired,
+        onPress: PropTypes.func
     }
 
     static defaultProps = {
@@ -19,11 +16,12 @@ export default class CoinItem extends React.Component {
     }
 
     render() {
-        const { name, symbol, themeColor, activate, onPress } = this.props
+        const { coin, activate, onPress } = this.props
+        const {name, symbol, themeColor, icon} = coin
         return (
             <BorderCard themeColor={themeColor} activate={activate} onPress={onPress}>
                 <View style={styles.container}>
-                    <Image style={styles.icon} source={{uri: `${HOST}/assets/${symbol}.png`}} resizeMode={'contain'}/>
+                    <Image style={styles.icon} source={icon} resizeMode={'contain'}/>
                     <View style={styles.titleContainer}>
                         <Text style={[styles.title, { color: activate ? 'white' : themeColor }]}>{name}</Text>
                         <Text style={[styles.subtitle, { color: activate ? 'white' : themeColor }]}>{symbol}</Text>

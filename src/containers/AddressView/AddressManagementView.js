@@ -3,10 +3,11 @@ import { View, StyleSheet, SafeAreaView, FlatList, Alert, Button } from 'react-n
 import { inject, observer } from 'mobx-react/index'
 import WalletCard from '../../components/Card/WalletCard'
 import AddressCard from '../../components/Card/AddressCard'
+import {dollarFormat, fixed} from '../../libs/NumberFormatter'
 import { PRIMARY_COLOR } from "../../libs/Constraints";
 import i18n from '../../libs/Locale'
 
-@inject('address', 'wallet')
+@inject('address', 'wallet', 'coin')
 @observer
 export default class AddressManagementView extends React.Component {
     static navigationOptions = ({ navigation }) => {
@@ -29,12 +30,16 @@ export default class AddressManagementView extends React.Component {
                         data={addressList}
                         extraData={{ size: addressList.length }}
                         keyExtractor={(item, idx) => (!!item) ? item.address : idx}
-                        renderItem={({ item }) => {
+                        renderItem={({item}) => {
+                            const coin = this.props.coin.getCoin(item.symbol);
                             return item && (<WalletCard
-                                key={item.address}
-                                onPress={() => this.handleWalletDelete(item)}
-                                name={item.name}
-                                symbol={item.symbol} moneySymbol="USD" />
+                                    key={item.address}
+                                    onPress={() => this.handleWalletDelete(item)}
+                                    themeColor={coin.themeColor}
+                                    name={item.name}
+                                    balance={item.balance}
+                                    price={dollarFormat(fixed((item.balance * coin.price),3))}
+                                    symbol={item.symbol} moneySymbol="USD"/>
                             )
                         }} />
                     <Button

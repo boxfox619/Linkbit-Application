@@ -9,7 +9,7 @@
 - mobx
 - eslint ([airbnb](https://github.com/airbnb/javascript))
 - react-native-navigation
- 
+
  ## Contributing
 - [MiRim Yu](https://github.com/firepunch)
 - [AshtonYoon](https://github.com/AshtonYoon)

@@ -5,8 +5,7 @@ export default class Wallet {
     @observable name
     @observable balance = 0
     @observable symbol
-    @observable walletFileName
-    @observable walletData
+    @observable privateKey
 
     @action setName(name) {
         this.name = name
@@ -18,8 +17,7 @@ export default class Wallet {
             name: this.name,
             balance: this.balance,
             symbol: this.symbol,
-            walletFileName: this.walletFileName,
-            walletData: this.walletData
+            privateKey: this.privateKey
         }
     }
 
@@ -28,7 +26,6 @@ export default class Wallet {
         this.name = json.name
         this.balance = json.balance
         this.symbol = json.symbol
-        this.walletFileName = json.walletFileName
-        this.walletData = json.walletData
+        this.privateKey = json.privateKey
     }
 }
