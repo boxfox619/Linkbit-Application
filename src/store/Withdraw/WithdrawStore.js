@@ -4,6 +4,7 @@ import TransactionStore from "../Transaction/TransactionStore"
 import CoinPriceStore from '../Coin/CoinPriceStore'
 import AddressNetworkApi from "../../api/Address/AddressNetworkApi"
 import { debounce } from 'lodash'
+import walletManager from '../../libs/wallet'
 
 export default class WithdrawStore {
     @observable symbol
@@ -44,9 +45,9 @@ export default class WithdrawStore {
         if (this.destAddress.length === 0) {
             return
         }
-        this.addressApi.checkAddressValid(this.symbol, this.destAddress)
-            .then(res => runInAction(() => this.destAddressError = res ? undefined : 'address is not valid'))
-            .catch(err => runInAction(() => this.destAddressError = 'address is not valid'))
+        if(!this.walletManager.validAddress(this.destAddress)){
+            this.destAddressError = 'Please enter valid address'
+        }
     }
 
     checkAddressValidDebounce = debounce(this.checkAddressValid, 800)
@@ -92,9 +93,13 @@ export default class WithdrawStore {
         return false
     }
 
+    get walletManager() {
+        return walletManager[this.symbol]
+    }
+
     withdraw = async () => {
         this.transactionStore = new TransactionStore(this.symbol, this.sourceAddress)
-        await walletManager[this.symbol].withdraw(this.wallet.privateKey, this.amount, this.destAddress)
+        const transactionHash = await this.walletManager.withdraw(this.wallet.privateKey, this.destAddress, this.amount)
         await this.transactionStore.refreshTransactions()
     }
 
@@ -110,5 +115,4 @@ export default class WithdrawStore {
         return this.destAddress
     }
 
-    get 
 }
