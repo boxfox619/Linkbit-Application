@@ -1,66 +1,45 @@
 import {HOST} from '../../libs/Constraints'
-import encoding from '../../libs/UrlEncoder'
 
 export default class AddressNetworkApi {
 
-    fetchOwnAddressList = async (uid) => {
+    fetchOwnAddressList = async (accountAddress) => {
         const res = await fetch(`${HOST}/address`, {
             method: 'GET',
-            headers: {'Authorization': uid}
+            body: {accountAddress}
         });
         return res.json();
     };
 
-    buyAddress = async (linkAddress) => {
+    createToken = async (publicKey) => {
+        const res = await fetch(`${HOST}/cert?publicKey=${publicKey}`, { method: 'GET' });
+        return res.json();
+    }
+
+    createLinkAddress = async (ownerAddress, token, linkAddress) => {
         const res = await fetch(`${HOST}/address`, {
             method: 'POST',
-            headers: {
-                'Authorization': '',
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: encoding({linkAddress})
+            body: JSON.stringify({ownerAddress, token, linkAddress})
         });
         return res.json();
     }
 
-    registerAddress = async (linkAddress, symbol, accountAddress) => {
-        const res = await fetch(`${HOST}/address/account`, {
+    linkAddress = async (token, ownerAddress, linkAddress, symbol, accountAddress) => {
+        const res = await fetch(`${HOST}/address`, {
             method: 'PUT',
-            headers: {
-                'Authorization': '',
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: encoding({
-                linkAddress: linkAddress,
-                symbol: symbol,
-                accountAddress: accountAddress
-            })
+            body: JSON.stringify({ownerAddress, token, linkAddress, symbol, accountAddress})
         });
-        return res.ok
+        return res.json();
     }
 
-    unregisterAddress = async (linkAddress, symbol) => {
-        const res = await fetch(`${HOST}/address/account`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': '',
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: encoding({
-                linkAddress: linkAddress,
-                symbol: symbol
-            })
+    getAccountAddress = async (linkAddress, symbol) => {
+        const res = await fetch(`${HOST}/address?linkaddress=${linkAddress}&symbol=${symbol}`, {
+            method: 'GET',
         });
-        return res.ok
+        return res.json();
     }
 
     checkLinkAddressExists = async (linkAddress) => {
         const res = await fetch(`${HOST}/address/exist?address=${linkAddress}`, {method: 'GET'});
         return res.json();
-    }
-
-    checkAddressValid = async (symbol, address) => {
-        const res = await fetch(`${HOST}/address/valid?symbol=${symbol}&address=${address}`, {method: 'GET'});
-        return res.status === 200;
     }
 }
