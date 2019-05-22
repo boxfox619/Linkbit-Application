@@ -1,6 +1,6 @@
 import {observable, action, computed} from 'mobx'
 import Wallet from './Wallet'
-import WalletStorageApi from "../../api/Wallet/WalletStorageApi"
+import WalletStorageApi from "../../api/WalletStorageApi"
 import coinPriceStore from '../Coin/CoinPriceStore'
 import {fixed} from '../../libs/NumberFormatter'
 import { handleError } from '../../libs/ErrorHandler'

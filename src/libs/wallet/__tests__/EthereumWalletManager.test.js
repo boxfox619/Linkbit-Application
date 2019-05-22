@@ -17,12 +17,9 @@ describe("EthereumWalletManager", () => {
   it("load transactions", async () => {
         const manager = new EthereumWalletManager()
         const address = '0xa5B5bE1ecB74696eC27E3CA89E5d940c9dbcCc56'
-        manager.loadTransaction(address).subscribe(transactions => {
-            expect(transactions).toBeDefined()
-            expect(transactions.length > 0).toBeTruthy()
-        }, err => {
-            console.warn(err)
-        })
+        const transactions = await manager.loadTransaction(address)
+        expect(transactions).toBeDefined()
+        expect(transactions.length > 0).toBeTruthy()
   })
 
   it("withdraw test", async () => {
