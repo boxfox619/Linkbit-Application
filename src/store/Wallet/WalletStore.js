@@ -51,7 +51,6 @@ class WalletStore {
     }
 
     importWallet = async (symbol, name, type, data) => {
-        alert(symbol)
         const walletData = await walletManager[symbol].import(type, data)
         return await this.addWallet(symbol, name, walletData)
     }

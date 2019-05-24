@@ -20,7 +20,7 @@ export default createStackNavigator({
     AddressBuyFinish: AddressBuyFinishView,
     AddressManagement: AddressManagementView,
     WalletSearch: WalletSearchView,
-    WalletImport: AddressBuyView,
+    WalletImport: ImportWalletView,
     WalletDetail: WalletDetailView,
     Withdraw: RemittanceView,
     Invoice: InvoiceView,

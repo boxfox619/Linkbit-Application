@@ -2,7 +2,6 @@ import React from 'react'
 import { View, StyleSheet, SafeAreaView, Clipboard } from 'react-native'
 import ActionButton from "react-native-action-button"
 import { observer } from 'mobx-react'
-import ActionButton from "react-native-action-button"
 import { Icon } from 'react-native-elements'
 import { WalletSummaryCard, TransactionList } from '../../components/index'
 import { TransactionStore } from '../../store/index'
@@ -43,7 +42,7 @@ export default class WalletDetailView extends React.Component {
         }).catch(e => alert(errorMsg))
     }
 
-    render() {  ``
+    render() {
         const wallet = this.props.navigation.getParam('wallet', {})
         return (
             <SafeAreaView style={CommonStyle.safeArea}>
@@ -53,6 +52,7 @@ export default class WalletDetailView extends React.Component {
                                      refreshing={this.store.loading}
                                      data={this.store.transactionList}
                                      symbol={wallet.symbol}
+                                     onSelect={this.handleSelectTransaction}
                                      fetchTransaction={this.handleRefreshTransactions}/>
                     <ActionButton buttonColor={PRIMARY_COLOR}
                                   onPress={() => this.props.navigation.navigate("Withdraw", {wallet})}
@@ -67,6 +67,17 @@ export default class WalletDetailView extends React.Component {
 
     handleRefreshTransactions = () => {
         this.store.refreshTransactions().catch(e => alert(e))
+    }
+
+    handleSelectTransaction = (txHash) => {
+        const transaction = this.store.transactionList.find(tr => tr.hash === txHash)
+        if(transaction.benefit) {
+            Clipboard.setString(transaction.sourceAddress)
+            alert('현재 지갑으로 송금해준 주소를 복사하였습니다.')
+        } else {
+            Clipboard.setString(transaction.targetAddress)
+            alert('송금한 주소를 복사하였습니다.')
+        }
     }
 }
 

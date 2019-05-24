@@ -1,27 +1,31 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {View, StyleSheet, Text} from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class TransactionCard extends React.Component {
     static propTypes = {
-        transaction: PropTypes.object.isRequired
+        transaction: PropTypes.object.isRequired,
+        onClick: PropTypes.func
     }
 
     render() {
         const {date, address, amount, confirm, symbol} = this.props.transaction
 
         return (
-            <View style={styles.transactionRow}>
-                <Text style={styles.date}>{date}</Text>
-                <View style={styles.accountContainer}>
-                    <Text style={styles.email}>unknown</Text>
-                    <Text numberOfLines={1} ellipsizeMode='tail' style={styles.address}>{address}</Text>
+            <TouchableOpacity onPress={this.props.onClick}>
+                <View style={styles.transactionRow}>
+                    <Text style={styles.date}>{date}</Text>
+                    <View style={styles.accountContainer}>
+                        <Text style={styles.email}>unknown</Text>
+                        <Text numberOfLines={1} ellipsizeMode='tail' style={styles.address}>{address}</Text>
+                    </View>
+                    <View style={styles.amountContainer}>
+                        <Text style={[styles.amount, this.amountColor]}>{(!this.props.transaction.benefit && '- ')}{`${amount} ${symbol}`}</Text>
+                        <Text style={styles.confirm}>{confirm}</Text>
+                    </View>
                 </View>
-                <View style={styles.amountContainer}>
-                    <Text style={[styles.amount, this.amountColor]}>{(!this.props.transaction.benefit && '- ')}{`${amount} ${symbol}`}</Text>
-                    <Text style={styles.confirm}>{confirm}</Text>
-                </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 

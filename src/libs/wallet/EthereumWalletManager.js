@@ -88,31 +88,34 @@ export default class EthereumWalletManager extends WalletManager {
   }
 
   withdraw = async (privateKey, targetAddress, amount, gasPrice, gasLimit) => {
-    const account = this.web3.eth.accounts.privateKeyToAccount(privateKey)
-    const nonce = this.web3.eth.getTransactionCount(web3.eth.defaultAccount)
-    const gasPrices = await getCurrentGasPrices()
+    const gasPrices = await this.getCurrentGasPrices()
 
     const transactionConfig = {
-      from: account.address,
       to: targetAddress,
-      value: this.web3.toHex(this.web3.toWei(amountToSend, 'ether')),
+      value: this.web3.utils.toHex(this.web3.utils.toWei(amount, 'ether')),
       gas: 21000,
       gasPrice: gasPrices.low * 1000000000, 
-      nonce: nonce,
-      chainId: 4 
+      chainId: 0
     }
-    const signedTransaction = await account.signTransaction(transactionConfig)
-    const transaction = await this.web3.eth.sendSignedTransaction(signedTransaction)
-    return transaction.transactionHash
+    const signedTransaction = await this.web3.eth.accounts.signTransaction(transactionConfig, privateKey)
+    const sendTransaction = new Promise((resolve, reject) => {
+      this.web3.eth.sendSignedTransaction(signedTransaction.rawTransaction)
+      .on('transactionHash', (txHash) => resolve(txHash))
+      .on('error', (error) => reject(error))
+    })
+    return await sendTransaction
   }
 
   getCurrentGasPrices = async () => {
-    let response = await axios.get('https://ethgasstation.info/json/ethgasAPI.json')
+    const res = await fetch('https://ethgasstation.info/json/ethgasAPI.json')
+    const data = res.json()
     let prices = {
-      low: response.data.safeLow / 10,
-      medium: response.data.average / 10,
-      high: response.data.fast / 10
+      low: data.safeLow / 10,
+      medium: data.average / 10,
+      high: data.fast / 10
     }
     return prices
   }
+
+  validAddress = (address) => this.web3.utils.isAddress(address)
 }
