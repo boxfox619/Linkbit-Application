@@ -8,6 +8,9 @@
   },
   "dependencies": {
     "cryptr": "^4.0.2",
+    "eth-ecies": "^1.0.3",
+    "ethereumjs-util": "^6.1.0",
+    "ethereumjs-wallet": "^0.6.3",
     "i18n-js": "^3.2.1",
     "lodash": "^4.17.11",
     "mobx": "^5.5.2",
