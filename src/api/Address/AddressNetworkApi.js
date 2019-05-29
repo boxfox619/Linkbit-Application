@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {HOST} from '../../libs/Constraints'
+import { HOST } from '../../libs/Constraints'
 
 export const fetchOwnAddressList = async (accountAddress) => {
     const res = await axios.get(`${HOST}/address?ownerAddress=${accountAddress}`);
@@ -8,25 +8,35 @@ export const fetchOwnAddressList = async (accountAddress) => {
 
 export const createToken = async (publicKey) => {
     const res = await axios.get(`${HOST}/cert?publicKey=${publicKey}`);
-    return res.data;
+    if (res.status === 200) {
+        return res.data.token
+    } else {
+        throw new Error(res.data.message)
+    }
 }
 
 export const createLinkAddress = async (ownerAddress, token, linkAddress) => {
-    const res = await axios.post(`${HOST}/address`, {ownerAddress, token, linkAddress});
-    return res.data;
+    const res = await axios.post(`${HOST}/address`, { ownerAddress, token, linkAddress })
+    if (res.status === 200) {
+        return true
+    } else {
+        throw new Error(res.data.message)
+    }
 }
 
 export const linkAddress = async (token, ownerAddress, linkAddress, symbol, accountAddress) => {
-    const res = await axios.put(`${HOST}/address`, {ownerAddress, token, linkAddress, symbol, accountAddress});
-    return res.data;
+    const res = await axios.put(`${HOST}/address`, { ownerAddress, token, linkAddress, symbol, accountAddress })
+    return res.data
 }
 
 export const getAccountAddress = async (linkAddress, symbol) => {
-    const res = await axios.get(`${HOST}/address?linkaddress=${linkAddress}&symbol=${symbol}`);
-    return res.data;
+    const res = await axios.get(`${HOST}/address?linkaddress=${linkAddress}&symbol=${symbol}`)
+    if (res.status === 200) {
+        return res.data.address
+    }
 }
 
 export const checkLinkAddressExists = async (linkAddress) => {
-    const res = await axios.get(`${HOST}/address/exist?address=${linkAddress}`);
-    return res.data;
+    const res = await axios.get(`${HOST}/address/exist?address=${linkAddress}`)
+    return res.data
 }

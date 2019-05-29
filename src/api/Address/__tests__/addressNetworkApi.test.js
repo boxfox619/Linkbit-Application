@@ -15,10 +15,10 @@ describe('address network api', () => {
     });
 
     it('should workin well api', async () => {
-        const data = await AddressApi.createToken(publicKey.toString('hex'))
-        expect(data).toBeDefined()
-        expect(data.token).toBeDefined();
-        const decrypted = ECIES.decrypt(privateKey, Buffer.from(data.token, 'hex'));
+        const token = await AddressApi.createToken(publicKey.toString('hex'))
+        expect(token).toBeDefined()
+        expect(token).toBeDefined();
+        const decrypted = ECIES.decrypt(privateKey, Buffer.from(token, 'hex'));
         expect(decrypted).toBeDefined();
     });
 })
