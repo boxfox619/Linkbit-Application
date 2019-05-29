@@ -3,6 +3,7 @@ import Cryptr from 'cryptr'
 import { WalletManager } from './WalletManager'
 import Transaction from '../../store/Transaction/Transaction'
 import moment from 'moment'
+import axios from 'axios'
 export const IMPORT_TYPE_PRIVATEKEY = 'privateKey'
 export const IMPORT_TYPE_MNEMONIC = 'mnemonic'
 
@@ -51,8 +52,8 @@ export default class EthereumWalletManager extends WalletManager {
   loadTransactionHashList = async (address, start, end) => {
     //it works only blockchain.com api
     const url = getTransactionApiUrl(address, start, end)
-    const res = await fetch(url)
-    const data = await res.json()
+    const res = await axios.get(url)
+    const data = await res.data
     return data.transactions.map(tr => tr)
   }
 
@@ -107,8 +108,8 @@ export default class EthereumWalletManager extends WalletManager {
   }
 
   getCurrentGasPrices = async () => {
-    const res = await fetch('https://ethgasstation.info/json/ethgasAPI.json')
-    const data = res.json()
+    const res = await axios.get('https://ethgasstation.info/json/ethgasAPI.json')
+    const data = res.data
     let prices = {
       low: data.safeLow / 10,
       medium: data.average / 10,

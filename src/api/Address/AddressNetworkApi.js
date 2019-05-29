@@ -1,45 +1,32 @@
+import axios from 'axios'
 import {HOST} from '../../libs/Constraints'
 
-export default class AddressNetworkApi {
+export const fetchOwnAddressList = async (accountAddress) => {
+    const res = await axios.get(`${HOST}/address?ownerAddress=${accountAddress}`);
+    return res.data;
+};
 
-    fetchOwnAddressList = async (accountAddress) => {
-        const res = await fetch(`${HOST}/address`, {
-            method: 'GET',
-            body: {accountAddress}
-        });
-        return res.json();
-    };
+export const createToken = async (publicKey) => {
+    const res = await axios.get(`${HOST}/cert?publicKey=${publicKey}`);
+    return res.data;
+}
 
-    createToken = async (publicKey) => {
-        const res = await fetch(`${HOST}/cert?publicKey=${publicKey}`, { method: 'GET' });
-        return res.json();
-    }
+export const createLinkAddress = async (ownerAddress, token, linkAddress) => {
+    const res = await axios.post(`${HOST}/address`, {ownerAddress, token, linkAddress});
+    return res.data;
+}
 
-    createLinkAddress = async (ownerAddress, token, linkAddress) => {
-        const res = await fetch(`${HOST}/address`, {
-            method: 'POST',
-            body: JSON.stringify({ownerAddress, token, linkAddress})
-        });
-        return res.json();
-    }
+export const linkAddress = async (token, ownerAddress, linkAddress, symbol, accountAddress) => {
+    const res = await axios.put(`${HOST}/address`, {ownerAddress, token, linkAddress, symbol, accountAddress});
+    return res.data;
+}
 
-    linkAddress = async (token, ownerAddress, linkAddress, symbol, accountAddress) => {
-        const res = await fetch(`${HOST}/address`, {
-            method: 'PUT',
-            body: JSON.stringify({ownerAddress, token, linkAddress, symbol, accountAddress})
-        });
-        return res.json();
-    }
+export const getAccountAddress = async (linkAddress, symbol) => {
+    const res = await axios.get(`${HOST}/address?linkaddress=${linkAddress}&symbol=${symbol}`);
+    return res.data;
+}
 
-    getAccountAddress = async (linkAddress, symbol) => {
-        const res = await fetch(`${HOST}/address?linkaddress=${linkAddress}&symbol=${symbol}`, {
-            method: 'GET',
-        });
-        return res.json();
-    }
-
-    checkLinkAddressExists = async (linkAddress) => {
-        const res = await fetch(`${HOST}/address/exist?address=${linkAddress}`, {method: 'GET'});
-        return res.json();
-    }
+export const checkLinkAddressExists = async (linkAddress) => {
+    const res = await axios.get(`${HOST}/address/exist?address=${linkAddress}`);
+    return res.data;
 }
