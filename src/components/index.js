@@ -12,6 +12,7 @@ import NavIcon from './Navbar/NavIcon'
 import Navbar from './Navbar/Navbar'
 import SegmentedControl from "./SegmentedControl/SegmentedControl"
 import Input from './Input/Input'
+import {InputWithTitle} from './Input/Input'
 
 export {
     ProgressDialog,
@@ -29,4 +30,5 @@ export {
     PinCodeView,
     NavIcon,
     Navbar,
+    InputWithTitle
 }

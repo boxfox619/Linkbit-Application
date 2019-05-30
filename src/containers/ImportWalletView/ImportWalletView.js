@@ -1,6 +1,6 @@
 import React from 'react'
 import {SafeAreaView, StyleSheet, View} from 'react-native'
-import {SegmentedControl, Input} from '../../components'
+import {SegmentedControl, InputWithTitle} from '../../components'
 import {observer, inject} from 'mobx-react'
 import {observable} from 'mobx'
 import withTitle from '../../components/HOC/withTitle'
@@ -18,7 +18,6 @@ const importMethods = [
 ]
 
 const TitledSegmentedControl = withTitle(SegmentedControl)
-const InputWithTitle = withTitle(Input)
 
 @inject(['wallet'])
 @observer

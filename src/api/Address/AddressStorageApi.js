@@ -1,5 +1,8 @@
 import {AsyncStorage} from 'react-native'
 import crypto from 'crypto'
+import ECIES from 'eth-ecies'
+import * as AddressApi from "../../api/Address/AddressNetworkApi"
+import * as ethUtil from 'ethereumjs-util'
 
 const ADDRESS_STORAGE_KEY = "address"
 const CORE_KEY = "core-key"
@@ -48,5 +51,21 @@ export default class AddressStorageApi {
         const coreKey = await AsyncStorage.getItem(CORE_KEY) || crypto.randomBytes(32).toString('hex')
         await AsyncStorage.setItem(CORE_KEY, coreKey)
         return coreKey
+    }
+
+    getCertificationToken = async () => {
+        const getCorePrivateKey = await this.addressStorageApi.getCoreKey()
+        const privateKey = Buffer.from(getCorePrivateKey, 'hex')
+        const publicKey = ethUtil.privateToPublic()
+        const token = await AddressApi.createToken(publicKey)
+        const decryptedToken = await ECIES.decrypt(privateKey, Buffer.from(token, 'hex'))
+        return decryptedToken
+    }
+
+    getCoreAddress = async () => {
+        const getCorePrivateKey = await this.addressStorageApi.getCoreKey()
+        const privateKey = Buffer.from(getCorePrivateKey, 'hex')
+        const publicKey = ethUtil.privateToPublic(privateKey)
+        return ethUtil.pubToAddress(publicKey).toString("hex")
     }
 }

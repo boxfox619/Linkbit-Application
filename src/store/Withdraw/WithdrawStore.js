@@ -36,10 +36,11 @@ export default class WithdrawStore {
     })
 
     checkAddressValid = () => {
-        const destAddress = await this.getDestAddress()
-        if (!destAddress) {
-            this.destAddressError = 'Please enter valid address'
-        }
+        this.getDestAddress().then(destAddress => {
+            if (!destAddress) {
+                this.destAddressError = 'Please enter valid address'
+            }
+        }).catch(e => this.destAddressError = 'Please enter valid address')
     }
 
     getDestAddress = async () => {

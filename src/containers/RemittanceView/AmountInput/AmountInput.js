@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {View, StyleSheet} from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import DropdownMenu from 'react-native-dropdown-menu'
-import AmountBox from "../AmountBox/AmountBox";
-import Input from "../../../components/Input/Input";
-import {debounce} from 'lodash'
+import AmountBox from "./AmountBox"
+import { debounce } from 'lodash'
+import Input from "../../../components/Input/Input"
+import withTitle from '../../../components/HOC/withTitle'
 
-export default class AmountInput extends React.Component {
+class AmountInput extends React.Component {
     static propTypes = {
         symbol: PropTypes.string.isRequired,
         moneySymbol: PropTypes.string.isRequired,
@@ -20,7 +21,7 @@ export default class AmountInput extends React.Component {
     }
 
     render() {
-        const {amount, price, symbol, selectedSymbol, moneySymbol, onChangeAmount, onChangeSymbol, edit, onPress} = this.props
+        const { amount, price, symbol, selectedSymbol, moneySymbol, onChangeAmount, onChangeSymbol, edit, onPress } = this.props
         const symbols = [[symbol, moneySymbol]];
         const amountValue = selectedSymbol === symbol ? amount : price;
         const onChangeAmountDebounce = debounce(onChangeAmount, 800)
@@ -40,19 +41,19 @@ export default class AmountInput extends React.Component {
                                 bgColor="transparent"
                                 tintColor="#594343"
                                 activityTintColor="#594343"
-                                optionTextStyle={{color: '#594343', backgroundColor: '#ffffff', zIndex: 2}}
-                                titleStyle={{color: '#594343'}}
+                                optionTextStyle={{ color: '#594343', backgroundColor: '#ffffff', zIndex: 2 }}
+                                titleStyle={{ color: '#594343' }}
                                 handler={(selection, row) => onChangeSymbol(symbols[selection][row])}
-                                data={symbols}/>
+                                data={symbols} />
                         </View>
                     </>
                 ) : (
-                    <AmountBox price={price}
-                               moneySymbol={moneySymbol}
-                               symbol={symbol}
-                               amount={amount}
-                               onPress={onPress}/>
-                )}
+                        <AmountBox price={price}
+                            moneySymbol={moneySymbol}
+                            symbol={symbol}
+                            amount={amount}
+                            onPress={onPress} />
+                    )}
             </View>
         )
     }
@@ -73,3 +74,5 @@ const styles = StyleSheet.create({
         borderColor: '#594343',
     },
 })
+
+export default withTitle(AmountInput)

@@ -11,7 +11,6 @@ export default class AmountBox extends React.Component {
         onPress: PropTypes.func.isRequired
     }
 
-
     render() {
         const { price, moneySymbol, symbol, amount, onPress} = this.props
         return (
