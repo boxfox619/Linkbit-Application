@@ -1,16 +1,14 @@
 import {observable, runInAction, action} from 'mobx'
-import AddressNetworkApi from '../../api/Address/AddressNetworkApi'
 import AddressStorageApi from '../../api/Address/AddressStorageApi'
+import * as AddressNetworkApi from '../../api/Address/AddressNetworkApi'
 import LinkedAddress from './LinkedAddress'
 
 class AddressStore {
     @observable linkedAddressList = []
-    addressNetworkApi
     addressStorageApi
     @observable isLoading = false
 
     constructor() {
-        this.addressNetworkApi = new AddressNetworkApi()
         this.addressStorageApi = new AddressStorageApi()
     }
 
@@ -40,8 +38,10 @@ class AddressStore {
         }
     }
 
-    addAddress = async (linkAddress, symbol, address) => {
-        const res = await this.addressNetworkApi.registerAddress(linkAddress, symbol, address)
+    addAddress = async (linkAddress, symbol, accountAddress) => {
+        const coreAddress = await this.addressStorageApi.getCoreAddress()
+        const token = await this.addressStorageApi.getCertificationToken()
+        const res = await this.AddressNetworkApi.linkAddress(token, coreAddress, linkAddress, symbol, accountAddress)
         if (res) {
             this.linkedAddressList.find(linked => linked.linkAddress === linkAddress).setAccountAddress(symbol, address)
             await this.save()
@@ -50,7 +50,7 @@ class AddressStore {
     }
 
     deleteAddress = async (linkAddress, symbol) => {
-        const res = await this.addressNetworkApi.unregisterAddress(linkAddress, symbol)
+        const res = await this.AddressNetworkApi.unregisterAddress(linkAddress, symbol)
         if (res) {
             this.linkedAddressList.find(linked => linked.linkAddress === linkAddress).setAccountAddress(symbol, undefined)
             await this.save()
