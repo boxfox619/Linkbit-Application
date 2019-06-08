@@ -26,7 +26,7 @@ export default class MainTabView extends React.Component {
 
         return (
             <React.Fragment>
-                <SafeAreaView style={{ flex:0, backgroundColor: '#fff' }} />
+                <SafeAreaView style={{ flex: 0, backgroundColor: '#fff' }} />
                 <SafeAreaView style={[CommonStyle.safeArea, { backgroundColor: PRIMARY_COLOR }]}>
                     <View style={styles.container}>
                         <Header
@@ -66,8 +66,8 @@ export default class MainTabView extends React.Component {
     get tabs() {
         return [
             { icon: 'payment', label: i18n.t('wallet') },
-            { icon: 'swap-horiz', label: i18n.t('transaction') },
-            { icon: 'settings', label:i18n.t('setting') },
+            { icon: 'swap-horiz', label: i18n.t('address') },
+            { icon: 'settings', label: i18n.t('setting') },
         ]
     }
 

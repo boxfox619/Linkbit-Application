@@ -54,16 +54,16 @@ export default class AddressStorageApi {
     }
 
     getCertificationToken = async () => {
-        const getCorePrivateKey = await this.addressStorageApi.getCoreKey()
+        const getCorePrivateKey = await this.getCoreKey()
         const privateKey = Buffer.from(getCorePrivateKey, 'hex')
-        const publicKey = ethUtil.privateToPublic()
+        const publicKey = ethUtil.privateToPublic(privateKey).toString('hex')
         const token = await AddressApi.createToken(publicKey)
         const decryptedToken = await ECIES.decrypt(privateKey, Buffer.from(token, 'hex'))
         return decryptedToken
     }
 
     getCoreAddress = async () => {
-        const getCorePrivateKey = await this.addressStorageApi.getCoreKey()
+        const getCorePrivateKey = await this.getCoreKey()
         const privateKey = Buffer.from(getCorePrivateKey, 'hex')
         const publicKey = ethUtil.privateToPublic(privateKey)
         return ethUtil.pubToAddress(publicKey).toString("hex")

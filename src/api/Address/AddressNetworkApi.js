@@ -7,20 +7,29 @@ export const fetchOwnAddressList = async (accountAddress) => {
 };
 
 export const createToken = async (publicKey) => {
-    const res = await axios.get(`${HOST}/cert?publicKey=${publicKey}`);
-    if (res.status === 200) {
-        return res.data.token
-    } else {
-        throw new Error(res.data.message)
+    try {
+        const res = await axios.get(`${HOST}/cert?publicKey=${publicKey}`);
+        if (res.status === 200) {
+            return res.data.token
+        } else {
+            throw new Error(res.data.message)
+        }
+    } catch (e) {
+        throw new Error('failed to create token')
     }
 }
 
-export const createLinkAddress = async (ownerAddress, token, linkAddress) => {
-    const res = await axios.post(`${HOST}/address`, { ownerAddress, token, linkAddress })
-    if (res.status === 200) {
-        return true
-    } else {
-        throw new Error(res.data.message)
+export const createLinkAddress = async (ownerAddress, token, linkaddress) => {
+    try {
+        const res = await axios.post(`${HOST}/address`, { ownerAddress, token, linkaddress })
+        if (res.status === 200) {
+            return true
+        } else {
+            throw new Error(res.data.message)
+        }
+    } catch (e) {
+        alert(JSON.stringify(e))
+        throw new Error('failed to create link address')
     }
 }
 

@@ -37,17 +37,17 @@ export default class AddressBuyView extends React.Component {
         }
     }
 
-    addressValidCheck = (text) => this.addressBuyStore.setAddress(text)
-
     render() {
         return (
             <>
                 <SafeAreaView style={{ flex: 0, backgroundColor: '#fff' }} />
                 <SafeAreaView style={[CommonStyle.safeArea, { backgroundColor: PRIMARY_COLOR }]}>
                     <View style={styles.container}>
+                        <View style={styles.form}>
                             <InputWithTitle title={i18n.t('address_lower')}
-                                onChangeText={this.addressValidCheck}
+                                onChangeText={this.addressBuyStore.setAddress}
                                 error={this.addressBuyStore.error} />
+                        </View>
                         <NavigationButton title={i18n.t('next')} onPress={this.onNext} />
                     </View>
                 </SafeAreaView>
@@ -64,9 +64,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     form: {
-        flex: 1,
-    },
-    getAddressButton: {
-        backgroundColor: PRIMARY_COLOR,
-    },
+        paddingHorizontal: 20
+    }
 })
