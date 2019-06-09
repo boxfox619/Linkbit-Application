@@ -58,7 +58,7 @@ export default class AddressStorageApi {
         const privateKey = Buffer.from(getCorePrivateKey, 'hex')
         const publicKey = ethUtil.privateToPublic(privateKey).toString('hex')
         const token = await AddressApi.createToken(publicKey)
-        const decryptedToken = await ECIES.decrypt(privateKey, Buffer.from(token, 'hex'))
+        const decryptedToken = await ECIES.decrypt(privateKey, Buffer.from(token, 'hex')).toString('hex')
         return decryptedToken
     }
 
