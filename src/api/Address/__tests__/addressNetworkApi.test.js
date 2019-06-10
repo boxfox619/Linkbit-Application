@@ -17,8 +17,15 @@ describe('address network api', () => {
     it('should workin well api', async () => {
         const token = await AddressApi.createToken(publicKey.toString('hex'))
         expect(token).toBeDefined()
-        expect(token).toBeDefined();
-        const decrypted = ECIES.decrypt(privateKey, Buffer.from(token, 'hex'));
+        const decrypted = ECIES.decrypt(privateKey, Buffer.from(token, 'hex')).toString();
         expect(decrypted).toBeDefined();
+        const address = ethUtil.pubToAddress(publicKey).toString('hex');
+        try {
+            const res = await AddressApi.createLinkAddress(address, decrypted, 'linkAddress');
+            expect(res).toBe(true);
+        } catch (err) {
+            console.log(err.message);
+            expect(res).toBe(null);
+        }
     });
 })

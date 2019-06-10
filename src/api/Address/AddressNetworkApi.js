@@ -21,15 +21,14 @@ export const createToken = async (publicKey) => {
 
 export const createLinkAddress = async (ownerAddress, token, linkaddress) => {
     try {
-        const res = await axios.post(`${HOST}/address`, { ownerAddress, token, linkaddress })
+        const res = await axios.post(`${HOST}/address`, { ownerAddress, token, linkaddress });
         if (res.status === 200) {
-            return true
+            return true;
         } else {
-            throw new Error(res.data.message)
+            throw new Error(res.data.message);
         }
     } catch (e) {
-        alert(JSON.stringify(e))
-        throw new Error('failed to create link address')
+        throw new Error(e.response.data.message);
     }
 }
 
