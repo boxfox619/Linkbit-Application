@@ -36,11 +36,15 @@ export default class LinkedAddress {
         return false
     }
 
-    deleteAddress = async (symbol) => {
+    unlinkAddress = async (symbol) => {
         if (this.getAccountAddress(symbol)) {
-            return await this.store.deleteAddress(this.linkAddress, symbol)
+            return await this.store.unlinkAddress(this.linkAddress, symbol)
         }
         return false
+    }
+
+    deleteAddress = async () => {
+        return await this.store.deleteAddress(this.linkAddress)
     }
 
     @action setAccountAddress = (symbol, address) => {

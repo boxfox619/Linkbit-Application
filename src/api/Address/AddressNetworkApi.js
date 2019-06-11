@@ -32,9 +32,43 @@ export const createLinkAddress = async (ownerAddress, token, linkaddress) => {
     }
 }
 
-export const linkAddress = async (token, ownerAddress, linkAddress, symbol, accountAddress) => {
-    const res = await axios.put(`${HOST}/address`, { ownerAddress, token, linkAddress, symbol, accountAddress })
-    return res.data
+export const deleteLinkAddress = async (token, linkaddress) => {
+    try {
+        const res = await axios.delete(`${HOST}/address`, { data: { token, linkaddress } });
+        if (res.status === 200) {
+            return true;
+        } else {
+            throw new Error(res.data.message);
+        }
+    } catch (e) {
+        throw new Error(e.response.data.message);
+    }
+}
+
+export const linkAddress = async (token, linkaddress, symbol, accountaddress) => {
+    try {
+        const res = await axios.put(`${HOST}/link`, { token, linkaddress, symbol, accountaddress })
+        if (res.status === 200) {
+            return true;
+        } else {
+            throw new Error(res.data.message);
+        }
+    } catch (e) {
+        throw new Error(e.response.data.message);
+    }
+}
+
+export const unlinkAddress = async (token, linkaddress, symbol) => {
+    try {
+        const res = await axios.delete(`${HOST}/link`, { data: { token, linkaddress, symbol } })
+        if (res.status === 200) {
+            return true;
+        } else {
+            throw new Error(res.data.message);
+        }
+    } catch (e) {
+        throw new Error(e.response.data.message);
+    }
 }
 
 export const getAccountAddress = async (linkAddress, symbol) => {

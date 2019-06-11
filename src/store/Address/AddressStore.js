@@ -38,24 +38,36 @@ class AddressStore {
         }
     }
 
-    addAddress = async (linkAddress, symbol, accountAddress) => {
-        const coreAddress = await this.addressStorageApi.getCoreAddress()
+    linkAddress = async (linkAddress, symbol, accountAddress) => {
         const token = await this.addressStorageApi.getCertificationToken()
-        const res = await this.AddressNetworkApi.linkAddress(token, coreAddress, linkAddress, symbol, accountAddress)
+        const res = await AddressNetworkApi.linkAddress(token, linkAddress, symbol, accountAddress)
         if (res) {
-            this.linkedAddressList.find(linked => linked.linkAddress === linkAddress).setAccountAddress(symbol, address)
+            this.linkedAddressList.find(linked => linked.linkAddress === linkAddress).setAccountAddress(symbol, accountAddress)
             await this.save()
         }
         return res
     }
 
-    deleteAddress = async (linkAddress, symbol) => {
-        const res = await this.AddressNetworkApi.unregisterAddress(linkAddress, symbol)
+    unlinkAddress = async (linkAddress, symbol) => {
+        const token = await this.addressStorageApi.getCertificationToken()
+        const res = await AddressNetworkApi.unlinkAddress(token, linkAddress, symbol)
         if (res) {
             this.linkedAddressList.find(linked => linked.linkAddress === linkAddress).setAccountAddress(symbol, undefined)
             await this.save()
         }
         return res
+    }
+
+    deleteAddress = async (linkaddress) => {
+        const token = await this.addressStorageApi.getCertificationToken()
+        const res = await AddressNetworkApi.deleteLinkAddress(token, linkaddress)
+        if (res) {
+            const idx = this.linkedAddressList.findIndex(linked => linked.linkAddress === linkaddress)
+            this.linkedAddressList.splice(idx, 1);
+            await this.save()
+        }
+        return res
+
     }
 
     save = () => {

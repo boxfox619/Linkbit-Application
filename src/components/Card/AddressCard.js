@@ -12,6 +12,7 @@ export default class AddressCard extends React.Component {
     linkedAddressCount: PropTypes.number.isRequired,
     activate: PropTypes.bool.isRequired,
     onPress: PropTypes.func,
+    onLongPress: PropTypes.func
   }
 
   static defaultProps = {
@@ -23,11 +24,12 @@ export default class AddressCard extends React.Component {
   }
 
   render () {
-    const {address, linkedAddressCount, onPress, activate} = this.props
+    const {address, linkedAddressCount, onPress, onLongPress, activate} = this.props
 
     return (
       <BorderCard
         onPress={onPress}
+        onLongPress={onLongPress}
         activate={activate}
         themeColor={PRIMARY_COLOR}>
         <Text style={this.activeColor}>{address}</Text>

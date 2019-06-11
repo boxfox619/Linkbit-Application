@@ -6,6 +6,7 @@ export default class BorderCard extends React.Component {
 
   static propTypes = {
     onPress: PropTypes.func,
+    onLongPress: PropTypes.func,
     themeColor: PropTypes.string.isRequired,
     activate: PropTypes.bool.isRequired,
   }
@@ -20,7 +21,6 @@ export default class BorderCard extends React.Component {
     if (this.props.activate) {
       style.backgroundColor = this.props.themeColor
     }
-
     return style
   }
 
@@ -28,6 +28,7 @@ export default class BorderCard extends React.Component {
     if (this.props.onPress) {
       return (
         <TouchableOpacity onPress={this.props.onPress}
+                          onLongPress={this.props.onLongPress}
                           style={[styles.container, this.getCardStyle()]}>
           {this.props.children}
         </TouchableOpacity>
