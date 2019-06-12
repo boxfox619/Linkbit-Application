@@ -6,10 +6,11 @@ import AddressCard from '../../components/Card/AddressCard'
 import { dollarFormat, fixed } from '../../libs/NumberFormatter'
 import { PRIMARY_COLOR } from "../../libs/Constraints";
 import i18n from '../../libs/Locale'
+import withProgressDialog from '../../components/HOC/withProgressDialog';
 
 @inject('address', 'wallet', 'coin')
 @observer
-export default class AddressManagementView extends React.Component {
+class AddressManagementView extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return {
             title: i18n.t('edit_address'),
@@ -68,19 +69,29 @@ export default class AddressManagementView extends React.Component {
     }
 
     addWallet = (wallet) => {
+        this.props.showProgress(true)
         this.currentAddressItem.linkAddress(wallet.symbol, wallet.address).then(res => {
+            this.props.showProgress(false)
             if (!res) {
                 alert(i18n.t('fail_add_address'))
             }
-        }).catch(e => alert(e))
+        }).catch(e => {
+            this.props.showProgress(false)
+            alert(e)
+        })
     }
 
     deleteWallet = (wallet) => {
+        this.props.showProgress(true)
         this.currentAddressItem.unlinkAddress(wallet.symbol).then(res => {
+            this.props.showProgress(false)
             if (!res) {
                 alert(i18n.t('fail_delete_address'))
             }
-        }).catch(e => alert(e))
+        }).catch(e => {
+            this.props.showProgress(false)
+            alert(e)
+        })
     }
 
     handleWalletDelete = (wallet) => {
@@ -95,8 +106,7 @@ export default class AddressManagementView extends React.Component {
         )
     }
 
-    onBack = () => {
-    }
+    onBack = () => {}
 }
 
 const styles = StyleSheet.create({
@@ -111,3 +121,4 @@ const styles = StyleSheet.create({
         backgroundColor: PRIMARY_COLOR,
     },
 })
+export default withProgressDialog(AddressManagementView)

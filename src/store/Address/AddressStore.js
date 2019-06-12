@@ -67,7 +67,6 @@ class AddressStore {
             await this.save()
         }
         return res
-
     }
 
     save = () => {

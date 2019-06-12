@@ -7,9 +7,10 @@ import NavigationButton from '../../../components/NavigationButton/NavigationBut
 import AddressBuyStore from '../../../store/Address/AddressBuyStore'
 import { PRIMARY_COLOR } from '../../../libs/Constraints'
 import CommonStyle from '../../../libs/CommonStyle'
+import withProgressDialog from '../../../components/HOC/withProgressDialog';
 
 @observer
-export default class AddressBuyView extends React.Component {
+class AddressBuyView extends React.Component {
     static navigationOptions = () => {
         return {
             title: i18n.t('gettingAddress'),
@@ -29,9 +30,14 @@ export default class AddressBuyView extends React.Component {
 
     onNext = () => {
         if (!this.addressBuyStore.valid) {
+            this.props.showProgress(true)
             this.addressBuyStore.getNewAddress().then(res => {
+                this.props.showProgress(false)
                 this.props.navigation.replace('AddressBuyFinish', { address: this.addressBuyStore.linkAddress })
-            }).catch(err => alert(err))
+            }).catch(err =>{
+                this.props.showProgress(false)
+                alert(err)
+            })
         } else {
             alert(i18n.t('err_addr'))
         }
@@ -67,3 +73,5 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20
     }
 })
+
+export default withProgressDialog(AddressBuyView)

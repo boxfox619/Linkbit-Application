@@ -10,12 +10,12 @@ import { observable } from 'mobx'
 import { PRIMARY_COLOR } from "../../libs/Constraints"
 import CommonStyle from '../../libs/CommonStyle'
 import WithdrawStore from '../../store/Withdraw/WithdrawStore'
-import Loading from '../../components/Loading/Loading'
 import i18n from '../../libs/Locale'
+import withProgressDialog from '../../components/HOC/withProgressDialog';
 
 @inject(['setting'])
 @observer
-export default class RemittanceView extends React.Component {
+class RemittanceView extends React.Component {
     static navigationOptions = () => {
         return {
             title: i18n.t('withdraw'),
@@ -30,7 +30,6 @@ export default class RemittanceView extends React.Component {
     @observable commission = 0
     @observable ratio = 0.1582
     @observable label = 'PIN 번호를 입력해주세요'
-    @observable isLoading = false
 
     constructor(props) {
         super(props)
@@ -89,7 +88,6 @@ export default class RemittanceView extends React.Component {
                         <NavigationButton title={this.buttonLabel} onPress={this.nextStep} />
                     </View>
                 </SafeAreaView>
-                <Loading isLoading={this.isLoading} />
             </React.Fragment>
         )
     }
@@ -122,10 +120,10 @@ export default class RemittanceView extends React.Component {
     }
 
     onSubmit = () => {
-        this.isLoading = true
+        this.props.showProgress(true)
         this.withdrawStore.withdraw()
             .then(res => {
-                this.isLoading = false
+                this.props.showProgress(false)
                 this.props.navigation.navigate({
                     routeName: 'Invoice',
                     params: {
@@ -139,7 +137,7 @@ export default class RemittanceView extends React.Component {
                 })
             })
             .catch(err => {
-                this.isLoading = false
+                this.props.showProgress(false)
                 alert(err)
             })
     }
@@ -191,3 +189,4 @@ const styles = StyleSheet.create({
         width: '100%'
     },
 })
+export default withProgressDialog(RemittanceView)

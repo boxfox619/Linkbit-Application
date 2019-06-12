@@ -2,16 +2,16 @@ import React from 'react'
 import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native'
 import NavigationButton from '../../components/NavigationButton/NavigationButton'
 import { InputWithTitle } from '../../components/Input/Input'
-import Loading from '../../components/Loading/Loading'
 import { inject, observer } from 'mobx-react'
 import CoinItem from '../../components/Card/CoinItem'
 import { PRIMARY_COLOR } from '../../libs/Constraints'
 import CommonStyle from '../../libs/CommonStyle'
 import i18n from '../../libs/Locale'
+import withProgressDialog from '../../components/HOC/withProgressDialog';
 
 @inject(['wallet'])
 @observer
-export default class CreateWalletView extends React.Component {
+class CreateWalletView extends React.Component {
     state = {
         progress: false,
         selectedIndex: 0,
@@ -22,7 +22,6 @@ export default class CreateWalletView extends React.Component {
         invalidPassword: false,
         confirmPassword: '',
         invalidConfirmPassword: false,
-        isLoading: false,
     }
 
     componentWillMount() {
@@ -39,7 +38,6 @@ export default class CreateWalletView extends React.Component {
             confirmPassword,
             invalidPassword,
             invalidConfirmPassword,
-            isLoading,
         } = this.state
 
         return (
@@ -74,7 +72,6 @@ export default class CreateWalletView extends React.Component {
                         <NavigationButton title={i18n.t('add')} onPress={this.createWallet} />
                     </View>
                 </SafeAreaView>
-                <Loading isLoading={isLoading} />
             </React.Fragment>
         )
     }
@@ -118,7 +115,7 @@ export default class CreateWalletView extends React.Component {
             this.setState({ invalidConfirmPassword: undefined })
         }
 
-        await this.setState({ isLoading: true })
+        this.props.showProgress(true);
         await this.props.wallet.createNewWallet(coin.symbol, walletName, password).then(() => {
             this.setState({ progress: false })
             this.props.navigation.navigate('Main')
@@ -126,7 +123,7 @@ export default class CreateWalletView extends React.Component {
             this.setState({ progress: false })
             alert(i18n.t('fail_add_wallet'))
         })
-        await this.setState({ isLoading: false })
+        this.props.showProgress(false);
     }
 }
 
@@ -157,3 +154,4 @@ const styles = StyleSheet.create({
         height: 40,
     }
 })
+export default withProgressDialog(CreateWalletView)
