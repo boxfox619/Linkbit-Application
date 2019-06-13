@@ -1,66 +1,84 @@
-import {HOST} from '../../libs/Constraints'
-import encoding from '../../libs/UrlEncoder'
+import axios from 'axios'
+import { HOST } from '../../libs/Constraints'
 
-export default class AddressNetworkApi {
+export const fetchOwnAddressList = async (accountAddress) => {
+    const res = await axios.get(`${HOST}/address?ownerAddress=${accountAddress}`);
+    return res.data;
+};
 
-    fetchOwnAddressList = async (uid) => {
-        const res = await fetch(`${HOST}/address`, {
-            method: 'GET',
-            headers: {'Authorization': uid}
-        });
-        return res.json();
-    };
-
-    buyAddress = async (linkAddress) => {
-        const res = await fetch(`${HOST}/address`, {
-            method: 'POST',
-            headers: {
-                'Authorization': '',
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: encoding({linkAddress})
-        });
-        return res.json();
+export const createToken = async (publicKey) => {
+    try {
+        const res = await axios.get(`${HOST}/cert?publicKey=${publicKey}`);
+        if (res.status === 200) {
+            return res.data.token
+        } else {
+            throw new Error(res.data.message)
+        }
+    } catch (e) {
+        throw new Error('failed to create token')
     }
+}
 
-    registerAddress = async (linkAddress, symbol, accountAddress) => {
-        const res = await fetch(`${HOST}/address/account`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': '',
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: encoding({
-                linkAddress: linkAddress,
-                symbol: symbol,
-                accountAddress: accountAddress
-            })
-        });
-        return res.ok
+export const createLinkAddress = async (ownerAddress, token, linkaddress) => {
+    try {
+        const res = await axios.post(`${HOST}/address`, { ownerAddress, token, linkaddress });
+        if (res.status === 200) {
+            return true;
+        } else {
+            throw new Error(res.data.message);
+        }
+    } catch (e) {
+        throw new Error(e.response.data.message);
     }
+}
 
-    unregisterAddress = async (linkAddress, symbol) => {
-        const res = await fetch(`${HOST}/address/account`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': '',
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: encoding({
-                linkAddress: linkAddress,
-                symbol: symbol
-            })
-        });
-        return res.ok
+export const deleteLinkAddress = async (token, linkaddress) => {
+    try {
+        const res = await axios.delete(`${HOST}/address`, { data: { token, linkaddress } });
+        if (res.status === 200) {
+            return true;
+        } else {
+            throw new Error(res.data.message);
+        }
+    } catch (e) {
+        throw new Error(e.response.data.message);
     }
+}
 
-    checkLinkAddressExists = async (linkAddress) => {
-        const res = await fetch(`${HOST}/address/exist?address=${linkAddress}`, {method: 'GET'});
-        return res.json();
+export const linkAddress = async (token, linkaddress, symbol, accountaddress) => {
+    try {
+        const res = await axios.put(`${HOST}/link`, { token, linkaddress, symbol, accountaddress })
+        if (res.status === 200) {
+            return true;
+        } else {
+            throw new Error(res.data.message);
+        }
+    } catch (e) {
+        throw new Error(e.response.data.message);
     }
+}
 
-    checkAddressValid = async (symbol, address) => {
-        const res = await fetch(`${HOST}/address/valid?symbol=${symbol}&address=${address}`, {method: 'GET'});
-        return res.status === 200;
+export const unlinkAddress = async (token, linkaddress, symbol) => {
+    try {
+        const res = await axios.delete(`${HOST}/link`, { data: { token, linkaddress, symbol } })
+        if (res.status === 200) {
+            return true;
+        } else {
+            throw new Error(res.data.message);
+        }
+    } catch (e) {
+        throw new Error(e.response.data.message);
     }
+}
+
+export const getAccountAddress = async (linkAddress, symbol) => {
+    const res = await axios.get(`${HOST}/address?linkaddress=${linkAddress}&symbol=${symbol}`)
+    if (res.status === 200) {
+        return res.data.address
+    }
+}
+
+export const checkLinkAddressExists = async (linkAddress) => {
+    const res = await axios.get(`${HOST}/address/exist?address=${linkAddress}`)
+    return res.data
 }

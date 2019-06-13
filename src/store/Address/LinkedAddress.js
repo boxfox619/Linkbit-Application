@@ -1,13 +1,14 @@
-import {observable, action, computed} from 'mobx'
+import { observable, action, computed } from 'mobx'
 
 export default class LinkedAddress {
+    ownAddress
     @observable linkAddress
     @observable accountAddressMap = {}
     store
 
     constructor(store, json) {
         this.store = store
-        if(!!json){
+        if (!!json) {
             this.updateFromJson(json)
         }
     }
@@ -18,6 +19,7 @@ export default class LinkedAddress {
 
     @computed get asJson() {
         return {
+            ownAddress: this.ownAddress,
             linkAddress: this.linkAddress,
             accountAddressMap: this.accountAddressMap
         }
@@ -34,22 +36,27 @@ export default class LinkedAddress {
         return false
     }
 
-    deleteAddress = async (symbol) => {
+    unlinkAddress = async (symbol) => {
         if (this.getAccountAddress(symbol)) {
-            return await this.store.deleteAddress(this.linkAddress, symbol)
+            return await this.store.unlinkAddress(this.linkAddress, symbol)
         }
         return false
     }
 
+    deleteAddress = async () => {
+        return await this.store.deleteAddress(this.linkAddress)
+    }
+
     @action setAccountAddress = (symbol, address) => {
-        if(!!address){
+        if (!!address) {
             this.accountAddressMap[symbol] = address
-        }else{
+        } else {
             delete this.accountAddressMap[symbol]
         }
     }
 
     @action updateFromJson(json) {
+        this.ownAddress = json.ownAddress
         this.linkAddress = json.linkAddress
         this.accountAddressMap = json.accountAddressMap || {}
     }

@@ -6,7 +6,7 @@ import CommonStyle from '../../../libs/CommonStyle'
 import NavigationButton from '../../../components/NavigationButton/NavigationButton'
 import i18n from '../../../libs/Locale'
 
-const checkedIcon = require('./img/checked.png')
+const checkedIcon = require('../../../assets/checked.png')
 
 @observer
 export default class AddressBuyFinishView extends React.Component {
@@ -15,6 +15,7 @@ export default class AddressBuyFinishView extends React.Component {
             title: i18n.t('finish'),
             headerTitleStyle: { color: 'black' },
             headerStyle: { backgroundColor: 'white' },
+            headerLeft: null
         }
     }
 

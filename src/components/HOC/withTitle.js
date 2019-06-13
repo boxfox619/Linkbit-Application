@@ -1,31 +1,36 @@
 import React from 'react'
 import { Text, StyleSheet, View } from 'react-native'
 
-const withTitle = Component => ({ title, isError, ...props }) => {
+const withTitle = Component => ({ title, error, ...props }) => {
     return (
         <View>
-            <Text style={[styles.title, isError ? { color: 'red' } : {}]}>
-                {
-                    isError ?
-                        '⚠️ ' :
-                        ''
-                }
-                {title}
-            </Text>
+            <View style={styles.label}>
+                <Text style={styles.title}>{title}</Text>
+                <Text style={styles.error}>{error}</Text>
+            </View>
             <Component {...props} />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    label: {
+        marginTop: 20,
+        marginBottom: 5,
+        marginHorizontal: 'auto',
+        position: 'relative'
+    },
     title: {
         color: '#594343',
         fontSize: 14,
         fontWeight: 'bold',
-        width: '100%',
+    },
+    error: {
+        position: 'absolute',
+        color: 'red',
+        right: 0,
+        top: 0,
         marginHorizontal: 'auto',
-        marginTop: 20,
-        marginBottom: 5,
     },
 })
 

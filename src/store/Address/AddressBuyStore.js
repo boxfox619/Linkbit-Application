@@ -1,24 +1,26 @@
-import {observable, action, computed} from 'mobx'
+import { observable, action, computed } from 'mobx'
 import AddressStore from './AddressStore'
-import AddressNetworkApi from "../../api/Address/AddressNetworkApi"
+import * as AddressApi from "../../api/Address/AddressNetworkApi"
 import AddressStorageApi from "../../api/Address/AddressStorageApi"
 import i18n from '../../libs/Locale'
 
 export default class AddressBuyStore {
     @observable linkAddress = ''
-    addressNetworkApi
     addressStorageApi
     @observable isProcessing = false
 
     constructor() {
-        this.addressNetworkApi = new AddressNetworkApi()
         this.addressStorageApi = new AddressStorageApi()
     }
 
     getNewAddress = async () => {
         this.isProcessing = true
-        const res = await this.addressNetworkApi.buyAddress(this.linkAddress)
-        await AddressStore.updateAddress(res)
+        const coreAddress = await this.addressStorageApi.getCoreAddress()
+        const token = await this.addressStorageApi.getCertificationToken()
+        const res = await AddressApi.createLinkAddress(coreAddress, token, this.linkAddress)
+        if (res) {
+            await AddressStore.updateAddress({ ownAddress: coreAddress, linkAddress: this.linkAddress })
+        }
         this.isProcessing = false
     }
 

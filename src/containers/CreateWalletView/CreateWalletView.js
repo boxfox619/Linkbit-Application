@@ -1,16 +1,13 @@
 import React from 'react'
 import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native'
 import NavigationButton from '../../components/NavigationButton/NavigationButton'
-import Input from '../../components/Input/Input'
-import withTitle from '../../components/HOC/withTitle'
+import { InputWithTitle } from '../../components/Input/Input'
 import Loading from '../../components/Loading/Loading'
 import { inject, observer } from 'mobx-react'
 import CoinItem from '../../components/Card/CoinItem'
 import { PRIMARY_COLOR } from '../../libs/Constraints'
 import CommonStyle from '../../libs/CommonStyle'
 import i18n from '../../libs/Locale'
-
-const InputWithTitle = withTitle(Input)
 
 @inject(['wallet'])
 @observer
@@ -56,18 +53,18 @@ export default class CreateWalletView extends React.Component {
                                 <InputWithTitle title={i18n.t('wallet_name')}
                                     value={walletName}
                                     onChangeText={text => this.setState({ walletName: text })}
-                                    isError={invalidWalletName} />
+                                    error={invalidWalletName} />
                                 {/* <InputWithTitle title={'지갑 설명'} /> */}
                                 <InputWithTitle title={i18n.t('pin')}
                                     secureTextEntry={true}
                                     value={password}
                                     onChangeText={text => this.setState({ password: text })}
-                                    isError={invalidPassword} />
+                                    error={invalidPassword} />
                                 <InputWithTitle title={i18n.t('verify_pin')}
                                     secureTextEntry={true}
                                     value={confirmPassword}
                                     onChangeText={this.checkConfirmPassword}
-                                    isError={invalidConfirmPassword} />
+                                    error={invalidConfirmPassword} />
                                 {/* <SegmentedControlWithTitle title={'공개범위 설정'}
                                 options={['소유자 정보', '지갑 정보']}
                                 selectedIndex={selectedIndex}
@@ -100,30 +97,25 @@ export default class CreateWalletView extends React.Component {
         const { coin, walletName, password, confirmPassword } = this.state
 
         if (!walletName) {
-            this.setState({ invalidWalletName: true })
-            alert(i18n.t('enter_name'))
+            this.setState({ invalidWalletName: i18n.t('enter_name') })
             return
-        }
-        else {
-            this.setState({ invalidWalletName: false })
+        } else {
+            this.setState({ invalidWalletName: undefined })
         }
 
         if (!password) {
-            this.setState({ invalidPassword: true })
-            alert(i18n.t('enter_pin'))
+            this.setState({ invalidPassword: i18n.t('enter_pin') })
             return
         }
         else {
-            this.setState({ invalidPassword: false })
+            this.setState({ invalidPassword: undefined })
         }
 
         if (password !== confirmPassword) {
-            this.setState({ invalidConfirmPassword: true })
-            alert(i18n.t('wrong_pin'))
+            this.setState({ invalidConfirmPassword: i18n.t('wrong_pin') })
             return
-        }
-        else {
-            this.setState({ invalidConfirmPassword: false })
+        } else {
+            this.setState({ invalidConfirmPassword: undefined })
         }
 
         await this.setState({ isLoading: true })

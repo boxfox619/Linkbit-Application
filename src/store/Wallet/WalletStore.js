@@ -1,8 +1,8 @@
-import {observable, action, computed} from 'mobx'
+import { observable, action, computed } from 'mobx'
 import Wallet from './Wallet'
-import WalletStorageApi from "../../api/Wallet/WalletStorageApi"
+import WalletStorageApi from "../../api/WalletStorageApi"
 import coinPriceStore from '../Coin/CoinPriceStore'
-import {fixed} from '../../libs/NumberFormatter'
+import { fixed } from '../../libs/NumberFormatter'
 import { handleError } from '../../libs/ErrorHandler'
 import walletManager from '../../libs/wallet'
 
@@ -57,7 +57,7 @@ class WalletStore {
 
     addWallet = async (symbol, name, walletData) => {
         const wallet = new Wallet()
-        wallet.updateFromJson({...walletData, name, balance: 0, symbol})
+        wallet.updateFromJson({ ...walletData, name, balance: 0, symbol })
         await this.walletStorageApi.addWallet(wallet.asJson)
         this.setWalletList([...this.wallets, wallet])
         return wallet

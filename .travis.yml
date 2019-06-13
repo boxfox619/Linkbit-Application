@@ -1,14 +1,9 @@
----
 language: node_js
 node_js:
-  - node
-  - lts/*
+  - "stable"
 cache:
   directories:
-    - ~/.npm
-before_script:
-  - npm install -g npm@latest
+  - node_modules
 script:
   - npm install
-  - npm ci
-  - npx jest --ci --passWithNoTests
+  - npm run test

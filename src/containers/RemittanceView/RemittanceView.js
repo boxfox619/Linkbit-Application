@@ -10,9 +10,7 @@ import { observable } from 'mobx'
 import { PRIMARY_COLOR } from "../../libs/Constraints"
 import CommonStyle from '../../libs/CommonStyle'
 import WithdrawStore from '../../store/Withdraw/WithdrawStore'
-import Input from '../../components/Input/Input'
 import Loading from '../../components/Loading/Loading'
-import { WalletStore } from '../../store';
 import i18n from '../../libs/Locale'
 
 @inject(['setting'])
@@ -20,11 +18,11 @@ import i18n from '../../libs/Locale'
 export default class RemittanceView extends React.Component {
     static navigationOptions = () => {
         return {
-          title: i18n.t('withdraw'),
-          headerTitleStyle: { color: 'black' },
-          headerStyle: { backgroundColor: 'white' },
+            title: i18n.t('withdraw'),
+            headerTitleStyle: { color: 'black' },
+            headerStyle: { backgroundColor: 'white' },
         }
-      }
+    }
 
     @observable step = 1
     @observable method = RemittanceType.Wallet
@@ -56,58 +54,37 @@ export default class RemittanceView extends React.Component {
                             </View>
                             <WalletSummaryCard wallet={wallet} />
                             {method === RemittanceType.Wallet && (
-                                <React.Fragment>
-                                    <View style={styles.label}>
-                                        <Text style={styles.title}>받는 주소</Text>
-                                        <Text style={styles.error}>{this.withdrawStore.destAddressError}</Text>
-                                    </View>
-                                    <AddressInput
-                                        address={destAddress}
-                                        edit={step < 2}
-                                        onChangeText={this.withdrawStore.setTargetAddress}
-                                        onPress={() => {
-                                            this.step = 1
-                                        }} />
-                                </React.Fragment>
-                            )
-                            }
-                            {
-                                step >= 2 && (
-                                    <>
-                                        <View style={styles.label}>
-                                            <Text style={styles.title}>보낼 금액</Text>
-                                        </View>
-                                        <AmountInput
-                                            symbol={wallet.symbol}
-                                            moneySymbol={moneySymbol}
-                                            price={price || ''}
-                                            amount={amount || ''}
-                                            selectedSymbol={calculateSymbol}
-                                            onChangeAmount={this.handleChangeAmount}
-                                            onChangeSymbol={(item) => this.calculateSymbol = item}
-                                            edit={step === 2}
-                                            onPress={() => {
-                                                this.step = 2
-                                            }} />
-                                    </>
-                                )
-                            }
-                            {
-                                step >= 3 && this.withdrawStore.passwordRequired && (
-                                    <>
-                                        <View style={styles.label}>
-                                            <Text style={styles.title}>지갑 비밀번호</Text>
-                                        </View>
-                                        <View style={styles.addressContainer}>
-                                            <Input
-                                                secureTextEntry={true}
-                                                defaultValue={password}
-                                                onChangeText={this.withdrawStore.setPassword}
-                                                placeholder="Type wallet password" />
-                                        </View>
-                                    </>
-                                )
-                            }
+                                <AddressInput
+                                    title="받는 주소"
+                                    address={destAddress}
+                                    edit={step < 2}
+                                    error={this.withdrawStore.destAddressError}
+                                    onChangeText={this.withdrawStore.setTargetAddress}
+                                    onPress={() => this.step = 1} />
+                            )}
+                            {step >= 2 && (
+                                <AmountInput
+                                    title="보낼 금액"
+                                    symbol={wallet.symbol}
+                                    moneySymbol={moneySymbol}
+                                    price={price || ''}
+                                    amount={amount || ''}
+                                    selectedSymbol={calculateSymbol}
+                                    onChangeAmount={this.handleChangeAmount}
+                                    onChangeSymbol={(item) => this.calculateSymbol = item}
+                                    edit={step === 2}
+                                    onPress={() => this.step = 2} />
+                            )}
+                            {step >= 3 && this.withdrawStore.passwordRequired && (
+                                <View style={styles.addressContainer}>
+                                    <InputWithTitle
+                                        title="지갑 비밀번호"
+                                        secureTextEntry={true}
+                                        defaultValue={password}
+                                        onChangeText={this.withdrawStore.setPassword}
+                                        placeholder="Type wallet password" />
+                                </View>
+                            )}
                         </View>
                         <NavigationButton title={this.buttonLabel} onPress={this.nextStep} />
                     </View>
@@ -200,24 +177,6 @@ const styles = StyleSheet.create({
     },
     wrapper: {
         paddingHorizontal: 20,
-    },
-    label: {
-        marginTop: 20,
-        marginBottom: 5,
-        marginHorizontal: 'auto',
-        position: 'relative'
-    },
-    title: {
-        color: '#594343',
-        fontSize: 14,
-        fontWeight: 'bold',
-    },
-    error: {
-        position: 'absolute',
-        color: 'red',
-        right: 0,
-        top: 0,
-        marginHorizontal: 'auto',
     },
     password: {
         flexGrow: 1,

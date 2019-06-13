@@ -1,4 +1,5 @@
 import React from 'react'
+import withTitle from '../HOC/withTitle'
 import { View, StyleSheet, TextInput } from 'react-native'
 
 export const Input = ({containerStyle = {}, ...props}) => {
@@ -10,6 +11,8 @@ export const Input = ({containerStyle = {}, ...props}) => {
 }
 
 export default Input
+
+export const InputWithTitle = withTitle(Input)
 
 const styles = StyleSheet.create({
     container: {

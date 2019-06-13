@@ -1,5 +1,5 @@
 import ethereumIcon from '../assets/ETH.png'
-const HOST = 'http://boxfox2015.cafe24.com:8999'
+const HOST = 'https://ive2y3tdlh.execute-api.ap-northeast-2.amazonaws.com/dev'
 const COIN_API_HOST = 'https://api.coingecko.com/api/v3'
 const PRIMARY_COLOR = '#594343'
 const RUNNING_MODE = 'test'

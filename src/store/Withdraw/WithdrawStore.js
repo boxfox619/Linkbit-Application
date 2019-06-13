@@ -1,8 +1,8 @@
-import { observable, action, computed, runInAction } from 'mobx'
+import { observable, action, computed } from 'mobx'
 import WalletStore from "../Wallet/WalletStore"
 import TransactionStore from "../Transaction/TransactionStore"
 import CoinPriceStore from '../Coin/CoinPriceStore'
-import AddressNetworkApi from "../../api/Address/AddressNetworkApi"
+import * as AddressApi from "../../api/Address/AddressNetworkApi"
 import { debounce } from 'lodash'
 import walletManager from '../../libs/wallet'
 
@@ -15,12 +15,6 @@ export default class WithdrawStore {
     @observable moneySymbol
     @observable destAddressError
     @observable password
-    transactionStore
-    addressApi
-
-    constructor() {
-        this.addressApi = new AddressNetworkApi()
-    }
 
     setSourceWallet = action((symbol, address) => {
         this.symbol = symbol
@@ -42,12 +36,19 @@ export default class WithdrawStore {
     })
 
     checkAddressValid = () => {
-        if (this.destAddress.length === 0) {
-            return
+        this.getDestAddress().then(destAddress => {
+            if (!destAddress) {
+                this.destAddressError = 'Please enter valid address'
+            }
+        }).catch(e => this.destAddressError = 'Please enter valid address')
+    }
+
+    getDestAddress = async () => {
+        if (this.destAddress.length === 0) return
+        if (this.walletManager.validAddress(this.destAddress)) {
+            return this.destAddress
         }
-        if(!this.walletManager.validAddress(this.destAddress)){
-            this.destAddressError = 'Please enter valid address'
-        }
+        return await AddressApi.getAccountAddress(this.destAddress, this.symbol)
     }
 
     checkAddressValidDebounce = debounce(this.checkAddressValid, 800)
@@ -98,9 +99,10 @@ export default class WithdrawStore {
     }
 
     withdraw = async () => {
-        this.transactionStore = new TransactionStore(this.symbol, this.sourceAddress)
-        const transactionHash = await this.walletManager.withdraw(this.wallet.privateKey, this.destAddress, this.amount)
-        await this.transactionStore.refreshTransactions()
+        const transactionStore = new TransactionStore(this.symbol, this.sourceAddress)
+        const destAddress = await this.getDestAddress()
+        const transactionHash = await this.walletManager.withdraw(this.wallet.privateKey, destAddress, this.amount)
+        await transactionStore.refreshTransactions()
     }
 
     get symbol() {
@@ -111,7 +113,7 @@ export default class WithdrawStore {
         return this.amount
     }
 
-    get address(){
+    get address() {
         return this.destAddress
     }
 

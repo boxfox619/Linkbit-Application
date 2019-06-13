@@ -3,7 +3,7 @@ import { View, StyleSheet, SafeAreaView, FlatList, Alert, Button } from 'react-n
 import { inject, observer } from 'mobx-react/index'
 import WalletCard from '../../components/Card/WalletCard'
 import AddressCard from '../../components/Card/AddressCard'
-import {dollarFormat, fixed} from '../../libs/NumberFormatter'
+import { dollarFormat, fixed } from '../../libs/NumberFormatter'
 import { PRIMARY_COLOR } from "../../libs/Constraints";
 import i18n from '../../libs/Locale'
 
@@ -23,23 +23,23 @@ export default class AddressManagementView extends React.Component {
         return (
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={styles.container}>
-                    <AddressCard address={this.currentAddressItem.linkAddress}
-                        linkedAddressCount={addressList.length} activate />
+                    <AddressCard address={this.currentAddressItem.linkAddress} linkedAddressCount={addressList.length} activate />
                     <FlatList
                         style={styles.list}
                         data={addressList}
                         extraData={{ size: addressList.length }}
                         keyExtractor={(item, idx) => (!!item) ? item.address : idx}
-                        renderItem={({item}) => {
+                        renderItem={({ item }) => {
                             const coin = this.props.coin.getCoin(item.symbol);
-                            return item && (<WalletCard
+                            return item && (
+                                <WalletCard
                                     key={item.address}
                                     onPress={() => this.handleWalletDelete(item)}
                                     themeColor={coin.themeColor}
                                     name={item.name}
                                     balance={item.balance}
-                                    price={dollarFormat(fixed((item.balance * coin.price),3))}
-                                    symbol={item.symbol} moneySymbol="USD"/>
+                                    price={dollarFormat(fixed((item.balance * coin.price), 3))}
+                                    symbol={item.symbol} moneySymbol="USD" />
                             )
                         }} />
                     <Button
@@ -68,7 +68,7 @@ export default class AddressManagementView extends React.Component {
     }
 
     addWallet = (wallet) => {
-        this.currentAddressItem.addAddress(wallet.symbol, wallet.address).then(res => {
+        this.currentAddressItem.linkAddress(wallet.symbol, wallet.address).then(res => {
             if (!res) {
                 alert(i18n.t('fail_add_address'))
             }
@@ -76,7 +76,7 @@ export default class AddressManagementView extends React.Component {
     }
 
     deleteWallet = (wallet) => {
-        this.currentAddressItem.deleteAddress(wallet.symbol).then(res => {
+        this.currentAddressItem.unlinkAddress(wallet.symbol).then(res => {
             if (!res) {
                 alert(i18n.t('fail_delete_address'))
             }
