@@ -1,4 +1,5 @@
 import axios from 'axios'
+import LinkedAddress from '../../store/Address/LinkedAddress'
 import { HOST } from '../../libs/Constraints'
 
 export const fetchOwnAddressList = async (accountAddress) => {
@@ -16,6 +17,19 @@ export const createToken = async (publicKey) => {
         }
     } catch (e) {
         throw new Error('failed to create token')
+    }
+}
+
+export const getLinkAddressMap = async (ownerAddress, token) => {
+    try {
+        const res = await axios.get(`${HOST}/address?ownerAddress=${ownerAddress}&token=${token}`);
+        if (res.status === 200) {
+            return res.data;
+        } else {
+            throw new Error(res.data.message);
+        }
+    } catch (e) {
+        throw new Error(e.response.data.message);
     }
 }
 
@@ -71,14 +85,14 @@ export const unlinkAddress = async (token, linkaddress, symbol) => {
     }
 }
 
-export const getAccountAddress = async (linkAddress, symbol) => {
-    const res = await axios.get(`${HOST}/address?linkaddress=${linkAddress}&symbol=${symbol}`)
+export const getAccountAddress = async (linkaddress, symbol) => {
+    const res = await axios.get(`${HOST}/link?linkaddress=${linkaddress}&symbol=${symbol}`)
     if (res.status === 200) {
         return res.data.address
     }
 }
 
-export const checkLinkAddressExists = async (linkAddress) => {
-    const res = await axios.get(`${HOST}/address/exist?address=${linkAddress}`)
+export const checkLinkAddressExists = async (linkaddress) => {
+    const res = await axios.get(`${HOST}/address/exist?address=${linkaddress}`)
     return res.data
 }

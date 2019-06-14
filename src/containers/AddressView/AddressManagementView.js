@@ -24,7 +24,7 @@ class AddressManagementView extends React.Component {
         return (
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={styles.container}>
-                    <AddressCard address={this.currentAddressItem.linkAddress} linkedAddressCount={addressList.length} activate />
+                    <AddressCard address={this.currentAddressItem.linkaddress} linkedAddressCount={addressList.length} activate />
                     <FlatList
                         style={styles.list}
                         data={addressList}
@@ -54,8 +54,8 @@ class AddressManagementView extends React.Component {
     }
 
     get currentAddressItem() {
-        const linkAddress = this.props.navigation.state.params.linkAddress
-        return this.props.address.getLinkedAddress().find(a => a.linkAddress === linkAddress)
+        const linkaddress = this.props.navigation.state.params.linkaddress
+        return this.props.address.getLinkedAddress().find(a => a.linkaddress === linkaddress)
     }
 
     onLinkNewWallet = () => {

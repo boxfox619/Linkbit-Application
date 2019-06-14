@@ -2,7 +2,7 @@ import { observable, action, computed } from 'mobx'
 
 export default class LinkedAddress {
     ownAddress
-    @observable linkAddress
+    @observable linkaddress
     @observable accountAddressMap = {}
     store
 
@@ -20,7 +20,7 @@ export default class LinkedAddress {
     @computed get asJson() {
         return {
             ownAddress: this.ownAddress,
-            linkAddress: this.linkAddress,
+            linkaddress: this.linkaddress,
             accountAddressMap: this.accountAddressMap
         }
     }
@@ -29,22 +29,22 @@ export default class LinkedAddress {
         return Object.keys(this.accountAddressMap)
     }
 
-    addAddress = async (symbol, address) => {
+    linkAddress = async (symbol, address) => {
         if (!this.getAccountAddress(symbol)) {
-            return await this.store.addAddress(this.linkAddress, symbol, address)
+            return await this.store.linkAddress(this.linkaddress, symbol, address)
         }
         return false
     }
 
     unlinkAddress = async (symbol) => {
         if (this.getAccountAddress(symbol)) {
-            return await this.store.unlinkAddress(this.linkAddress, symbol)
+            return await this.store.unlinkAddress(this.linkaddress, symbol)
         }
         return false
     }
 
     deleteAddress = async () => {
-        return await this.store.deleteAddress(this.linkAddress)
+        return await this.store.deleteAddress(this.linkaddress)
     }
 
     @action setAccountAddress = (symbol, address) => {
@@ -57,7 +57,7 @@ export default class LinkedAddress {
 
     @action updateFromJson(json) {
         this.ownAddress = json.ownAddress
-        this.linkAddress = json.linkAddress
+        this.linkaddress = json.linkaddress
         this.accountAddressMap = json.accountAddressMap || {}
     }
 

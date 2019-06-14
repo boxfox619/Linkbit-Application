@@ -1,4 +1,4 @@
-import {observable, runInAction, action} from 'mobx'
+import { observable, runInAction, action } from 'mobx'
 import AddressStorageApi from '../../api/Address/AddressStorageApi'
 import * as AddressNetworkApi from '../../api/Address/AddressNetworkApi'
 import LinkedAddress from './LinkedAddress'
@@ -10,6 +10,17 @@ class AddressStore {
 
     constructor() {
         this.addressStorageApi = new AddressStorageApi()
+    }
+
+    refreshAddressMap = async () => {
+        this.isLoading = true
+        const token = await this.addressStorageApi.getCertificationToken()
+        const ownerAddress = await this.addressStorageApi.getCoreAddress()
+        const addressMapList = await AddressNetworkApi.getLinkAddressMap(ownerAddress, token);
+        const linkedAddressList = addressMapList.map(addressMap => new LinkedAddress(this, addressMap));
+        this.linkedAddressList = linkedAddressList;
+        this.save();
+        this.isLoading = false
     }
 
     loadAddressList = async () => {
@@ -27,7 +38,7 @@ class AddressStore {
 
 
     @action updateAddress = async (json) => {
-        let linkedAddress = this.linkedAddressList.find(linked => linked.linkAddress === json.linkAddress)
+        let linkedAddress = this.linkedAddressList.find(linked => linked.linkaddress === json.linkaddress)
         if (!linkedAddress) {
             linkedAddress = new LinkedAddress(this, json)
             this.linkedAddressList = [...this.linkedAddressList, linkedAddress]
@@ -38,21 +49,21 @@ class AddressStore {
         }
     }
 
-    linkAddress = async (linkAddress, symbol, accountAddress) => {
+    linkAddress = async (linkaddress, symbol, accountAddress) => {
         const token = await this.addressStorageApi.getCertificationToken()
-        const res = await AddressNetworkApi.linkAddress(token, linkAddress, symbol, accountAddress)
+        const res = await AddressNetworkApi.linkAddress(token, linkaddress, symbol, accountAddress)
         if (res) {
-            this.linkedAddressList.find(linked => linked.linkAddress === linkAddress).setAccountAddress(symbol, accountAddress)
+            this.linkedAddressList.find(linked => linked.linkaddress === linkaddress).setAccountAddress(symbol, accountAddress)
             await this.save()
         }
         return res
     }
 
-    unlinkAddress = async (linkAddress, symbol) => {
+    unlinkAddress = async (linkaddress, symbol) => {
         const token = await this.addressStorageApi.getCertificationToken()
-        const res = await AddressNetworkApi.unlinkAddress(token, linkAddress, symbol)
+        const res = await AddressNetworkApi.unlinkAddress(token, linkaddress, symbol)
         if (res) {
-            this.linkedAddressList.find(linked => linked.linkAddress === linkAddress).setAccountAddress(symbol, undefined)
+            this.linkedAddressList.find(linked => linked.linkaddress === linkaddress).setAccountAddress(symbol, undefined)
             await this.save()
         }
         return res
@@ -62,7 +73,7 @@ class AddressStore {
         const token = await this.addressStorageApi.getCertificationToken()
         const res = await AddressNetworkApi.deleteLinkAddress(token, linkaddress)
         if (res) {
-            const idx = this.linkedAddressList.findIndex(linked => linked.linkAddress === linkaddress)
+            const idx = this.linkedAddressList.findIndex(linked => linked.linkaddress === linkaddress)
             this.linkedAddressList.splice(idx, 1);
             await this.save()
         }

@@ -30,9 +30,9 @@ export default class AddressStorageApi {
         await this.saveAddressList(addressList)
     }
 
-    removeAddress = async (linkAddress) => {
+    removeAddress = async (linkaddress) => {
         const addressList = await this.getAddressList()
-        const idx = addressList.findIndex(address => (address.address === linkAddress))
+        const idx = addressList.findIndex(address => (address.address === linkaddress))
         addressList.splice(idx, 1)
         await this.saveAddressList(addressList)
     }
