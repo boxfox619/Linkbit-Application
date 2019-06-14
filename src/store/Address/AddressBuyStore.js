@@ -5,7 +5,7 @@ import AddressStorageApi from "../../api/Address/AddressStorageApi"
 import i18n from '../../libs/Locale'
 
 export default class AddressBuyStore {
-    @observable linkAddress = ''
+    @observable linkaddress = ''
     addressStorageApi
     @observable isProcessing = false
 
@@ -17,19 +17,19 @@ export default class AddressBuyStore {
         this.isProcessing = true
         const coreAddress = await this.addressStorageApi.getCoreAddress()
         const token = await this.addressStorageApi.getCertificationToken()
-        const res = await AddressApi.createLinkAddress(coreAddress, token, this.linkAddress)
+        const res = await AddressApi.createLinkAddress(coreAddress, token, this.linkaddress)
         if (res) {
-            await AddressStore.updateAddress({ ownAddress: coreAddress, linkAddress: this.linkAddress })
+            await AddressStore.updateAddress({ ownAddress: coreAddress, linkaddress: this.linkaddress })
         }
         this.isProcessing = false
     }
 
     @action setAddress = (address) => {
-        this.linkAddress = address
+        this.linkaddress = address
     }
 
     @computed get error() {
-        if (this.linkAddress.length < 8) {
+        if (this.linkaddress.length < 8) {
             return i18n.t('err_8char')
         }
     }
