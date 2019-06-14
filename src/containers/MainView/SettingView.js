@@ -30,11 +30,6 @@ export default class SettingView extends React.Component {
                 key: 'Security',
                 labelText: i18n.t('lock_mainTxt', {locale}),
                 subLabelText: i18n.t('lock_subTxt', {locale}),
-            }, {
-                key: 'reset',
-                labelText: i18n.t('reset_mainTxt', {locale}),
-                labelStyle: styles.reset,
-                subLabelText: i18n.t('reset_subTxt', {locale}),
             }
         ]
     }

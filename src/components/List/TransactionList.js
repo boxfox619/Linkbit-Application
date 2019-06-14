@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {StyleSheet, FlatList} from 'react-native'
+import { StyleSheet, FlatList } from 'react-native'
 import TransactionCard from '../Card/TransactionCard'
 
 export default class TransactionList extends React.Component {
@@ -10,13 +10,14 @@ export default class TransactionList extends React.Component {
         refreshing: PropTypes.bool.isRequired,
         data: PropTypes.array.isRequired,
         symbol: PropTypes.string.isRequired,
-        onSelect: PropTypes.func
+        onSelect: PropTypes.func,
+        onLongSelect: PropTypes.func
     }
 
     static defaultProps = {
         data: [],
         refreshing: false,
-        onSelect: (txHash) => {}
+        onSelect: (txHash) => { }
     }
 
     onRefresh = () => {
@@ -39,7 +40,8 @@ export default class TransactionList extends React.Component {
                         key={item.hash}
                         symbol={this.props.symbol}
                         transaction={item}
-                        onClick={() => this.props.onSelect(item.hash)} />
+                        onClick={() => this.props.onSelect(item.hash)}
+                        onLongPress={() => !!this.props.onLongSelect && this.props.onLongSelect(item.hash)} />
                 )} />
         )
     }

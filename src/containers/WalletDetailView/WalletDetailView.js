@@ -53,6 +53,7 @@ export default class WalletDetailView extends React.Component {
                         data={this.store.transactionList}
                         symbol={wallet.symbol}
                         onSelect={this.handleSelectTransaction}
+                        onLongSelect={this.handleLongSelectTransaction}
                         fetchTransaction={this.handleRefreshTransactions} />
                     <ActionButton buttonColor={PRIMARY_COLOR}
                         onPress={() => this.props.navigation.navigate("Withdraw", { wallet })}
@@ -69,16 +70,19 @@ export default class WalletDetailView extends React.Component {
         this.store.refreshTransactions().catch(e => alert(e))
     }
 
-    handleSelectTransaction = (txHash) => {
-        this.props.navigation.navigate('TransactionDetail', { txHash });
- /*        const transaction = this.store.transactionList.find(tr => tr.hash === txHash)
+    handleLongSelectTransaction = (txHash) => {
+        const transaction = this.store.transactionList.find(tr => tr.hash === txHash)
         if (transaction.benefit) {
             Clipboard.setString(transaction.sourceAddress)
             alert('현재 지갑으로 송금해준 주소를 복사하였습니다.')
         } else {
             Clipboard.setString(transaction.targetAddress)
             alert('송금한 주소를 복사하였습니다.')
-        } */
+        }
+    }
+
+    handleSelectTransaction = (txHash) => {
+        this.props.navigation.navigate('TransactionDetail', { txHash });
     }
 }
 

@@ -33,7 +33,7 @@ class SettingStore {
     @action setCurrency = async val => {
         this.currency = val
         await this.save()
-        await CoinPriceStore.refreshCoins()
+        await CoinPriceStore.refreshCoinPrices()
     }
 
     @action setPin = async val => {

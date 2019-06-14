@@ -6,14 +6,15 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export default class TransactionCard extends React.Component {
     static propTypes = {
         transaction: PropTypes.object.isRequired,
-        onClick: PropTypes.func
+        onClick: PropTypes.func,
+        onLongPress: PropTypes.func
     }
 
     render() {
         const {date, address, amount, confirm, symbol} = this.props.transaction
 
         return (
-            <TouchableOpacity onPress={this.props.onClick}>
+            <TouchableOpacity onPress={this.props.onClick} onLongPress={this.props.onLongPress}>
                 <View style={styles.transactionRow}>
                     <Text style={styles.date}>{date}</Text>
                     <View style={styles.accountContainer}>
