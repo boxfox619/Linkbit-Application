@@ -3,6 +3,7 @@ import MainTabView from './MainView/MainTabView'
 import AddressManagementView from './AddressView/AddressManagementView'
 import WalletSearchView from './AddressView/WalletSearchView'
 import WalletDetailView from './WalletDetailView/WalletDetailView'
+import TransactionDetailView from './WalletDetailView/TransactionDetailView'
 import AddressBuyView from './AddressView/AddressBuyContainer/AddressBuyView'
 import AddressBuyFinishView from './AddressView/AddressBuyContainer/AddressBuyFinishView'
 import RemittanceView from "./RemittanceView/RemittanceView"
@@ -28,7 +29,8 @@ export default createStackNavigator({
     "Setting.Language": LanguageSettingView,
     "Setting.Currency": CurrencySettingView,
     SelectCoin: SelectCoinView,
-    CreateWallet: CreateWalletView
+    CreateWallet: CreateWalletView,
+    TransactionDetail: TransactionDetailView
 },
     {
         initialRouteName: 'Main',
