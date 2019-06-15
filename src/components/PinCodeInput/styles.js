@@ -4,7 +4,8 @@ export default StyleSheet.create({
     //passwordInputView
     container: {
         flex: 1,
-        position: 'relative'
+        position: 'relative',
+        justifyContent: 'center'
     },
     title: {
         fontSize: 18,
@@ -13,13 +14,11 @@ export default StyleSheet.create({
         lineHeight: Dimensions.get('window').height / 3,
     },
     pin: {
-        position: 'absolute',
         width: '100%',
-        bottom: 50,
     },
     passwordInputView: {
         flexDirection: 'row',
-        alignSelf: 'center',
+        alignSelf: 'center'
     },
     passwordInputViewItem: {
         alignItems: 'center',
@@ -40,7 +39,7 @@ export default StyleSheet.create({
     // KeyboardView
     keyboardView: {
         alignItems: 'center',
-        marginTop: 35,
+        marginTop: 15
     },
     keyboardViewItem: {
         alignItems: 'center',

@@ -13,7 +13,7 @@ const KeyboardView = ({keyboardOnPress, pinLength, onComplete, bgColor, returnTy
     if (item === deleteText) {
       onPressActive = animatedDeleteButtonOnPress
       style = [styles[0]]
-      component = (<Image style={{width: 30, height: 30}} source={require('./img/ic_delete.png')}/>)
+      component = (<Image style={{width: 30, height: 30}} source={require('../../assets/ic_delete.png')}/>)
     } else {
       onPressActive = false
       style = [styles[0]]
