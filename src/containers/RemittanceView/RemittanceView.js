@@ -1,17 +1,18 @@
 import React from 'react'
-import { View, StyleSheet, Text, SafeAreaView, ActivityIndicator } from 'react-native'
-import NavigationButton from '../../components/NavigationButton/NavigationButton'
+import i18n from '../../libs/Locale'
+import { observable } from 'mobx'
+import { inject, observer } from "mobx-react/index"
+import { View, StyleSheet, SafeAreaView } from 'react-native'
+import { PRIMARY_COLOR } from "../../libs/Constraints"
+import Title from '../../components/Label/Title'
+import CommonStyle from '../../libs/CommonStyle'
+import WithdrawStore from '../../store/Withdraw/WithdrawStore'
+import withProgressDialog from '../../components/HOC/withProgressDialog';
 import AddressInput from './AddressInput/AddressInput'
 import AmountInput from './AmountInput/AmountInput'
 import RemittanceType from '../../store/RemittanceType'
 import WalletSummaryCard from "../../components/Card/WalletSummaryCard"
-import { inject, observer } from "mobx-react/index"
-import { observable } from 'mobx'
-import { PRIMARY_COLOR } from "../../libs/Constraints"
-import CommonStyle from '../../libs/CommonStyle'
-import WithdrawStore from '../../store/Withdraw/WithdrawStore'
-import i18n from '../../libs/Locale'
-import withProgressDialog from '../../components/HOC/withProgressDialog';
+import NavigationButton from '../../components/Button/NavigationButton'
 
 @inject(['setting'])
 @observer
@@ -48,9 +49,7 @@ class RemittanceView extends React.Component {
                 <SafeAreaView style={[CommonStyle.safeArea, { backgroundColor: PRIMARY_COLOR }]}>
                     <View style={styles.container}>
                         <View style={styles.wrapper}>
-                            <View style={styles.label}>
-                                <Text style={styles.title}>출금 지갑</Text>
-                            </View>
+                            <Title title="출금 지갑" />
                             <WalletSummaryCard wallet={wallet} />
                             {method === RemittanceType.Wallet && (
                                 <AddressInput
@@ -96,12 +95,14 @@ class RemittanceView extends React.Component {
         if (this.method === RemittanceType.Wallet) {
             switch (this.step) {
                 case 1:
-                    if (this.withdrawStore.destAddressError) {
-                        alert(this.withdrawStore.destAddressError)
-                        break;
-                    }
-                    this.step += 1
-                    break
+                    this.withdrawStore.checkAddressValid().then(() => {
+                        if (this.withdrawStore.destAddressError) {
+                            alert(this.withdrawStore.destAddressError)
+                        } else {
+                            this.step += 1
+                        }
+                    })
+                    break;
                 case 2:
                     if (this.withdrawStore.amountError) {
                         alert(this.withdrawStore.amountError)

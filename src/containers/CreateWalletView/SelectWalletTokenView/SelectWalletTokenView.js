@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, SafeAreaView, View } from 'react-native'
-import NavigationButton from '../../../components/NavigationButton/NavigationButton'
+import NavigationButton from '../../../components/Button/NavigationButton'
 import SelectCoinView from "../../../components/List/SelectCoinView"
 import { PRIMARY_COLOR } from '../../../libs/Constraints'
 import CommonStyle from '../../../libs/CommonStyle'

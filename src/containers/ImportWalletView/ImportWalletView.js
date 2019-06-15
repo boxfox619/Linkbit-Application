@@ -4,7 +4,7 @@ import {SegmentedControl, InputWithTitle} from '../../components'
 import {observer, inject} from 'mobx-react'
 import {observable} from 'mobx'
 import withTitle from '../../components/HOC/withTitle'
-import NavigationButton from "../../components/NavigationButton/NavigationButton";
+import NavigationButton from "../../components/Button/NavigationButton";
 
 const importMethods = [
     {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, StyleSheet, Image, TextInput } from 'react-native'
 
-const searchBarIcon = require('./img/search.png')
+const searchBarIcon = require('../../assets/search.png')
 
 export default class SearchBar extends React.Component {
   render() {

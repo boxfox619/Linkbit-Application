@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native'
-import NavigationButton from '../../components/NavigationButton/NavigationButton'
+import NavigationButton from '../../components/Button/NavigationButton'
 import { InputWithTitle } from '../../components/Input/Input'
 import { inject, observer } from 'mobx-react'
 import CoinItem from '../../components/Card/CoinItem'
