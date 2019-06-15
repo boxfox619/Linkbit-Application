@@ -62,7 +62,10 @@ export default class WalletListView extends React.Component {
           onPress: () => {
             this.props.wallet.deleteWallet(wallet)
               .then(() => alert(i18n.t('delete_wallet_success')))
-              .catch(err => handleError(err))
+              .catch(err => {
+                handleError(err)
+                alert(err.message)
+              })
           }
         },
       ],

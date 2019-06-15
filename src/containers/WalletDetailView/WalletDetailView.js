@@ -8,6 +8,7 @@ import { TransactionStore } from '../../store/index'
 import { PRIMARY_COLOR } from "../../libs/Constraints"
 import CommonStyle from '../../libs/CommonStyle'
 import i18n from '../../libs/Locale'
+import { handleError } from '../../libs/ErrorHandler';
 
 @observer
 export default class WalletDetailView extends React.Component {
@@ -36,10 +37,15 @@ export default class WalletDetailView extends React.Component {
     }
 
     componentDidMount() {
-        const errorMsg = '트랜젝션 정보 업데이트를 실패했습니다'
         this.store.loadTransactions().then(() => {
-            this.store.refreshTransactions().catch(e => alert(e))
-        }).catch(e => alert(errorMsg))
+            this.store.refreshTransactions().catch(e => {
+                handleError(e)
+                alert(e.message)
+            })
+        }).catch(e => {
+            handleError(e)
+            alert(e.message)
+        })
     }
 
     render() {
@@ -56,7 +62,7 @@ export default class WalletDetailView extends React.Component {
                         onLongSelect={this.handleLongSelectTransaction}
                         fetchTransaction={this.handleRefreshTransactions} />
                     <ActionButton buttonColor={PRIMARY_COLOR}
-                        onPress={() => this.props.navigation.navigate("Withdraw", { wallet })}
+                        onPress={() => this.props.navigation.navigate("Withdraw", { wallet, transactionStore: this.store })}
                         offsetX={20}
                         offsetY={20}
                         renderIcon={() => <Icon name="account-balance-wallet" color="#fff" />}
@@ -67,7 +73,10 @@ export default class WalletDetailView extends React.Component {
     }
 
     handleRefreshTransactions = () => {
-        this.store.refreshTransactions().catch(e => alert(e))
+        this.store.refreshTransactions().catch(e => {
+            handleError(e)
+            alert(e.message)
+        })
     }
 
     handleLongSelectTransaction = (txHash) => {

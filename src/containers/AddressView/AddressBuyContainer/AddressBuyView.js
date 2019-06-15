@@ -8,6 +8,7 @@ import AddressBuyStore from '../../../store/Address/AddressBuyStore'
 import { PRIMARY_COLOR } from '../../../libs/Constraints'
 import CommonStyle from '../../../libs/CommonStyle'
 import withProgressDialog from '../../../components/HOC/withProgressDialog';
+import { handleError } from '../../../libs/ErrorHandler';
 
 @observer
 class AddressBuyView extends React.Component {
@@ -35,8 +36,8 @@ class AddressBuyView extends React.Component {
                 this.props.showProgress(false)
                 this.props.navigation.replace('AddressBuyFinish', { address: this.addressBuyStore.linkaddress })
             }).catch(err =>{
-                this.props.showProgress(false)
-                alert(err)
+                handleError(err)
+                this.props.showProgress(false, '', () => alert(err.message))
             })
         } else {
             alert(i18n.t('err_addr'))

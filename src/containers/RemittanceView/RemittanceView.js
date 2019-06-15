@@ -14,8 +14,9 @@ import RemittanceType from '../../store/RemittanceType'
 import WalletSummaryCard from "../../components/Card/WalletSummaryCard"
 import NavigationButton from '../../components/Button/NavigationButton'
 import withVerify from '../../components/HOC/withVerify';
+import { handleError } from '../../libs/ErrorHandler';
 
-@inject(['setting'])
+@inject('setting', 'wallet')
 @observer
 class RemittanceView extends React.Component {
     static navigationOptions = () => {
@@ -35,7 +36,8 @@ class RemittanceView extends React.Component {
 
     constructor(props) {
         super(props)
-        this.withdrawStore = new WithdrawStore()
+        const transactionStore = props.navigation.getParam("transactionStore")
+        this.withdrawStore = new WithdrawStore(transactionStore)
         this.withdrawStore.setSourceWallet(this.wallet.symbol, this.wallet.address)
         this.withdrawStore.setMoneySymbol(props.setting.currency)
         this.calculateSymbol = this.wallet.symbol
@@ -126,27 +128,28 @@ class RemittanceView extends React.Component {
         return this.step >= 3 ? '송금하기' : '다음'
     }
 
-    onSubmit = () => {
+    onSubmit = async () => {
         this.props.showProgress(true)
-        this.withdrawStore.withdraw()
-            .then(res => {
-                this.props.showProgress(false)
+        try {
+            await this.withdrawStore.withdraw()
+            this.props.showProgress(false, '', () => {
                 this.props.navigation.navigate({
                     routeName: 'Invoice',
                     params: {
                         symbol: this.withdrawStore.symbol,
                         amount: this.withdrawStore.amount,
-                        destAddress: this.withdrawStore.name,
-                        withDrawWalletName: this.wallet,
-                        // TODO: 잔액을 불러와야 함
-                        balance: 3.1415926535,
+                        destAddress: this.withdrawStore.destAddress,
+                        withDrawWalletName: this.wallet.name,
+                        balance: this.wallet.balance,
                     },
                 })
             })
-            .catch(err => {
-                this.props.showProgress(false)
-                alert(err)
-            })
+        } catch (err) {
+            handleError(err)
+            this.props.showProgress(false, '', () => alert(err.message))
+        } finally {
+            this.props.showProgress(false)
+        }
     }
 
     handleChangeAmount = (amount) => {
@@ -159,7 +162,8 @@ class RemittanceView extends React.Component {
     }
 
     get wallet() {
-        return this.props.navigation.getParam("wallet")
+        const wallet = this.props.navigation.getParam("wallet");
+        return this.props.wallet.getWallet(wallet.address)
     }
 
     onCommissionChanged = (value) => {

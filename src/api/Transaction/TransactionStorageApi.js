@@ -1,6 +1,7 @@
-import {AsyncStorage} from 'react-native'
+import { AsyncStorage } from 'react-native'
 
 const TRANSACTION_STORAGE_KEY = "transaction"
+const TMP_TRANSACTION_STORAGE_KEY = "tmp_transaction"
 export default class TransactionStorageApi {
     transactionMap
 
@@ -9,35 +10,40 @@ export default class TransactionStorageApi {
         this.address = address
     }
 
+    loadTransactionMap = async (key) => {
+        const transactionStorage = JSON.parse(await AsyncStorage.getItem(key) || '{}')
+        const symbolMap = transactionStorage[this.symbol] || {}
+        return symbolMap[this.address] || {}
+    }
+
     getTransactionMap = async () => {
-        if(!this.transactionMap){
-            const transactionStorage = JSON.parse(await AsyncStorage.getItem(TRANSACTION_STORAGE_KEY) || '{}')
-            const symbolMap = transactionStorage[this.symbol] || {}
-            this.transactionMap = symbolMap[this.address] || {}
+        if (!this.transactionMap) {
+            this.transactionMap = await this.loadTransactionMap(TRANSACTION_STORAGE_KEY)
         }
         return this.transactionMap
     }
 
     setTransactions = async (transactions) => {
-        const data = transactions.reduce((trnasactionMap, transaction) => {
-            trnasactionMap[transaction.hash] = transaction
-            return trnasactionMap
-        }, this.transactionMap)
-        await this.saveTransactionMap(data)
+        const originalTransactionMap = await this.getTransactionMap()
+        const data = transactions.reduce((transactionMap, transaction) => {
+            transactionMap[transaction.hash] = transaction
+            return transactionMap
+        }, originalTransactionMap)
+        this.transactionMap = await this.saveTransactionMap(TRANSACTION_STORAGE_KEY, data)
     }
 
     getTransactions = async () => {
         const transactionMap = await this.getTransactionMap()
-        return Object.values(transactionMap).filter(t => typeof t === "object").sort((tr, tr2) => tr2.block - tr.block)
+        return Object.values(transactionMap).filter(t => !!t && !!t.block).sort((tr, tr2) => tr2.block - tr.block)
     }
 
-    saveTransactionMap = async (transactionMap) => {
-        const transactionStorage = JSON.parse(await AsyncStorage.getItem(TRANSACTION_STORAGE_KEY) || '{}')
+    saveTransactionMap = async (key, transactionMap) => {
+        const transactionStorage = JSON.parse(await AsyncStorage.getItem(key) || '{}')
         const symbolMap = transactionStorage[this.symbol] || {}
         symbolMap[this.address] = transactionMap
         transactionStorage[this.symbol] = symbolMap
-        this.transactionMap = transactionMap
-        await AsyncStorage.setItem(TRANSACTION_STORAGE_KEY, JSON.stringify(transactionStorage))
+        await AsyncStorage.setItem(key, JSON.stringify(transactionStorage))
+        return transactionMap
     }
 
     clear = async () => {

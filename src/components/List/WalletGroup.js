@@ -49,7 +49,7 @@ export default class WalletGroup extends React.Component {
     get totalBalance() {
         let totalBalance = 0
         this.props.wallets.forEach(wallet => {
-            totalBalance += wallet.balance
+            totalBalance += parseFloat(wallet.balance, 10)
         })
         return totalBalance
     }

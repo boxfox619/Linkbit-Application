@@ -8,6 +8,7 @@ import { dollarFormat, fixed } from '../../libs/NumberFormatter'
 import { PRIMARY_COLOR } from "../../libs/Constraints";
 import i18n from '../../libs/Locale'
 import withProgressDialog from '../../components/HOC/withProgressDialog';
+import { handleError } from '../../libs/ErrorHandler';
 
 @inject('address', 'wallet', 'coin')
 @observer
@@ -81,26 +82,28 @@ class AddressManagementView extends React.Component {
     addWallet = (wallet) => {
         this.props.showProgress(true)
         this.currentAddressItem.linkAddress(wallet.symbol, wallet.address).then(res => {
-            this.props.showProgress(false)
-            if (!res) {
-                alert(i18n.t('fail_add_address'))
-            }
+            this.props.showProgress(false, '', () => {
+                if (!res) {
+                    alert(i18n.t('fail_add_address'))
+                }
+            })
         }).catch(e => {
-            this.props.showProgress(false)
-            alert(e)
+            handleError(e)
+            this.props.showProgress(false, '', () => alert(e))
         })
     }
 
     deleteWallet = (wallet) => {
         this.props.showProgress(true)
         this.currentAddressItem.unlinkAddress(wallet.symbol).then(res => {
-            this.props.showProgress(false)
-            if (!res) {
-                alert(i18n.t('fail_delete_address'))
-            }
+            this.props.showProgress(false, '', () => {
+                if (!res) {
+                    alert(i18n.t('fail_delete_address'))
+                }
+            })
         }).catch(e => {
-            this.props.showProgress(false)
-            alert(e)
+            handleError(e)
+            this.props.showProgress(false, '', () => alert(e))
         })
     }
 
