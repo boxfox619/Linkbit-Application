@@ -48,7 +48,6 @@ export const styles = StyleSheet.create({
         marginVertical: 80,
         marginHorizontal: 30,
         alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#e8a93a'
+        justifyContent: 'center'
     }
 })
