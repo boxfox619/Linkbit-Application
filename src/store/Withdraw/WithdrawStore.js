@@ -1,6 +1,5 @@
 import { observable, action, computed } from 'mobx'
 import WalletStore from "../Wallet/WalletStore"
-import TransactionStore from "../Transaction/TransactionStore"
 import CoinPriceStore from '../Coin/CoinPriceStore'
 import * as AddressApi from "../../api/Address/AddressNetworkApi"
 import { debounce } from 'lodash'
@@ -15,6 +14,11 @@ export default class WithdrawStore {
     @observable moneySymbol
     @observable destAddressError
     @observable password
+    transactionStore
+
+    constructor(transactionStore) {
+        this.transactionStore = transactionStore
+    }
 
     setSourceWallet = action((symbol, address) => {
         this.symbol = symbol
@@ -104,10 +108,9 @@ export default class WithdrawStore {
     }
 
     withdraw = async () => {
-        const transactionStore = new TransactionStore(this.symbol, this.sourceAddress)
         const destAddress = await this.getDestAddress()
         const transactionHash = await this.walletManager.withdraw(this.wallet.privateKey, destAddress, this.amount)
-        const transactionData = {
+/*         const transactionData = {
             block: 0,
             hash: transactionHash,
             symbol: this.symbol,
@@ -117,9 +120,8 @@ export default class WithdrawStore {
             status: false,
             date: new Date().toDateString(),
             confirm: 0
-        }
-        await transactionStore.saveTempTransaction(transactionData)
-        await transactionStore.refreshTransactions()
+        } */
+        await this.transactionStore.refreshTransactions()
         await WalletStore.loadAllBalance()
     }
 

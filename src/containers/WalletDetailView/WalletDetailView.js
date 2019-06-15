@@ -62,7 +62,7 @@ export default class WalletDetailView extends React.Component {
                         onLongSelect={this.handleLongSelectTransaction}
                         fetchTransaction={this.handleRefreshTransactions} />
                     <ActionButton buttonColor={PRIMARY_COLOR}
-                        onPress={() => this.props.navigation.navigate("Withdraw", { wallet })}
+                        onPress={() => this.props.navigation.navigate("Withdraw", { wallet, transactionStore: this.store })}
                         offsetX={20}
                         offsetY={20}
                         renderIcon={() => <Icon name="account-balance-wallet" color="#fff" />}

@@ -6,7 +6,6 @@ import { handleError } from '../../libs/ErrorHandler';
 
 export default class TransactionStore {
     @observable transactions = []
-    @observable tmpTransactions = []
     @observable loading = false
     symbol
     address
@@ -22,10 +21,8 @@ export default class TransactionStore {
         this.loading = true
         try {
             const transactions = await this.transactionStorageApi.getTransactions()
-            const tmpTransactions = await this.transactionStorageApi.getTmpTransactions()
             runInAction(() => {
                 this.transactions = transactions.map(this.convertTransaction)
-                this.tmpTransactions = tmpTransactions.map(this.convertTransaction)
             })
         } catch (err) {
             handleError(err)
@@ -49,14 +46,8 @@ export default class TransactionStore {
         this.loading = false
     }
 
-    saveTempTransaction = async (transaction) => {
-        await this.transactionStorageApi.addTmpTransaction(transaction)
-        const tmpTransaction = this.convertTransaction(transaction)
-        this.tmpTransactions.push(tmpTransaction)
-    }
-
     @computed get transactionList() {
-        return [...this.tmpTransactions, ...this.transactions].map(tr => {
+        return this.transactions.map(tr => {
             const benefit = tr.targetAddress.toLowerCase() === this.address.toLowerCase()
             let address = benefit ? tr.sourceAddress : tr.targetAddress
             return { ...tr, benefit, address, symbol: this.symbol }
@@ -64,6 +55,6 @@ export default class TransactionStore {
     }
 
     @computed get transactionCount() {
-        return this.transactions.length + this.tmpTransactions.length
+        return this.transactions.length
     }
 }

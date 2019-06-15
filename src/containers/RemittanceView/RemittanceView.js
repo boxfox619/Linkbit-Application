@@ -36,7 +36,8 @@ class RemittanceView extends React.Component {
 
     constructor(props) {
         super(props)
-        this.withdrawStore = new WithdrawStore()
+        const transactionStore = props.navigation.getParam("transactionStore")
+        this.withdrawStore = new WithdrawStore(transactionStore)
         this.withdrawStore.setSourceWallet(this.wallet.symbol, this.wallet.address)
         this.withdrawStore.setMoneySymbol(props.setting.currency)
         this.calculateSymbol = this.wallet.symbol
