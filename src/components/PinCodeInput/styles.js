@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet} from 'react-native'
+import {StyleSheet} from 'react-native'
 
 export default StyleSheet.create({
     //passwordInputView
@@ -10,8 +10,8 @@ export default StyleSheet.create({
     title: {
         fontSize: 18,
         textAlign: 'center',
-        width: Dimensions.get('window').width,
-        lineHeight: Dimensions.get('window').height / 3,
+        width: '100%',
+        marginBottom: '20%',
     },
     pin: {
         width: '100%',

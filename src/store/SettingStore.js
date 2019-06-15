@@ -35,6 +35,11 @@ class SettingStore {
         await CoinPriceStore.refreshCoinPrices()
     }
 
+    @action unsetPin = async () => {
+        this.pin = ''
+        await this.save()
+    }
+
     @action setPin = async val => {
         this.pin = val
         await this.save()
@@ -43,6 +48,10 @@ class SettingStore {
     @action setFingerprint = async val => {
         this.useFingerprint = val
         await this.save()
+    }
+
+    get usePin() {
+        return (this.pin !== undefined && !!this.pin)
     }
 
     save = async () => {
