@@ -3,10 +3,10 @@ import { View, StyleSheet } from 'react-native'
 import PinCodeCreateView from '../PinCodeInputView/PinCodeCreateView'
 import { inject, observer } from 'mobx-react'
 import { observable } from 'mobx'
-import { checkForFingerprint } from '../../libs/Fingerprint'
 import SettingListView from '../SettingView/SettingListView'
 import PinCodeView from '../../components/PinCodeInput'
 import i18n from '../../libs/Locale'
+import TouchID from 'react-native-touch-id'
 
 @inject(['setting'])
 @observer
@@ -47,9 +47,16 @@ export default class SecurityView extends React.Component {
     if (useFingerprint) {
       await setFingerprint(false)
     }
-    const finger = await checkForFingerprint(true)
-    await setFingerprint(finger)
-    this.view = await 'menu'
+    try {
+      const res = await TouchID.authenticate('to demo this react-native component')
+      await setFingerprint(res)
+    } catch (err) {
+      if (err.name === 'LAErrorTouchIDNotEnrolled') {
+        alert('Touch ID 또는 Face ID가 지원되지 않습니다')
+      } else {
+        alert('인증을 실패했습니다')
+      }
+    }
   }
 
   render() {

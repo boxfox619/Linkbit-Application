@@ -1,15 +1,16 @@
 import React from 'react'
-import {View, StyleSheet} from 'react-native'
-import {createAppContainer} from 'react-navigation'
-import {Provider} from 'mobx-react'
+import { View, StyleSheet } from 'react-native'
+import { createAppContainer } from 'react-navigation'
+import { Provider } from 'mobx-react'
 import Navigator from './src/containers/navigator'
 import PinCodeView from './src/components/PinCodeInput'
-import {WalletStore, CoinPriceStore, AddressStore, SettingStore} from './src/store'
-import {checkForFingerprint} from './src/libs/Fingerprint'
-import {handleError} from "./src/libs/ErrorHandler"
-import {observer} from 'mobx-react'
-import {observable} from 'mobx/lib/mobx'
+import SplashView from './src/containers/GuideView/SplashView'
+import { WalletStore, CoinPriceStore, AddressStore, SettingStore } from './src/store'
+import { handleError } from "./src/libs/ErrorHandler"
+import { observer } from 'mobx-react'
+import { observable } from 'mobx/lib/mobx'
 import i18n from './src/libs/Locale'
+import TouchID from 'react-native-touch-id'
 
 const store = {
   wallet: WalletStore,
@@ -23,18 +24,30 @@ const AppContainer = createAppContainer(Navigator)
 export default class App extends React.Component {
   @observable label = i18n.t('pin_verify')
   @observable isVerify = true
+  @observable progress = true
 
   componentDidMount() {
-    store.address.loadAddressList().catch(err => handleError(err))
-    store.wallet.loadWalletList().catch(err => handleError(err))
-    store.coin.load().catch(err => handleError(err))
-
-    const {pin, useFingerprint} = store.setting
-    if (useFingerprint) {
-      this.isVerify = checkForFingerprint()
-    } else if (pin) {
-      this.isVerify = false
-    }
+    Promise.all([
+      store.address.loadAddressList(),
+      store.wallet.loadWalletList(),
+      store.coin.load(),
+      store.setting.load()
+    ]).then(() => {
+      const { pin, useFingerprint } = store.setting
+      if (useFingerprint) {
+        TouchID.authenticate('to demo this react-native component')
+          .then(success => {
+            this.isVerify = true
+          }).catch(error => {
+            this.isVerify = false
+          });
+      } else if (pin) {
+        this.isVerify = false
+      }
+      this.progress = false
+    }).catch(err => {
+      handleError(err)
+    })
   }
 
   handlePinVerify = inputPin => {
@@ -50,14 +63,16 @@ export default class App extends React.Component {
     return (
       <Provider {...store}>
         <View style={[styles.container, !this.isVerify && styles.paddingTop]}>
-          {
-            !this.isVerify ?
-              <PinCodeView
-                label={this.label}
-                onComplete={this.handlePinVerify}
-                pinLength={5}/> :
-              <AppContainer/>
-          }
+          {this.progress ? (
+            <SplashView />
+          ) : (
+              !this.isVerify ?
+                <PinCodeView
+                  label={this.label}
+                  onComplete={this.handlePinVerify}
+                  pinLength={5} /> :
+                <AppContainer />
+            )}
         </View>
       </Provider>
     )
