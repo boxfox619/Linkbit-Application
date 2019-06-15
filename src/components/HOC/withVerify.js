@@ -5,9 +5,10 @@ import { PinCodeView } from '..'
 import { handleTouchIdError } from '../../libs/ErrorHandler'
 import TouchID from 'react-native-touch-id'
 
-const withVerify = (Component, visible = false) => inject(['setting'])(observer((class withPinVerify extends React.Component {
+const withVerify = (Component, defaultVisible = false) => inject(['setting'])(observer((class withPinVerify extends React.Component {
     constructor(props) {
         super(props)
+        const visible = defaultVisible && this.props.setting.usePin
         this.state = { label: i18n.t('pin_verify'), visible, verified: false, callback: undefined }
     }
 

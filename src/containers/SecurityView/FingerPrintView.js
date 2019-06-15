@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, Dimensions, Image } from 'react-native'
 
-const backgroundImg = require('./img/img_fingerprint.png')
+const backgroundImg = require('../../assets/img_fingerprint.png')
 
 export default class FingerPrintView extends React.Component {
 
