@@ -13,6 +13,7 @@ import AmountInput from './AmountInput/AmountInput'
 import RemittanceType from '../../store/RemittanceType'
 import WalletSummaryCard from "../../components/Card/WalletSummaryCard"
 import NavigationButton from '../../components/Button/NavigationButton'
+import withVerify from '../../components/HOC/withVerify';
 
 @inject(['setting'])
 @observer
@@ -111,7 +112,12 @@ class RemittanceView extends React.Component {
                     this.step += 1
                     break
                 case 3:
-                    this.onSubmit()
+                    this.props.requestVerify((res) => {
+                        if (res) {
+                            this.onSubmit()
+                        }
+                    })
+                    break
             }
         }
     }
@@ -190,4 +196,4 @@ const styles = StyleSheet.create({
         width: '100%'
     },
 })
-export default withProgressDialog(RemittanceView)
+export default withVerify(withProgressDialog(RemittanceView))
