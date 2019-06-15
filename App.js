@@ -22,15 +22,12 @@ export default class App extends React.Component {
   @observable isVerify = true
   @observable progress = true
 
-  componentDidMount() {
-    Promise.all([
-      store.address.loadAddressList(),
-      store.wallet.loadWalletList(),
-      store.coin.load(),
-      store.setting.load()
-    ]).then(() => {
-      this.progress = false
-    })
+  componentDidMount = async () => {
+    await store.setting.load()
+    await store.address.loadAddressList()
+    await store.wallet.loadWalletList()
+    await store.coin.load()
+    this.progress = false
   }
 
   render() {

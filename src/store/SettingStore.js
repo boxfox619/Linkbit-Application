@@ -1,6 +1,5 @@
 import { observable, action } from 'mobx'
 import i18n from 'i18n-js'
-import { Dimensions } from 'react-native'
 import AsyncStorageApi from "../api/AsyncStorageApi";
 import CoinPriceStore from './Coin/CoinPriceStore';
 
@@ -9,11 +8,6 @@ class SettingStore {
     @observable currency = 'USD'
     @observable pin = ''
     @observable useFingerprint = false
-
-    @observable.struct windowDimensions = {
-        width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height,
-    }
 
     load = async () => {
         const obj = await AsyncStorageApi.getObject(['language', 'currency', 'pin', 'useFingerprint'])
@@ -51,7 +45,7 @@ class SettingStore {
     }
 
     get usePin() {
-        return (this.pin !== undefined && !!this.pin)
+        return (this.pin !== undefined && this.pin !== null && this.pin !== 'null' && !!this.pin)
     }
 
     save = async () => {
