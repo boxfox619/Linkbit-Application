@@ -11,21 +11,21 @@ import i18n from '../../libs/Locale'
 
 @observer
 export default class WalletDetailView extends React.Component {
-    static navigationOptions = ({navigation}) => {
-        const {params = {wallet}} = navigation.state
+    static navigationOptions = ({ navigation }) => {
+        const { params = { wallet } } = navigation.state
 
         return {
             title: i18n.t('detail'),
-            headerTitleStyle: {color: 'black'},
-            headerStyle: {backgroundColor: 'white'},
+            headerTitleStyle: { color: 'black' },
+            headerStyle: { backgroundColor: 'white' },
             headerRight: <Icon name={'share'}
-                               style={{color: '#fff'}}
-                               containerStyle={{marginRight: 10}}
-                               onPress={() => {
-                                   const address = params.wallet.address
-                                   Clipboard.setString(address)
-                                   alert(i18n.t('copied_addr'))
-                               }}/>
+                style={{ color: '#fff' }}
+                containerStyle={{ marginRight: 10 }}
+                onPress={() => {
+                    const address = params.wallet.address
+                    Clipboard.setString(address)
+                    alert(i18n.t('copied_addr'))
+                }} />
         }
     }
 
@@ -47,18 +47,19 @@ export default class WalletDetailView extends React.Component {
         return (
             <SafeAreaView style={CommonStyle.safeArea}>
                 <View style={styles.container}>
-                    <WalletSummaryCard wallet={wallet}/>
-                    <TransactionList style={{padding: 10}}
-                                     refreshing={this.store.loading}
-                                     data={this.store.transactionList}
-                                     symbol={wallet.symbol}
-                                     onSelect={this.handleSelectTransaction}
-                                     fetchTransaction={this.handleRefreshTransactions}/>
+                    <WalletSummaryCard wallet={wallet} />
+                    <TransactionList style={{ padding: 10 }}
+                        refreshing={this.store.loading}
+                        data={this.store.transactionList}
+                        symbol={wallet.symbol}
+                        onSelect={this.handleSelectTransaction}
+                        onLongSelect={this.handleLongSelectTransaction}
+                        fetchTransaction={this.handleRefreshTransactions} />
                     <ActionButton buttonColor={PRIMARY_COLOR}
-                                  onPress={() => this.props.navigation.navigate("Withdraw", {wallet})}
-                                  offsetX={20}
-                                  offsetY={20}
-                                  renderIcon={() => <Icon name="account-balance-wallet" color="#fff"/>}
+                        onPress={() => this.props.navigation.navigate("Withdraw", { wallet })}
+                        offsetX={20}
+                        offsetY={20}
+                        renderIcon={() => <Icon name="account-balance-wallet" color="#fff" />}
                     />
                 </View>
             </SafeAreaView>
@@ -69,15 +70,19 @@ export default class WalletDetailView extends React.Component {
         this.store.refreshTransactions().catch(e => alert(e))
     }
 
-    handleSelectTransaction = (txHash) => {
+    handleLongSelectTransaction = (txHash) => {
         const transaction = this.store.transactionList.find(tr => tr.hash === txHash)
-        if(transaction.benefit) {
+        if (transaction.benefit) {
             Clipboard.setString(transaction.sourceAddress)
             alert('현재 지갑으로 송금해준 주소를 복사하였습니다.')
         } else {
             Clipboard.setString(transaction.targetAddress)
             alert('송금한 주소를 복사하였습니다.')
         }
+    }
+
+    handleSelectTransaction = (txHash) => {
+        this.props.navigation.navigate('TransactionDetail', { txHash });
     }
 }
 
