@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, Text, Button, StyleSheet, Dimensions, Image } from 'react-native'
+import { View, Text, Button, Image } from 'react-native'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 import { PagerDotIndicator, IndicatorViewPager } from '../../components/ViewPager'
+import { styles } from './styles'
 
 @observer
 export default class GuideView extends React.Component {
@@ -46,7 +47,7 @@ export default class GuideView extends React.Component {
             <View style={styles.card}>
               <Image
                 style={styles.image}
-                source={require('./img/ic_public.png')}/>
+                source={require('../../assets/ic_public.png')}/>
               <Text style={styles.titleLabel}>쉽고 간편하게</Text>
               <Text style={styles.subLabel}>
                 누구나 쉽고 간편하게
@@ -60,7 +61,7 @@ export default class GuideView extends React.Component {
             <View style={styles.card}>
               <Image
                 style={styles.image}
-                source={require('./img/ic_security.png')}/>
+                source={require('../../assets/ic_security.png')}/>
               <Text style={styles.titleLabel}>더 안전하게</Text>
               <Text style={styles.subLabel}>
                 자신의 자산을
@@ -74,7 +75,7 @@ export default class GuideView extends React.Component {
             <View style={styles.card}>
               <Image
                 style={styles.image}
-                source={require('./img/ic_local_atm.png')}/>
+                source={require('../../assets/ic_local_atm.png')}/>
               <Text style={styles.titleLabel}>쉽고 간편하게</Text>
               <Text style={styles.subLabel}>
                 누구나 쉽고 간편하게
@@ -88,7 +89,7 @@ export default class GuideView extends React.Component {
             <View style={styles.card}>
               <Image
                 style={styles.image}
-                source={require('./img/ic_linkbit.png')}/>
+                source={require('../../assets/ic_linkbit.png')}/>
               <Text style={styles.titleLabel}>새로운 시작</Text>
               <Text style={styles.subLabel}>
                 새로운 실생활 암호화폐
@@ -109,47 +110,3 @@ export default class GuideView extends React.Component {
     )
   }
 }
-
-const getCardWidth = () => {
-  const {height, width} = Dimensions.get('window')
-
-  return width / 100 * 80
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 50,
-    paddingBottom: 20,
-  },
-  page: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  card: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: getCardWidth(),
-    marginBottom: 80,
-    borderRadius: 10,
-    backgroundColor: '#e8a93a',
-  },
-  image: {
-    width: 200,
-    height: 200,
-    marginBottom: 50,
-  },
-  titleLabel: {
-    fontSize: 20,
-    marginBottom: 10,
-    color: '#ffffff',
-    fontWeight: 'bold',
-  },
-  subLabel: {
-    lineHeight: 20,
-    color: '#ffffff',
-    textAlign: 'center',
-  },
-})

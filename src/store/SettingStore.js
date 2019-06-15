@@ -1,6 +1,6 @@
-import {observable, action} from 'mobx'
+import { observable, action } from 'mobx'
 import i18n from 'i18n-js'
-import {Dimensions} from 'react-native'
+import { Dimensions } from 'react-native'
 import AsyncStorageApi from "../api/AsyncStorageApi";
 import CoinPriceStore from './Coin/CoinPriceStore';
 
@@ -15,13 +15,12 @@ class SettingStore {
         height: Dimensions.get('window').height,
     }
 
-    constructor() {
-        AsyncStorageApi.getObject(['language', 'currency']).then(obj => {
-            this.language = obj.language || 'ko'
-            this.currency = obj.currency || 'USD'
-            this.pin = obj.pin
-            this.useFingerprint = (obj.useFingerprint || false) === 'true'
-        })
+    load = async () => {
+        const obj = await AsyncStorageApi.getObject(['language', 'currency', 'pin', 'useFingerprint'])
+        this.language = obj.language || 'ko'
+        this.currency = obj.currency || 'USD'
+        this.pin = obj.pin
+        this.useFingerprint = (obj.useFingerprint || false) === 'true'
     }
 
     @action setLanguage = async val => {
