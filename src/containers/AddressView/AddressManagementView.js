@@ -48,6 +48,7 @@ class AddressManagementView extends React.Component {
                                     themeColor={coin.themeColor}
                                     name={item.name}
                                     balance={item.balance}
+                                    address={item.address}
                                     price={dollarFormat(fixed((item.balance * coin.price), 3))}
                                     symbol={item.symbol} moneySymbol="USD" />
                             )
