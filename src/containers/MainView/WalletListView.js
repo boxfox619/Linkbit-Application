@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, Alert } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import { WalletList } from '../../components'
 import { PRIMARY_COLOR } from '../../libs/Constraints'
@@ -19,10 +19,6 @@ export default class WalletListView extends React.Component {
     }
   }
 
-  openWalletDetail = (wallet) => {
-    this.props.navigation.navigate('WalletDetail', { wallet })
-  }
-
   render() {
     return (
       <View style={[styles.container, CommonStyle.mainTabViewContent]}>
@@ -37,7 +33,8 @@ export default class WalletListView extends React.Component {
         <WalletList
           moneySymbol={this.props.setting.currency}
           wallets={this.props.wallet.walletList}
-          onWalletSelected={w => this.openWalletDetail(w)} />
+          onWalletSelected={w => this.openWalletDetail(w)}
+          onWalletLongSelected={w => this.deleteWallet(w)} />
         <ActionButton buttonColor={PRIMARY_COLOR}
           onPress={() => this.props.navigation.navigate("SelectCoin", { nextPath: 'CreateWallet' })}
           offsetX={20}
@@ -46,8 +43,31 @@ export default class WalletListView extends React.Component {
     )
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.wallet.loadWalletList().catch(err => handleError(err))
+  }
+
+  openWalletDetail = (wallet) => {
+    this.props.navigation.navigate('WalletDetail', { wallet })
+  }
+
+  deleteWallet = (wallet) => {
+    Alert.alert(
+      i18n.t('delete_wallet_mainTxt'),
+      `${wallet.name} : ${i18n.t('delete_wallet_subTxt')}`,
+      [
+        { text: i18n.t('cancel'), style: 'cancel' },
+        {
+          text: i18n.t('delete_wallet_mainTxt').toLowerCase(),
+          onPress: () => {
+            this.props.wallet.deleteWallet(wallet)
+              .then(() => alert(i18n.t('delete_wallet_success')))
+              .catch(err => handleError(err))
+          }
+        },
+      ],
+      { cancelable: false },
+    )
   }
 }
 

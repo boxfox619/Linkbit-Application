@@ -46,6 +46,9 @@ const en = {
   finger: 'Fingerprint',
   reset_mainTxt: 'Reset',
   reset_subTxt: 'We destroy all accounts and information',
+  delete_wallet_mainTxt: 'Delete Wallet',
+  delete_wallet_subTxt: 'Delete wallet from Linkbit',
+  delete_wallet_success: 'Success delete the wallet',
   success_add: 'Success to create address!',
   err_8char: 'Please enter more than 8 characters',
   err_addr: 'Please enter valid address',
@@ -124,6 +127,9 @@ const ko = {
   finger: '지문',
   reset_mainTxt: '초기화',
   reset_subTxt: '모든 계정과 정보를 파기합니다',
+  delete_wallet_mainTxt: '지갑 삭제',
+  delete_wallet_subTxt: '지갑을 Linkbit에서 삭제합니다',
+  delete_wallet_success: '지갑을 삭제했습니다',
   success_add: '주소를 생성했습니다!',
   err_8char: '8자 이상 입력해주세요',
   err_addr: '올바른 주소를 입력해주세요',
@@ -160,7 +166,7 @@ Linkbit 이용약관
 }
 
 i18n.fallbacks = true
-i18n.translations = {en, ko}
+i18n.translations = { en, ko }
 i18n.locale = SettingStore.language
 
 export default i18n
