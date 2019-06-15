@@ -35,12 +35,17 @@ export default class WithdrawStore {
         this.checkAddressValidDebounce()
     })
 
-    checkAddressValid = () => {
-        this.getDestAddress().then(destAddress => {
+    checkAddressValid = async () => {
+        try {
+            const destAddress = await this.getDestAddress()
             if (!destAddress) {
                 this.destAddressError = 'Please enter valid address'
+            } else {
+                this.destAddressError = undefined
             }
-        }).catch(e => this.destAddressError = 'Please enter valid address')
+        } catch (err) {
+            this.destAddressError = 'Please enter valid address'
+        }
     }
 
     getDestAddress = async () => {

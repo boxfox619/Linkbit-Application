@@ -1,6 +1,6 @@
 import React from 'react'
 import { fixed } from '../../../libs/NumberFormatter'
-import NavigationButton from '../../../components/NavigationButton/NavigationButton'
+import NavigationButton from '../../../components/Button/NavigationButton'
 import CommonStyle from '../../../libs/CommonStyle'
 import { PRIMARY_COLOR } from '../../../libs/Constraints'
 import { View, StyleSheet, Image, Text, SafeAreaView } from 'react-native'

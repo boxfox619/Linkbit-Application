@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, Image, SafeAreaView } from 'react-native'
 import { observer } from 'mobx-react'
 import { PRIMARY_COLOR } from '../../../libs/Constraints'
 import CommonStyle from '../../../libs/CommonStyle'
-import NavigationButton from '../../../components/NavigationButton/NavigationButton'
+import NavigationButton from '../../../components/Button/NavigationButton'
 import i18n from '../../../libs/Locale'
 
 const checkedIcon = require('../../../assets/checked.png')

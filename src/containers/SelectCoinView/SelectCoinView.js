@@ -2,7 +2,7 @@ import React from 'react'
 import { COIN_INFO } from '../../libs/Constraints'
 import { StyleSheet, SafeAreaView, View } from 'react-native'
 import { observer } from 'mobx-react/index'
-import NavigationButton from '../../components/NavigationButton/NavigationButton'
+import NavigationButton from '../../components/Button/NavigationButton'
 import SelectCoinListView from "../../components/List/SelectCoinListView"
 import { PRIMARY_COLOR } from '../../libs/Constraints'
 import CommonStyle from '../../libs/CommonStyle'

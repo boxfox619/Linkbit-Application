@@ -1,10 +1,10 @@
 import React from 'react'
 import { View, StyleSheet, FlatList, Text } from 'react-native'
 import {dollarFormat, fixed} from "../../libs/NumberFormatter"
-import SearchBar from '../../components/SearchBar/SearchBar'
+import WalletCard from '../../components/Card/WalletCard'
+import SearchBar from '../../components/Input/SearchBar'
 import { observer, inject } from 'mobx-react'
 import { observable } from 'mobx'
-import WalletCard from '../../components/Card/WalletCard'
 import i18n from '../../libs/Locale'
 
 @inject('wallet', 'coin')

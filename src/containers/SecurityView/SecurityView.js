@@ -7,6 +7,7 @@ import SettingListView from '../SettingView/SettingListView'
 import PinCodeView from '../../components/PinCodeInput'
 import i18n from '../../libs/Locale'
 import TouchID from 'react-native-touch-id'
+import { handleTouchIdError } from '../../libs/ErrorHandler';
 
 @inject(['setting'])
 @observer
@@ -51,11 +52,7 @@ export default class SecurityView extends React.Component {
       const res = await TouchID.authenticate('to demo this react-native component')
       await setFingerprint(res)
     } catch (err) {
-      if (err.name === 'LAErrorTouchIDNotEnrolled') {
-        alert('Touch ID 또는 Face ID가 지원되지 않습니다')
-      } else {
-        alert('인증을 실패했습니다')
-      }
+      handleTouchIdError(err)
     }
   }
 
