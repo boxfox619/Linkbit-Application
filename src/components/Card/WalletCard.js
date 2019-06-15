@@ -14,6 +14,7 @@ export default class WalletCard extends React.Component {
     price: PropTypes.any,
     themeColor: PropTypes.string,
     onPress: PropTypes.func,
+    onLongPress: PropTypes.func
   }
 
   static defaultProps = {
@@ -27,6 +28,7 @@ export default class WalletCard extends React.Component {
     return (
       <BorderCard
         onPress={this.props.onPress}
+        onLongPress={this.props.onLongPress}
         themeColor={this.props.themeColor}>
         <Text
           style={[styles.label, this.getTextColor()]}>{this.props.name}</Text>

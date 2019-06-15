@@ -46,8 +46,8 @@ export default class SettingView extends React.Component {
                 i18n.t('reset_mainTxt'),
                 i18n.t('reset_subTxt'),
                 [
-                    {text: i18n.t('cancel'), style: 'cancel'},
-                    {text: i18n.t('reset_mainTxt').toLowerCase(), onPress: () => this.handleSetView('Setting')},
+                    { text: i18n.t('cancel'), style: 'cancel' },
+                    { text: i18n.t('reset_mainTxt').toLowerCase(), onPress: () => this.handleSetView('Setting') },
                 ],
                 {cancelable: false},
             )

@@ -38,13 +38,16 @@ export default class App extends React.Component {
         TouchID.authenticate('to demo this react-native component')
           .then(success => {
             this.isVerify = true
+            this.progress = false
           }).catch(error => {
             this.isVerify = false
-          });
-      } else if (pin) {
-        this.isVerify = false
+          })
+      } else {
+        this.progress = false
+        if (pin) {
+          this.isVerify = false
+        }
       }
-      this.progress = false
     }).catch(err => {
       handleError(err)
     })

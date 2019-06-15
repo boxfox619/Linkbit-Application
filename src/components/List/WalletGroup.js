@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {View, StyleSheet} from 'react-native'
-import {CoinCard, WalletCard} from '..'
-import {observer, inject} from 'mobx-react'
-import {dollarFormat, fixed} from '../../libs/NumberFormatter'
+import { View, StyleSheet } from 'react-native'
+import { CoinCard, WalletCard } from '..'
+import { observer, inject } from 'mobx-react'
+import { dollarFormat, fixed } from '../../libs/NumberFormatter'
 
 @inject('coin')
 @observer
@@ -16,6 +16,7 @@ export default class WalletGroup extends React.Component {
         wallets: PropTypes.array.isRequired,
         onToggled: PropTypes.func.isRequired,
         onWalletSelected: PropTypes.func,
+        onWalletLongSelected: PropTypes.func
     }
 
     static defaultProps = {
@@ -34,8 +35,8 @@ export default class WalletGroup extends React.Component {
                     symbol={this.props.coinSymbol}
                     moneySymbol={this.props.moneySymbol}
                     balance={fixed(this.totalBalance, 3)}
-                    price={dollarFormat(fixed((this.totalBalance * this.coin.price),3))}
-                    onClick={() => this.props.onToggled(this.props.coinSymbol)}/>
+                    price={dollarFormat(fixed((this.totalBalance * this.coin.price), 3))}
+                    onClick={() => this.props.onToggled(this.props.coinSymbol)} />
                 {this.props.activated && this.renderWallets(this.coin)}
             </View>
         )
@@ -63,8 +64,9 @@ export default class WalletGroup extends React.Component {
                     moneySymbol={this.props.moneySymbol}
                     balance={wallet.balance}
                     themeColor={coin.themeColor}
-                    price={dollarFormat(fixed((wallet.balance * coin.price),3))}
-                    onPress={() => this.props.onWalletSelected(wallet)}/>
+                    price={dollarFormat(fixed((wallet.balance * coin.price), 3))}
+                    onPress={() => this.props.onWalletSelected(wallet)}
+                    onLongPress={() => this.props.onWalletLongSelected && this.props.onWalletLongSelected(wallet)} />
             )
         })
     }

@@ -12,6 +12,7 @@ export default class WalletList extends React.Component {
     moneySymbol: PropTypes.string.isRequired,
     wallets: PropTypes.array.isRequired,
     onWalletSelected: PropTypes.func,
+    onWalletLongSelected: PropTypes.func
   }
 
   renderWalletList = () => {
@@ -28,8 +29,9 @@ export default class WalletList extends React.Component {
             coinSymbol={symbol}
             moneySymbol={this.props.moneySymbol}
             wallets={wallets}
-            onToggled={() => {this.selectedCoin = symbol}}
-            onWalletSelected={wallet => this.props.onWalletSelected(wallet)}/>
+            onToggled={() => { this.selectedCoin = symbol }}
+            onWalletSelected={this.props.onWalletSelected}
+            onWalletLongSelected={this.props.onWalletLongSelected} />
         )
       })
     }
@@ -50,10 +52,10 @@ export default class WalletList extends React.Component {
     return map
   }
 
-  render () {
+  render() {
     return (
-      <View style={{flex: 1}}>
-        <ScrollView style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1 }}>
           {this.renderWalletList()}
         </ScrollView>
       </View>

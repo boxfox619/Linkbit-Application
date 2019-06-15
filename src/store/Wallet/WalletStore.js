@@ -66,6 +66,11 @@ class WalletStore {
         return wallet
     }
 
+    deleteWallet = async (wallet) => {
+        await this.walletStorageApi.removeWallet(wallet.symbol, wallet.address)
+        await this.loadWalletList()
+    }
+
     @action setWalletList(walletList) {
         this.wallets = walletList.filter(w => !!w.address)
     }
