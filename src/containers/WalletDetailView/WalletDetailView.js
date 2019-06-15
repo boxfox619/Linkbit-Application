@@ -8,6 +8,7 @@ import { TransactionStore } from '../../store/index'
 import { PRIMARY_COLOR } from "../../libs/Constraints"
 import CommonStyle from '../../libs/CommonStyle'
 import i18n from '../../libs/Locale'
+import { handleError } from '../../libs/ErrorHandler';
 
 @observer
 export default class WalletDetailView extends React.Component {
@@ -37,8 +38,14 @@ export default class WalletDetailView extends React.Component {
 
     componentDidMount() {
         this.store.loadTransactions().then(() => {
-            this.store.refreshTransactions().catch(e => alert(e))
-        }).catch(e => alert(e))
+            this.store.refreshTransactions().catch(e => {
+                handleError(e)
+                alert(e.message)
+            })
+        }).catch(e => {
+            handleError(e)
+            alert(e.message)
+        })
     }
 
     render() {
@@ -66,7 +73,10 @@ export default class WalletDetailView extends React.Component {
     }
 
     handleRefreshTransactions = () => {
-        this.store.refreshTransactions().catch(e => alert(e))
+        this.store.refreshTransactions().catch(e => {
+            handleError(e)
+            alert(e.message)
+        })
     }
 
     handleLongSelectTransaction = (txHash) => {

@@ -7,6 +7,7 @@ import i18n from '../../libs/Locale'
 import AddressCard from '../../components/Card/AddressCard'
 import ActionButton from "react-native-action-button";
 import CommonStyle from "../../libs/CommonStyle";
+import { handleError } from '../../libs/ErrorHandler';
 
 @inject(['address'])
 @observer
@@ -74,7 +75,10 @@ export default class AddressListView extends React.Component {
       } else {
         alert(i18n.t('fail_delete_address'))
       }
-    }).catch(err => alert(err))
+    }).catch(err => {
+      handleError(err)
+      alert(i18n.t('fail_delete_address'))
+    })
   }
 }
 

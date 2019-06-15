@@ -5,6 +5,7 @@ import {observer, inject} from 'mobx-react'
 import {observable} from 'mobx'
 import withTitle from '../../components/HOC/withTitle'
 import NavigationButton from "../../components/Button/NavigationButton";
+import { handleError } from '../../libs/ErrorHandler';
 
 const importMethods = [
     {
@@ -83,7 +84,10 @@ export default class ImportWalletView extends React.Component {
             const {coin} = this.props.navigation.state.params
             this.props.wallet.importWallet(coin.symbol, this.walletName, importType, this.value)
                 .then(res => this.props.navigation.navigate('Main'))
-                .catch(err => alert(err.message || `지갑 연동에 실패했습니다. 입력한 정보를 확인해주세요`))
+                .catch(err => {
+                    handleError(err)
+                    alert(err.message || `지갑 연동에 실패했습니다. 입력한 정보를 확인해주세요`)
+                })
         }
     }
 }

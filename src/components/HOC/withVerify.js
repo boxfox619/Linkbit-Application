@@ -2,7 +2,7 @@ import React from 'react'
 import i18n from '../../libs/Locale'
 import { inject, observer } from 'mobx-react'
 import { PinCodeView } from '..'
-import { handleTouchIdError } from '../../libs/ErrorHandler'
+import { handleTouchIdError, handleError } from '../../libs/ErrorHandler'
 import TouchID from 'react-native-touch-id'
 
 const withVerify = (Component, defaultVisible = false) => inject(['setting'])(observer((class withPinVerify extends React.Component {
@@ -37,6 +37,7 @@ const withVerify = (Component, defaultVisible = false) => inject(['setting'])(ob
                         this.setState({ verified: true })
                     })
                     .catch(error => {
+                        handleError(error)
                         handleTouchIdError(error)
                         this.setState({ verified: false })
                         this.response(false)

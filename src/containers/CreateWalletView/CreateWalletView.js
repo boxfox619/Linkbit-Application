@@ -13,7 +13,6 @@ import withProgressDialog from '../../components/HOC/withProgressDialog';
 @observer
 class CreateWalletView extends React.Component {
     state = {
-        progress: false,
         selectedIndex: 0,
         coin: {},
         walletName: '',
@@ -116,14 +115,12 @@ class CreateWalletView extends React.Component {
         }
 
         this.props.showProgress(true);
-        await this.props.wallet.createNewWallet(coin.symbol, walletName, password).then(() => {
-            this.setState({ progress: false })
-            this.props.navigation.navigate('Main')
-        }).catch(e => {
-            this.setState({ progress: false })
-            alert(i18n.t('fail_add_wallet'))
-        })
-        this.props.showProgress(false);
+        try {
+            await this.props.wallet.createNewWallet(coin.symbol, walletName, password)
+            this.props.showProgress(false, '', () => this.props.navigation.navigate('Main'))
+        } catch (err) {
+            this.props.showProgress(false, '', () => alert(i18n.t('fail_add_wallet')))
+        }
     }
 }
 

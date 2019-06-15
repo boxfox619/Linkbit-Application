@@ -120,6 +120,7 @@ export default class WithdrawStore {
         }
         await transactionStore.saveTempTransaction(transactionData)
         await transactionStore.refreshTransactions()
+        await WalletStore.loadAllBalance()
     }
 
     get symbol() {

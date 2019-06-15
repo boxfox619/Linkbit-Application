@@ -2,6 +2,7 @@ import { observable, computed, runInAction, action } from 'mobx'
 import Transaction from './Transaction'
 import TransactionStorageApi from "../../api/Transaction/TransactionStorageApi";
 import walletManager from '../../libs/wallet'
+import { handleError } from '../../libs/ErrorHandler';
 
 export default class TransactionStore {
     @observable transactions = []
@@ -19,13 +20,19 @@ export default class TransactionStore {
 
     loadTransactions = async () => {
         this.loading = true
-        const transactions = await this.transactionStorageApi.getTransactions()
-        const tmpTransactions = await this.transactionStorageApi.getTmpTransactions()
-        runInAction(() => {
-            this.transactions = transactions.map(this.convertTransaction)
-            this.tmpTransactions = tmpTransactions.map(this.convertTransaction)
-        })
-        this.loading = false
+        try {
+            const transactions = await this.transactionStorageApi.getTransactions()
+            const tmpTransactions = await this.transactionStorageApi.getTmpTransactions()
+            runInAction(() => {
+                this.transactions = transactions.map(this.convertTransaction)
+                this.tmpTransactions = tmpTransactions.map(this.convertTransaction)
+            })
+        } catch (err) {
+            handleError(err)
+            throw new Error('트랜젝션 정보 업데이트를 실패했습니다')
+        } finally {
+            this.loading = false
+        }
     }
 
     convertTransaction = transaction => {
