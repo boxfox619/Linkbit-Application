@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, StyleSheet, SafeAreaView, FlatList, Alert, Button } from 'react-native'
 import { inject, observer } from 'mobx-react/index'
+import UnknownWallet from '../../store/Wallet/UnknwonWallet'
 import WalletCard from '../../components/Card/WalletCard'
 import AddressCard from '../../components/Card/AddressCard'
 import { dollarFormat, fixed } from '../../libs/NumberFormatter'
@@ -20,15 +21,23 @@ class AddressManagementView extends React.Component {
     }
 
     render() {
-        const addressList = this.currentAddressItem.accountAddressList.map(address => this.props.wallet.getWallet(address))
+        const walletList = Object.keys(this.currentAddressItem.accountAddressMap).map(symbol => {
+            const account = this.currentAddressItem.getAccountAddress(symbol)
+            const wallet = this.props.wallet.getWallet(account)
+            if (wallet) {
+                return wallet
+            } else {
+                return new UnknownWallet(symbol, account)
+            }
+        })
         return (
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={styles.container}>
-                    <AddressCard address={this.currentAddressItem.linkaddress} linkedAddressCount={addressList.length} activate />
+                    <AddressCard address={this.currentAddressItem.linkaddress} linkedAddressCount={walletList.length} activate />
                     <FlatList
                         style={styles.list}
-                        data={addressList}
-                        extraData={{ size: addressList.length }}
+                        data={walletList}
+                        extraData={{ size: walletList.length }}
                         keyExtractor={(item, idx) => (!!item) ? item.address : idx}
                         renderItem={({ item }) => {
                             const coin = this.props.coin.getCoin(item.symbol);
@@ -106,7 +115,7 @@ class AddressManagementView extends React.Component {
         )
     }
 
-    onBack = () => {}
+    onBack = () => { }
 }
 
 const styles = StyleSheet.create({
