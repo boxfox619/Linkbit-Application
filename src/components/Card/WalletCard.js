@@ -10,6 +10,7 @@ export default class WalletCard extends React.Component {
     name: PropTypes.string.isRequired,
     symbol: PropTypes.string.isRequired,
     moneySymbol: PropTypes.string.isRequired,
+    address: PropTypes.string,
     balance: PropTypes.any,
     price: PropTypes.any,
     themeColor: PropTypes.string,
@@ -21,10 +22,10 @@ export default class WalletCard extends React.Component {
     balance: 0,
     price: 0,
     themeColor: PRIMARY_COLOR,
-    onPress: () => {},
+    onPress: () => { },
   }
 
-  render () {
+  render() {
     return (
       <BorderCard
         onPress={this.props.onPress}
@@ -37,18 +38,23 @@ export default class WalletCard extends React.Component {
             <Text style={[styles.symbol, this.getTextColor()]}>{this.props.symbol}</Text>
             <Text style={[styles.value, this.getTextColor()]}>{this.props.balance}</Text>
           </View>
-          <View style={[styles.values, {right: 0}]}>
+          <View style={[styles.values, { right: 0 }]}>
             <Text style={[styles.symbol, this.getTextColor()]}>{this.props.moneySymbol}</Text>
             <Text style={[styles.value, this.getTextColor()]}>{this.props.price}</Text>
           </View>
         </View>
+        {this.props.address && (
+          <View style={[styles.valuesWrapper, { marginTop: 0 }]}>
+            <Text style={[this.getTextColor(), {fontSize: 13}]}>{this.props.address}</Text>
+          </View>
+        )}
       </BorderCard>
     )
   }
 
   getTextColor = () => {
     const themeColor = this.props.themeColor
-    return {color: themeColor.length === 0 ? PRIMARY_COLOR : themeColor}
+    return { color: themeColor.length === 0 ? PRIMARY_COLOR : themeColor }
   }
 }
 
