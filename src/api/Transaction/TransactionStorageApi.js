@@ -1,43 +1,78 @@
-import {AsyncStorage} from 'react-native'
+import { AsyncStorage } from 'react-native'
 
 const TRANSACTION_STORAGE_KEY = "transaction"
+const TMP_TRANSACTION_STORAGE_KEY = "tmp_transaction"
 export default class TransactionStorageApi {
     transactionMap
+    tmpTransactionMap
 
     constructor(symbol, address) {
         this.symbol = symbol
         this.address = address
     }
 
+    loadTransactionMap = async (key) => {
+        const transactionStorage = JSON.parse(await AsyncStorage.getItem(key) || '{}')
+        const symbolMap = transactionStorage[this.symbol] || {}
+        return symbolMap[this.address] || {}
+    }
+
     getTransactionMap = async () => {
-        if(!this.transactionMap){
-            const transactionStorage = JSON.parse(await AsyncStorage.getItem(TRANSACTION_STORAGE_KEY) || '{}')
-            const symbolMap = transactionStorage[this.symbol] || {}
-            this.transactionMap = symbolMap[this.address] || {}
+        if (!this.transactionMap) {
+            this.transactionMap = await this.loadTransactionMap(TRANSACTION_STORAGE_KEY)
         }
         return this.transactionMap
     }
 
+    getTmpTransactionMap = async () => {
+        if (!this.tmpTransactionMap) {
+            this.tmpTransactionMap = await this.loadTransactionMap(TMP_TRANSACTION_STORAGE_KEY)
+        }
+        return this.tmpTransactionMap
+    }
+
+    addTmpTransaction = async (transaction) => {
+        const data = await this.getTmpTransactionMap()
+        data[transaction.hash] = transaction
+        this.tmpTransactionMap = data
+        await this.saveTransactionMap(TMP_TRANSACTION_STORAGE_KEY, data)
+    }
+
+    removeTmpTransaction = async (transactionHash) => {
+        const data = await this.getTmpTransactionMap()
+        delete data[transactionHash]
+        this.tmpTransactionMap = data
+        await this.saveTransactionMap(TRANSACTION_STORAGE_KEY, data)
+    }
+
     setTransactions = async (transactions) => {
-        const data = transactions.reduce((trnasactionMap, transaction) => {
-            trnasactionMap[transaction.hash] = transaction
-            return trnasactionMap
-        }, this.transactionMap)
-        await this.saveTransactionMap(data)
+        const originalTransactionMap = await this.getTransactionMap()
+        const data = transactions.reduce((transactionMap, transaction) => {
+            transactionMap[transaction.hash] = transaction
+            delete this.tmpTransactionMap[transaction.hash]
+            return transactionMap
+        }, originalTransactionMap)
+        this.transactionMap = await this.saveTransactionMap(TRANSACTION_STORAGE_KEY, data)
+        this.tmpTransactionMap = await this.saveTransactionMap(TMP_TRANSACTION_STORAGE_KEY, this.tmpTransactionMap)
     }
 
     getTransactions = async () => {
         const transactionMap = await this.getTransactionMap()
-        return Object.values(transactionMap).filter(t => typeof t === "object").sort((tr, tr2) => tr2.block - tr.block)
+        return Object.values(transactionMap).filter(t => !!t && !!t.block).sort((tr, tr2) => tr2.block - tr.block)
     }
 
-    saveTransactionMap = async (transactionMap) => {
-        const transactionStorage = JSON.parse(await AsyncStorage.getItem(TRANSACTION_STORAGE_KEY) || '{}')
+    getTmpTransactions = async () => {
+        const transactionMap = await this.getTmpTransactionMap()
+        return Object.values(transactionMap).filter(t => !!t && !!t.block).sort((tr, tr2) => tr2.block - tr.block)
+    }
+
+    saveTransactionMap = async (key, transactionMap) => {
+        const transactionStorage = JSON.parse(await AsyncStorage.getItem(key) || '{}')
         const symbolMap = transactionStorage[this.symbol] || {}
         symbolMap[this.address] = transactionMap
         transactionStorage[this.symbol] = symbolMap
-        this.transactionMap = transactionMap
-        await AsyncStorage.setItem(TRANSACTION_STORAGE_KEY, JSON.stringify(transactionStorage))
+        await AsyncStorage.setItem(key, JSON.stringify(transactionStorage))
+        return transactionMap
     }
 
     clear = async () => {

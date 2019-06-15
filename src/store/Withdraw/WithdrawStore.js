@@ -107,6 +107,18 @@ export default class WithdrawStore {
         const transactionStore = new TransactionStore(this.symbol, this.sourceAddress)
         const destAddress = await this.getDestAddress()
         const transactionHash = await this.walletManager.withdraw(this.wallet.privateKey, destAddress, this.amount)
+        const transactionData = {
+            block: 0,
+            hash: transactionHash,
+            symbol: this.symbol,
+            sourceAddress: this.sourceAddress,
+            targetAddress: destAddress,
+            amount: this.amount,
+            status: false,
+            date: new Date().toDateString(),
+            confirm: 0
+        }
+        await transactionStore.saveTempTransaction(transactionData)
         await transactionStore.refreshTransactions()
     }
 

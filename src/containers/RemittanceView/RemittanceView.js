@@ -127,10 +127,8 @@ class RemittanceView extends React.Component {
     }
 
     onSubmit = () => {
-        this.props.showProgress(true)
         this.withdrawStore.withdraw()
             .then(res => {
-                this.props.showProgress(false)
                 this.props.navigation.navigate({
                     routeName: 'Invoice',
                     params: {
@@ -144,7 +142,6 @@ class RemittanceView extends React.Component {
                 })
             })
             .catch(err => {
-                this.props.showProgress(false)
                 alert(err)
             })
     }

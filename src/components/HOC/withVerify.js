@@ -29,7 +29,7 @@ const withVerify = (Component, defaultVisible = false) => inject(['setting'])(ob
 
     setVisible = (callback) => {
         this.setState({ callback }, () => {
-            const { pin, useFingerprint } = this.props.setting
+            const { usePin, useFingerprint } = this.props.setting
             if (useFingerprint) {
                 TouchID.authenticate('인증이 필요합니다')
                     .then(success => {
@@ -43,7 +43,7 @@ const withVerify = (Component, defaultVisible = false) => inject(['setting'])(ob
                     })
                 return
             }
-            if (pin === undefined || pin.length === 0) {
+            if (!usePin) {
                 this.response(true)
                 this.setState({ verified: true })
             } else {
