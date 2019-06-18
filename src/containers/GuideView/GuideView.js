@@ -1,10 +1,11 @@
 import React from 'react'
 import { View, Text, Button, Image } from 'react-native'
 import { observable } from 'mobx'
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 import { PagerDotIndicator, IndicatorViewPager } from '../../components/ViewPager'
 import { styles } from './styles'
 
+@inject('setting')
 @observer
 export default class GuideView extends React.Component {
   @observable buttonLabel = '다음'
@@ -27,7 +28,7 @@ export default class GuideView extends React.Component {
     if (this.currentPage < 3) {
       this.goToNext()
     } else {
-
+      this.props.setting.finishInitialExecution()
     }
   }
 
