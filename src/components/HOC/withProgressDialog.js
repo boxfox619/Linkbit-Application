@@ -25,7 +25,7 @@ const withProgressDialog = Component => class WithProgress extends React.Compone
     }
 
     setVisible = (visible, label, callback) => {
-        this.setState({ visible, label: label, callback });
+        this.setState({ visible, label, callback });
     }
 
     componentDidUpdate() {
