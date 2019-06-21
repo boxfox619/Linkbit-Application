@@ -83,11 +83,10 @@ export default class WalletDetailView extends React.Component {
         const transaction = this.store.transactionList.find(tr => tr.hash === txHash)
         if (transaction.benefit) {
             Clipboard.setString(transaction.sourceAddress)
-            alert('현재 지갑으로 송금해준 주소를 복사하였습니다.')
         } else {
             Clipboard.setString(transaction.targetAddress)
-            alert('송금한 주소를 복사하였습니다.')
         }
+        alert(i18n.t('copied_target_address'))
     }
 
     handleSelectTransaction = (txHash) => {
