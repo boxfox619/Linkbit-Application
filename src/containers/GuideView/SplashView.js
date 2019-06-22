@@ -1,17 +1,11 @@
 import React from 'react'
-import { View, Text, Image } from 'react-native'
+import { View, Image } from 'react-native'
 import { styles } from './styles'
 
 const SplashView = () => {
     return (
         <View style={styles.splash}>
-            <Image
-                style={styles.image}
-                source={require('../../assets/ic_linkbit.png')} />
-            <Text style={styles.titleLabel}>Linkbit</Text>
-            <Text style={styles.subLabel}>
-                더 편리한 암호화폐
-              </Text>
+            <Image style={{ width: 270, height: 75 }} resizeMode="stretch" source={require('../../assets/ic_linkbit_logo.png')} />
         </View>
     )
 }

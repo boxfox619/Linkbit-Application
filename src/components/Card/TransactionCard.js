@@ -23,7 +23,7 @@ export default class TransactionCard extends React.Component {
                     </View>
                     <View style={styles.rightContainer}>
                         <View style={[styles.amountContainer]} >
-                            <Text style={[styles.amount, this.amountColor, { maxWidth: 80 }]} numberOfLines={1} ellipsizeMode='tail'>{(this.props.transaction.benefit ? '+' : '-')}{` ${amount}`}</Text>
+                            <Text style={[styles.amount, this.amountColor, { maxWidth: 70 }]} numberOfLines={1} ellipsizeMode='tail'>{(this.props.transaction.benefit ? '+' : '-')}{` ${amount}`}</Text>
                             <Text style={[styles.amount, this.amountColor]}>{symbol}</Text>
                         </View>
                         <Text style={styles.confirm}>{confirm}</Text>
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     amount: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: 'bold',
         textAlign: 'right',
         alignItems: 'flex-end',

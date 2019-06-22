@@ -8,13 +8,15 @@ class SettingStore {
     @observable currency = 'USD'
     @observable pin = ''
     @observable useFingerprint = false
+    @observable isInitialExecution = false
 
     load = async () => {
-        const obj = await AsyncStorageApi.getObject(['language', 'currency', 'pin', 'useFingerprint'])
+        const obj = await AsyncStorageApi.getObject(['language', 'currency', 'pin', 'useFingerprint', 'initialExecution'])
         this.language = obj.language || 'ko'
         this.currency = obj.currency || 'USD'
         this.pin = obj.pin
         this.useFingerprint = (obj.useFingerprint || false) === 'true'
+        this.isInitialExecution = !obj.initialExecution
     }
 
     @action setLanguage = async val => {
@@ -44,6 +46,11 @@ class SettingStore {
         await this.save()
     }
 
+    @action finishInitialExecution = async () => {
+        this.isInitialExecution = false   
+        await this.save()
+    }
+
     get usePin() {
         return (this.pin !== undefined && this.pin !== null && this.pin !== 'null' && !!this.pin)
     }
@@ -53,7 +60,8 @@ class SettingStore {
             language: this.language,
             currency: this.currency,
             pin: this.pin,
-            useFingerprint: this.useFingerprint
+            useFingerprint: this.useFingerprint,
+            initialExecution: this.isInitialExecution
         })
     }
 }

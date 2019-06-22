@@ -7,7 +7,8 @@ import CoinItem from '../../components/Card/CoinItem'
 import { PRIMARY_COLOR } from '../../libs/Constraints'
 import CommonStyle from '../../libs/CommonStyle'
 import i18n from '../../libs/Locale'
-import withProgressDialog from '../../components/HOC/withProgressDialog';
+import { debounce } from 'lodash'
+import withProgressDialog from '../../components/HOC/withProgressDialog'
 
 @inject(['wallet'])
 @observer
@@ -38,6 +39,7 @@ class CreateWalletView extends React.Component {
             invalidPassword,
             invalidConfirmPassword,
         } = this.state
+        const createWallet = debounce(this.createWallet, 800)
 
         return (
             <React.Fragment>
@@ -68,7 +70,7 @@ class CreateWalletView extends React.Component {
                                 onChange={index => this.setState({ selectedIndex: index })} /> */}
                             </View>
                         </ScrollView>
-                        <NavigationButton title={i18n.t('add')} onPress={this.createWallet} />
+                        <NavigationButton title={i18n.t('add')} onPress={createWallet} />
                     </View>
                 </SafeAreaView>
             </React.Fragment>
@@ -89,38 +91,36 @@ class CreateWalletView extends React.Component {
     }
 
     createWallet = async () => {
-        this.setState({ progress: true })
-        const { coin, walletName, password, confirmPassword } = this.state
-
-        if (!walletName) {
-            this.setState({ invalidWalletName: i18n.t('enter_name') })
-            return
-        } else {
-            this.setState({ invalidWalletName: undefined })
-        }
-
-        if (!password) {
-            this.setState({ invalidPassword: i18n.t('enter_pin') })
-            return
-        }
-        else {
-            this.setState({ invalidPassword: undefined })
-        }
-
-        if (password !== confirmPassword) {
-            this.setState({ invalidConfirmPassword: i18n.t('wrong_pin') })
-            return
-        } else {
-            this.setState({ invalidConfirmPassword: undefined })
-        }
-
-        this.props.showProgress(true);
-        try {
-            await this.props.wallet.createNewWallet(coin.symbol, walletName, password)
-            this.props.showProgress(false, '', () => this.props.navigation.navigate('Main'))
-        } catch (err) {
-            this.props.showProgress(false, '', () => alert(i18n.t('fail_add_wallet')))
-        }
+        this.props.showProgress(true, '', async () =>  {
+            const { coin, walletName, password, confirmPassword } = this.state
+            if (!walletName) {
+                this.setState({ invalidWalletName: i18n.t('enter_name') })
+                return
+            } else {
+                this.setState({ invalidWalletName: undefined })
+            }
+    
+            if (!password) {
+                this.setState({ invalidPassword: i18n.t('enter_pin') })
+                return
+            }
+            else {
+                this.setState({ invalidPassword: undefined })
+            }
+    
+            if (password !== confirmPassword) {
+                this.setState({ invalidConfirmPassword: i18n.t('wrong_pin') })
+                return
+            } else {
+                this.setState({ invalidConfirmPassword: undefined })
+            }
+            try {
+                await this.props.wallet.createNewWallet(coin.symbol, walletName, password)
+                this.props.showProgress(false, '', () => this.props.navigation.navigate('Main'))
+            } catch (err) {
+                this.props.showProgress(false, '', () => alert(i18n.t('fail_add_wallet')))
+            }
+        })
     }
 }
 

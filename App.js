@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native'
 import { createAppContainer } from 'react-navigation'
 import { Provider } from 'mobx-react'
 import Navigator from './src/containers/navigator'
-import SplashView from './src/containers/GuideView/SplashView'
+import { SplashView, GuideView } from './src/containers/GuideView'
 import { WalletStore, CoinPriceStore, AddressStore, SettingStore } from './src/store'
 import { observer } from 'mobx-react'
 import { observable } from 'mobx/lib/mobx'
@@ -34,7 +34,9 @@ export default class App extends React.Component {
     return (
       <Provider {...store}>
         <View style={[styles.container, !this.isVerify && styles.paddingTop]}>
-          {(this.progress) ? (<SplashView />) : (<AppContainer />)}
+          {(this.progress) ? (<SplashView />) : (
+            store.setting.isInitialExecution ? (<GuideView />) : (<AppContainer />)
+          )}
         </View>
       </Provider>
     )
