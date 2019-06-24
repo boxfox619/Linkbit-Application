@@ -4,6 +4,7 @@ import NavigationButton from '../../../components/Button/NavigationButton'
 import CommonStyle from '../../../libs/CommonStyle'
 import { PRIMARY_COLOR } from '../../../libs/Constraints'
 import { View, StyleSheet, Image, Text, SafeAreaView } from 'react-native'
+import i18n from '../../../libs/Locale';
 
 export default class InvoiceView extends React.Component {
     render() {
@@ -25,27 +26,26 @@ export default class InvoiceView extends React.Component {
                                     </View>
                                 </View>
                                 <Text style={styles.name}>
-                                    <Text>{'해당 주소로\n'}</Text>
+                                    {/* <Text>{'해당 주소로\n'}</Text> */}
                                     <Text style={{ fontWeight: "bold" }}>{`${symbol} ${formattedAmount} `}</Text>
-                                    <Text>{'송금 완료!'}</Text>
+                                    <Text>{i18n.t('finish_withdraw')}</Text>
                                 </Text>
-                                <Text style={styles.destAddress}>{`받는 주소 ${destAddress}`}</Text>
+                                <Text style={styles.destAddress}>{`${i18n.t('target_address')} ${destAddress}`}</Text>
                                 <View style={styles.description}>
-                                    <Text style={styles.key}>{'출금 지갑'}</Text>
+                                    <Text style={styles.key}>{i18n.t('withdraw_source_wallet')}</Text>
                                     <Text style={styles.value}>{`${withDrawWalletName}`}</Text>
                                 </View>
                                 <View style={styles.divider} />
                                 <View style={styles.description}>
-                                    <Text style={styles.key}>{'송금 후 잔액'}</Text>
+                                    <Text style={styles.key}>{i18n.t('balance_after_wallet')}</Text>
                                     <Text style={styles.value}>{`${symbol} ${formattedBalance}`}</Text>
                                 </View>
                             </View>
                         </View>
-                        <NavigationButton title={'확인'}
-                            onPress={this.goToMain} />
+                        <NavigationButton title={i18n.t('done')} onPress={this.goToMain} />
                     </View>
                 </SafeAreaView>
-            </React.Fragment >
+            </React.Fragment>
         )
     }
 

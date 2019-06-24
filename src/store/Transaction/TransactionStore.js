@@ -1,8 +1,9 @@
-import { observable, computed, runInAction, action } from 'mobx'
+import { observable, computed, runInAction } from 'mobx'
 import Transaction from './Transaction'
 import TransactionStorageApi from "../../api/Transaction/TransactionStorageApi";
 import walletManager from '../../libs/wallet'
 import { handleError } from '../../libs/ErrorHandler';
+import i18n from '../../libs/Locale';
 
 export default class TransactionStore {
     @observable transactions = []
@@ -26,7 +27,7 @@ export default class TransactionStore {
             })
         } catch (err) {
             handleError(err)
-            throw new Error('트랜젝션 정보 업데이트를 실패했습니다')
+            throw new Error(i18n.t('failed_update_transaction'))
         } finally {
             this.loading = false
         }

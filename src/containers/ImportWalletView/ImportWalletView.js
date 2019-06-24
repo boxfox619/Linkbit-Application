@@ -6,6 +6,7 @@ import {observable} from 'mobx'
 import withTitle from '../../components/HOC/withTitle'
 import NavigationButton from "../../components/Button/NavigationButton";
 import { handleError } from '../../libs/ErrorHandler';
+import i18n from '../../libs/Locale'
 
 const importMethods = [
     {
@@ -40,7 +41,7 @@ export default class ImportWalletView extends React.Component {
             <SafeAreaView>
                 <View style={styles.container}>
                     <View style={styles.formContainer}>
-                        <InputWithTitle title={'지갑 이름'}
+                        <InputWithTitle title={i18n.t('wallet_name')}
                                         value={this.walletName}
                                         onChangeText={text => this.walletName = text}/>
                         <TitledSegmentedControl
@@ -57,7 +58,7 @@ export default class ImportWalletView extends React.Component {
                                 onChangeText={this.handleChangeText(input.key)}/>
                         ))}
                     </View>
-                    <NavigationButton title={'불러오기'} onPress={this.importWallet}/>
+                    <NavigationButton title={i18n.t('import')} onPress={this.importWallet}/>
                 </View>
             </SafeAreaView>
         )
@@ -77,16 +78,16 @@ export default class ImportWalletView extends React.Component {
         const importType = importMethod.type
         const invalidInput = importMethod.form.find(input => !this.value[input.key] || this.value[input.key].length === 0)
         if (this.walletName.length === 0) {
-            alert('지갑 이름을 입력해주세요')
+            alert(i18n.t('enter_wallet_name'))
         }else if (invalidInput) {
-            alert(`${invalidInput.label}을 입력해주세요`)
+            alert(`${i18n.t('enter_missing_field')} : ${invalidInput.label}`)
         } else {
             const {coin} = this.props.navigation.state.params
             this.props.wallet.importWallet(coin.symbol, this.walletName, importType, this.value)
                 .then(res => this.props.navigation.navigate('Main'))
                 .catch(err => {
                     handleError(err)
-                    alert(err.message || `지갑 연동에 실패했습니다. 입력한 정보를 확인해주세요`)
+                    alert(err.message || i18n.t('import_wallet_failed'))
                 })
         }
     }

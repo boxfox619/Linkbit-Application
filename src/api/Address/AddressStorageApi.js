@@ -1,4 +1,4 @@
-import {AsyncStorage} from 'react-native'
+import { AsyncStorage } from 'react-native'
 import crypto from 'crypto'
 import ECIES from 'eth-ecies'
 import * as AddressApi from "../../api/Address/AddressNetworkApi"
@@ -11,7 +11,7 @@ export default class AddressStorageApi {
     addressList = []
 
     getAddressList = async () => {
-        if(!this.addressList || this.addressList.length === 0){
+        if (!this.addressList || this.addressList.length === 0) {
             await this.loadAddressList();
         }
         return this.addressList
@@ -39,7 +39,7 @@ export default class AddressStorageApi {
 
     saveAddressList = async (addressList) => {
         this.addressList = addressList
-        AsyncStorage.setItem(ADDRESS_STORAGE_KEY, JSON.stringify(addressList))
+        await AsyncStorage.setItem(ADDRESS_STORAGE_KEY, JSON.stringify(addressList))
     }
 
     loadAddressList = async () => {

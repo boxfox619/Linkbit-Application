@@ -25,7 +25,7 @@ class SecurityView extends React.Component {
 
   handleViewSetting = view => {
     if (view === 'pin' && this.props.setting.pin) {
-      this.props.setting.unsetPin().then(() => alert('pin 설정을 해제하였습니다'))
+      this.props.setting.unsetPin().then(() => alert(i18n.t('finish_unset_pin')))
       return
     }
     this.view = view
@@ -41,7 +41,7 @@ class SecurityView extends React.Component {
       await setFingerprint(false)
     }
     try {
-      const res = await TouchID.authenticate('to demo this react-native component')
+      const res = await TouchID.authenticate(i18n.t('need_authentication'))
       await setFingerprint(res)
     } catch (err) {
       handleTouchIdError(err)
