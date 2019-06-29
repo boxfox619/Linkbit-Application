@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx'
 import i18n from 'i18n-js'
 import AsyncStorageApi from "../api/AsyncStorageApi";
-import CoinPriceStore from './Coin/CoinPriceStore';
+import CoinPriceStore from './CoinPriceStore';
 
 class SettingStore {
     @observable language = 'ko'

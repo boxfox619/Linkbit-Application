@@ -6,7 +6,7 @@ import { View, StyleSheet, SafeAreaView } from 'react-native'
 import { PRIMARY_COLOR } from "../../libs/Constraints"
 import Title from '../../components/Label/Title'
 import CommonStyle from '../../libs/CommonStyle'
-import WithdrawStore from '../../store/Withdraw/WithdrawStore'
+import WithdrawStore from '../../store/WithdrawStore'
 import withProgressDialog from '../../components/HOC/withProgressDialog';
 import AddressInput from './AddressInput/AddressInput'
 import AmountInput from './AmountInput/AmountInput'

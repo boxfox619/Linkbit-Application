@@ -1,9 +1,9 @@
 import { observable, action, computed } from 'mobx'
-import WalletStore from "../Wallet/WalletStore"
-import CoinPriceStore from '../Coin/CoinPriceStore'
-import * as AddressApi from "../../api/Address/AddressNetworkApi"
+import WalletStore from "./Wallet/WalletStore"
+import CoinPriceStore from './CoinPriceStore'
+import * as AddressApi from "../api/Address/AddressNetworkApi"
 import { debounce } from 'lodash'
-import walletManager from '../../libs/wallet'
+import walletManager from '../libs/wallet'
 
 export default class WithdrawStore {
     @observable symbol

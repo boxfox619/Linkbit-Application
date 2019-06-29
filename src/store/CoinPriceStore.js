@@ -1,8 +1,8 @@
 import { observable, computed, action } from 'mobx'
-import CoinNetworkApi from './../../api/Coin/CoinNetworkApi'
-import CoinStorageApi from './../../api/Coin/CoinStorageApi'
-import SettingStore from '../SettingStore'
-import { COIN_INFO } from '../../libs/Constraints';
+import CoinNetworkApi from '../api/Coin/CoinNetworkApi'
+import CoinStorageApi from '../api/Coin/CoinStorageApi'
+import SettingStore from './SettingStore'
+import { COIN_INFO } from '../libs/Constraints';
 
 class CoinPriceStore {
     @observable isLoading = false
