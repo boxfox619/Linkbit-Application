@@ -36,7 +36,6 @@ export default class App extends React.Component {
       await store.coin.load()
       this.label = i18n.t('loading_finish')
       this.progress = false
-
     } catch (err) {
       this.label = i18n.t('loading_fail')
     }
@@ -46,7 +45,7 @@ export default class App extends React.Component {
     return (
       <Provider {...store}>
         <View style={[styles.container, !this.isVerify && styles.paddingTop]}>
-          {(this.progress) ? (<SplashView label={this.label}/>) : (
+          {(this.progress) ? (<SplashView label={this.label} />) : (
             store.setting.isInitialExecution ? (<GuideView />) : (<AppContainer />)
           )}
         </View>

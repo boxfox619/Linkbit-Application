@@ -27,12 +27,8 @@ class WalletStore {
 
     loadAllBalance = async () => {
         const promiseList = this.wallets.map(async (wallet) => {
-            try {
-                const balance = await walletManager[wallet.symbol].getBalance(wallet.address)
-                wallet.balance = balance
-            } catch (err) {
-                handleError(err)
-            }
+            const balance = await walletManager[wallet.symbol].getBalance(wallet.address)
+            wallet.balance = balance
         });
         await Promise.all(promiseList)
         await this.walletStorageApi.saveWalletList(this.wallets.map(w => w.asJson))

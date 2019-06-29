@@ -1,7 +1,6 @@
 import i18n from './Locale'
 
 export const handleError = (err) => {
-
     console.error(err)
 }
 

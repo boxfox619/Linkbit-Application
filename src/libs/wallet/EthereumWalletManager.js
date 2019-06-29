@@ -4,6 +4,8 @@ import { WalletManager } from './WalletManager'
 import Transaction from '../../store/Transaction/Transaction'
 import moment from 'moment'
 import axios from 'axios'
+import { Observable } from 'rxjs';
+import { timeout } from 'rxjs/operators';
 export const IMPORT_TYPE_PRIVATEKEY = 'privateKey'
 export const IMPORT_TYPE_MNEMONIC = 'mnemonic'
 
@@ -82,11 +84,12 @@ export default class EthereumWalletManager extends WalletManager {
     })
   }
 
-  getBalance = async (address) => {
+  getBalance = async (address) => Observable.create(async (obs) => { 
     const balanceWei = await this.web3.eth.getBalance(address)
     const balance = this.web3.utils.fromWei(balanceWei, 'ether')
-    return balance
-  }
+    obs.next(balance)
+    obs.complete()
+  }).pipe(timeout(axios.defaults.timeout)).toPromise()
 
   withdraw = async (privateKey, targetAddress, amount, gasPrice, gasLimit) => {
     const gasPrices = await this.getCurrentGasPrices()
