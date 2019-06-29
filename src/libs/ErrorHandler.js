@@ -1,4 +1,4 @@
-import i18n from '../../libs/Locale'
+import i18n from './Locale'
 
 export const handleError = (err) => {
 

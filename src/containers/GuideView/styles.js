@@ -49,5 +49,9 @@ export const styles = StyleSheet.create({
         marginHorizontal: 30,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    statusLabel: {
+        bottom: '5%',
+        position: 'absolute'
     }
 })

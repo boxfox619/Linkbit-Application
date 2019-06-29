@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import PinCodeView from '../../components/PinCodeInput'
 import {observable} from 'mobx'
 import {observer} from "mobx-react"
+import i18n from '../../libs/Locale'
 
 @observer
 export default class PinCodeCreateView extends React.Component {
-    @observable label = 'PIN 번호를 설정합니다'
+    @observable label = i18n.t('pin_setting')
     @observable prevPin
 
     static propTypes = {
@@ -16,13 +17,13 @@ export default class PinCodeCreateView extends React.Component {
     onPinEntered = (val) => {
         const {onPinEntered} = this.props
         if (!this.prevPin) {
-            this.label = '핀 번호를 한번 더 입력해 주세요'
+            this.label = i18n.t('enter_pin_verify')
             this.prevPin = val
         } else {
             if (this.prevPin === val) {
                 onPinEntered(val)
             } else {
-                this.label = '핀 번호가 일치하지 않습니다'
+                this.label = i18n.t('worng_pin')
                 this.prevPin = undefined
             }
         }
