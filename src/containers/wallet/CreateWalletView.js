@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native'
-import NavigationButton from '../../components/Button/NavigationButton'
+import { NavigationButton } from '../../components/Button'
 import { InputWithTitle } from '../../components/Input/Input'
 import { inject, observer } from 'mobx-react'
 import CoinItem from '../../components/Card/CoinItem'
@@ -8,7 +8,7 @@ import { PRIMARY_COLOR } from '../../libs/Constraints'
 import CommonStyle from '../../libs/CommonStyle'
 import i18n from '../../libs/Locale'
 import { debounce } from 'lodash'
-import withProgressDialog from '../../components/HOC/withProgressDialog'
+import { withProgressDialog } from '../../components/HOC'
 
 @inject(['wallet'])
 @observer
@@ -91,7 +91,7 @@ class CreateWalletView extends React.Component {
     }
 
     createWallet = async () => {
-        this.props.showProgress(true, '', async () =>  {
+        this.props.showProgress(true, '', async () => {
             const { coin, walletName, password, confirmPassword } = this.state
             if (!walletName) {
                 this.setState({ invalidWalletName: i18n.t('enter_name') })
@@ -99,7 +99,7 @@ class CreateWalletView extends React.Component {
             } else {
                 this.setState({ invalidWalletName: undefined })
             }
-    
+
             if (!password) {
                 this.setState({ invalidPassword: i18n.t('enter_pin') })
                 return
@@ -107,7 +107,7 @@ class CreateWalletView extends React.Component {
             else {
                 this.setState({ invalidPassword: undefined })
             }
-    
+
             if (password !== confirmPassword) {
                 this.setState({ invalidConfirmPassword: i18n.t('wrong_pin') })
                 return

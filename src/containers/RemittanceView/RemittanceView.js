@@ -7,14 +7,13 @@ import { PRIMARY_COLOR } from "../../libs/Constraints"
 import Title from '../../components/Label/Title'
 import CommonStyle from '../../libs/CommonStyle'
 import WithdrawStore from '../../store/WithdrawStore'
-import withProgressDialog from '../../components/HOC/withProgressDialog';
 import AddressInput from './AddressInput/AddressInput'
 import AmountInput from './AmountInput/AmountInput'
 import RemittanceType from '../../store/RemittanceType'
 import WalletSummaryCard from "../../components/Card/WalletSummaryCard"
 import NavigationButton from '../../components/Button/NavigationButton'
-import withVerify from '../../components/HOC/withVerify';
-import { handleError } from '../../libs/ErrorHandler';
+import { withProgressDialog, withVerify } from '../../components/HOC'
+import { handleError } from '../../libs/ErrorHandler'
 
 @inject('setting', 'wallet')
 @observer

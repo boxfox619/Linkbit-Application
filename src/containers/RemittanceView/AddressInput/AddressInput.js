@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import AddressBox from "./AddressBox"
 import { Input } from "../../../components/Input/Input"
-import withTitle from '../../../components/HOC/withTitle'
+import { withTitle } from '../../../components/HOC'
 
 class AddressInput extends React.Component {
   render() {

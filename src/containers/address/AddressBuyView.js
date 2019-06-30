@@ -1,14 +1,14 @@
 import React from 'react'
 import { View, StyleSheet, SafeAreaView } from 'react-native'
 import { observer } from 'mobx-react'
-import i18n from '../../../libs/Locale'
-import { InputWithTitle } from '../../../components/Input/Input'
-import NavigationButton from '../../../components/Button/NavigationButton'
-import AddressBuyStore from '../../../store/Address/AddressBuyStore'
-import { PRIMARY_COLOR } from '../../../libs/Constraints'
-import CommonStyle from '../../../libs/CommonStyle'
-import withProgressDialog from '../../../components/HOC/withProgressDialog';
-import { handleError } from '../../../libs/ErrorHandler';
+import i18n from '../../libs/Locale'
+import { InputWithTitle } from '../../components/Input/Input'
+import NavigationButton from '../../components/Button/NavigationButton'
+import AddressBuyStore from '../../store/Address/AddressBuyStore'
+import { PRIMARY_COLOR } from '../../libs/Constraints'
+import CommonStyle from '../../libs/CommonStyle'
+import { withProgressDialog } from '../../components/HOC';
+import { handleError } from '../../libs/ErrorHandler';
 
 @observer
 class AddressBuyView extends React.Component {
@@ -35,7 +35,7 @@ class AddressBuyView extends React.Component {
             this.addressBuyStore.getNewAddress().then(res => {
                 this.props.showProgress(false)
                 this.props.navigation.replace('AddressBuyFinish', { address: this.addressBuyStore.linkaddress })
-            }).catch(err =>{
+            }).catch(err => {
                 handleError(err)
                 this.props.showProgress(false, '', () => alert(err.message))
             })

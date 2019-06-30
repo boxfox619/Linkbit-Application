@@ -7,7 +7,7 @@ import AddressCard from '../../components/Card/AddressCard'
 import { dollarFormat, fixed } from '../../libs/NumberFormatter'
 import { PRIMARY_COLOR } from "../../libs/Constraints";
 import i18n from '../../libs/Locale'
-import withProgressDialog from '../../components/HOC/withProgressDialog';
+import { withProgressDialog } from '../../components/HOC';
 import { handleError } from '../../libs/ErrorHandler';
 
 @inject('address', 'wallet', 'coin')

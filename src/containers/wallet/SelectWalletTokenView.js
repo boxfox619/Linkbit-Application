@@ -1,10 +1,10 @@
 import React from 'react'
 import { StyleSheet, SafeAreaView, View } from 'react-native'
-import NavigationButton from '../../../components/Button/NavigationButton'
-import SelectCoinView from "../../../components/List/SelectCoinView"
-import { PRIMARY_COLOR } from '../../../libs/Constraints'
-import CommonStyle from '../../../libs/CommonStyle'
-import i18n from '../../../libs/Locale'
+import NavigationButton from '../../components/Button/NavigationButton'
+import {SelectCoinView} from "../../components/List"
+import { PRIMARY_COLOR } from '../../libs/Constraints'
+import CommonStyle from '../../libs/CommonStyle'
+import i18n from '../../libs/Locale'
 
 export default class SelectWalletTokenView extends React.Component {
     state = {

@@ -5,7 +5,7 @@ import DropdownMenu from 'react-native-dropdown-menu'
 import AmountBox from "./AmountBox"
 import { debounce } from 'lodash'
 import Input from "../../../components/Input/Input"
-import withTitle from '../../../components/HOC/withTitle'
+import { withTitle } from '../../../components/HOC'
 
 class AmountInput extends React.Component {
     static propTypes = {

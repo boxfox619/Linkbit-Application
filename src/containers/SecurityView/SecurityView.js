@@ -7,7 +7,7 @@ import PinCodeCreateView from './PinCodeCreateView'
 import SettingListView from '../SettingView/SettingListView'
 import i18n from '../../libs/Locale'
 import TouchID from 'react-native-touch-id'
-import withVerify from '../../components/HOC/withVerify';
+import { withVerify } from '../../components/HOC';
 
 @inject(['setting'])
 @observer
