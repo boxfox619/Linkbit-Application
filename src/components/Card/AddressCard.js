@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 import BorderCard from './BorderCard'
 import { PRIMARY_COLOR } from '../../libs/Constraints'
 import i18n from'../../libs/Locale'

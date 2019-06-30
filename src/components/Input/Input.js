@@ -1,10 +1,10 @@
 import React from 'react'
-import withTitle from '../HOC/withTitle'
+import { withTitle } from '../HOC'
 import { View, StyleSheet, TextInput } from 'react-native'
 
-export const Input = ({containerStyle = {}, ...props}) => {
+export const Input = ({ containerStyle = {}, ...props }) => {
     return (
-        <View style={{...styles.container, ...containerStyle}}>
+        <View style={{ ...styles.container, ...containerStyle }}>
             <TextInput style={styles.input} {...props} />
         </View>
     )
