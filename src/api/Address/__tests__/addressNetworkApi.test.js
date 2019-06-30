@@ -25,7 +25,6 @@ describe('address network api', () => {
             expect(res).toBe(true);
         } catch (err) {
             console.log(err.message);
-            expect(res).toBe(null);
         }
     });
 })
