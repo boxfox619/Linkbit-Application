@@ -20,7 +20,7 @@ export default class NavIcon extends React.Component {
   render () {
     return (
       <View>
-        <Icon name={this.props.icon} color={this.props.color}/>
+        <Icon name={this.props.icon} color={this.props.color} />
         <Text style={{color: this.props.color, textAlign: 'center'}}>{this.props.label}</Text>
       </View>
     )

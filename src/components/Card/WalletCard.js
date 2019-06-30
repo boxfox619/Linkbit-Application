@@ -15,7 +15,7 @@ export default class WalletCard extends React.Component {
     price: PropTypes.any,
     themeColor: PropTypes.string,
     onPress: PropTypes.func,
-    onLongPress: PropTypes.func
+    onLongPress: PropTypes.func,
   }
 
   static defaultProps = {
@@ -53,6 +53,7 @@ export default class WalletCard extends React.Component {
 
   getTextColor = () => {
     const themeColor = this.props.themeColor
+    
     return { color: themeColor.length === 0 ? PRIMARY_COLOR : themeColor }
   }
 }

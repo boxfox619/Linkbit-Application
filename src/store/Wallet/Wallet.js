@@ -8,24 +8,24 @@ export default class Wallet {
     @observable privateKey
 
     @action setName(name) {
-        this.name = name
+      this.name = name
     }
 
     @computed get asJson() {
-        return {
-            address: this.address,
-            name: this.name,
-            balance: this.balance,
-            symbol: this.symbol,
-            privateKey: this.privateKey
-        }
+      return {
+        address: this.address,
+        name: this.name,
+        balance: this.balance,
+        symbol: this.symbol,
+        privateKey: this.privateKey,
+      }
     }
 
     updateFromJson(json) {
-        this.address = json.address
-        this.name = json.name
-        this.balance = json.balance
-        this.symbol = json.symbol
-        this.privateKey = json.privateKey
+      this.address = json.address
+      this.name = json.name
+      this.balance = json.balance
+      this.symbol = json.symbol
+      this.privateKey = json.privateKey
     }
 }

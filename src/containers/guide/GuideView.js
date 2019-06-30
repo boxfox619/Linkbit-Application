@@ -34,7 +34,7 @@ export default class GuideView extends React.Component {
   }
 
   _renderDotIndicator () {
-    return <PagerDotIndicator pageCount={4}/>
+    return <PagerDotIndicator pageCount={4} />
   }
 
   render () {
@@ -49,7 +49,7 @@ export default class GuideView extends React.Component {
             <View style={styles.card}>
               <Image
                 style={styles.image}
-                source={require('../../assets/ic_public.png')}/>
+                source={require('../../assets/ic_public.png')} />
               <Text style={styles.titleLabel}>쉽고 간편하게</Text>
               <Text style={styles.subLabel}>
                 누구나 쉽고 간편하게
@@ -63,7 +63,7 @@ export default class GuideView extends React.Component {
             <View style={styles.card}>
               <Image
                 style={styles.image}
-                source={require('../../assets/ic_security.png')}/>
+                source={require('../../assets/ic_security.png')} />
               <Text style={styles.titleLabel}>더 안전하게</Text>
               <Text style={styles.subLabel}>
                 자신의 자산을
@@ -77,7 +77,7 @@ export default class GuideView extends React.Component {
             <View style={styles.card}>
               <Image
                 style={styles.image}
-                source={require('../../assets/ic_local_atm.png')}/>
+                source={require('../../assets/ic_local_atm.png')} />
               <Text style={styles.titleLabel}>쉽고 간편하게</Text>
               <Text style={styles.subLabel}>
                 누구나 쉽고 간편하게
@@ -91,7 +91,7 @@ export default class GuideView extends React.Component {
             <View style={styles.card}>
               <Image
                 style={styles.image}
-                source={require('../../assets/ic_linkbit.png')}/>
+                source={require('../../assets/ic_linkbit.png')} />
               <Text style={styles.titleLabel}>새로운 시작</Text>
               <Text style={styles.subLabel}>
                 새로운 실생활 암호화폐
@@ -107,7 +107,7 @@ export default class GuideView extends React.Component {
           title={this.buttonLabel}
           color="#594343"
           overrides={{backgroundColor: '#594343'}}
-          accessibilityLabel="Learn more about this purple button"/>
+          accessibilityLabel="Learn more about this purple button" />
       </View>
     )
   }

@@ -1,11 +1,12 @@
 import Web3 from 'web3'
 import Cryptr from 'cryptr'
-import { WalletManager } from './WalletManager'
-import Transaction from '../../store/Transaction/Transaction'
 import moment from 'moment'
 import axios from 'axios'
-import { Observable } from 'rxjs';
-import { timeout } from 'rxjs/operators';
+import { Observable } from 'rxjs'
+import { timeout } from 'rxjs/operators'
+import Transaction from '../../store/Transaction/Transaction'
+import WalletManager from './WalletManager'
+
 export const IMPORT_TYPE_PRIVATEKEY = 'privateKey'
 export const IMPORT_TYPE_MNEMONIC = 'mnemonic'
 
@@ -15,7 +16,7 @@ export default class EthereumWalletManager extends WalletManager {
   web3
 
   constructor(providerUrl) {
-    super();
+    super()
     const provider = new Web3.providers.HttpProvider(providerUrl || web3ProviderUrl)
     this.web3 = new Web3(provider)
   }
@@ -23,22 +24,23 @@ export default class EthereumWalletManager extends WalletManager {
   import = (type, data) => {
     let resultData
     switch (type) {
-      case IMPORT_TYPE_PRIVATEKEY:
-        let privateKey = data.privateKey
-        const password = data.password
-        if (password) {
-          privateKey = new Cryptr(password).decrypt(privateKey)
-        }
-        const wallet = this.web3.eth.accounts.privateKeyToAccount(privateKey)
-        resultData = {
-          address: wallet.address,
-          privateKey: wallet.privateKey
-        }
-        break
-      case IMPORT_TYPE_MNEMONIC:
-        //@TODO implement mnemonic import
-        break
+    case IMPORT_TYPE_PRIVATEKEY:
+      let privateKey = data.privateKey
+      const password = data.password
+      if (password) {
+        privateKey = new Cryptr(password).decrypt(privateKey)
+      }
+      const wallet = this.web3.eth.accounts.privateKeyToAccount(privateKey)
+      resultData = {
+        address: wallet.address,
+        privateKey: wallet.privateKey,
+      }
+      break
+    case IMPORT_TYPE_MNEMONIC:
+      //@TODO implement mnemonic import
+      break
     }
+
     return resultData
   }
 
@@ -48,6 +50,7 @@ export default class EthereumWalletManager extends WalletManager {
     const privateKey = walletData.privateKey
     const cryptr = new Cryptr(password)
     const encryptedPrivateKey = cryptr.encrypt(privateKey)
+
     return { address, privateKey: encryptedPrivateKey }
   }
 
@@ -56,19 +59,21 @@ export default class EthereumWalletManager extends WalletManager {
     const url = getTransactionApiUrl(address, start, end)
     const res = await axios.get(url)
     const data = await res.data
+
     return data.transactions.map(tr => tr)
   }
 
   loadTransaction = async (address, start, end) => {
     const lastBlock = await this.web3.eth.getBlockNumber()
     const transactions = await this.loadTransactionHashList(address, start, end)
+
     return transactions.map(e => {
       const blockNumber = e.blockNumber
       const txHash = e.hash
       const from = e.from
       const to = e.to
       const date = moment(new Date(e.timestamp * 1000)).format('YYYY-MM-DD hh:mm:ss')
-      const amount = this.web3.utils.fromWei(e.value, "ether")
+      const amount = this.web3.utils.fromWei(e.value, 'ether')
       const confirm = lastBlock - blockNumber
       const status = e.state
       /*
@@ -84,40 +89,42 @@ export default class EthereumWalletManager extends WalletManager {
     })
   }
 
-  getBalance = async (address) => Observable.create(async (obs) => { 
+  getBalance = async (address) => Observable.create(async (obs) => {
     const balanceWei = await this.web3.eth.getBalance(address)
     const balance = this.web3.utils.fromWei(balanceWei, 'ether')
     obs.next(balance)
     obs.complete()
   }).pipe(timeout(axios.defaults.timeout)).toPromise()
 
-  withdraw = async (privateKey, targetAddress, amount, gasPrice, gasLimit) => {
+  withdraw = async (privateKey, targetAddress, amount) => {
     const gasPrices = await this.getCurrentGasPrices()
 
     const transactionConfig = {
       to: targetAddress,
       value: this.web3.utils.toHex(this.web3.utils.toWei(amount, 'ether')),
       gas: 21000,
-      gasPrice: gasPrices.low * 1000000000, 
-      chainId: 0
+      gasPrice: gasPrices.low * 1000000000,
+      chainId: 0,
     }
     const signedTransaction = await this.web3.eth.accounts.signTransaction(transactionConfig, privateKey)
     const sendTransaction = new Promise((resolve, reject) => {
       this.web3.eth.sendSignedTransaction(signedTransaction.rawTransaction)
-      .on('transactionHash', (txHash) => resolve(txHash))
-      .on('error', (error) => reject(error))
+        .on('transactionHash', (txHash) => resolve(txHash))
+        .on('error', (error) => reject(error))
     })
+
     return await sendTransaction
   }
 
   getCurrentGasPrices = async () => {
     const res = await axios.get('https://ethgasstation.info/json/ethgasAPI.json')
     const data = res.data
-    let prices = {
+    const prices = {
       low: data.safeLow / 10,
       medium: data.average / 10,
-      high: data.fast / 10
+      high: data.fast / 10,
     }
+
     return prices
   }
 

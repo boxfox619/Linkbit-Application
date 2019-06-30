@@ -2,19 +2,19 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { createAppContainer } from 'react-navigation'
 import { Provider } from 'mobx-react'
+import { observer } from 'mobx-react'
+import { observable } from 'mobx/lib/mobx'
 import Navigator from './src/containers/navigator'
 import { SplashView, GuideView } from './src/containers/guide'
 import { WalletStore, CoinPriceStore, AddressStore, SettingStore } from './src/store'
-import { observer } from 'mobx-react'
-import { observable } from 'mobx/lib/mobx'
-import withVerify from './src/components/HOC/withVerify';
-import i18n from './src/libs/Locale';
+import withVerify from './src/components/HOC/withVerify'
+import i18n from './src/libs/Locale'
 
 const store = {
   wallet: WalletStore,
   coin: CoinPriceStore,
   address: AddressStore,
-  setting: SettingStore
+  setting: SettingStore,
 }
 const AppContainer = withVerify(createAppContainer(Navigator), true)
 
@@ -57,9 +57,9 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   paddingTop: {
-    paddingTop: 90
-  }
+    paddingTop: 90,
+  },
 })

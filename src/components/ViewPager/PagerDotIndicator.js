@@ -22,9 +22,10 @@ export default class PagerDotIndicator extends Component {
   }
 
   static defaultProps = {
-    pageCount: 0,
     initialPage: 0,
     hideSingle: false,
+    dotStyle: {},
+    selectedDotStyle: {},
   }
 
   state = {
@@ -43,6 +44,10 @@ export default class PagerDotIndicator extends Component {
       style !== nextProps.style
   }
 
+  onPageSelected (e) {
+    this.setState({selectedIndex: e.position})
+  }
+
   render () {
     const {pageCount, dotStyle, selectedDotStyle} = this.props
     if (pageCount <= 0) return null
@@ -53,7 +58,7 @@ export default class PagerDotIndicator extends Component {
       dotsView.push(
         <View
           style={[styles.dot, isSelect ? styles.selectDot : null, isSelect ? selectedDotStyle : dotStyle]}
-          key={i}/>,
+          key={i} />,
       )
     }
 
@@ -62,10 +67,6 @@ export default class PagerDotIndicator extends Component {
         {dotsView}
       </View>
     )
-  }
-
-  onPageSelected (e) {
-    this.setState({selectedIndex: e.position})
   }
 }
 const styles = StyleSheet.create({

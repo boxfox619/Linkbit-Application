@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint --fix src"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -51,6 +52,8 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.7.1",
+    "eslint-plugin-jsx-a11y": "^6.2.2",
     "eslint-plugin-react": "^7.12.4",
     "jest": "^24.7.1",
     "jest-fetch-mock": "^2.1.2",

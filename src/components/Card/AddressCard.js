@@ -12,7 +12,7 @@ export default class AddressCard extends React.Component {
     linkedAddressCount: PropTypes.number.isRequired,
     activate: PropTypes.bool.isRequired,
     onPress: PropTypes.func,
-    onLongPress: PropTypes.func
+    onLongPress: PropTypes.func,
   }
 
   static defaultProps = {

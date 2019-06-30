@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
-import { Input } from "."
+import { Input } from '.'
 import { withTitle } from '../HOC'
 
 class AddressInput extends React.Component {
@@ -16,10 +16,10 @@ class AddressInput extends React.Component {
             onChangeText={onChangeText}
             placeholder="Type address here" />
         ) : (
-            <TouchableOpacity onPress={onPress} style={styles.toAddressContainer}>
-              <Text style={styles.toAddressText}>{address}</Text>
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity onPress={onPress} style={styles.toAddressContainer}>
+            <Text style={styles.toAddressText}>{address}</Text>
+          </TouchableOpacity>
+        )}
       </View>
     )
   }

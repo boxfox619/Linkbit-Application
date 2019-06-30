@@ -5,11 +5,12 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 export default class NavigationButton extends React.Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
-    onPress: PropTypes.func.isRequired
+    onPress: PropTypes.func.isRequired,
   }
 
   render() {
     const { title, onPress } = this.props
+    
     return (
       <TouchableOpacity
         activeOpacity={0.4}

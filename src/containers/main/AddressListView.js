@@ -2,12 +2,12 @@ import React from 'react'
 import { View, StyleSheet, FlatList, Alert } from 'react-native'
 import { inject, observer } from 'mobx-react/index'
 import { observable } from 'mobx'
+import ActionButton from 'react-native-action-button'
 import { PRIMARY_COLOR } from '../../libs/Constraints'
 import i18n from '../../libs/Locale'
 import { AddressCard } from '../../components/Card'
-import ActionButton from "react-native-action-button";
-import CommonStyle from "../../libs/CommonStyle";
-import { handleError } from '../../libs/ErrorHandler';
+import CommonStyle from '../../libs/CommonStyle'
+import { handleError } from '../../libs/ErrorHandler'
 
 @inject(['address'])
 @observer
@@ -49,7 +49,7 @@ export default class AddressListView extends React.Component {
           }} />
         <ActionButton
           buttonColor={PRIMARY_COLOR}
-          onPress={() => this.props.navigation.navigate("AddressBuy")}
+          onPress={() => this.props.navigation.navigate('AddressBuy')}
           offsetX={20}
           offsetY={20} />
       </View>
@@ -85,7 +85,7 @@ export default class AddressListView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   list: {
     flex: 1,

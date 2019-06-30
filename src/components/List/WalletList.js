@@ -12,7 +12,7 @@ export default class WalletList extends React.Component {
     moneySymbol: PropTypes.string.isRequired,
     wallets: PropTypes.array.isRequired,
     onWalletSelected: PropTypes.func,
-    onWalletLongSelected: PropTypes.func
+    onWalletLongSelected: PropTypes.func,
   }
 
   renderWalletList = () => {

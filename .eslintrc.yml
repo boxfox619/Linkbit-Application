@@ -1,6 +1,7 @@
 env:
   browser: true
   es6: true
+  jest: true
 extends:
   - airbnb
   - eslint:recommended
@@ -8,6 +9,7 @@ extends:
 plugins:
   - babel
   - react
+  - jest
 parser: babel-eslint
 parserOptions:
   ecmaVersion: 6
@@ -19,6 +21,16 @@ globals:
   require: true
 rules:
   react/jsx-closing-bracket-location: [1, 'after-props']
+  jest/no-disabled-tests:
+    - warn
+  jest/no-focused-tests:
+    - error
+  jest/no-identical-title:
+    - error
+  jest/prefer-to-have-length:
+    - warn
+  jest/valid-expect:
+    - error
   react/destructuring-assignment:
     - off
   react/prop-types:

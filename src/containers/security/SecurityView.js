@@ -2,12 +2,12 @@ import React from 'react'
 import { observable } from 'mobx'
 import { View, StyleSheet } from 'react-native'
 import { inject, observer } from 'mobx-react'
+import TouchID from 'react-native-touch-id'
 import { handleTouchIdError } from '../../libs/ErrorHandler'
 import PinCodeCreateView from './PinCodeCreateView'
 import { SettingListView } from '../../components/List'
 import i18n from '../../libs/Locale'
-import TouchID from 'react-native-touch-id'
-import { withVerify } from '../../components/HOC';
+import { withVerify } from '../../components/HOC'
 
 @inject(['setting'])
 @observer
@@ -23,9 +23,26 @@ class SecurityView extends React.Component {
   @observable label = i18n.t('pin_verify')
   @observable view = 'menu'
 
+  get settings() {
+    const { usePin, useFingerprint } = this.props.setting
+    
+    return [
+      {
+        labelText: i18n.t('pin'),
+        subLabelText: usePin ? i18n.t('set') : i18n.t('unset'),
+        key: 'pin',
+      }, {
+        labelText: i18n.t('finger'),
+        subLabelText: useFingerprint ? i18n.t('set') : i18n.t('unset'),
+        key: 'finger',
+      },
+    ]
+  }
+
   handleViewSetting = view => {
     if (view === 'pin' && this.props.setting.pin) {
       this.props.setting.unsetPin().then(() => alert(i18n.t('finish_unset_pin')))
+      
       return
     }
     this.view = view
@@ -58,36 +75,21 @@ class SecurityView extends React.Component {
           <PinCodeCreateView onPinEntered={this.handleSetPin} />
         }
         {
-          (view === 'menu' || view === 'finger') &&
-          <SettingListView
-            list={this.settings}
-            style={{ padding: 20 }}
-            onItemSelected={this.handleViewSetting} />
-        }
+          (view === 'menu' || view === 'finger') && (
+            <SettingListView
+              list={this.settings}
+              style={{ padding: 20 }}
+              onItemSelected={this.handleViewSetting} />
+          )}
       </View>
     )
-  }
-
-  get settings() {
-    const { usePin, useFingerprint } = this.props.setting
-    return [
-      {
-        labelText: i18n.t('pin'),
-        subLabelText: usePin ? i18n.t('set') : i18n.t('unset'),
-        key: 'pin',
-      }, {
-        labelText: i18n.t('finger'),
-        subLabelText: useFingerprint ? i18n.t('set') : i18n.t('unset'),
-        key: 'finger',
-      }
-    ]
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  }
+    flex: 1,
+  },
 })
 
 export default withVerify(SecurityView, true)

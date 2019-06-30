@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx'
+import { observable, computed } from 'mobx'
 
 export default class Address {
   @observable address

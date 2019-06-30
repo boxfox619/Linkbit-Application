@@ -1,20 +1,16 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 
-export default class FriendBox extends React.Component {
-  render () {
-    const {mail} = this.props
-
-    return (
-      <View style={styles.toFriendContainer}>
-        <View>
-          <Text style={styles.name}>이름</Text>
-          <Text style={styles.address}>주소</Text>
-        </View>
-        <Text style={styles.toFriendText}>{mail}</Text>
+const FriendBox = ({ mail }) => {
+  return (
+    <View style={styles.toFriendContainer}>
+      <View>
+        <Text style={styles.name}>이름</Text>
+        <Text style={styles.address}>주소</Text>
       </View>
-    )
-  }
+      <Text style={styles.toFriendText}>{mail}</Text>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -47,3 +43,5 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
 })
+
+export default FriendBox
