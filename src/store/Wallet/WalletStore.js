@@ -1,7 +1,7 @@
 import { observable, action, computed } from 'mobx'
 import Wallet from './Wallet'
 import WalletStorageApi from "../../api/WalletStorageApi"
-import coinPriceStore from '../Coin/CoinPriceStore'
+import coinPriceStore from '../CoinPriceStore'
 import { fixed } from '../../libs/NumberFormatter'
 import { handleError } from '../../libs/ErrorHandler'
 import walletManager from '../../libs/wallet'
@@ -27,12 +27,8 @@ class WalletStore {
 
     loadAllBalance = async () => {
         const promiseList = this.wallets.map(async (wallet) => {
-            try {
-                const balance = await walletManager[wallet.symbol].getBalance(wallet.address)
-                wallet.balance = balance
-            } catch (err) {
-                handleError(err)
-            }
+            const balance = await walletManager[wallet.symbol].getBalance(wallet.address)
+            wallet.balance = balance
         });
         await Promise.all(promiseList)
         await this.walletStorageApi.saveWalletList(this.wallets.map(w => w.asJson))

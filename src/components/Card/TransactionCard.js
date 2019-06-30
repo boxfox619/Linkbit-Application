@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {View, StyleSheet, Text} from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class TransactionCard extends React.Component {
@@ -11,7 +11,7 @@ export default class TransactionCard extends React.Component {
     }
 
     render() {
-        const {date, address, amount, confirm, symbol} = this.props.transaction
+        const { date, address, amount, confirm, symbol } = this.props.transaction
 
         return (
             <TouchableOpacity onPress={this.props.onClick} onLongPress={this.props.onLongPress}>
@@ -21,8 +21,11 @@ export default class TransactionCard extends React.Component {
                         <Text style={styles.email}>unknown</Text>
                         <Text numberOfLines={1} ellipsizeMode='tail' style={styles.address}>{address}</Text>
                     </View>
-                    <View style={styles.amountContainer}>
-                        <Text style={[styles.amount, this.amountColor]}>{(!this.props.transaction.benefit && '- ')}{`${amount} ${symbol}`}</Text>
+                    <View style={styles.rightContainer}>
+                        <View style={[styles.amountContainer]} >
+                            <Text style={[styles.amount, this.amountColor, { maxWidth: 70 }]} numberOfLines={1} ellipsizeMode='tail'>{(this.props.transaction.benefit ? '+' : '-')}{` ${amount}`}</Text>
+                            <Text style={[styles.amount, this.amountColor]}>{symbol}</Text>
+                        </View>
                         <Text style={styles.confirm}>{confirm}</Text>
                     </View>
                 </View>
@@ -30,11 +33,11 @@ export default class TransactionCard extends React.Component {
         )
     }
 
-    get amountColor(){
+    get amountColor() {
         if (this.props.transaction.benefit) {
-            return {color: '#0088FF'}
+            return { color: '#0088FF' }
         } else {
-            return {color: 'red'}
+            return { color: 'red' }
         }
     }
 }
@@ -69,14 +72,19 @@ const styles = StyleSheet.create({
         color: '#555555',
         maxHeight: '70%'
     },
-    amountContainer: {
+    rightContainer: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         height: '100%',
     },
+    amountContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+    },
     amount: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: 'bold',
         textAlign: 'right',
         alignItems: 'flex-end',

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { View, FlatList } from 'react-native'
-import CoinItem from '../Card/CoinItem'
+import { CoinItem } from '../Card'
 
 export default class SelectCoinListView extends React.Component {
 
@@ -18,7 +18,7 @@ export default class SelectCoinListView extends React.Component {
     }
 
     render() {
-        const {coins, selectedCoin, onSelectCoin, isLoading, style} = this.props
+        const { coins, selectedCoin, onSelectCoin, isLoading, style } = this.props
         return (
             <View style={style}>
                 <FlatList
@@ -26,9 +26,9 @@ export default class SelectCoinListView extends React.Component {
                     extraData={selectedCoin}
                     keyExtractor={(item) => item.symbol}
                     refreshing={isLoading}
-                    renderItem={({item}) => (
-                        <CoinItem coin={item} activate={selectedCoin === item.symbol} onPress={() => onSelectCoin(item.symbol)}/>
-                    )}/>
+                    renderItem={({ item }) => (
+                        <CoinItem coin={item} activate={selectedCoin === item.symbol} onPress={() => onSelectCoin(item.symbol)} />
+                    )} />
             </View>
         )
     }

@@ -2,7 +2,7 @@ import React from 'react'
 import i18n from '../../libs/Locale'
 import { inject, observer } from 'mobx-react'
 import { PinCodeView } from '..'
-import { handleTouchIdError } from '../../libs/ErrorHandler'
+import { handleTouchIdError, handleError } from '../../libs/ErrorHandler'
 import TouchID from 'react-native-touch-id'
 
 const withVerify = (Component, defaultVisible = false) => inject(['setting'])(observer((class withPinVerify extends React.Component {
@@ -29,21 +29,22 @@ const withVerify = (Component, defaultVisible = false) => inject(['setting'])(ob
 
     setVisible = (callback) => {
         this.setState({ callback }, () => {
-            const { pin, useFingerprint } = this.props.setting
+            const { usePin, useFingerprint } = this.props.setting
             if (useFingerprint) {
-                TouchID.authenticate('인증이 필요합니다')
+                TouchID.authenticate(i18n.t('need_authentication'))
                     .then(success => {
                         this.response(true)
                         this.setState({ verified: true })
                     })
                     .catch(error => {
+                        handleError(error)
                         handleTouchIdError(error)
                         this.setState({ verified: false })
                         this.response(false)
                     })
                 return
             }
-            if (pin === undefined || pin.length === 0) {
+            if (!usePin) {
                 this.response(true)
                 this.setState({ verified: true })
             } else {

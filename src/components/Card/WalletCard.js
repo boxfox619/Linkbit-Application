@@ -31,8 +31,12 @@ export default class WalletCard extends React.Component {
         onPress={this.props.onPress}
         onLongPress={this.props.onLongPress}
         themeColor={this.props.themeColor}>
-        <Text
-          style={[styles.label, this.getTextColor()]}>{this.props.name}</Text>
+        <Text style={[styles.label, this.getTextColor()]}>{this.props.name}</Text>
+        {this.props.address && (
+          <View style={[styles.valuesWrapper, { marginTop: 0 }]}>
+            <Text style={[this.getTextColor(), { fontSize: 10 }]}>{this.props.address}</Text>
+          </View>
+        )}
         <View style={styles.valuesWrapper}>
           <View style={styles.values}>
             <Text style={[styles.symbol, this.getTextColor()]}>{this.props.symbol}</Text>
@@ -43,11 +47,6 @@ export default class WalletCard extends React.Component {
             <Text style={[styles.value, this.getTextColor()]}>{this.props.price}</Text>
           </View>
         </View>
-        {this.props.address && (
-          <View style={[styles.valuesWrapper, { marginTop: 0 }]}>
-            <Text style={[this.getTextColor(), {fontSize: 13}]}>{this.props.address}</Text>
-          </View>
-        )}
       </BorderCard>
     )
   }
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   value: {
-    fontSize: 17,
+    fontSize: 15,
   },
   symbol: {
     fontSize: 14,

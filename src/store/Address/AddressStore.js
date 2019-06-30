@@ -2,6 +2,7 @@ import { observable, runInAction, action } from 'mobx'
 import AddressStorageApi from '../../api/Address/AddressStorageApi'
 import * as AddressNetworkApi from '../../api/Address/AddressNetworkApi'
 import LinkedAddress from './LinkedAddress'
+import { handleError } from '../../libs/ErrorHandler';
 
 class AddressStore {
     @observable linkedAddressList = []
@@ -81,7 +82,10 @@ class AddressStore {
     }
 
     save = () => {
-        this.addressStorageApi.saveAddressList(this.linkedAddressList.map(link => link.asJson)).catch(err => alert(err))
+        this.addressStorageApi.saveAddressList(this.linkedAddressList.map(link => link.asJson)).catch(err => {
+            handleError(err)
+            alert(err)
+        })
     }
 
     getLinkedAddress = (symbol, accountAddress) => {

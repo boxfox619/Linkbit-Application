@@ -1,5 +1,4 @@
 import axios from 'axios'
-import LinkedAddress from '../../store/Address/LinkedAddress'
 import { HOST } from '../../libs/Constraints'
 
 export const fetchOwnAddressList = async (accountAddress) => {

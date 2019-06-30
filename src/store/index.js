@@ -1,5 +1,5 @@
 import AddressStore from './Address/AddressStore'
-import CoinPriceStore from './Coin/CoinPriceStore'
+import CoinPriceStore from './CoinPriceStore'
 import TransactionStore from './Transaction/TransactionStore'
 import WalletStore from './Wallet/WalletStore'
 import SettingStore from './SettingStore'
