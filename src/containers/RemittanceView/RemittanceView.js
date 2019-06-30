@@ -32,7 +32,7 @@ class RemittanceView extends React.Component {
     @observable calculateSymbol = 'USD'
     @observable commission = 0
     @observable ratio = 0.1582
-    @observable label = 'PIN 번호를 입력해주세요'
+    @observable label = i18n.t('enter_pin')
 
     constructor(props) {
         super(props)
@@ -125,7 +125,7 @@ class RemittanceView extends React.Component {
     }
 
     get buttonLabel() {
-        return this.step >= 3 ? '송금하기' : '다음'
+        return this.step >= 3 ? i18n.t('withdraw') : i18n.t('next')
     }
 
     onSubmit = async () => {

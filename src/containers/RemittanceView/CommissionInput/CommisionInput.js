@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { View, StyleSheet, Slider, Text } from 'react-native'
 import { PRIMARY_COLOR } from '../../../libs/Constraints'
+import i18n from '../../../libs/Locale'
 
 export default class CommissionInput extends React.Component {
     static propTypes = {
@@ -28,7 +29,7 @@ export default class CommissionInput extends React.Component {
                     <View style={styles.line} />
                     <View style={styles.line} />
                 </View>
-                <Text style={styles.description}>{"수수료 금액에 따라서 전송 속도가 결정됩니다"}</Text>
+                <Text style={styles.description}>{i18n.t('description_tx_fee')}</Text>
             </View>
         )
     }

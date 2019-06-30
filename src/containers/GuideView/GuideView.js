@@ -4,11 +4,12 @@ import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import { PagerDotIndicator, IndicatorViewPager } from '../../components/ViewPager'
 import { styles } from './styles'
+import i18n from '../../libs/Locale'
 
 @inject('setting')
 @observer
 export default class GuideView extends React.Component {
-  @observable buttonLabel = '다음'
+  @observable buttonLabel = i18n.t('next')
   @observable currentPage = 0
 
   constructor (props) {
@@ -20,7 +21,7 @@ export default class GuideView extends React.Component {
     if (page == 3) {
       this.buttonLabel = '시작하기'
     } else {
-      this.buttonLabel = '다음'
+      this.buttonLabel = i18n.t('next')
     }
   }
 

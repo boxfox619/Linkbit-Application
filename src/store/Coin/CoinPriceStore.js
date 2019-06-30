@@ -1,4 +1,4 @@
-import {observable, computed, action} from 'mobx'
+import { observable, computed, action } from 'mobx'
 import CoinNetworkApi from './../../api/Coin/CoinNetworkApi'
 import CoinStorageApi from './../../api/Coin/CoinStorageApi'
 import SettingStore from '../SettingStore'
@@ -20,7 +20,7 @@ class CoinPriceStore {
     }
 
     refreshCoinPrices = async () => {
-        for(coin of COIN_INFO){
+        for (coin of COIN_INFO) {
             const price = await this.coinNetworkApi.fetchCoinPrice(coin.name, SettingStore.currency)
             this.setCoinPrice(coin.symbol, price)
             await this.coinStorageApi.updatePrice(coin.symbol, price)
@@ -29,7 +29,7 @@ class CoinPriceStore {
 
     refreshCoinPrice = async (symbol) => {
         const coin = COIN_INFO.find(c => c.symbol = symbol);
-        if(!coin){
+        if (!coin) {
             return
         }
         const price = await this.coinNetworkApi.fetchCoinPrice(coin.name, SettingStore.currency);
@@ -38,18 +38,18 @@ class CoinPriceStore {
     }
 
     @action setCoinPrice = (symbol, price) => {
-        this.coinPriceMap = {...this.coinPriceMap, [symbol]: price};
+        this.coinPriceMap = { ...this.coinPriceMap, [symbol]: price };
     }
- 
+
     @action setLoading = (status) => {
         this.isLoading = status
     }
-                                               
+
     getCoin = (symbol) => {
         return computed(() => {
             const coin = COIN_INFO.find(coin => coin.symbol === symbol)
             const price = this.coinStorageApi.getPrice(symbol) || 0
-            return {...coin, price}
+            return { ...coin, price }
         }).get()
     }
 }
