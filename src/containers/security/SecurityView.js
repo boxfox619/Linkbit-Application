@@ -4,7 +4,7 @@ import { View, StyleSheet } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import { handleTouchIdError } from '../../libs/ErrorHandler'
 import PinCodeCreateView from './PinCodeCreateView'
-import SettingListView from '../SettingView/SettingListView'
+import { SettingListView } from '../../components/List'
 import i18n from '../../libs/Locale'
 import TouchID from 'react-native-touch-id'
 import { withVerify } from '../../components/HOC';

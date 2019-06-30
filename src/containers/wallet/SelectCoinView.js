@@ -1,12 +1,12 @@
 import React from 'react'
 import { StyleSheet, SafeAreaView, View } from 'react-native'
 import { observer } from 'mobx-react'
-import { COIN_INFO } from '../libs/Constraints'
-import NavigationButton from '../components/Button/NavigationButton'
-import { SelectCoinListView } from "../components/List"
-import { PRIMARY_COLOR } from '../libs/Constraints'
-import CommonStyle from '../libs/CommonStyle'
-import i18n from '../libs/Locale'
+import { COIN_INFO } from '../../libs/Constraints'
+import NavigationButton from '../../components/Button/NavigationButton'
+import { SelectCoinListView } from "../../components/List"
+import { PRIMARY_COLOR } from '../../libs/Constraints'
+import CommonStyle from '../../libs/CommonStyle'
+import i18n from '../../libs/Locale'
 
 @observer
 export default class SelectCoinView extends React.Component {

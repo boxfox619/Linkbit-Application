@@ -1,7 +1,7 @@
 import React from 'react'
 import i18n from "../../libs/Locale"
-import SettingListView from "./SettingListView"
-import {observer, inject} from 'mobx-react'
+import { SettingListView } from "../../components/List"
+import { observer, inject } from 'mobx-react'
 
 @inject(['setting'])
 @observer
@@ -14,7 +14,7 @@ export default class CurrencySettingView extends React.Component {
         }
     }
 
-    render(){
+    render() {
         const currency = [
             {
                 labelText: i18n.t('bill_krw'),
@@ -25,7 +25,7 @@ export default class CurrencySettingView extends React.Component {
             }
         ]
         return (
-            <SettingListView style={{padding: 20}} list={currency} onItemSelected={this.handleCurrencySetting}/>
+            <SettingListView style={{ padding: 20 }} list={currency} onItemSelected={this.handleCurrencySetting} />
         )
     }
 

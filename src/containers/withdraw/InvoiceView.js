@@ -1,10 +1,10 @@
 import React from 'react'
-import { fixed } from '../../../libs/NumberFormatter'
-import NavigationButton from '../../../components/Button/NavigationButton'
-import CommonStyle from '../../../libs/CommonStyle'
-import { PRIMARY_COLOR } from '../../../libs/Constraints'
+import { fixed } from '../../libs/NumberFormatter'
+import NavigationButton from '../../components/Button/NavigationButton'
+import CommonStyle from '../../libs/CommonStyle'
+import { PRIMARY_COLOR } from '../../libs/Constraints'
 import { View, StyleSheet, Image, Text, SafeAreaView } from 'react-native'
-import i18n from '../../../libs/Locale';
+import i18n from '../../libs/Locale';
 
 export default class InvoiceView extends React.Component {
     render() {

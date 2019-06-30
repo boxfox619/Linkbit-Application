@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react/index'
 import { observable } from 'mobx'
 import { PRIMARY_COLOR } from '../../libs/Constraints'
 import i18n from '../../libs/Locale'
-import AddressCard from '../../components/Card/AddressCard'
+import { AddressCard } from '../../components/Card'
 import ActionButton from "react-native-action-button";
 import CommonStyle from "../../libs/CommonStyle";
 import { handleError } from '../../libs/ErrorHandler';

@@ -6,7 +6,7 @@ import KeyboardView from './KeyboardView'
 import InputView from './InputView'
 import Styles from './styles'
 
-class PinCodeView extends React.Component {
+class PinCodeInputView extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -108,7 +108,7 @@ class PinCodeView extends React.Component {
     }
 }
 
-PinCodeView.defaultProps = {
+PinCodeInputView.defaultProps = {
     deleteText: 'DEL',
     buttonBgColor: '#FFF',
     buttonTextColor: '#333',
@@ -120,7 +120,7 @@ PinCodeView.defaultProps = {
     clear: false,
     label: 'PIN 코드를 입력해주세요'
 }
-PinCodeView.propTypes = {
+PinCodeInputView.propTypes = {
     disabled: PropTypes.bool,
     deleteText: PropTypes.string,
     returnType: PropTypes.string,
@@ -135,4 +135,4 @@ PinCodeView.propTypes = {
     label: PropTypes.string.isRequired
 }
 
-export default PinCodeView
+export default PinCodeInputView

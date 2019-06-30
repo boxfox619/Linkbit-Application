@@ -1,8 +1,8 @@
 import React from 'react'
 import { View, StyleSheet, FlatList, Text } from 'react-native'
-import {dollarFormat, fixed} from "../../libs/NumberFormatter"
-import WalletCard from '../../components/Card/WalletCard'
-import SearchBar from '../../components/Input/SearchBar'
+import { dollarFormat, fixed } from "../../libs/NumberFormatter"
+import { WalletCard } from '../../components/Card'
+import { SearchBar } from '../../components/Input'
 import { observer, inject } from 'mobx-react'
 import { observable } from 'mobx'
 import i18n from '../../libs/Locale'
@@ -69,7 +69,7 @@ export default class WalletSearchView extends React.Component {
         <SearchBar
           onChangeText={this.onChangeText}
           onClearText={this.onChangeText}
-          placeholder={i18n.t('search_wallet')}/>
+          placeholder={i18n.t('search_wallet')} />
         <Text style={styles.header}>{i18n.t('address_list')}</Text>
         <FlatList
           style={styles.list}

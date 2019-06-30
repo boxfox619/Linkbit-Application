@@ -1,8 +1,7 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
-import AddressBox from "./AddressBox"
-import { Input } from "../../../components/Input/Input"
-import { withTitle } from '../../../components/HOC'
+import { Input } from "."
+import { withTitle } from '../HOC'
 
 class AddressInput extends React.Component {
   render() {
@@ -17,7 +16,9 @@ class AddressInput extends React.Component {
             onChangeText={onChangeText}
             placeholder="Type address here" />
         ) : (
-            <AddressBox address={address} onPress={onPress} />
+            <TouchableOpacity onPress={onPress} style={styles.toAddressContainer}>
+              <Text style={styles.toAddressText}>{address}</Text>
+            </TouchableOpacity>
           )}
       </View>
     )
@@ -31,6 +32,23 @@ const styles = StyleSheet.create({
     width: '100%',
     alignContent: 'center',
     alignItems: 'center',
+  },
+  toAddressContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    borderColor: '#594343',
+    backgroundColor: '#594343',
+    borderRadius: 5,
+    borderWidth: 3,
+    height: 53,
+    width: '100%',
+    paddingHorizontal: 13,
+    alignContent: 'center',
+    alignItems: 'center',
+  },
+  toAddressText: {
+    fontSize: 14,
+    color: '#ffffff',
   },
 })
 

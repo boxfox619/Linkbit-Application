@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import PinCodeView from '../../components/PinCodeInput'
+import {PinCodeView} from '../../components/Input'
 import {observable} from 'mobx'
 import {observer} from "mobx-react"
 import i18n from '../../libs/Locale'

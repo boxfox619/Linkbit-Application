@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { View, StyleSheet, Slider, Text } from 'react-native'
-import { PRIMARY_COLOR } from '../../../libs/Constraints'
-import i18n from '../../../libs/Locale'
+import { PRIMARY_COLOR } from '../../libs/Constraints'
+import i18n from '../../libs/Locale'
 
 export default class CommissionInput extends React.Component {
     static propTypes = {

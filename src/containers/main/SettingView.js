@@ -1,7 +1,7 @@
 import React from 'react'
-import { StyleSheet, Alert } from 'react-native'
+import { Alert } from 'react-native'
 import i18n from '../../libs/Locale'
-import SettingListView from "../SettingView/SettingListView";
+import SettingListView from "../../components/List/SettingListView";
 import { inject, observer } from "mobx-react";
 import CommonStyle from "../../libs/CommonStyle";
 

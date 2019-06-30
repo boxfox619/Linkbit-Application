@@ -1,14 +1,10 @@
 import { createStackNavigator } from 'react-navigation'
-import MainTabView from './MainView/MainTabView'
-import TransactionDetailView from './TransactionDetailView'
-import {AddressManagementView, WalletSearchView, AddressBuyView, AddressBuyFinishView} from './address'
-import {WalletDetailView, CreateWalletView, ImportWalletView, } from './wallet'
-import RemittanceView from "./RemittanceView/RemittanceView"
-import InvoiceView from './RemittanceView/InvoiceView/InvoiceView'
-import SecurityView from './SecurityView/SecurityView'
-import LanguageSettingView from './SettingView/LanguageSettingView'
-import CurrencySettingView from './SettingView/CurrencySettingView'
-import SelectCoinView from './SelectCoinView'
+import { MainTabView } from './main'
+import { AddressManagementView, WalletSearchView, AddressBuyView, AddressBuyFinishView } from './address'
+import { WalletDetailView, CreateWalletView, ImportWalletView, TransactionDetailView, SelectCoinView } from './wallet'
+import { WithdrawView, InvoiceView } from "./withdraw"
+import { SecurityView } from './security'
+import { LanguageSettingView, CurrencySettingView } from './setting'
 
 export default createStackNavigator({
     Main: MainTabView,
@@ -18,7 +14,7 @@ export default createStackNavigator({
     WalletSearch: WalletSearchView,
     WalletImport: ImportWalletView,
     WalletDetail: WalletDetailView,
-    Withdraw: RemittanceView,
+    Withdraw: WithdrawView,
     Invoice: InvoiceView,
     Security: SecurityView,
     "Setting.Language": LanguageSettingView,

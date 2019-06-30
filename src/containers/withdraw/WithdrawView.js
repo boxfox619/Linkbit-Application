@@ -1,23 +1,22 @@
 import React from 'react'
 import i18n from '../../libs/Locale'
 import { observable } from 'mobx'
-import { inject, observer } from "mobx-react/index"
+import { inject, observer } from "mobx-react"
 import { View, StyleSheet, SafeAreaView } from 'react-native'
 import { PRIMARY_COLOR } from "../../libs/Constraints"
 import Title from '../../components/Label/Title'
 import CommonStyle from '../../libs/CommonStyle'
 import WithdrawStore from '../../store/WithdrawStore'
-import AddressInput from './AddressInput/AddressInput'
-import AmountInput from './AmountInput/AmountInput'
+import { AmountInput, AddressInput } from '../../components/Input'
 import RemittanceType from '../../store/RemittanceType'
-import WalletSummaryCard from "../../components/Card/WalletSummaryCard"
-import NavigationButton from '../../components/Button/NavigationButton'
+import { WalletSummaryCard } from "../../components/Card"
+import { NavigationButton } from '../../components/Button'
 import { withProgressDialog, withVerify } from '../../components/HOC'
 import { handleError } from '../../libs/ErrorHandler'
 
 @inject('setting', 'wallet')
 @observer
-class RemittanceView extends React.Component {
+class WithdrawView extends React.Component {
     static navigationOptions = () => {
         return {
             title: i18n.t('withdraw'),
@@ -199,4 +198,4 @@ const styles = StyleSheet.create({
         width: '100%'
     },
 })
-export default withVerify(withProgressDialog(RemittanceView))
+export default withVerify(withProgressDialog(WithdrawView))

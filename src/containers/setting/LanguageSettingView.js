@@ -1,7 +1,7 @@
 import React from 'react'
-import i18n from "../../libs/Locale"
-import SettingListView from "./SettingListView"
-import {observer, inject} from 'mobx-react'
+import i18n from '../../libs/Locale'
+import { SettingListView } from '../../components/List'
+import { observer, inject } from 'mobx-react'
 
 const language = [
     {
@@ -26,7 +26,7 @@ export default class LanguageSettingView extends React.Component {
 
     render() {
         return (
-            <SettingListView style={{padding: 20}} list={language} onItemSelected={this.handleLanguageSetting}/>
+            <SettingListView style={{ padding: 20 }} list={language} onItemSelected={this.handleLanguageSetting} />
         )
     }
 

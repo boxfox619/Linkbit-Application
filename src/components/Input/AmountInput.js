@@ -1,11 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { View, StyleSheet } from 'react-native'
+import PropTypes from 'prop-types'
 import DropdownMenu from 'react-native-dropdown-menu'
-import AmountBox from "./AmountBox"
 import { debounce } from 'lodash'
-import Input from "../../../components/Input/Input"
-import { withTitle } from '../../../components/HOC'
+import { Input } from "."
+import { withTitle } from '../HOC'
 
 class AmountInput extends React.Component {
     static propTypes = {
@@ -48,11 +47,16 @@ class AmountInput extends React.Component {
                         </View>
                     </>
                 ) : (
-                        <AmountBox price={price}
-                            moneySymbol={moneySymbol}
-                            symbol={symbol}
-                            amount={amount}
-                            onPress={onPress} />
+                        <TouchableOpacity onPress={onPress} style={styles.toAmountContainer}>
+                            <View style={{ display: 'flex', flexDirection: 'row' }}>
+                                <Text style={styles.toAmountSymbol}>{moneySymbol}</Text>
+                                <Text style={styles.toAmount}>{price}</Text>
+                            </View>
+                            <View style={{ display: 'flex', flexDirection: 'row' }}>
+                                <Text style={styles.toAmountSymbol}>{symbol}</Text>
+                                <Text style={styles.toAmount}>{amount}</Text>
+                            </View>
+                        </TouchableOpacity>
                     )}
             </View>
         )
@@ -72,6 +76,29 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderWidth: 3,
         borderColor: '#594343',
+    },
+    toAmountContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        borderColor: '#594343',
+        backgroundColor: '#594343',
+        borderRadius: 5,
+        borderWidth: 3,
+        height: 53,
+        width: '100%',
+        paddingHorizontal: 13,
+        alignContent: 'center',
+        alignItems: 'center',
+    },
+    toAmountSymbol: {
+        color: '#888888',
+        marginHorizontal: 2,
+        fontSize: 14,
+    },
+    toAmount: {
+        color: '#ffffff',
+        fontSize: 14,
     },
 })
 
