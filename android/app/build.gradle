@@ -101,10 +101,20 @@ android {
         applicationId "com.linkbit.LinkbitApplication"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "0.0.1"
         ndk {
             abiFilters "armeabi-v7a", "x86"
+        }
+    }
+    signingConfigs {
+        release {
+            if (project.hasProperty('LINKBIT_RELEASE_STORE_FILE')) {
+                storeFile file(LINKBIT_RELEASE_STORE_FILE)
+                storePassword LINKBIT_RELEASE_STORE_PASSWORD
+                keyAlias LINKBIT_RELEASE_KEY_ALIAS
+                keyPassword LINKBIT_RELEASE_KEY_PASSWORD
+            }
         }
     }
     splits {
@@ -119,6 +129,7 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
         }
     }
     // applicationVariants are e.g. debug, release

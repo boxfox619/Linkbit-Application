@@ -84,10 +84,6 @@ class WalletStore {
       return fixed(totalPrice, 3)
     }
 
-    @computed get walletList() {
-      return this.wallets
-    }
-
     @computed get walletCount() {
       return this.wallets.length
     }
