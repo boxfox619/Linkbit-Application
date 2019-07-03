@@ -2,49 +2,49 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { View, StyleSheet, Text, Image } from 'react-native'
 import { inject, observer } from 'mobx-react/index'
-import {dollarFormat, fixed} from '../../libs/NumberFormatter'
+import { dollarFormat, fixed } from '../../libs/NumberFormatter'
 
 @inject('coin', 'setting')
 @observer
 export default class WalletSummaryCard extends React.Component {
-    static propTypes = {
-      wallet: PropTypes.object.isRequired,
-    }
+  static propTypes = {
+    wallet: PropTypes.object.isRequired,
+  }
 
-    render() {
-      const { symbol, name, balance, address } = this.props.wallet
-      
-      return (
-        <View style={[styles.container, { backgroundColor: this.coin.themeColor }]}>
-          <View style={styles.iconContainer}>
-            <View style={styles.iconBackground}>
-              <Image style={styles.icon} source={this.coin.icon} resizeMode="contain" />
-            </View>
-          </View>
-          <Text style={styles.name}>{name}</Text>
-          <View>
-            <View style={styles.subContainer}>
-              <Text style={styles.label}>{symbol}</Text>
-              <Text style={styles.valueLabel}>{balance}</Text>
-            </View>
-            <View style={styles.subContainer}>
-              <Text style={styles.label}>{this.props.setting.currency}</Text>
-              <Text style={styles.valueLabel}>{dollarFormat(fixed((balance * this.coin.price),3))}</Text>
-            </View>
-            <View style={styles.subContainer}>
-              <Text style={styles.label}>ADDRESS</Text>
-              <Text numberOfLines={1} ellipsizeMode='tail' style={styles.valueLabel}>{address}</Text>
-            </View>
+  get coin() {
+    const { symbol } = this.props.wallet
+
+    return this.props.coin.getCoin(symbol)
+  }
+
+  render() {
+    const { symbol, name, balance, address } = this.props.wallet
+
+    return (
+      <View style={[styles.container, { backgroundColor: this.coin.themeColor }]}>
+        <View style={styles.iconContainer}>
+          <View style={styles.iconBackground}>
+            <Image style={styles.icon} source={this.coin.icon} resizeMode="contain" />
           </View>
         </View>
-      )
-    }
-
-    get coin() {
-      const { symbol } = this.props.wallet
-      
-      return this.props.coin.getCoin(symbol)
-    }
+        <Text style={styles.name}>{name}</Text>
+        <View>
+          <View style={styles.subContainer}>
+            <Text style={styles.label}>{symbol}</Text>
+            <Text style={styles.valueLabel}>{balance}</Text>
+          </View>
+          <View style={styles.subContainer}>
+            <Text style={styles.label}>{this.props.setting.currency}</Text>
+            <Text style={styles.valueLabel}>{dollarFormat(fixed((balance * this.coin.price), 3))}</Text>
+          </View>
+          <View style={styles.subContainer}>
+            <Text style={styles.label}>ADDRESS</Text>
+            <Text numberOfLines={1} ellipsizeMode='tail' style={styles.valueLabel}>{address}</Text>
+          </View>
+        </View>
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({

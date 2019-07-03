@@ -5,4 +5,5 @@ import ViewPager from './ViewPager'
 export {
   PagerDotIndicator,
   IndicatorViewPager,
+  ViewPager,
 }

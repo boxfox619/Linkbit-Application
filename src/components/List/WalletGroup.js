@@ -25,23 +25,6 @@ export default class WalletGroup extends React.Component {
       onWalletLongSelected: () => {},
     }
 
-    render() {
-      return (
-        <View style={styles.container}>
-          <CoinCard
-            activate={this.props.activated}
-            coinName={this.coin.name}
-            themeColor={this.coin.themeColor}
-            symbol={this.props.coinSymbol}
-            moneySymbol={this.props.moneySymbol}
-            balance={fixed(this.totalBalance, 3)}
-            price={dollarFormat(fixed((this.totalBalance * this.coin.price), 3))}
-            onClick={() => this.props.onToggled(this.props.coinSymbol)} />
-          {this.props.activated && this.renderWallets(this.coin)}
-        </View>
-      )
-    }
-
     get coin() {
       return this.props.coin.getCoin(this.props.coinSymbol)
     }
@@ -70,6 +53,23 @@ export default class WalletGroup extends React.Component {
             onLongPress={() => this.props.onWalletLongSelected && this.props.onWalletLongSelected(wallet)} />
         )
       })
+    }
+
+    render() {
+      return (
+        <View style={styles.container}>
+          <CoinCard
+            activate={this.props.activated}
+            coinName={this.coin.name}
+            themeColor={this.coin.themeColor}
+            symbol={this.props.coinSymbol}
+            moneySymbol={this.props.moneySymbol}
+            balance={fixed(this.totalBalance, 3)}
+            price={dollarFormat(fixed((this.totalBalance * this.coin.price), 3))}
+            onClick={() => this.props.onToggled(this.props.coinSymbol)} />
+          {this.props.activated && this.renderWallets(this.coin)}
+        </View>
+      )
     }
 }
 

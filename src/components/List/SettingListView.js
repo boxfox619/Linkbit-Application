@@ -2,31 +2,29 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
 
-export default class SettingListView extends React.Component {
-    static propTypes = {
-      list: PropTypes.array.isRequired,
-      onItemSelected: PropTypes.func.isRequired,
-    }
+const SettingListView = (props) => {
+  const { list, onItemSelected, style } = props
 
-    render() {
-      const {list, onItemSelected, style} = this.props
-      
-      return (
-        <View style={[styles.container, style]}>
-          {
-            list.map(item => (
-              <TouchableOpacity
-                key={item.key}
-                style={styles.listItem}
-                onPress={() => onItemSelected(item.key)}>
-                <Text style={[styles.mainTxt, styles.labelStyle]}>{item.labelText}</Text>
-                <Text style={[styles.subTxt, styles.subLabelStyle]}>{item.subLabelText}</Text>
-              </TouchableOpacity>
-            ))
-          }
-        </View>
-      )
-    }
+  return (
+    <View style={[styles.container, style]}>
+      {
+        list.map(item => (
+          <TouchableOpacity
+            key={item.key}
+            style={styles.listItem}
+            onPress={() => onItemSelected(item.key)}>
+            <Text style={[styles.mainTxt, styles.labelStyle]}>{item.labelText}</Text>
+            <Text style={[styles.subTxt, styles.subLabelStyle]}>{item.subLabelText}</Text>
+          </TouchableOpacity>
+        ))
+      }
+    </View>
+  )
+}
+
+SettingListView.propTypes = {
+  list: PropTypes.array.isRequired,
+  onItemSelected: PropTypes.func.isRequired,
 }
 
 const styles = StyleSheet.create({
@@ -51,3 +49,5 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
   },
 })
+
+export default SettingListView

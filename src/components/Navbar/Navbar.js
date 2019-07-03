@@ -26,12 +26,12 @@ const Navbar = (props) => {
 }
 
 Navbar.propTypes = {
-  tabs: PropTypes.array.isRequired,
-  onTabSelected: PropTypes.func.isRequired,
-  selectedIndex: PropTypes.number.isRequired,
-  defaultColor: PropTypes.string.isRequired,
-  activeColor: PropTypes.string.isRequired,
-  containerStyle: PropTypes.any.isRequired,
+  tabs: PropTypes.array,
+  onTabSelected: PropTypes.func,
+  selectedIndex: PropTypes.number,
+  defaultColor: PropTypes.string,
+  activeColor: PropTypes.string,
+  containerStyle: PropTypes.any,
 }
 
 Navbar.defaultProps = {

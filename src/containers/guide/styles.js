@@ -1,8 +1,8 @@
 import { StyleSheet, Dimensions } from 'react-native'
 
 const getCardWidth = () => {
-  const { height, width } = Dimensions.get('window')
-
+  const { width } = Dimensions.get('window')
+  
   return width / 100 * 80
 }
 

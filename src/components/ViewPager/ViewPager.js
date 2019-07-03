@@ -53,14 +53,6 @@ export default class ViewPager extends Component {
     this.state = { width: 0, height: 0, page: props.initialPage }
   }
 
-  _onPageScrollOnAndroid(e) {
-    if (this.props.onPageScroll) this.props.onPageScroll(e.nativeEvent)
-  }
-
-  _onPageSelectedOnAndroid(e) {
-    if (this.props.onPageSelected) this.props.onPageSelected(e.nativeEvent)
-  }
-
   _renderOnIOS() {
     const childrenCount = this.props.children ? this.props.children.length : 0
     const initialPage = Math.min(Math.max(0, this.props.initialPage), childrenCount - 1)
@@ -165,6 +157,14 @@ export default class ViewPager extends Component {
       this.refs[VIEWPAGER_REF].setPage(selectedPage)
       if (this.props.onPageSelected) this.props.onPageSelected({ position: selectedPage })
     }
+  }
+
+  _onPageScrollOnAndroid(e) {
+    if (this.props.onPageScroll) this.props.onPageScroll(e.nativeEvent)
+  }
+
+  _onPageSelectedOnAndroid(e) {
+    if (this.props.onPageSelected) this.props.onPageSelected(e.nativeEvent)
   }
 
   render() {

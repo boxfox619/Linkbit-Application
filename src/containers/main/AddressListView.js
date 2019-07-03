@@ -22,6 +22,31 @@ export default class AddressListView extends React.Component {
     return { topBar: { title: { text: i18n.t('address_list') } } }
   }
 
+  handler = (linkaddress) => {
+    Alert.alert(
+      i18n.t('delete_address'),
+      i18n.t('confirm_delete_address'),
+      [
+        { text: i18n.t('cancel'), onPress: () => {}, style: 'cancel' },
+        { text: i18n.t('agree'), onPress: () => this.deleteAddress(linkaddress) },
+      ],
+      { cancelable: false },
+    )
+  }
+
+  deleteAddress = (linkaddress) => {
+    linkaddress.deleteAddress().then(res => {
+      if (res) {
+        this.props.navigation.goBack(null)
+      } else {
+        alert(i18n.t('fail_delete_address'))
+      }
+    }).catch(err => {
+      handleError(err)
+      alert(i18n.t('fail_delete_address'))
+    })
+  }
+
   render() {
     const { linkedAddressList } = this.props.address
     const linkedAddressSize = linkedAddressList.reduce((count, value) => count + value.accountAddressList.length, 0)
@@ -54,31 +79,6 @@ export default class AddressListView extends React.Component {
           offsetY={20} />
       </View>
     )
-  }
-
-  handler = (linkaddress) => {
-    Alert.alert(
-      i18n.t('delete_address'),
-      i18n.t('confirm_delete_address'),
-      [
-        { text: i18n.t('cancel'), onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-        { text: i18n.t('agree'), onPress: () => this.deleteAddress(linkaddress) },
-      ],
-      { cancelable: false },
-    )
-  }
-
-  deleteAddress = (linkaddress) => {
-    linkaddress.deleteAddress().then(res => {
-      if (res) {
-        this.props.navigation.goBack(null)
-      } else {
-        alert(i18n.t('fail_delete_address'))
-      }
-    }).catch(err => {
-      handleError(err)
-      alert(i18n.t('fail_delete_address'))
-    })
   }
 }
 

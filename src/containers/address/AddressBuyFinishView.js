@@ -9,7 +9,7 @@ import checkedIcon from '../../assets/checked.png'
 
 @observer
 export default class AddressBuyFinishView extends React.Component {
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = () => {
       return {
         title: i18n.t('finish'),
         headerTitleStyle: { color: 'black' },

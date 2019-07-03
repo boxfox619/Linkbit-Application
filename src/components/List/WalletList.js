@@ -15,6 +15,11 @@ export default class WalletList extends React.Component {
     onWalletLongSelected: PropTypes.func,
   }
 
+  static defaultProps = {
+    onWalletSelected: () => {},
+    onWalletLongSelected: () => {},
+  }
+
   renderWalletList = () => {
     if (this.props.wallets && this.props.wallets.length > 0) {
       const walletMap = this.groupBy(this.props.wallets, 'symbol')

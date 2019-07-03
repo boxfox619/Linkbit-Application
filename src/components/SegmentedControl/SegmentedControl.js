@@ -19,7 +19,6 @@ export default class SegmentedControl extends React.Component {
               index === 0 ? null : styles.marginLeft,
               selectedIndex === index ? styles.selected : null]}
           onPress={() => {
-            this.setState({selectedIndex: index})
             this.props.onChange(index)
           }}>
           <Text style={[styles.optionName, selectedIndex === index ? styles.selectedText : null]}>{option}</Text>

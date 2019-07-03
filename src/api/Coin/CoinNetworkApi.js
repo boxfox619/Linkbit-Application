@@ -5,6 +5,7 @@ export default class CoinNetworkApi {
 
     fetchCoins = async () => {
       const res = await axios.get(`${COIN_API_HOST}/coins/list`)
+      
       return res.data
     }
 
@@ -12,6 +13,7 @@ export default class CoinNetworkApi {
       const res = await axios.get(`${COIN_API_HOST}/coins/${coinId}?community_data=false&developer_data=false&tickers=false`)
       const data = await res.data
       const price = data['market_data']['current_price'][currency.toLowerCase()]
+      
       return price
     }
 }

@@ -6,7 +6,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View, ViewPropTypes } from 'react-native'
-import IndicatorViewPager from './IndicatorViewPager'
 
 const DEFAULT_DOT_RADIUS = 8
 const SELECTED_DOT_RADIUS = 12
@@ -15,7 +14,6 @@ export default class PagerDotIndicator extends Component {
     ...ViewPropTypes,
     pageCount: PropTypes.number.isRequired,
     initialPage: PropTypes.number,
-    pager: PropTypes.instanceOf(IndicatorViewPager),
     dotStyle: ViewPropTypes.style,
     selectedDotStyle: ViewPropTypes.style,
     hideSingle: PropTypes.bool,

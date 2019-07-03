@@ -1,67 +1,65 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 import PropTypes from 'prop-types'
 import DropdownMenu from 'react-native-dropdown-menu'
 import { debounce } from 'lodash'
 import { Input } from '.'
 import { withTitle } from '../HOC'
 
-class AmountInput extends React.Component {
-    static propTypes = {
-      symbol: PropTypes.string.isRequired,
-      moneySymbol: PropTypes.string.isRequired,
-      amount: PropTypes.any.isRequired,
-      price: PropTypes.any.isRequired,
-      selectedSymbol: PropTypes.string.isRequired,
-      onChangeAmount: PropTypes.func.isRequired,
-      onChangeSymbol: PropTypes.func.isRequired,
-      edit: PropTypes.bool.isRequired,
-      onPress: PropTypes.func.isRequired,
-    }
+const AmountInput = (props) => {
+  const { amount, price, symbol, selectedSymbol, moneySymbol, onChangeAmount, onChangeSymbol, edit, onPress } = props
+  const symbols = [[symbol, moneySymbol]]
+  const amountValue = selectedSymbol === symbol ? amount : price
+  const onChangeAmountDebounce = debounce(onChangeAmount, 800)
 
-    render() {
-      const { amount, price, symbol, selectedSymbol, moneySymbol, onChangeAmount, onChangeSymbol, edit, onPress } = this.props
-      const symbols = [[symbol, moneySymbol]]
-      const amountValue = selectedSymbol === symbol ? amount : price
-      const onChangeAmountDebounce = debounce(onChangeAmount, 800)
-      
-      return (
-        <View style={styles.amountContainer}>
-          {edit ? (
-            <>
-              <Input
-                placeholder='0'
-                keyboardType='numeric'
-                returnKeyType='done'
-                containerStyle={{ flex: 1 }}
-                defaultValue={String(amountValue)}
-                onChangeText={text => onChangeAmountDebounce(text)} />
-              <View style={styles.unitPicker}>
-                <DropdownMenu
-                  bgColor="transparent"
-                  tintColor="#594343"
-                  activityTintColor="#594343"
-                  optionTextStyle={{ color: '#594343', backgroundColor: '#ffffff', zIndex: 2 }}
-                  titleStyle={{ color: '#594343' }}
-                  handler={(selection, row) => onChangeSymbol(symbols[selection][row])}
-                  data={symbols} />
-              </View>
-            </>
-          ) : (
-            <TouchableOpacity onPress={onPress} style={styles.toAmountContainer}>
-              <View style={{ display: 'flex', flexDirection: 'row' }}>
-                <Text style={styles.toAmountSymbol}>{moneySymbol}</Text>
-                <Text style={styles.toAmount}>{price}</Text>
-              </View>
-              <View style={{ display: 'flex', flexDirection: 'row' }}>
-                <Text style={styles.toAmountSymbol}>{symbol}</Text>
-                <Text style={styles.toAmount}>{amount}</Text>
-              </View>
-            </TouchableOpacity>
-          )}
-        </View>
-      )
-    }
+  return (
+    <View style={styles.amountContainer}>
+      {edit ? (
+        <>
+          <Input
+            placeholder='0'
+            keyboardType='numeric'
+            returnKeyType='done'
+            containerStyle={{ flex: 1 }}
+            defaultValue={String(amountValue)}
+            onChangeText={text => onChangeAmountDebounce(text)} />
+          <View style={styles.unitPicker}>
+            <DropdownMenu
+              bgColor="transparent"
+              tintColor="#594343"
+              activityTintColor="#594343"
+              optionTextStyle={{ color: '#594343', backgroundColor: '#ffffff', zIndex: 2 }}
+              titleStyle={{ color: '#594343' }}
+              handler={(selection, row) => onChangeSymbol(symbols[selection][row])}
+              data={symbols} />
+          </View>
+        </>
+      ) : (
+        <TouchableOpacity onPress={onPress} style={styles.toAmountContainer}>
+          <View style={{ display: 'flex', flexDirection: 'row' }}>
+            <Text style={styles.toAmountSymbol}>{moneySymbol}</Text>
+            <Text style={styles.toAmount}>{price}</Text>
+          </View>
+          <View style={{ display: 'flex', flexDirection: 'row' }}>
+            <Text style={styles.toAmountSymbol}>{symbol}</Text>
+            <Text style={styles.toAmount}>{amount}</Text>
+          </View>
+        </TouchableOpacity>
+      )}
+    </View>
+  )
+}
+
+AmountInput.propTypes = {
+  symbol: PropTypes.string.isRequired,
+  moneySymbol: PropTypes.string.isRequired,
+  amount: PropTypes.any.isRequired,
+  price: PropTypes.any.isRequired,
+  selectedSymbol: PropTypes.string.isRequired,
+  onChangeAmount: PropTypes.func.isRequired,
+  onChangeSymbol: PropTypes.func.isRequired,
+  edit: PropTypes.bool.isRequired,
+  onPress: PropTypes.func.isRequired,
 }
 
 const styles = StyleSheet.create({

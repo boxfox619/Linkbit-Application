@@ -45,7 +45,7 @@ export default class IndicatorViewPager extends Component {
     }
   }
 
-  componentWillUpdate (nextProps, nextState) {
+  componentWillUpdate (nextProps) {
     this._childrenCount = React.Children.count(nextProps.children)
   }
 

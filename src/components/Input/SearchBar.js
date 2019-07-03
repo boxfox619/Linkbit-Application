@@ -3,20 +3,18 @@ import { View, StyleSheet, Image, TextInput } from 'react-native'
 
 const searchBarIcon = require('../../assets/search.png')
 
-export default class SearchBar extends React.Component {
-  render() {
-    return (
-      <View style={styles.searchBar}>
-        <Image
-          style={styles.searchBarIcon}
-          source={searchBarIcon} />
-        <View style={styles.divider} />
-        <TextInput
-          {...this.props}
-          style={styles.searchBarInput} />
-      </View>
-    )
-  }
+const SearchBar = () => {
+  return (
+    <View style={styles.searchBar}>
+      <Image
+        style={styles.searchBarIcon}
+        source={searchBarIcon} />
+      <View style={styles.divider} />
+      <TextInput
+        {...this.props}
+        style={styles.searchBarInput} />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -52,3 +50,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#EAEAEA',
   },
 })
+
+export default SearchBar

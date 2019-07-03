@@ -2,9 +2,9 @@ import React from 'react'
 import { Animated, FlatList, Text, TouchableOpacity, View, Image } from 'react-native'
 import deleteIcon from '../../../assets/ic_delete.png'
 
-const KeyboardView = ({keyboardOnPress, pinLength, onComplete, bgColor, returnType, textColor, deleteText, animatedDeleteButtonOnPress, styles}) => {
+const KeyboardView = ({ keyboardOnPress, pinLength, onComplete, bgColor, returnType, textColor, deleteText, animatedDeleteButtonOnPress, styles }) => {
   const data = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'empty', '0', deleteText]
-  const renderItem = ({item, index}) => {
+  const renderItem = ({ item }) => {
     let style
     let onPressActive
     let component
@@ -14,7 +14,7 @@ const KeyboardView = ({keyboardOnPress, pinLength, onComplete, bgColor, returnTy
     if (item === deleteText) {
       onPressActive = animatedDeleteButtonOnPress
       style = [styles[0]]
-      component = (<Image style={{width: 30, height: 30}} source={deleteIcon} />)
+      component = (<Image style={{ width: 30, height: 30 }} source={deleteIcon} />)
     } else {
       onPressActive = false
       style = [styles[0]]

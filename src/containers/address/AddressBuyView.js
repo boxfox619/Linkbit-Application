@@ -32,7 +32,7 @@ class AddressBuyView extends React.Component {
     onNext = () => {
       if (!this.addressBuyStore.valid) {
         this.props.showProgress(true)
-        this.addressBuyStore.getNewAddress().then(res => {
+        this.addressBuyStore.getNewAddress().then(() => {
           this.props.showProgress(false)
           this.props.navigation.replace('AddressBuyFinish', { address: this.addressBuyStore.linkaddress })
         }).catch(err => {

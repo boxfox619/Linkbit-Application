@@ -1,33 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native'
-import {Icon} from 'react-native-elements'
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { Icon } from 'react-native-elements'
 
-export class HeaderButtonWithTitle extends React.Component {
+export const HeaderButtonWithTitle = (props) => {
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity onPress={props.onIconClicked} style={{ marginRight: 15 }}>
+        <Icon name={props.icon} size={35} />
+      </TouchableOpacity>
+      <Text style={styles.title}>{props.title}</Text>
+    </View>
+  )
+}
 
-    static propTypes = {
-      icon: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      onIconClicked: PropTypes.func.isRequired,
-    }
+HeaderButtonWithTitle.propTypes = {
+  icon: PropTypes.string,
+  title: PropTypes.string,
+  onIconClicked: PropTypes.func,
+}
 
-    static defaultProps = {
-      icon: 'arrow-back',
-      title: '',
-      onIconClicked: () => {
-      },
-    }
-
-    render() {
-      return (
-        <View style={styles.container}>
-          <TouchableOpacity onPress={this.props.onIconClicked} style={{marginRight: 15}}>
-            <Icon name={this.props.icon} size={35} />
-          </TouchableOpacity>
-          <Text style={styles.title}>{this.props.title}</Text>
-        </View>
-      )
-    }
+HeaderButtonWithTitle.defaultProps = {
+  icon: 'arrow-back',
+  title: '',
+  onIconClicked: () => {
+  },
 }
 
 const styles = StyleSheet.create({
@@ -42,3 +39,5 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
 })
+
+export default HeaderButtonWithTitle
