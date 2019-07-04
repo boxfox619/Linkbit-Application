@@ -1,28 +1,26 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
-import { Input } from "."
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { Input } from '.'
 import { withTitle } from '../HOC'
 
-class AddressInput extends React.Component {
-  render() {
-    const { address, onChangeText, edit, onPress } = this.props
+const AddressInput = (props) => {
+  const { address, onChangeText, edit, onPress } = props
 
-    return (
-      <View style={styles.addressContainer}>
-        {edit ? (
-          <Input
-            returnKeyType='done'
-            defaultValue={address}
-            onChangeText={onChangeText}
-            placeholder="Type address here" />
-        ) : (
-            <TouchableOpacity onPress={onPress} style={styles.toAddressContainer}>
-              <Text style={styles.toAddressText}>{address}</Text>
-            </TouchableOpacity>
-          )}
-      </View>
-    )
-  }
+  return (
+    <View style={styles.addressContainer}>
+      {edit ? (
+        <Input
+          returnKeyType='done'
+          defaultValue={address}
+          onChangeText={onChangeText}
+          placeholder="Type address here" />
+      ) : (
+        <TouchableOpacity onPress={onPress} style={styles.toAddressContainer}>
+          <Text style={styles.toAddressText}>{address}</Text>
+        </TouchableOpacity>
+      )}
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({

@@ -9,8 +9,6 @@ import PropTypes from 'prop-types'
 import { StyleSheet, View, ViewPropTypes } from 'react-native'
 import ViewPager from './ViewPager'
 
-const VIEWPAGER_REF = 'viewPager'
-const INDICATOR_REF = 'indicator'
 export default class IndicatorViewPager extends Component {
   static propTypes = {
     ...ViewPager.propTypes,
@@ -23,11 +21,13 @@ export default class IndicatorViewPager extends Component {
 
   static defaultProps = {
     indicator: null,
-    initialPage: 0,
     horizontalScroll: true,
+    pagerStyle: {},
+    onPageSelected: () => { },
+    goToNext: () => { },
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this._onPageScroll = this._onPageScroll.bind(this)
     this._onPageSelected = this._onPageSelected.bind(this)
@@ -37,41 +37,52 @@ export default class IndicatorViewPager extends Component {
     this.setPageWithoutAnimation = this.setPageWithoutAnimation.bind(this)
     this._currentIndex = props.initialPage
     this._childrenCount = React.Children.count(props.children)
+    this.viewPagerRef = React.createRef()
+    this.indecatorRef = React.createRef()
   }
 
-  componentDidMount () {
+  componentDidMount() {
     if (this.props.goToNext) {
       this.props.goToNext(this._goToNextPage)
     }
   }
 
-  componentWillUpdate (nextProps, nextState) {
+  componentWillUpdate(nextProps) {
     this._childrenCount = React.Children.count(nextProps.children)
   }
 
-  render () {
-    return (
-      <View style={[styles.container, this.props.style]}>
-        <ViewPager
-          {...this.props}
-          horizontalScroll={this.props.horizontalScroll}
-          ref={VIEWPAGER_REF}
-          style={[styles.pager, this.props.pagerStyle]}
-          onPageScroll={this._onPageScroll}
-          onPageSelected={this._onPageSelected}/>
-        {this._renderIndicator()}
-      </View>
-    )
+  setPage(selectedPage) {
+    this.viewPagerRef.current.setPage(selectedPage)
   }
 
-  _onPageScroll (params) {
-    const indicator = this.refs[INDICATOR_REF]
+  setPageWithoutAnimation(selectedPage) {
+    this.viewPagerRef.current.setPageWithoutAnimation(selectedPage)
+  }
+
+  _renderIndicator() {
+    const { indicator, initialPage } = this.props
+    if (!indicator) return null
+
+    return React.cloneElement(indicator, {
+      ref: this.indecatorRef,
+      pager: this,
+      initialPage: initialPage,
+    })
+  }
+
+  _goToNextPage() {
+    const nextIndex = (this._currentIndex + 1) % this._childrenCount
+    this.setPage(nextIndex)
+  }
+
+  _onPageScroll(params) {
+    const indicator = this.indecatorRef.current
     indicator && indicator.onPageScroll && indicator.onPageScroll(params)
     this.props.onPageScroll && this.props.onPageScroll(params)
   }
 
-  _onPageSelected (params) {
-    const indicator = this.refs[INDICATOR_REF]
+  _onPageSelected(params) {
+    const indicator = this.indecatorRef.current
     indicator && indicator.onPageSelected && indicator.onPageSelected(params)
     this.props.onPageSelected && this.props.onPageSelected(params)
     this._currentIndex = params.position
@@ -80,32 +91,24 @@ export default class IndicatorViewPager extends Component {
     }
   }
 
-  _renderIndicator () {
-    const {indicator, initialPage} = this.props
-    if (!indicator) return null
-
-    return React.cloneElement(indicator, {
-      ref: INDICATOR_REF,
-      pager: this,
-      initialPage: initialPage,
-    })
+  render() {
+    return (
+      <View style={[styles.container, this.props.style]}>
+        <ViewPager
+          {...this.props}
+          horizontalScroll={this.props.horizontalScroll}
+          ref={this.viewPagerRef}
+          style={[styles.pager, this.props.pagerStyle]}
+          onPageScroll={this._onPageScroll}
+          onPageSelected={this._onPageSelected} />
+        {this._renderIndicator()}
+      </View>
+    )
   }
 
-  _goToNextPage () {
-    const nextIndex = (this._currentIndex + 1) % this._childrenCount
-    this.setPage(nextIndex)
-  }
-
-  setPage (selectedPage) {
-    this.refs[VIEWPAGER_REF].setPage(selectedPage)
-  }
-
-  setPageWithoutAnimation (selectedPage) {
-    this.refs[VIEWPAGER_REF].setPageWithoutAnimation(selectedPage)
-  }
 }
 
 const styles = StyleSheet.create({
   container: {},
-  pager: {flex: 1},
+  pager: { flex: 1 },
 })

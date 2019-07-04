@@ -1,7 +1,7 @@
-import WalletStore from "../WalletStore"
+import WalletStore from '../WalletStore'
 
-describe("WalletStore", () => {
-  it("creates new wallet", async () => {
+describe('WalletStore', () => {
+  it('creates new wallet', async () => {
     const symbol = 'ETH'
     const password = '12341234'
     const result = await WalletStore.createWallet(symbol, password)

@@ -3,33 +3,40 @@ import PropTypes from 'prop-types'
 import { View, FlatList } from 'react-native'
 import { CoinItem } from '../Card'
 
-export default class SelectCoinListView extends React.Component {
+const SelectCoinListView = (props) => {
+  const { coins, selectedCoin, onSelectCoin, isLoading, style } = props
 
-    static propTypes = {
-        coins: PropTypes.array.isRequired,
-        selectedCoin: PropTypes.string,
-        onSelectCoin: PropTypes.func.isRequired,
-        isLoading: PropTypes.bool.isRequired,
-        style: PropTypes.object
-    }
-
-    static defaultProps = {
-        isLoading: false
-    }
-
-    render() {
-        const { coins, selectedCoin, onSelectCoin, isLoading, style } = this.props
-        return (
-            <View style={style}>
-                <FlatList
-                    data={coins}
-                    extraData={selectedCoin}
-                    keyExtractor={(item) => item.symbol}
-                    refreshing={isLoading}
-                    renderItem={({ item }) => (
-                        <CoinItem coin={item} activate={selectedCoin === item.symbol} onPress={() => onSelectCoin(item.symbol)} />
-                    )} />
-            </View>
-        )
-    }
+  return (
+    <View style={style}>
+      <FlatList
+        data={coins}
+        extraData={selectedCoin}
+        keyExtractor={(item) => item.symbol}
+        refreshing={isLoading}
+        renderItem={({ item }) => (
+          <CoinItem coin={item} activate={selectedCoin === item.symbol} onPress={() => onSelectCoin(item.symbol)} />
+        )} />
+    </View>
+  )
 }
+
+SelectCoinListView.propTypes = {
+  coins: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    symbol: PropTypes.string.isRequired,
+    themeColor: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+  })).isRequired,
+  selectedCoin: PropTypes.string,
+  onSelectCoin: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+  style: View.PropTypes.style,
+}
+
+SelectCoinListView.defaultProps = {
+  selectedCoin: undefined,
+  isLoading: false,
+  style: {},
+}
+
+export default SelectCoinListView

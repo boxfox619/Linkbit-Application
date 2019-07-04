@@ -1,1 +1,9 @@
-export { default as NavigationButton } from './NavigationButton'
+import NavigationButton from './NavigationButton'
+
+export {
+  NavigationButton,
+}
+
+export default {
+  NavigationButton,
+}

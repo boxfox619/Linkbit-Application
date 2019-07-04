@@ -1,9 +1,8 @@
-import EthereumWalletManager from "../EthereumWalletManager"
-import { IMPORT_TYPE_PRIVATEKEY } from '../EthereumWalletManager'
+import EthereumWalletManager, { IMPORT_TYPE_PRIVATEKEY } from '../EthereumWalletManager'
 
-describe("EthereumWalletManager", () => {
-  jest.setTimeout(300000000);
-  it("create new wallet and import", async () => {
+describe('EthereumWalletManager', () => {
+  jest.setTimeout(300000000)
+  it('create new wallet and import', async () => {
     const manager = new EthereumWalletManager()
     const password = '1234'
     const wallet = manager.create(password)
@@ -14,7 +13,7 @@ describe("EthereumWalletManager", () => {
     expect(wallet.address).toMatch(importedWallet.address)
   })
 
-  it("load transactions", async () => {
+  it('load transactions', async () => {
     const manager = new EthereumWalletManager()
     const address = '0xa5B5bE1ecB74696eC27E3CA89E5d940c9dbcCc56'
     const transactions = await manager.loadTransaction(address)

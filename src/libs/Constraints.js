@@ -1,4 +1,5 @@
 import ethereumIcon from '../assets/ETH.png'
+
 const HOST = 'https://ive2y3tdlh.execute-api.ap-northeast-2.amazonaws.com/dev'
 const COIN_API_HOST = 'https://api.coingecko.com/api/v3'
 const PRIMARY_COLOR = '#594343'
@@ -10,8 +11,8 @@ const COIN_INFO = [
     symbol: 'ETH',
     name: 'ethereum',
     themeColor: '#627eea',
-    icon: ethereumIcon
-  }
+    icon: ethereumIcon,
+  },
 ]
 export {
   HOST,
@@ -19,5 +20,5 @@ export {
   RUNNING_MODE,
   COIN_API_HOST,
   INFURA_MAINNET_URL,
-  COIN_INFO
+  COIN_INFO,
 }

@@ -1,16 +1,15 @@
 import React from 'react'
 import { View, StyleSheet, FlatList, Text } from 'react-native'
-import { dollarFormat, fixed } from "../../libs/NumberFormatter"
-import { WalletCard } from '../../components/Card'
-import { SearchBar } from '../../components/Input'
 import { observer, inject } from 'mobx-react'
 import { observable } from 'mobx'
+import { dollarFormat, fixed } from '../../libs/NumberFormatter'
+import { WalletCard } from '../../components/Card'
+import { SearchBar } from '../../components/Input'
 import i18n from '../../libs/Locale'
 
 @inject('wallet', 'coin')
 @observer
 export default class WalletSearchView extends React.Component {
-  @observable wallets
 
   static navigationOptions = () => {
     return {
@@ -19,6 +18,7 @@ export default class WalletSearchView extends React.Component {
       headerStyle: { backgroundColor: 'white' },
     }
   }
+  @observable wallets = []
 
   componentDidMount() {
     this.onChangeText()
@@ -76,7 +76,8 @@ export default class WalletSearchView extends React.Component {
           data={this.wallets}
           keyExtractor={(item) => item.address}
           renderItem={({ item }) => {
-            const coin = this.props.coin.getCoin(item.symbol);
+            const coin = this.props.coin.getCoin(item.symbol)
+
             return (
               <WalletCard
                 key={item.address}
@@ -85,7 +86,8 @@ export default class WalletSearchView extends React.Component {
                 name={item.name}
                 balance={item.balance}
                 price={dollarFormat(fixed((item.balance * coin.price), 3))}
-                symbol={item.symbol} moneySymbol="USD" />
+                symbol={item.symbol}
+                moneySymbol="USD" />
             )
           }} />
       </View>
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingTop: 20,
     paddingBottom: 10,
-    paddingLeft: 2
+    paddingLeft: 2,
   },
   list: {
     flex: 1,

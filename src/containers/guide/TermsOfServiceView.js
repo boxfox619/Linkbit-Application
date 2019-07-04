@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Button, StyleSheet, Dimensions, ScrollView, Text } from 'react-native'
-import i18n from '../libs/Locale'
+import i18n from '../../libs/Locale'
 
 export default class TermsOfServiceView extends React.Component {
   onPressConfirm = () => {

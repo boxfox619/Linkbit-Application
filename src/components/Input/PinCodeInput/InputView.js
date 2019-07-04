@@ -15,7 +15,7 @@ const InputView = ({pinViewAnim, animatedInputIndex, pinLength, bgColor, activeB
           styles[1], {
             backgroundColor: bgColor,
             opacity: bgOpacity,
-          }]}/>
+          }]} />
     )
   }
 
@@ -27,7 +27,7 @@ const InputView = ({pinViewAnim, animatedInputIndex, pinLength, bgColor, activeB
           styles[2], {
             backgroundColor: activeBgColor,
             opacity: 1,
-          }]}/>
+          }]} />
     )
   }
   const ShowInput = (pinLength) => {

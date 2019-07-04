@@ -3,28 +3,30 @@ import PropTypes from 'prop-types'
 import { StyleSheet, Text } from 'react-native'
 import BorderCard from './BorderCard'
 import { PRIMARY_COLOR } from '../../libs/Constraints'
-import i18n from'../../libs/Locale'
+import i18n from '../../libs/Locale'
 
 export default class AddressCard extends React.Component {
 
   static propTypes = {
     address: PropTypes.string.isRequired,
     linkedAddressCount: PropTypes.number.isRequired,
-    activate: PropTypes.bool.isRequired,
+    activate: PropTypes.bool,
     onPress: PropTypes.func,
-    onLongPress: PropTypes.func
+    onLongPress: PropTypes.func,
   }
 
   static defaultProps = {
     activate: false,
+    onPress: () => { },
+    onLongPress: () => { },
   }
 
-  get activeColor () {
-    return {color: this.props.activate ? 'white' : 'black'}
+  get activeColor() {
+    return { color: this.props.activate ? 'white' : 'black' }
   }
 
-  render () {
-    const {address, linkedAddressCount, onPress, onLongPress, activate} = this.props
+  render() {
+    const { address, linkedAddressCount, onPress, onLongPress, activate } = this.props
 
     return (
       <BorderCard

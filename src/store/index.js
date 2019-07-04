@@ -5,9 +5,9 @@ import WalletStore from './Wallet/WalletStore'
 import SettingStore from './SettingStore'
 
 export {
-    AddressStore,
-    CoinPriceStore,
-    TransactionStore,
-    WalletStore,
-    SettingStore
+  AddressStore,
+  CoinPriceStore,
+  TransactionStore,
+  WalletStore,
+  SettingStore,
 }

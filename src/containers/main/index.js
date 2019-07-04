@@ -1,1 +1,9 @@
-export { default as MainTabView } from './MainTabView'
+import MainTabView from './MainTabView'
+
+export {
+  MainTabView,
+}
+
+export default {
+  MainTabView,
+}

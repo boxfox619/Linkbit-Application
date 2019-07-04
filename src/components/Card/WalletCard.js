@@ -11,11 +11,11 @@ export default class WalletCard extends React.Component {
     symbol: PropTypes.string.isRequired,
     moneySymbol: PropTypes.string.isRequired,
     address: PropTypes.string,
-    balance: PropTypes.any,
-    price: PropTypes.any,
+    balance: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     themeColor: PropTypes.string,
     onPress: PropTypes.func,
-    onLongPress: PropTypes.func
+    onLongPress: PropTypes.func,
   }
 
   static defaultProps = {
@@ -23,8 +23,17 @@ export default class WalletCard extends React.Component {
     price: 0,
     themeColor: PRIMARY_COLOR,
     onPress: () => { },
+    onLongPress: () => { },
+    address: undefined,
   }
 
+
+  getTextColor = () => {
+    const themeColor = this.props.themeColor
+
+    return { color: themeColor.length === 0 ? PRIMARY_COLOR : themeColor }
+  }
+  
   render() {
     return (
       <BorderCard
@@ -49,11 +58,6 @@ export default class WalletCard extends React.Component {
         </View>
       </BorderCard>
     )
-  }
-
-  getTextColor = () => {
-    const themeColor = this.props.themeColor
-    return { color: themeColor.length === 0 ? PRIMARY_COLOR : themeColor }
   }
 }
 
