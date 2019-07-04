@@ -56,7 +56,7 @@ class WalletStore {
     addWallet = async (symbol, name, walletData) => {
       const wallet = new Wallet()
       wallet.updateFromJson({ ...walletData, name, balance: 0, symbol })
-      if (this.walletList.find(w => w.address === wallet.address)) {
+      if (this.wallets.find(w => w.address === wallet.address)) {
         throw new Error('already imported wallet')
       }
       await this.walletStorageApi.addWallet(wallet.asJson)
