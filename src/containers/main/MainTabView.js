@@ -21,6 +21,48 @@ export default class MainTabView extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.updateIndex(0)
+  }
+
+  get tabs() {
+    return [
+      { icon: 'payment', label: i18n.t('wallet') },
+      { icon: 'swap-horiz', label: i18n.t('address') },
+      { icon: 'settings', label: i18n.t('setting') },
+    ]
+  }
+
+  renderContents = () => {
+    switch (this.state.selectedIndex) {
+    case 0:
+      return <WalletListView navigation={this.props.navigation} />
+    case 1:
+      return <AddressListView navigation={this.props.navigation} />
+    case 2:
+      return <SettingView navigation={this.props.navigation} />
+    }
+  }
+
+  updateIndex = (selectedIndex) => {
+    const state = { selectedIndex }
+    switch (selectedIndex) {
+    case 0:
+      state.headerTitle = 'wallet'
+      state.headerIcon = undefined
+      break
+    case 1:
+      state.headerTitle = 'address'
+      state.headerIcon = undefined
+      break
+    case 2:
+      state.headerTitle = 'setting'
+      state.headerIcon = undefined
+      break
+    }
+    this.setState(state)
+  }
+
   render() {
     const { headerTitle, headerIcon, selectedIndex } = this.state
 
@@ -44,48 +86,6 @@ export default class MainTabView extends React.Component {
         </SafeAreaView>
       </React.Fragment>
     )
-  }
-
-  componentDidMount() {
-    this.updateIndex(0)
-  }
-
-  renderContents = () => {
-    switch (this.state.selectedIndex) {
-    case 0:
-      return <WalletListView navigation={this.props.navigation} />
-    case 1:
-      return <AddressListView navigation={this.props.navigation} />
-    case 2:
-      return <SettingView navigation={this.props.navigation} />
-    }
-  }
-
-  get tabs() {
-    return [
-      { icon: 'payment', label: i18n.t('wallet') },
-      { icon: 'swap-horiz', label: i18n.t('address') },
-      { icon: 'settings', label: i18n.t('setting') },
-    ]
-  }
-
-  updateIndex = (selectedIndex) => {
-    const state = { selectedIndex }
-    switch (selectedIndex) {
-    case 0:
-      state.headerTitle = 'wallet'
-      state.headerIcon = undefined
-      break
-    case 1:
-      state.headerTitle = 'address'
-      state.headerIcon = undefined
-      break
-    case 2:
-      state.headerTitle = 'setting'
-      state.headerIcon = undefined
-      break
-    }
-    this.setState(state)
   }
 }
 

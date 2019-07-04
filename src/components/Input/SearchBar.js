@@ -3,16 +3,14 @@ import { View, StyleSheet, Image, TextInput } from 'react-native'
 
 const searchBarIcon = require('../../assets/search.png')
 
-const SearchBar = () => {
+const SearchBar = (props) => {
   return (
     <View style={styles.searchBar}>
       <Image
         style={styles.searchBarIcon}
         source={searchBarIcon} />
       <View style={styles.divider} />
-      <TextInput
-        {...this.props}
-        style={styles.searchBarInput} />
+      <TextInput {...props} style={styles.searchBarInput} />
     </View>
   )
 }

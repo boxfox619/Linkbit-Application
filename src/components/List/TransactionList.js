@@ -8,7 +8,14 @@ export default class TransactionList extends React.Component {
   static propTypes = {
     fetchTransaction: PropTypes.func.isRequired,
     refreshing: PropTypes.bool,
-    data: PropTypes.array,
+    data: PropTypes.arrayOf(PropTypes.shape({
+      date: PropTypes.string.isRequired,
+      address: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
+      confirm: PropTypes.number.isRequired,
+      symbol: PropTypes.string.isRequired,
+      benefit: PropTypes.bool.isRequired,
+    })),
     symbol: PropTypes.string.isRequired,
     onSelect: PropTypes.func,
     onLongSelect: PropTypes.func,

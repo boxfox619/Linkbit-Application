@@ -10,7 +10,12 @@ export default class WalletList extends React.Component {
   @observable selectedCoin = undefined
   static propTypes = {
     moneySymbol: PropTypes.string.isRequired,
-    wallets: PropTypes.object.isRequired,
+    wallets: PropTypes.arrayOf(PropTypes.shape({
+      address: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      symbol: PropTypes.string.isRequired,
+      balance: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    })).isRequired,
     onWalletSelected: PropTypes.func,
     onWalletLongSelected: PropTypes.func,
   }

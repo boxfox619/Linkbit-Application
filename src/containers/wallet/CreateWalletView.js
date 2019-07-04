@@ -16,7 +16,6 @@ class CreateWalletView extends React.Component {
   state = {
     coin: {},
     walletName: '',
-    inValidWalletName: '',
     password: '',
     invalidPassword: false,
     confirmPassword: '',

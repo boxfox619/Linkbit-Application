@@ -23,7 +23,11 @@ const SettingListView = (props) => {
 }
 
 SettingListView.propTypes = {
-  list: PropTypes.array.isRequired,
+  list: PropTypes.arrayOf(PropTypes.shape({
+    key: PropTypes.string.isRequired,
+    labelText: PropTypes.string.isRequired,
+    subLabelText: PropTypes.string.isRequired,
+  })).isRequired,
   onItemSelected: PropTypes.func.isRequired,
 }
 

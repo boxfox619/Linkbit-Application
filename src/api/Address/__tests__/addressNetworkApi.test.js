@@ -2,6 +2,7 @@ import crypto from 'crypto'
 import ECIES from 'eth-ecies'
 import * as ethUtil from 'ethereumjs-util'
 import * as AddressApi from '../AddressNetworkApi'
+import { handleError } from '../../../libs/ErrorHandler'
 
 describe('address network api', () => {
   const privateKey = crypto.randomBytes(32)
@@ -24,7 +25,7 @@ describe('address network api', () => {
       const res = await AddressApi.createLinkAddress(address, decrypted, 'linkAddress')
       expect(res).toBe(true)
     } catch (err) {
-      console.log(err.message)
+      handleError(err)
     }
   })
 
@@ -37,7 +38,7 @@ describe('address network api', () => {
       const res = await AddressApi.deleteLinkAddress(decrypted, 'linkAddress')
       expect(res).toBe(true)
     } catch (err) {
-      console.log(err.message)
+      handleError(err)
     }
   })
 })

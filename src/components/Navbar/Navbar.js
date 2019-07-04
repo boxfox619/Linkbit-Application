@@ -26,12 +26,15 @@ const Navbar = (props) => {
 }
 
 Navbar.propTypes = {
-  tabs: PropTypes.array,
+  tabs: PropTypes.arrayOf(PropTypes.shape({
+    icon: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+  })),
   onTabSelected: PropTypes.func,
   selectedIndex: PropTypes.number,
   defaultColor: PropTypes.string,
   activeColor: PropTypes.string,
-  containerStyle: PropTypes.any,
+  containerStyle: View.PropTypes.style,
 }
 
 Navbar.defaultProps = {

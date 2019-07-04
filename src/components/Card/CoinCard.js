@@ -10,8 +10,8 @@ export default class CoinCard extends React.Component {
     coinName: PropTypes.string.isRequired,
     symbol: PropTypes.string.isRequired,
     moneySymbol: PropTypes.string.isRequired,
-    balance: PropTypes.any,
-    price: PropTypes.any,
+    balance: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     themeColor: PropTypes.string,
     activate: PropTypes.bool,
     onClick: PropTypes.func,
@@ -22,6 +22,7 @@ export default class CoinCard extends React.Component {
     price: '0',
     activate: false,
     themeColor: PRIMARY_COLOR,
+    onClick: () => {},
   }
 
   constructor (props) {

@@ -7,16 +7,17 @@ const withProgressDialog = Component => class WithProgress extends React.Compone
     this.state = { label: 'Loading', visible: false }
   }
 
-  setVisible = (visible, label, callback) => {
-    this.setState({ visible, label, callback })
-  }
-
   componentDidUpdate() {
     const callback = this.state.callback
     callback && setTimeout(() => {
       callback()
     }, 500)
   }
+
+  setVisible = (visible, label, callback) => {
+    this.setState({ visible, label, callback })
+  }
+
   render() {
     return (
       <>

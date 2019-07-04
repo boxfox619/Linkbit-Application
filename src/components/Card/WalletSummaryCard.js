@@ -8,7 +8,12 @@ import { dollarFormat, fixed } from '../../libs/NumberFormatter'
 @observer
 export default class WalletSummaryCard extends React.Component {
   static propTypes = {
-    wallet: PropTypes.object.isRequired,
+    wallet: PropTypes.shape({
+      symbol: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      balance: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.number.isRequired]).isRequired,
+      address: PropTypes.string.isRequired,
+    }).isRequired,
   }
 
   get coin() {

@@ -10,7 +10,6 @@ import i18n from '../../libs/Locale'
 @inject('wallet', 'coin')
 @observer
 export default class WalletSearchView extends React.Component {
-  @observable wallets
 
   static navigationOptions = () => {
     return {
@@ -19,6 +18,7 @@ export default class WalletSearchView extends React.Component {
       headerStyle: { backgroundColor: 'white' },
     }
   }
+  @observable wallets = []
 
   componentDidMount() {
     this.onChangeText()
@@ -77,7 +77,7 @@ export default class WalletSearchView extends React.Component {
           keyExtractor={(item) => item.address}
           renderItem={({ item }) => {
             const coin = this.props.coin.getCoin(item.symbol)
-            
+
             return (
               <WalletCard
                 key={item.address}

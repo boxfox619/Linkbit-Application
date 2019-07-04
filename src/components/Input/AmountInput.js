@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
 import DropdownMenu from 'react-native-dropdown-menu'
 import { debounce } from 'lodash'
@@ -53,8 +53,8 @@ const AmountInput = (props) => {
 AmountInput.propTypes = {
   symbol: PropTypes.string.isRequired,
   moneySymbol: PropTypes.string.isRequired,
-  amount: PropTypes.any.isRequired,
-  price: PropTypes.any.isRequired,
+  amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   selectedSymbol: PropTypes.string.isRequired,
   onChangeAmount: PropTypes.func.isRequired,
   onChangeSymbol: PropTypes.func.isRequired,

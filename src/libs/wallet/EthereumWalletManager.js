@@ -23,10 +23,9 @@ export default class EthereumWalletManager extends WalletManager {
 
   import = (type, data) => {
     let resultData
-    switch (type) {
-    case IMPORT_TYPE_PRIVATEKEY:
-      let privateKey = data.privateKey
+    if (type === IMPORT_TYPE_PRIVATEKEY) {
       const password = data.password
+      let privateKey = data.privateKey
       if (password) {
         privateKey = new Cryptr(password).decrypt(privateKey)
       }
@@ -35,12 +34,10 @@ export default class EthereumWalletManager extends WalletManager {
         address: wallet.address,
         privateKey: wallet.privateKey,
       }
-      break
-    case IMPORT_TYPE_MNEMONIC:
-      //@TODO implement mnemonic import
-      break
+    } else if (type === IMPORT_TYPE_MNEMONIC) {
+      // @TODO implement mnemonic
     }
-
+    
     return resultData
   }
 
@@ -85,6 +82,7 @@ export default class EthereumWalletManager extends WalletManager {
       const gas = e.gas
       const input = e.input
       */
+
       return new Transaction(blockNumber, txHash, 'ETH', from, to, 'undefined', amount, status, date, confirm)
     })
   }
