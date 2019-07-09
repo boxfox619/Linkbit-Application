@@ -1418,4 +1418,4 @@ __d(function(g,r,i,a,m,e,d){m.exports=r(d[0]).registerAsset({__packager_asset:!0
 __d(function(i,n,p,t,a,o,c){a.exports={name:"LinkbitApplication",displayName:"LinkbitApplication"}},1407,[]);
 __r(119);
 __r(0);
-//# sourceMappingURL=sourcemap.js
+//# sourceMappingURL=index.android.bundle.map
