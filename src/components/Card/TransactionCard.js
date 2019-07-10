@@ -8,7 +8,7 @@ export default class TransactionCard extends React.Component {
     transaction: PropTypes.shape({
       date: PropTypes.string.isRequired,
       address: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired,
+      amount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
       confirm: PropTypes.number.isRequired,
       symbol: PropTypes.string.isRequired,
       benefit: PropTypes.bool.isRequired,

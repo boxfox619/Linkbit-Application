@@ -4,6 +4,7 @@ import { View, StyleSheet } from 'react-native'
 import { CoinCard, WalletCard } from '..'
 import { observer, inject } from 'mobx-react'
 import { dollarFormat, fixed } from '../../libs/NumberFormatter'
+import Wallet from '../../store/Wallet/Wallet'
 
 @inject('coin')
 @observer
@@ -13,12 +14,7 @@ export default class WalletGroup extends React.Component {
     activated: PropTypes.bool,
     coinSymbol: PropTypes.string.isRequired,
     moneySymbol: PropTypes.string.isRequired,
-    wallets: PropTypes.arrayOf(PropTypes.shape({
-      address: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      symbol: PropTypes.string.isRequired,
-      balance: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    })).isRequired,
+    wallets: PropTypes.arrayOf(PropTypes.instanceOf(Wallet)).isRequired,
     onToggled: PropTypes.func.isRequired,
     onWalletSelected: PropTypes.func,
     onWalletLongSelected: PropTypes.func,

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, FlatList } from 'react-native'
+import { View, FlatList, ViewPropTypes } from 'react-native'
 import { CoinItem } from '../Card'
 
 const SelectCoinListView = (props) => {
@@ -30,7 +30,7 @@ SelectCoinListView.propTypes = {
   selectedCoin: PropTypes.string,
   onSelectCoin: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
-  style: View.PropTypes.style,
+  style: ViewPropTypes.style,
 }
 
 SelectCoinListView.defaultProps = {

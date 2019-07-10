@@ -4,18 +4,14 @@ import { ScrollView, View } from 'react-native'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 import WalletGroup from './WalletGroup'
+import Wallet from '../../store/Wallet/Wallet'
 
 @observer
 export default class WalletList extends React.Component {
   @observable selectedCoin = undefined
   static propTypes = {
     moneySymbol: PropTypes.string.isRequired,
-    wallets: PropTypes.arrayOf(PropTypes.shape({
-      address: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      symbol: PropTypes.string.isRequired,
-      balance: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    })).isRequired,
+    wallets: PropTypes.arrayOf(PropTypes.instanceOf(Wallet)).isRequired,
     onWalletSelected: PropTypes.func,
     onWalletLongSelected: PropTypes.func,
   }
