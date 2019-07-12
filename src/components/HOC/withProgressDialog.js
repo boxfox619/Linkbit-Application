@@ -22,7 +22,7 @@ const withProgressDialog = Component => class WithProgress extends React.Compone
     return (
       <>
         {this.state.visible && (
-          <Modal transparent>
+          <Modal transparent onRequestClose={this.setVisible.bind(this, false)}>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(52, 52, 52, 0.8)' }}>
               <View style={{ borderRadius: 10, backgroundColor: 'white', padding: 25 }}>
                 <Text style={{ fontSize: 20, fontWeight: '200' }}>{this.state.label || 'loading'}</Text>
