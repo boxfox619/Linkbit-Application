@@ -37,7 +37,7 @@
     "react-navigation": "^3.0.2",
     "rxjs": "^6.5.2",
     "vm-browserify": "^1.1.0",
-    "web3": "^1.0.0-beta.37"
+    "web3": "^1.0.0-beta.55"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
