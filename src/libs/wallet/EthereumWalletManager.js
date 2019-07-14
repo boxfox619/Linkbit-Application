@@ -30,15 +30,15 @@ export default class EthereumWalletManager extends WalletManager {
       if (password) {
         privateKey = new Cryptr(password).decrypt(privateKey)
       }
-      const wallet = this.web3.eth.accounts.privateKeyToAccount(privateKey)
+      const wallet = EthWallet.fromPrivateKey(Buffer.from(privateKey, 'hex'))
       resultData = {
-        address: wallet.address,
-        privateKey: wallet.privateKey,
+        address: wallet.getAddress(),
+        privateKey: wallet.getPrivateKey(),
       }
     } else if (type === IMPORT_TYPE_MNEMONIC) {
       // @TODO implement mnemonic
     }
-    
+
     return resultData
   }
 
@@ -48,7 +48,6 @@ export default class EthereumWalletManager extends WalletManager {
     const address = walletData.getAddress()
     const cryptr = new Cryptr(password)
     const encryptedPrivateKey = cryptr.encrypt(privateKey)
-
     return { address, privateKey: encryptedPrivateKey }
   }
 
