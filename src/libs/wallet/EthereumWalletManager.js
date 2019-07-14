@@ -6,6 +6,7 @@ import { Observable } from 'rxjs'
 import { timeout } from 'rxjs/operators'
 import Transaction from '../../store/Transaction/Transaction'
 import WalletManager from './WalletManager'
+import EthWallet from 'ethereumjs-wallet'
 
 export const IMPORT_TYPE_PRIVATEKEY = 'privateKey'
 export const IMPORT_TYPE_MNEMONIC = 'mnemonic'
@@ -42,9 +43,9 @@ export default class EthereumWalletManager extends WalletManager {
   }
 
   create = (password) => {
-    const walletData = this.web3.eth.accounts.create()
-    const address = walletData.address
-    const privateKey = walletData.privateKey
+    const walletData = EthWallet.generate()
+    const privateKey = walletData.getPrivateKey()
+    const address = walletData.getAddress()
     const cryptr = new Cryptr(password)
     const encryptedPrivateKey = cryptr.encrypt(privateKey)
 

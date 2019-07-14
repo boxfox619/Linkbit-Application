@@ -3,6 +3,7 @@ import 'proxy-polyfill'
 import 'node-libs-react-native/globals'
 import './globals'
 import './axios-settings'
+import './src/polyfill/arrayPolyfills'
 
 import { AppRegistry } from 'react-native'
 import App from './App'
