@@ -7,6 +7,8 @@ import { timeout } from 'rxjs/operators'
 import Transaction from '../../store/Transaction/Transaction'
 import WalletManager from './WalletManager'
 import EthWallet from 'ethereumjs-wallet'
+import Units from 'ethereumjs-units'
+import { INFURA_MAINNET_URL } from '../Constraints';
 
 export const IMPORT_TYPE_PRIVATEKEY = 'privateKey'
 export const IMPORT_TYPE_MNEMONIC = 'mnemonic'
@@ -88,11 +90,17 @@ export default class EthereumWalletManager extends WalletManager {
   }
 
   getBalance = async (address) => Observable.create(async (obs) => {
-    const balanceWei = await this.web3.eth.getBalance(address)
-    const balance = this.web3.utils.fromWei(balanceWei, 'ether')
+    const res = await axios.post(INFURA_MAINNET_URL, {
+      jsonrpc: '2.0',
+      method: 'eth_getBalance',
+      params: [address, 'latest'],
+      id: 1
+    })
+    const value = parseInt(res.data.result, 16)
+    const balance = Units.convert(value, 'wei', 'eth')
     obs.next(balance)
     obs.complete()
-  }).pipe(timeout(axios.defaults.timeout)).toPromise()
+  }).toPromise()
 
   withdraw = async (privateKey, targetAddress, amount) => {
     const gasPrices = await this.getCurrentGasPrices()
