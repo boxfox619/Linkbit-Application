@@ -3,7 +3,6 @@ import Cryptr from 'cryptr'
 import moment from 'moment'
 import axios from 'axios'
 import { Observable } from 'rxjs'
-import { timeout } from 'rxjs/operators'
 import Transaction from '../../store/Transaction/Transaction'
 import WalletManager from './WalletManager'
 import EthWallet from 'ethereumjs-wallet'
@@ -63,7 +62,13 @@ export default class EthereumWalletManager extends WalletManager {
   }
 
   loadTransaction = async (address, start, end) => {
-    const lastBlock = await this.web3.eth.getBlockNumber()
+    const res = await axios.post(INFURA_MAINNET_URL, {
+      jsonrpc: '2.0',
+      method: 'eth_blockNumber',
+      params: [],
+      id: 1
+    })
+    const lastBlock = parseInt(res.data.result, 16)
     const transactions = await this.loadTransactionHashList(address, start, end)
 
     return transactions.map(e => {
