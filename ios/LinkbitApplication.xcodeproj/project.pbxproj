@@ -62,6 +62,7 @@
 		E2B4CBC1E2684234B1C04B47 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A62B8FC0B7DA4525BA7E5C50 /* MaterialCommunityIcons.ttf */; };
 		EF944C3488AD45789D7DABEF /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 884C71CE10374A1ABE94C3CA /* Feather.ttf */; };
 		FCEAEDF6AD1D426DA2874C6C /* libRNVectorIcons-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 649EAD7406B744909A87BACC /* libRNVectorIcons-tvOS.a */; };
+		F0EBFC365A7E41738D7D164A /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A70F8252ECD54C23B919A8E9 /* Fontisto.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -468,6 +469,7 @@
 		D9EC00307E4445CF92E1F2F6 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		E816E0E6F25E42B38B4850F2 /* TouchID.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = TouchID.xcodeproj; path = "../node_modules/react-native-touch-id/TouchID.xcodeproj"; sourceTree = "<group>"; };
 		FF7D7DAC40D34D37BEE823A6 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		A70F8252ECD54C23B919A8E9 /* Fontisto.ttf */ = {isa = PBXFileReference; name = "Fontisto.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -833,6 +835,7 @@
 				1DC8F68E4CBC43B290FB1FC0 /* Octicons.ttf */,
 				6780B01C96DC401EABE81244 /* SimpleLineIcons.ttf */,
 				61BE2B8609C74F18A87E09D7 /* Zocial.ttf */,
+				A70F8252ECD54C23B919A8E9 /* Fontisto.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1393,6 +1396,7 @@
 				B959FC6C263D47AFA0D204B0 /* Octicons.ttf in Resources */,
 				AC52753E5A5443E6888CABD7 /* SimpleLineIcons.ttf in Resources */,
 				6FBE3D67A8ED48328CB8FD26 /* Zocial.ttf in Resources */,
+				F0EBFC365A7E41738D7D164A /* Fontisto.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -32,8 +32,8 @@ export default class EthereumWalletManager extends WalletManager {
       }
       const wallet = EthWallet.fromPrivateKey(Buffer.from(privateKey, 'hex'))
       resultData = {
-        address: wallet.getAddress(),
-        privateKey: wallet.getPrivateKey(),
+        address: wallet.getAddressString(),
+        privateKey: data.privateKey,
       }
     } else if (type === IMPORT_TYPE_MNEMONIC) {
       // @TODO implement mnemonic
@@ -44,8 +44,8 @@ export default class EthereumWalletManager extends WalletManager {
 
   create = (password) => {
     const walletData = EthWallet.generate()
-    const privateKey = walletData.getPrivateKey()
-    const address = walletData.getAddress()
+    const privateKey = walletData.getPrivateKey().toString('hex')
+    const address = walletData.getAddressString()
     const cryptr = new Cryptr(password)
     const encryptedPrivateKey = cryptr.encrypt(privateKey)
     return { address, privateKey: encryptedPrivateKey }

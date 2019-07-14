@@ -1,20 +1,22 @@
 import EthereumWalletManager, { IMPORT_TYPE_PRIVATEKEY } from '../EthereumWalletManager'
+import Cryptr from 'cryptr'
 
 describe('EthereumWalletManager', () => {
   jest.setTimeout(300000000)
   const password = '1234'
-  const privateKey = '49df76ef7febbe6e883b0754cbd1e1cfaaedba9c0202b231a9124f4adaa5f20408958595fbe81dfaaa38540953a4a35767642794f228c5a48804b71c9019c6d257014f9ce0b2e72e77b57399d64763e97c'
+  const privateKey = 'b520ee36e2c32f9d6643336aabd687e830d29df15ac033bf22cbf5af2b69139a'
 
-  it('create new wallet and import', async () => {
+  it('create new wallet', async () => {
     const manager = new EthereumWalletManager()
     const wallet = manager.create(password)
     expect(wallet.address).toBeDefined()
     expect(wallet.privateKey).toBeDefined()
   })
 
-  it('create new wallet and import', async () => {
+  it('wallet import', async () => {
     const manager = new EthereumWalletManager()
-    const importData = { privateKey, password }
+    const encrypted = new Cryptr(password).encrypt(privateKey)
+    const importData = { privateKey: encrypted, password }
     const importedWallet = manager.import(IMPORT_TYPE_PRIVATEKEY, importData)
     expect(importedWallet).toBeDefined()
   })
