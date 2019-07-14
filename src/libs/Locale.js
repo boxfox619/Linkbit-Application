@@ -17,7 +17,7 @@ const en = {
   wallet_total: 'Total',
   link_wallet: 'Link a new wallet',
   search_wallet: 'Wallet name or address...',
-  fail_add_wallet: 'Add wallet failed',
+  fail_add_wallet: 'Failed create wallet',
   address: 'ADDRESS',
   address_lower: 'Address',
   address_list: 'Address List',

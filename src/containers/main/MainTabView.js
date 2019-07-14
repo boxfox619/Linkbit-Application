@@ -8,8 +8,11 @@ import WalletListView from './WalletListView'
 import SettingView from './SettingView'
 import i18n from '../../libs/Locale'
 import AddressListView from './AddressListView'
+import { inject, observer } from 'mobx-react'
 
-export default class MainTabView extends React.Component {
+@inject(['setting'])
+@observer
+class MainTabView extends React.Component {
   static navigationOptions = { header: null }
 
   constructor() {
@@ -35,30 +38,30 @@ export default class MainTabView extends React.Component {
 
   renderContents = () => {
     switch (this.state.selectedIndex) {
-    case 0:
-      return <WalletListView navigation={this.props.navigation} />
-    case 1:
-      return <AddressListView navigation={this.props.navigation} />
-    case 2:
-      return <SettingView navigation={this.props.navigation} />
+      case 0:
+        return <WalletListView navigation={this.props.navigation} />
+      case 1:
+        return <AddressListView navigation={this.props.navigation} />
+      case 2:
+        return <SettingView navigation={this.props.navigation} />
     }
   }
 
   updateIndex = (selectedIndex) => {
     const state = { selectedIndex }
     switch (selectedIndex) {
-    case 0:
-      state.headerTitle = 'wallet'
-      state.headerIcon = undefined
-      break
-    case 1:
-      state.headerTitle = 'address'
-      state.headerIcon = undefined
-      break
-    case 2:
-      state.headerTitle = 'setting'
-      state.headerIcon = undefined
-      break
+      case 0:
+        state.headerTitle = 'wallet'
+        state.headerIcon = undefined
+        break
+      case 1:
+        state.headerTitle = 'address'
+        state.headerIcon = undefined
+        break
+      case 2:
+        state.headerTitle = 'setting'
+        state.headerIcon = undefined
+        break
     }
     this.setState(state)
   }
@@ -95,6 +98,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   title: {
+    flex: 1,
+    width: 100,
     fontSize: 20,
     fontWeight: 'bold',
     marginLeft: 10,
@@ -104,3 +109,5 @@ const styles = StyleSheet.create({
     backgroundColor: PRIMARY_COLOR,
   },
 })
+
+export default MainTabView

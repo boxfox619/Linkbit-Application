@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, ViewPropTypes } from 'react-native'
 import NavIcon from './NavIcon'
 
 const Navbar = (props) => {
@@ -34,7 +34,7 @@ Navbar.propTypes = {
   selectedIndex: PropTypes.number,
   defaultColor: PropTypes.string,
   activeColor: PropTypes.string,
-  containerStyle: View.PropTypes.style,
+  containerStyle: ViewPropTypes.style,
 }
 
 Navbar.defaultProps = {

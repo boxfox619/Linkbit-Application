@@ -3,17 +3,13 @@ import PropTypes from 'prop-types'
 import { View, StyleSheet, Text, Image } from 'react-native'
 import { inject, observer } from 'mobx-react/index'
 import { dollarFormat, fixed } from '../../libs/NumberFormatter'
+import Wallet from '../../store/Wallet/Wallet'
 
 @inject('coin', 'setting')
 @observer
 export default class WalletSummaryCard extends React.Component {
   static propTypes = {
-    wallet: PropTypes.shape({
-      symbol: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      balance: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.number.isRequired]).isRequired,
-      address: PropTypes.string.isRequired,
-    }).isRequired,
+    wallet: PropTypes.instanceOf(Wallet).isRequired,
   }
 
   get coin() {

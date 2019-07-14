@@ -25,7 +25,7 @@ CoinItem.propTypes = {
     name: PropTypes.string.isRequired,
     symbol: PropTypes.string.isRequired,
     themeColor: PropTypes.string.isRequired,
-    icon: PropTypes.string.isRequired,
+    icon: PropTypes.number.isRequired,
   }).isRequired,
   activate: PropTypes.bool,
   onPress: PropTypes.func,

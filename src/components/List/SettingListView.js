@@ -26,7 +26,7 @@ SettingListView.propTypes = {
   list: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string.isRequired,
     labelText: PropTypes.string.isRequired,
-    subLabelText: PropTypes.string.isRequired,
+    subLabelText: PropTypes.string,
   })).isRequired,
   onItemSelected: PropTypes.func.isRequired,
 }

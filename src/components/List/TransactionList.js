@@ -11,7 +11,7 @@ export default class TransactionList extends React.Component {
     data: PropTypes.arrayOf(PropTypes.shape({
       date: PropTypes.string.isRequired,
       address: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired,
+      amount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
       confirm: PropTypes.number.isRequired,
       symbol: PropTypes.string.isRequired,
       benefit: PropTypes.bool.isRequired,

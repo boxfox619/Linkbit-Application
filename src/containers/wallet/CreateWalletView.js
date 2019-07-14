@@ -41,37 +41,35 @@ class CreateWalletView extends React.Component {
   }
 
   createWallet = async () => {
+    const { coin, walletName, password, confirmPassword } = this.state
+    if (!walletName) {
+      this.setState({ invalidWalletName: i18n.t('enter_name') })
+      return
+    } else {
+      this.setState({ invalidWalletName: undefined })
+    }
+
+    if (!password) {
+      this.setState({ invalidPassword: i18n.t('enter_pin') })
+      return
+    } else {
+      this.setState({ invalidPassword: undefined })
+    }
+
+    if (password !== confirmPassword) {
+      this.setState({ invalidConfirmPassword: i18n.t('wrong_pin') })
+      return
+    } else {
+      this.setState({ invalidConfirmPassword: undefined })
+    }
+
     this.props.showProgress(true, '', async () => {
-      const { coin, walletName, password, confirmPassword } = this.state
-      if (!walletName) {
-        this.setState({ invalidWalletName: i18n.t('enter_name') })
-
-        return
-      } else {
-        this.setState({ invalidWalletName: undefined })
-      }
-
-      if (!password) {
-        this.setState({ invalidPassword: i18n.t('enter_pin') })
-
-        return
-      }
-      else {
-        this.setState({ invalidPassword: undefined })
-      }
-
-      if (password !== confirmPassword) {
-        this.setState({ invalidConfirmPassword: i18n.t('wrong_pin') })
-
-        return
-      } else {
-        this.setState({ invalidConfirmPassword: undefined })
-      }
       try {
         await this.props.wallet.createNewWallet(coin.symbol, walletName, password)
         this.props.showProgress(false, '', () => this.props.navigation.navigate('Main'))
       } catch (err) {
-        this.props.showProgress(false, '', () => alert(i18n.t('fail_add_wallet')))
+        this.props.showProgress(false, '', () => alert(err))
+        // this.props.showProgress(false, '', () => alert(i18n.t('fail_add_wallet')))
       }
     })
   }

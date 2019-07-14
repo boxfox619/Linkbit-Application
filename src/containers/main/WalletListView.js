@@ -62,7 +62,7 @@ export default class WalletListView extends React.Component {
         </View>
         <WalletList
           moneySymbol={this.props.setting.currency}
-          wallets={this.props.wallet.wallets}
+          wallets={this.props.wallet.wallets.slice()}
           onWalletSelected={w => this.openWalletDetail(w)}
           onWalletLongSelected={w => this.deleteWallet(w)} />
         <ActionButton
