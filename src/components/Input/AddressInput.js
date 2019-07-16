@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
-import { Input } from '.'
+import { Input } from './Input'
 import { withTitle } from '../HOC'
 
 const AddressInput = (props) => {

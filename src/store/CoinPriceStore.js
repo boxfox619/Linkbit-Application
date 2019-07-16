@@ -15,8 +15,8 @@ class CoinPriceStore {
     this.coinStorageApi = new CoinStorageApi()
     reaction(
       () => settingStore.currency,
-      async () => this.refreshCoinPrices()
-  );
+      async () => this.refreshCoinPrices(),
+    )
   }
 
   load = async () => {

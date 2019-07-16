@@ -1,6 +1,6 @@
 import i18n from './Locale'
 
-export const handleError = (err) => {
+export const handleError = () => {
   
 }
 

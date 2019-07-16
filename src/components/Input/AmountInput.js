@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
 import DropdownMenu from 'react-native-dropdown-menu'
 import { debounce } from 'lodash'
-import { Input } from '.'
+import { Input } from './Input'
 import { withTitle } from '../HOC'
 
 const AmountInput = (props) => {
