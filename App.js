@@ -6,22 +6,10 @@ import { observer } from 'mobx-react'
 import { observable } from 'mobx/lib/mobx'
 import Navigator from './src/containers/navigator'
 import { SplashView, GuideView } from './src/containers/guide'
-import { WalletStore, CoinPriceStore, AddressStore, SettingStore } from './src/store'
 import withVerify from './src/components/HOC/withVerify'
 import i18n from './src/libs/Locale'
+import { createStore } from './src/store';
 
-const createStore = () => {
-  const settingStore = new SettingStore()
-  const coinStore = new CoinPriceStore(settingStore)
-  const walletStore = new WalletStore(coinStore)
-  const addressStore = new AddressStore()
-  return {
-    wallet: walletStore,
-    coin: coinStore,
-    address: addressStore,
-    setting: settingStore,
-  }
-}
 const AppContainer = withVerify(createAppContainer(Navigator), true)
 
 @observer
