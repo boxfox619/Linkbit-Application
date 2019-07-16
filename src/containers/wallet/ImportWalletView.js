@@ -59,7 +59,7 @@ export default class ImportWalletView extends React.Component {
         .then(() => this.props.navigation.navigate('Main'))
         .catch(err => {
           handleError(err)
-          alert(err.message || i18n.t('import_wallet_failed'))
+          alert(i18n.t('import_wallet_failed'))
         })
     }
   }

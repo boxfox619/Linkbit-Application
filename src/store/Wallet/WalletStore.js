@@ -1,15 +1,16 @@
 import { observable, action, computed } from 'mobx'
 import Wallet from './Wallet'
 import WalletStorageApi from '../../api/WalletStorageApi'
-import coinPriceStore from '../CoinPriceStore'
 import { fixed } from '../../libs/NumberFormatter'
 import walletManager from '../../libs/wallet'
 
 class WalletStore {
     @observable wallets = []
     walletStorageApi
+    coinPriceStore
 
-    constructor() {
+    constructor(coinPriceStore) {
+      this.coinPriceStore = coinPriceStore
       this.walletStorageApi = new WalletStorageApi()
     }
 
@@ -36,7 +37,7 @@ class WalletStore {
 
     createNewWallet = async (symbol, name, password) => {
       const walletData = await this.createWallet(symbol, password)
-      coinPriceStore.refreshCoinPrice(symbol)
+      this.coinPriceStore.refreshCoinPrice(symbol)
       
       return await this.addWallet(symbol, name, walletData)
     }
@@ -77,7 +78,7 @@ class WalletStore {
     @computed get totalPrice() {
       let totalPrice = 0
       this.wallets.forEach(w => {
-        const coin = coinPriceStore.getCoin(w.symbol)
+        const coin = this.coinPriceStore.getCoin(w.symbol)
         totalPrice += w.balance * coin.price
       })
       
@@ -89,4 +90,4 @@ class WalletStore {
     }
 }
 
-export default new WalletStore()
+export default WalletStore

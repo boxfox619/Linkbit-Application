@@ -1,7 +1,7 @@
 import i18n from './Locale'
 
-export const handleError = (err) => {
-  console.error(err)
+export const handleError = () => {
+  
 }
 
 export const handleTouchIdError = (err) => {

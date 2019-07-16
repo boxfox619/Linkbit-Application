@@ -57,7 +57,6 @@ export default class TransactionList extends React.Component {
 
 const styles = StyleSheet.create({
   transactionListView: {
-    backgroundColor: 'red',
     borderStyle: 'dotted',
     width: '100%',
     margin: 0,

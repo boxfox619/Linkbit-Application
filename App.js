@@ -6,16 +6,10 @@ import { observer } from 'mobx-react'
 import { observable } from 'mobx/lib/mobx'
 import Navigator from './src/containers/navigator'
 import { SplashView, GuideView } from './src/containers/guide'
-import { WalletStore, CoinPriceStore, AddressStore, SettingStore } from './src/store'
 import withVerify from './src/components/HOC/withVerify'
 import i18n from './src/libs/Locale'
+import { createStore } from './src/store';
 
-const store = {
-  wallet: WalletStore,
-  coin: CoinPriceStore,
-  address: AddressStore,
-  setting: SettingStore,
-}
 const AppContainer = withVerify(createAppContainer(Navigator), true)
 
 @observer
@@ -23,17 +17,23 @@ export default class App extends React.Component {
   @observable isVerify = true
   @observable progress = true
   @observable label = i18n.t('loading')
+  store
+
+  constructor(props) {
+    super(props)
+    this.store = createStore()
+  }
 
   componentDidMount = async () => {
     try {
       this.label = i18n.t('loading_setting')
-      await store.setting.load()
+      await this.store.setting.load()
       this.label = i18n.t('loading_address')
-      await store.address.loadAddressList()
+      await this.store.address.loadAddressList()
       this.label = i18n.t('loading_wallet')
-      await store.wallet.loadWalletList()
+      await this.store.wallet.loadWalletList()
       this.label = i18n.t('loading_coin')
-      await store.coin.load()
+      await this.store.coin.load()
       this.label = i18n.t('loading_finish')
       this.progress = false
     } catch (err) {
@@ -43,10 +43,10 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <Provider {...store}>
+      <Provider {...this.store}>
         <View style={[styles.container, !this.isVerify && styles.paddingTop]}>
           {(this.progress) ? (<SplashView label={this.label} />) : (
-            store.setting.isInitialExecution ? (<GuideView />) : (<AppContainer />)
+            this.store.setting.isInitialExecution ? (<GuideView />) : (<AppContainer />)
           )}
         </View>
       </Provider>

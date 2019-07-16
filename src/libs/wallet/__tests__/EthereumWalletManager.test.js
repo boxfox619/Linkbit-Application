@@ -1,5 +1,5 @@
-import EthereumWalletManager, { IMPORT_TYPE_PRIVATEKEY } from '../EthereumWalletManager'
 import Cryptr from 'cryptr'
+import EthereumWalletManager, { IMPORT_TYPE_PRIVATEKEY } from '../EthereumWalletManager'
 
 describe('EthereumWalletManager', () => {
   jest.setTimeout(300000000)
@@ -27,5 +27,13 @@ describe('EthereumWalletManager', () => {
     const transactions = await manager.loadTransaction(address)
     expect(transactions).toBeDefined()
     expect(transactions.length > 0).toBeTruthy()
+  })
+
+  it('get balance', async () => {
+    const manager = new EthereumWalletManager()
+    const address = '0xa5B5bE1ecB74696eC27E3CA89E5d940c9dbcCc56'
+    const balance = await manager.getBalance(address)
+    expect(balance).toBeDefined()
+    expect(balance > 0).toBeTruthy()
   })
 })

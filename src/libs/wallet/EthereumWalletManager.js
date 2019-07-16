@@ -3,10 +3,12 @@ import Cryptr from 'cryptr'
 import moment from 'moment'
 import axios from 'axios'
 import { Observable } from 'rxjs'
-import { timeout } from 'rxjs/operators'
-import Transaction from '../../store/Transaction/Transaction'
-import WalletManager from './WalletManager'
 import EthWallet from 'ethereumjs-wallet'
+import { Transaction as EthereumTx } from 'ethereumjs-tx'
+import Units from 'ethereumjs-units'
+import WalletManager from './WalletManager'
+import Transaction from '../../store/Transaction/Transaction'
+import { INFURA_MAINNET_URL } from '../Constraints'
 
 export const IMPORT_TYPE_PRIVATEKEY = 'privateKey'
 export const IMPORT_TYPE_MNEMONIC = 'mnemonic'
@@ -22,7 +24,7 @@ export default class EthereumWalletManager extends WalletManager {
     this.web3 = new Web3(provider)
   }
 
-  import = (type, data) => {
+  import = async (type, data) => {
     let resultData
     if (type === IMPORT_TYPE_PRIVATEKEY) {
       const password = data.password
@@ -38,7 +40,7 @@ export default class EthereumWalletManager extends WalletManager {
     } else if (type === IMPORT_TYPE_MNEMONIC) {
       // @TODO implement mnemonic
     }
-
+    
     return resultData
   }
 
@@ -48,6 +50,7 @@ export default class EthereumWalletManager extends WalletManager {
     const address = walletData.getAddressString()
     const cryptr = new Cryptr(password)
     const encryptedPrivateKey = cryptr.encrypt(privateKey)
+    
     return { address, privateKey: encryptedPrivateKey }
   }
 
@@ -61,7 +64,13 @@ export default class EthereumWalletManager extends WalletManager {
   }
 
   loadTransaction = async (address, start, end) => {
-    const lastBlock = await this.web3.eth.getBlockNumber()
+    const res = await axios.post(INFURA_MAINNET_URL, {
+      jsonrpc: '2.0',
+      method: 'eth_blockNumber',
+      params: [],
+      id: 1,
+    })
+    const lastBlock = parseInt(res.data.result, 16)
     const transactions = await this.loadTransactionHashList(address, start, end)
 
     return transactions.map(e => {
@@ -70,7 +79,7 @@ export default class EthereumWalletManager extends WalletManager {
       const from = e.from
       const to = e.to
       const date = moment(new Date(e.timestamp * 1000)).format('YYYY-MM-DD hh:mm:ss')
-      const amount = this.web3.utils.fromWei(e.value, 'ether')
+      const amount = Units.convert(e.value, 'wei', 'eth')
       const confirm = lastBlock - blockNumber
       const status = e.state
       /*
@@ -88,11 +97,17 @@ export default class EthereumWalletManager extends WalletManager {
   }
 
   getBalance = async (address) => Observable.create(async (obs) => {
-    const balanceWei = await this.web3.eth.getBalance(address)
-    const balance = this.web3.utils.fromWei(balanceWei, 'ether')
+    const res = await axios.post(INFURA_MAINNET_URL, {
+      jsonrpc: '2.0',
+      method: 'eth_getBalance',
+      params: [address, 'latest'],
+      id: 1,
+    })
+    const value = parseInt(res.data.result, 16)
+    const balance = Units.convert(value, 'wei', 'eth')
     obs.next(balance)
     obs.complete()
-  }).pipe(timeout(axios.defaults.timeout)).toPromise()
+  }).toPromise()
 
   withdraw = async (privateKey, targetAddress, amount) => {
     const gasPrices = await this.getCurrentGasPrices()
@@ -104,14 +119,18 @@ export default class EthereumWalletManager extends WalletManager {
       gasPrice: gasPrices.low * 1000000000,
       chainId: 0,
     }
-    const signedTransaction = await this.web3.eth.accounts.signTransaction(transactionConfig, privateKey)
-    const sendTransaction = new Promise((resolve, reject) => {
-      this.web3.eth.sendSignedTransaction(signedTransaction.rawTransaction)
-        .on('transactionHash', (txHash) => resolve(txHash))
-        .on('error', (error) => reject(error))
+    const tx = new EthereumTx(transactionConfig)
+    tx.sign(privateKey)
+    const rawTrnasaction = tx.serialize().toString('hex')
+    const res = await axios.post(INFURA_MAINNET_URL, {
+      jsonrpc: '2.0',
+      method: 'eth_sendRawTransaction',
+      params: [rawTrnasaction],
+      id: 1,
     })
-
-    return await sendTransaction
+    const txHash = res.data.result
+    
+    return txHash
   }
 
   getCurrentGasPrices = async () => {
