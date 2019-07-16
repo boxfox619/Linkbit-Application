@@ -97,4 +97,4 @@ class AddressStore {
     }
 }
 
-export default new AddressStore()
+export default AddressStore

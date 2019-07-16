@@ -3,11 +3,11 @@ import Cryptr from 'cryptr'
 import moment from 'moment'
 import axios from 'axios'
 import { Observable } from 'rxjs'
-import Transaction from '../../store/Transaction/Transaction'
-import WalletManager from './WalletManager'
 import EthWallet from 'ethereumjs-wallet'
 import { Transaction as EthereumTx } from 'ethereumjs-tx'
 import Units from 'ethereumjs-units'
+import WalletManager from './WalletManager'
+import Transaction from '../../store/Transaction/Transaction'
 import { INFURA_MAINNET_URL } from '../Constraints'
 
 export const IMPORT_TYPE_PRIVATEKEY = 'privateKey'
@@ -40,6 +40,7 @@ export default class EthereumWalletManager extends WalletManager {
     } else if (type === IMPORT_TYPE_MNEMONIC) {
       // @TODO implement mnemonic
     }
+    
     return resultData
   }
 
@@ -49,6 +50,7 @@ export default class EthereumWalletManager extends WalletManager {
     const address = walletData.getAddressString()
     const cryptr = new Cryptr(password)
     const encryptedPrivateKey = cryptr.encrypt(privateKey)
+    
     return { address, privateKey: encryptedPrivateKey }
   }
 
@@ -66,7 +68,7 @@ export default class EthereumWalletManager extends WalletManager {
       jsonrpc: '2.0',
       method: 'eth_blockNumber',
       params: [],
-      id: 1
+      id: 1,
     })
     const lastBlock = parseInt(res.data.result, 16)
     const transactions = await this.loadTransactionHashList(address, start, end)
@@ -99,7 +101,7 @@ export default class EthereumWalletManager extends WalletManager {
       jsonrpc: '2.0',
       method: 'eth_getBalance',
       params: [address, 'latest'],
-      id: 1
+      id: 1,
     })
     const value = parseInt(res.data.result, 16)
     const balance = Units.convert(value, 'wei', 'eth')
@@ -124,9 +126,10 @@ export default class EthereumWalletManager extends WalletManager {
       jsonrpc: '2.0',
       method: 'eth_sendRawTransaction',
       params: [rawTrnasaction],
-      id: 1
+      id: 1,
     })
     const txHash = res.data.result
+    
     return txHash
   }
 

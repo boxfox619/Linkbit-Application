@@ -10,11 +10,17 @@ import { WalletStore, CoinPriceStore, AddressStore, SettingStore } from './src/s
 import withVerify from './src/components/HOC/withVerify'
 import i18n from './src/libs/Locale'
 
-const store = {
-  wallet: WalletStore,
-  coin: CoinPriceStore,
-  address: AddressStore,
-  setting: SettingStore,
+const createStore = () => {
+  const settingStore = new SettingStore()
+  const coinStore = new CoinPriceStore(settingStore)
+  const walletStore = new WalletStore(coinStore)
+  const addressStore = new AddressStore()
+  return {
+    wallet: walletStore,
+    coin: coinStore,
+    address: addressStore,
+    setting: settingStore,
+  }
 }
 const AppContainer = withVerify(createAppContainer(Navigator), true)
 
@@ -23,17 +29,23 @@ export default class App extends React.Component {
   @observable isVerify = true
   @observable progress = true
   @observable label = i18n.t('loading')
+  store
+
+  constructor(props) {
+    super(props)
+    this.store = createStore()
+  }
 
   componentDidMount = async () => {
     try {
       this.label = i18n.t('loading_setting')
-      await store.setting.load()
+      await this.store.setting.load()
       this.label = i18n.t('loading_address')
-      await store.address.loadAddressList()
+      await this.store.address.loadAddressList()
       this.label = i18n.t('loading_wallet')
-      await store.wallet.loadWalletList()
+      await this.store.wallet.loadWalletList()
       this.label = i18n.t('loading_coin')
-      await store.coin.load()
+      await this.store.coin.load()
       this.label = i18n.t('loading_finish')
       this.progress = false
     } catch (err) {
@@ -43,10 +55,10 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <Provider {...store}>
+      <Provider {...this.store}>
         <View style={[styles.container, !this.isVerify && styles.paddingTop]}>
           {(this.progress) ? (<SplashView label={this.label} />) : (
-            store.setting.isInitialExecution ? (<GuideView />) : (<AppContainer />)
+            this.store.setting.isInitialExecution ? (<GuideView />) : (<AppContainer />)
           )}
         </View>
       </Provider>

@@ -1,7 +1,6 @@
 import { observable, action } from 'mobx'
 import i18n from 'i18n-js'
 import AsyncStorageApi from '../api/AsyncStorageApi'
-import CoinPriceStore from './CoinPriceStore'
 
 class SettingStore {
     @observable language = 'ko'
@@ -28,7 +27,6 @@ class SettingStore {
     @action setCurrency = async val => {
       this.currency = val
       await this.save()
-      await CoinPriceStore.refreshCoinPrices()
     }
 
     @action unsetPin = async () => {
@@ -66,4 +64,4 @@ class SettingStore {
     }
 }
 
-export default new SettingStore()
+export default SettingStore

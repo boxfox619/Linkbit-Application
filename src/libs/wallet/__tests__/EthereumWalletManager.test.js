@@ -1,5 +1,5 @@
-import EthereumWalletManager, { IMPORT_TYPE_PRIVATEKEY } from '../EthereumWalletManager'
 import Cryptr from 'cryptr'
+import EthereumWalletManager, { IMPORT_TYPE_PRIVATEKEY } from '../EthereumWalletManager'
 
 describe('EthereumWalletManager', () => {
   jest.setTimeout(300000000)

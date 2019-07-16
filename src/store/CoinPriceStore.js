@@ -1,7 +1,6 @@
-import { observable, computed, action } from 'mobx'
+import { observable, computed, action, reaction } from 'mobx'
 import CoinNetworkApi from '../api/Coin/CoinNetworkApi'
 import CoinStorageApi from '../api/Coin/CoinStorageApi'
-import SettingStore from './SettingStore'
 import i18n from '../libs/Locale'
 import { COIN_INFO } from '../libs/Constraints'
 
@@ -10,9 +9,14 @@ class CoinPriceStore {
   coinNetworkApi
   coinStorageApi
 
-  constructor() {
+  constructor(settingStore) {
+    this.settingStore = settingStore
     this.coinNetworkApi = new CoinNetworkApi()
     this.coinStorageApi = new CoinStorageApi()
+    reaction(
+      () => settingStore.currency,
+      async () => this.refreshCoinPrices()
+  );
   }
 
   load = async () => {
@@ -26,7 +30,7 @@ class CoinPriceStore {
 
   refreshCoinPrices = async () => {
     for (const coin of COIN_INFO) {
-      const price = await this.coinNetworkApi.fetchCoinPrice(coin.name, SettingStore.currency)
+      const price = await this.coinNetworkApi.fetchCoinPrice(coin.name, this.settingStore.currency)
       this.setCoinPrice(coin.symbol, price)
       await this.coinStorageApi.updatePrice(coin.symbol, price)
     }
@@ -37,7 +41,7 @@ class CoinPriceStore {
     if (!coin) {
       return
     }
-    const price = await this.coinNetworkApi.fetchCoinPrice(coin.name, SettingStore.currency)
+    const price = await this.coinNetworkApi.fetchCoinPrice(coin.name, this.settingStore.currency)
     this.setCoinPrice(symbol, price)
     this.coinStorageApi.updatePrice(symbol, price)
   }
@@ -60,4 +64,4 @@ class CoinPriceStore {
   }
 }
 
-export default new CoinPriceStore()
+export default CoinPriceStore

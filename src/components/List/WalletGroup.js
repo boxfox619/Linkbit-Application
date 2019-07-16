@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { View, StyleSheet } from 'react-native'
-import { CoinCard, WalletCard } from '..'
 import { observer, inject } from 'mobx-react'
+import { CoinCard, WalletCard } from '../Card'
 import { dollarFormat, fixed } from '../../libs/NumberFormatter'
 import Wallet from '../../store/Wallet/Wallet'
 
