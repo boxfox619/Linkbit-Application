@@ -40,7 +40,7 @@ export default class EthereumWalletManager extends WalletManager {
     } else if (type === IMPORT_TYPE_MNEMONIC) {
       // @TODO implement mnemonic
     }
-    
+
     return resultData
   }
 
@@ -50,7 +50,7 @@ export default class EthereumWalletManager extends WalletManager {
     const address = walletData.getAddressString()
     const cryptr = new Cryptr(password)
     const encryptedPrivateKey = cryptr.encrypt(privateKey)
-    
+
     return { address, privateKey: encryptedPrivateKey }
   }
 
@@ -109,8 +109,13 @@ export default class EthereumWalletManager extends WalletManager {
     obs.complete()
   }).toPromise()
 
-  withdraw = async (privateKey, targetAddress, amount) => {
+  withdraw = async (privateKey, password, targetAddress, amount) => {
+    const cryptr = new Cryptr(password)
     const gasPrices = await this.getCurrentGasPrices()
+    if (password) {
+
+    }
+    const privateKeyBuffer = Buffer.from(privateKey, 'hex')
 
     const transactionConfig = {
       to: targetAddress,
@@ -120,7 +125,7 @@ export default class EthereumWalletManager extends WalletManager {
       chainId: 0,
     }
     const tx = new EthereumTx(transactionConfig)
-    tx.sign(privateKey)
+    tx.sign(privateKeyBuffer)
     const rawTrnasaction = tx.serialize().toString('hex')
     const res = await axios.post(INFURA_MAINNET_URL, {
       jsonrpc: '2.0',
@@ -129,7 +134,7 @@ export default class EthereumWalletManager extends WalletManager {
       id: 1,
     })
     const txHash = res.data.result
-    
+
     return txHash
   }
 
@@ -146,4 +151,13 @@ export default class EthereumWalletManager extends WalletManager {
   }
 
   validAddress = (address) => this.web3.utils.isAddress(address)
+
+  checkValidPrivateKey = (privateKey) => {
+    try {
+      const wallet = EthWallet.fromPrivateKey(Buffer.from(privateKey, 'hex'))
+      return !!wallet
+    } catch {
+      return false
+    }
+  }
 }
