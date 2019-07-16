@@ -9,6 +9,7 @@ export const createStore = () => {
   const coinStore = new CoinPriceStore(settingStore)
   const walletStore = new WalletStore(coinStore)
   const addressStore = new AddressStore()
+  
   return {
     wallet: walletStore,
     coin: coinStore,

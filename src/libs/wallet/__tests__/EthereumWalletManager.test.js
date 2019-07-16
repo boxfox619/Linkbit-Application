@@ -42,5 +42,6 @@ describe('EthereumWalletManager', () => {
     const encrypted = new Cryptr(password).encrypt(privateKey)
     expect(manager.checkValidPrivateKey(privateKey)).toBeTruthy()
     expect(!manager.checkValidPrivateKey(encrypted)).toBeTruthy()
+    expect(manager.checkValidPrivateKey(encrypted, password)).toBeTruthy()
   })
 })

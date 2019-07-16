@@ -110,12 +110,9 @@ export default class EthereumWalletManager extends WalletManager {
   }).toPromise()
 
   withdraw = async (privateKey, password, targetAddress, amount) => {
-    const cryptr = new Cryptr(password)
     const gasPrices = await this.getCurrentGasPrices()
-    if (password) {
-
-    }
-    const privateKeyBuffer = Buffer.from(privateKey, 'hex')
+    const privateKeyString = password ? new Cryptr(password).decrypt(privateKey) : privateKey
+    const privateKeyBuffer = Buffer.from(privateKeyString, 'hex')
 
     const transactionConfig = {
       to: targetAddress,
@@ -152,9 +149,11 @@ export default class EthereumWalletManager extends WalletManager {
 
   validAddress = (address) => this.web3.utils.isAddress(address)
 
-  checkValidPrivateKey = (privateKey) => {
+  checkValidPrivateKey = (privateKey, password) => {
     try {
-      const wallet = EthWallet.fromPrivateKey(Buffer.from(privateKey, 'hex'))
+      const privateKeyString = password ? new Cryptr(password).decrypt(privateKey) : privateKey
+      const wallet = EthWallet.fromPrivateKey(Buffer.from(privateKeyString, 'hex'))
+      
       return !!wallet
     } catch {
       return false
