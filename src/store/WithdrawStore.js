@@ -1,9 +1,9 @@
 import { observable, action, computed } from 'mobx'
 import { debounce } from 'lodash'
-import WalletStore from './Wallet/WalletStore'
-import CoinPriceStore from './CoinPriceStore'
 import * as AddressApi from '../api/Address/AddressNetworkApi'
 import walletManager from '../libs/wallet'
+import { handleError } from '../libs/ErrorHandler'
+import i18n from '../libs/Locale'
 
 export default class WithdrawStore {
   @observable symbol
@@ -15,9 +15,13 @@ export default class WithdrawStore {
   @observable destAddressError
   @observable password
   transactionStore
+  coinPriceStore
+  walletStore
 
-  constructor(transactionStore) {
+  constructor(coinPriceStore, walletStore, transactionStore) {
     this.transactionStore = transactionStore
+    this.coinPriceStore = coinPriceStore
+    this.walletStore = walletStore
   }
 
   setSourceWallet = action((symbol, address) => {
@@ -84,7 +88,7 @@ export default class WithdrawStore {
   })
 
   @computed get coinPrice() {
-    return CoinPriceStore.getCoin(this.symbol).price
+    return this.coinPriceStore.getCoin(this.symbol).price
   }
 
   @computed get amountError() {
@@ -95,17 +99,16 @@ export default class WithdrawStore {
     if (value > this.wallet.balance) {
       return `Up to a maximum of ${this.wallet.balance} can be sent.`
     }
-    
+
     return undefined
   }
 
   @computed get wallet() {
-    return WalletStore.walletList.find(w => w.address === this.sourceAddress || w.linkedAddress === this.sourceAddress)
+    return this.walletStore.wallets.find(w => w.address === this.sourceAddress || w.linkedAddress === this.sourceAddress)
   }
 
   @computed get passwordRequired() {
-    // @TODO impl password check
-    return false
+    return !this.walletManager.checkValidPrivateKey(this.wallet.privateKey, this.password)
   }
 
   get walletManager() {
@@ -113,23 +116,22 @@ export default class WithdrawStore {
   }
 
   withdraw = async () => {
-    const destAddress = await this.getDestAddress()
-    await this.walletManager.withdraw(this.wallet.privateKey, destAddress, this.amount)
-    /*    
-          
-          const transactionData = {
-          block: 0,
-          hash: transactionHash,
-          symbol: this.symbol,
-          sourceAddress: this.sourceAddress,
-          targetAddress: destAddress,
-          amount: this.amount,
-          status: false,
-          date: new Date().toDateString(),
-          confirm: 0
-      } */
-    await this.transactionStore.refreshTransactions()
-    await WalletStore.loadAllBalance()
+    if (!this.walletManager.checkValidPrivateKey(this.wallet.privateKey, this.password)) {
+      throw new Error(i18n.t('wrong_password'))
+    }
+    try {
+      const destAddress = await this.getDestAddress()
+      await this.walletManager.withdraw(this.wallet.privateKey, this.password, destAddress, this.amount)
+    } catch (err) {
+      handleError(err)
+      throw new Error(i18n.t('withdraw_failed'))
+    }
+    try {
+      await this.transactionStore.refreshTransactions()
+      await this.walletStore.loadAllBalance()
+    } catch (err) {
+      handleError(err)
+    }
   }
 
   get symbol() {

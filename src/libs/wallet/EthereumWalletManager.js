@@ -1,4 +1,3 @@
-import Web3 from 'web3'
 import Cryptr from 'cryptr'
 import moment from 'moment'
 import axios from 'axios'
@@ -13,16 +12,8 @@ import { INFURA_MAINNET_URL } from '../Constraints'
 export const IMPORT_TYPE_PRIVATEKEY = 'privateKey'
 export const IMPORT_TYPE_MNEMONIC = 'mnemonic'
 
-const web3ProviderUrl = 'https://mainnet.infura.io/v3/326b0d7561824e0b8c4ee1f30e257019'
 const getTransactionApiUrl = (address, start = 0, end = 200) => `https://api.blockchain.info/v2/eth/data/account/${address}/transactions?page=${start}&size=${end}`
 export default class EthereumWalletManager extends WalletManager {
-  web3
-
-  constructor(providerUrl) {
-    super()
-    const provider = new Web3.providers.HttpProvider(providerUrl || web3ProviderUrl)
-    this.web3 = new Web3(provider)
-  }
 
   import = async (type, data) => {
     let resultData
@@ -113,13 +104,15 @@ export default class EthereumWalletManager extends WalletManager {
     const gasPrices = await this.getCurrentGasPrices()
     const privateKeyString = password ? new Cryptr(password).decrypt(privateKey) : privateKey
     const privateKeyBuffer = Buffer.from(privateKeyString, 'hex')
-
+    const wallet = EthWallet.fromPrivateKey(privateKeyBuffer)
+    const wei = Units.convert(amount, 'eth', 'wei')
+    const nonce = await this.getTransactionCount(wallet.address)
     const transactionConfig = {
+      nonce: `0x${(nonce + 1).toString(16)}`,
       to: targetAddress,
-      value: this.web3.utils.toHex(this.web3.utils.toWei(amount, 'ether')),
-      gas: 21000,
-      gasPrice: gasPrices.low * 1000000000,
-      chainId: 0,
+      value: `0x${wei.toString(16)}`,
+      gasLimit: `0x${(21000).toString(16)}`,
+      gasPrice: `0x${(gasPrices.low * 1000000000).toString(16)}`,
     }
     const tx = new EthereumTx(transactionConfig)
     tx.sign(privateKeyBuffer)
@@ -127,12 +120,26 @@ export default class EthereumWalletManager extends WalletManager {
     const res = await axios.post(INFURA_MAINNET_URL, {
       jsonrpc: '2.0',
       method: 'eth_sendRawTransaction',
-      params: [rawTrnasaction],
+      params: [`0x${rawTrnasaction}`],
       id: 1,
     })
+    if (res.data.error) {
+      throw new Error(res.data.error.message)
+    }
     const txHash = res.data.result
 
     return txHash
+  }
+
+  getTransactionCount = async (address) => {
+    const res = await axios.post(INFURA_MAINNET_URL, {
+      jsonrpc: '2.0',
+      method: 'eth_getTransactionCount',
+      params: [address, 'latest'],
+      id: 1,
+    })
+
+    return parseInt(res.data.result, 16)
   }
 
   getCurrentGasPrices = async () => {
@@ -147,13 +154,21 @@ export default class EthereumWalletManager extends WalletManager {
     return prices
   }
 
-  validAddress = (address) => this.web3.utils.isAddress(address)
+  validAddress = (address) => {
+    if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
+      return false
+    } else if (/^(0x)?[0-9a-f]{40}$/.test(address) || /^(0x)?[0-9A-F]{40}$/.test(address)) {
+      return true
+    }
+    
+    return false
+  }
 
   checkValidPrivateKey = (privateKey, password) => {
     try {
       const privateKeyString = password ? new Cryptr(password).decrypt(privateKey) : privateKey
       const wallet = EthWallet.fromPrivateKey(Buffer.from(privateKeyString, 'hex'))
-      
+
       return !!wallet
     } catch {
       return false
