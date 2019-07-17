@@ -102,11 +102,11 @@ export default class EthereumWalletManager extends WalletManager {
 
   withdraw = async (privateKey, password, targetAddress, amount) => {
     const gasPrices = await this.getCurrentGasPrices()
-    const privateKeyString = password ? new Cryptr(password).decrypt(privateKey) : privateKey
+    const privateKeyString = !!password ? new Cryptr(password).decrypt(privateKey) : privateKey
     const privateKeyBuffer = Buffer.from(privateKeyString, 'hex')
     const wallet = EthWallet.fromPrivateKey(privateKeyBuffer)
     const wei = Units.convert(amount, 'eth', 'wei')
-    const nonce = await this.getTransactionCount(wallet.address)
+    const nonce = await this.getTransactionCount(wallet.getAddressString())
     const transactionConfig = {
       nonce: `0x${(nonce + 1).toString(16)}`,
       to: targetAddress,
@@ -138,7 +138,6 @@ export default class EthereumWalletManager extends WalletManager {
       params: [address, 'latest'],
       id: 1,
     })
-
     return parseInt(res.data.result, 16)
   }
 
@@ -160,7 +159,7 @@ export default class EthereumWalletManager extends WalletManager {
     } else if (/^(0x)?[0-9a-f]{40}$/.test(address) || /^(0x)?[0-9A-F]{40}$/.test(address)) {
       return true
     }
-    
+
     return false
   }
 
