@@ -44,10 +44,4 @@ describe('EthereumWalletManager', () => {
     const count = await manager.getTransactionCount(address)
     expect(count > 0).toBeTruthy()
   })
-
-  it('should send withdraw transaction well', async () => {
-    const amount = 0.000000000000001
-    const txHash = await manager.withdraw(privateKey, undefined, address, amount)
-    expect(txHash).toBeDefined()
-  })
 })

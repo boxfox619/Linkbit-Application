@@ -108,11 +108,11 @@ export default class EthereumWalletManager extends WalletManager {
     const wei = Units.convert(amount, 'eth', 'wei')
     const nonce = await this.getTransactionCount(wallet.getAddressString())
     const transactionConfig = {
-      nonce: `0x${(nonce + 1).toString(16)}`,
+      nonce: nonce + 1,
       to: targetAddress,
-      value: `0x${wei.toString(16)}`,
-      gasLimit: `0x${(21000).toString(16)}`,
-      gasPrice: `0x${(gasPrices.low * 1000000000).toString(16)}`,
+      value: wei,
+      gasLimit: 21000,
+      gasPrice: gasPrices.low * 1000000000,
     }
     const tx = new EthereumTx(transactionConfig)
     tx.sign(privateKeyBuffer)
@@ -127,7 +127,6 @@ export default class EthereumWalletManager extends WalletManager {
       throw new Error(res.data.error.message)
     }
     const txHash = res.data.result
-
     return txHash
   }
 
