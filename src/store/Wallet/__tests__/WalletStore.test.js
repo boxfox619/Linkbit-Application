@@ -1,4 +1,4 @@
-import { createStore } from '../..';
+import { createStore } from '../..'
 
 describe('WalletStore', () => {
   const store = createStore()

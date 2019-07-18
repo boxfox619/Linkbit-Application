@@ -6,6 +6,10 @@ class WalletManager {
   import() { }
   create() { }
   loadTransaction() { }
+  checkValidPrivateKey() { }
+  getBalance() {}
+  withdraw() {}
+  validAddress() {}
 }
 exports.WalletManager = WalletManager
 export default WalletManager

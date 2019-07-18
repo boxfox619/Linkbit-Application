@@ -1,12 +1,13 @@
 import i18n from 'i18n-js'
-import SettingStore from '../store/SettingStore'
 
 const en = {
   finish: 'Finish',
   withdraw: 'Withdraw',
+  withdraw_amount: 'Amount',
   balance_after_wallet: 'Balance after withdraw',
   finish_withdraw: 'Withdraw finished!',
   withdraw_source_wallet: 'From',
+  withdraw_failed: 'Withdraw failed!',
   gettingAddress: 'Create Link Address',
   select_coin: 'Select Coin',
   copied_addr: 'Copied wallet address to clipboard',
@@ -57,6 +58,12 @@ const en = {
   enter_pin: 'Please enter PIN code',
   verify_pin: 'Verify Passcode',
   wrong_pin: 'Passcode is incorrected',
+  password: 'Password',
+  confirm_password: 'Password Confirm',
+  msg_wrong_password: 'Please enter wallet password',
+  msg_valid_password: 'Please enter right password',
+  msg_enter_password: 'Please enter password',
+  msg_verify_password: 'Please enter password again',
   finger: 'Fingerprint',
   reset_mainTxt: 'Reset',
   reset_subTxt: 'We destroy all accounts and information',
@@ -111,9 +118,11 @@ Linkbit 이용약관
 const ko = {
   finish: '완료',
   withdraw: '송금',
+  withdraw_amount: '송금 금액',
   balance_after_wallet: '송금 후 잔액',
   finish_withdraw: '송금 완료!',
   withdraw_source_wallet: '출금 지갑',
+  withdraw_failed: '송금 실패!',
   gettingAddress: '새 주소 등록',
   select_coin: '코인을 선택해주세요',
   copied_addr: '지갑 주소가 클립보드에 복사되었습니다',
@@ -164,6 +173,12 @@ const ko = {
   enter_pin: '핀번호를 입력해주세요',
   verify_pin: '암호를 확인해주세요',
   wrong_pin: '암호가 일치하지 않습니다',
+  password: '비밀번호',
+  confirm_password: '비밀번호 확인',
+  msg_wrong_password: '지갑 비밀번호를 확인해주세요',
+  msg_valid_password: '정확한 비밀번호를 입력해주세요',
+  msg_enter_password: '비밀번호를 입력해주세요',
+  msg_verify_password: '비밀번호를 다시한번 입력해주세요',
   finger: '지문',
   reset_mainTxt: '초기화',
   reset_subTxt: '모든 계정과 정보를 파기합니다',
@@ -218,6 +233,6 @@ Linkbit 이용약관
 
 i18n.fallbacks = true
 i18n.translations = { en, ko }
-i18n.locale = SettingStore.language
+// i18n.locale = SettingStore.language
 
 export default i18n

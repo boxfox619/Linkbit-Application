@@ -51,7 +51,7 @@ class CreateWalletView extends React.Component {
     }
 
     if (!password) {
-      this.setState({ invalidPassword: i18n.t('enter_pin') })
+      this.setState({ invalidPassword: i18n.t('msg_enter_password') })
       
       return
     } else {
@@ -59,7 +59,7 @@ class CreateWalletView extends React.Component {
     }
 
     if (password !== confirmPassword) {
-      this.setState({ invalidConfirmPassword: i18n.t('wrong_pin') })
+      this.setState({ invalidConfirmPassword: i18n.t('msg_valid_password') })
       
       return
     } else {
@@ -104,13 +104,13 @@ class CreateWalletView extends React.Component {
                   error={invalidWalletName} />
                 {/* <InputWithTitle title={'지갑 설명'} /> */}
                 <InputWithTitle
-                  title={i18n.t('pin')}
+                  title={i18n.t('password')}
                   secureTextEntry
                   value={password}
                   onChangeText={text => this.setState({ password: text })}
                   error={invalidPassword} />
                 <InputWithTitle
-                  title={i18n.t('verify_pin')}
+                  title={i18n.t('confirm_password')}
                   secureTextEntry
                   value={confirmPassword}
                   onChangeText={this.checkConfirmPassword}
