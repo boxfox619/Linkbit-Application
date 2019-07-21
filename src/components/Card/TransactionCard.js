@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, StyleSheet, Text } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 
 export default class TransactionCard extends React.Component {
   static propTypes = {
