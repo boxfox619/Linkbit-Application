@@ -1,5 +1,0 @@
-export { default as SelectCoinListView } from './SelectCoinListView'
-export { default as TransactionList } from './TransactionList'
-export { default as WalletGroup } from './WalletGroup'
-export { default as WalletList } from './WalletList'
-export { default as SettingListView } from './SettingListView'

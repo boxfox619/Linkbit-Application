@@ -1,80 +1,29 @@
 {
-  "name": "Linkbit-Application",
+  "name": "LinkbitApplication",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "start": "react-native start",
     "test": "jest",
-    "lint": "eslint --fix src"
+    "lint": "eslint ."
   },
   "dependencies": {
-    "axios": "^0.18.0",
-    "cryptr": "^4.0.2",
-    "eth-ecies": "^1.0.3",
-    "ethereumjs-tx": "^2.1.0",
-    "ethereumjs-units": "^0.2.0",
-    "ethereumjs-util": "^6.1.0",
-    "ethereumjs-wallet": "^0.6.3",
-    "i18n-js": "^3.2.1",
-    "lodash": "^4.17.11",
-    "mobx": "^4.11.0",
-    "mobx-react": "^5.0.0",
-    "moment": "^2.24.0",
-    "node-libs-react-native": "^1.0.3",
-    "prop-types": "^15.6.2",
-    "proxy-polyfill": "^0.3.0",
-    "react": "16.6.3",
-    "react-dom": "^16.6.3",
-    "react-native": "^0.57.8",
-    "react-native-action-button": "^2.8.5",
-    "react-native-dialog": "^5.6.0",
-    "react-native-dropdown-menu": "^2.0.0",
-    "react-native-elements": "^1.1.0",
-    "react-native-gesture-handler": "^1.0.5",
-    "react-native-randombytes": "^3.5.1",
-    "react-native-svg-uri": "^1.2.3",
-    "react-native-touch-id": "^4.4.1",
-    "react-native-vector-icons": "^6.4.2",
-    "react-native-webview": "^2.14.3",
-    "react-navigation": "^3.0.2",
-    "rxjs": "^6.5.2",
-    "vm-browserify": "^1.1.0",
-    "web3": "^1.0.0-beta.55"
+    "react": "16.8.6",
+    "react-native": "0.60.4",
+    "react-native-gesture-handler": "^1.3.0",
+    "react-navigation": "^3.11.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.4.3",
-    "@babel/core": "^7.4.3",
-    "@babel/plugin-proposal-decorators": "^7.4.0",
-    "@babel/preset-env": "^7.5.4",
-    "@babel/preset-es2015": "^7.0.0-beta.53",
-    "@babel/preset-flow": "^7.0.0",
-    "@babel/runtime": "^7.4.3",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^10.0.1",
-    "babel-jest": "^23.4.2",
-    "babel-preset-react-native": "^4.0.1",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-babel": "^5.3.0",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-jest": "^22.7.1",
-    "eslint-plugin-jsx-a11y": "^6.2.2",
-    "eslint-plugin-react": "^7.12.4",
-    "jest": "^24.7.1",
-    "jest-fetch-mock": "^2.1.2",
-    "metro-react-native-babel-preset": "^0.55.0"
+    "@babel/core": "7.5.5",
+    "@babel/runtime": "7.5.5",
+    "@react-native-community/eslint-config": "0.0.3",
+    "babel-jest": "24.8.0",
+    "eslint": "6.1.0",
+    "jest": "24.8.0",
+    "metro-react-native-babel-preset": "0.54.1",
+    "react-test-renderer": "16.8.6"
   },
   "jest": {
-    "preset": "react-native",
-    "setupFiles": [
-      "<rootDir>/jest-config.js"
-    ],
-    "globals": {
-      "__DEV__": true
-    }
-  },
-  "transform": {
-    "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
-    ".(ts|tsx)": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
+    "preset": "react-native"
   }
 }
