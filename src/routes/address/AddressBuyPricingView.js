@@ -13,10 +13,6 @@ export default class AddressBuyPricingView extends React.Component {
     return {topBar: {title: {text: '주소 구매'}}}
   }
 
-  componentWillMount = () => {
-
-  }
-
   getFreeAddress = () => {
     this.props.navigation.navigate('AddressBuyFinish')
   }

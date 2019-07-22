@@ -5,16 +5,13 @@ import { observer, inject } from 'mobx-react'
 import { PagerDotIndicator, IndicatorViewPager } from '../../components/ViewPager'
 import { styles } from './styles'
 import i18n from '../../libs/Locale'
+import { SafeAreaView } from 'react-navigation';
 
 @inject('setting')
 @observer
 export default class GuideView extends React.Component {
   @observable buttonLabel = i18n.t('next')
   @observable currentPage = 0
-
-  constructor (props) {
-    super(props)
-  }
 
   onPageSelected = (page) => {
     this.currentPage = page
@@ -33,15 +30,15 @@ export default class GuideView extends React.Component {
     }
   }
 
-  _renderDotIndicator () {
+  _renderDotIndicator() {
     return <PagerDotIndicator pageCount={4} />
   }
 
-  render () {
+  render() {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <IndicatorViewPager
-          style={{flex: 1}}
+          style={{ flex: 1 }}
           indicator={this._renderDotIndicator()}
           goToNext={next => this.goToNext = next}
           onPageSelected={this.onPageSelected}>
@@ -103,11 +100,12 @@ export default class GuideView extends React.Component {
           </View>
         </IndicatorViewPager>
         <Button
+          onPress={this.onPressNext}
           title={this.buttonLabel}
           color="#594343"
-          overrides={{backgroundColor: '#594343'}}
+          overrides={{ backgroundColor: '#594343' }}
           accessibilityLabel="Learn more about this purple button" />
-      </View>
+      </SafeAreaView>
     )
   }
 }

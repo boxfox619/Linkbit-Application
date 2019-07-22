@@ -25,6 +25,7 @@ export default class IndicatorViewPager extends Component {
     pagerStyle: {},
     onPageSelected: () => { },
     goToNext: () => { },
+    initialPage: 0
   }
 
   constructor(props) {

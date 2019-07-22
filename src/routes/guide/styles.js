@@ -9,7 +9,7 @@ const getCardWidth = () => {
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 50,
+    paddingTop: 120,
     paddingBottom: 20,
   },
   page: {

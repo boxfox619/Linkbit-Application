@@ -13,18 +13,18 @@ import { withProgressDialog } from '../../components/HOC'
 @inject(['wallet'])
 @observer
 class CreateWalletView extends React.Component {
-  state = {
-    coin: {},
-    walletName: '',
-    password: '',
-    invalidPassword: false,
-    confirmPassword: '',
-    invalidConfirmPassword: false,
-  }
 
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     const coin = this.props.navigation.getParam('coin', {})
-    this.setState({ coin })
+    this.state = {
+      coin: coin,
+      walletName: '',
+      password: '',
+      invalidPassword: false,
+      confirmPassword: '',
+      invalidConfirmPassword: false,
+    }
   }
 
   checkConfirmPassword = text => {
@@ -44,7 +44,7 @@ class CreateWalletView extends React.Component {
     const { coin, walletName, password, confirmPassword } = this.state
     if (!walletName) {
       this.setState({ invalidWalletName: i18n.t('enter_name') })
-      
+
       return
     } else {
       this.setState({ invalidWalletName: undefined })
@@ -52,7 +52,7 @@ class CreateWalletView extends React.Component {
 
     if (!password) {
       this.setState({ invalidPassword: i18n.t('msg_enter_password') })
-      
+
       return
     } else {
       this.setState({ invalidPassword: undefined })
@@ -60,7 +60,7 @@ class CreateWalletView extends React.Component {
 
     if (password !== confirmPassword) {
       this.setState({ invalidConfirmPassword: i18n.t('msg_valid_password') })
-      
+
       return
     } else {
       this.setState({ invalidConfirmPassword: undefined })
