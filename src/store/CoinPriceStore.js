@@ -1,4 +1,5 @@
 import { observable, computed, action, reaction } from 'mobx'
+import { Alert } from 'react-native'
 import CoinNetworkApi from '../api/Coin/CoinNetworkApi'
 import CoinStorageApi from '../api/Coin/CoinStorageApi'
 import i18n from '../libs/Locale'
@@ -24,7 +25,7 @@ class CoinPriceStore {
     try {
       await this.refreshCoinPrices()
     } catch (err) {
-      alert(i18n.t('please_check_network'))
+      Alert.alert(i18n.t('please_check_network'))
     }
   }
 

@@ -41,12 +41,12 @@ class AddressManagementView extends React.Component {
     this.currentAddressItem.linkAddress(wallet.symbol, wallet.address).then(res => {
       this.props.showProgress(false, '', () => {
         if (!res) {
-          alert(i18n.t('fail_add_address'))
+          Alert.alert(i18n.t('fail_add_address'))
         }
       })
     }).catch(e => {
       handleError(e)
-      this.props.showProgress(false, '', () => alert(e))
+      this.props.showProgress(false, '', () => Alert.alert(e))
     })
   }
 
@@ -55,12 +55,12 @@ class AddressManagementView extends React.Component {
     this.currentAddressItem.unlinkAddress(wallet.symbol).then(res => {
       this.props.showProgress(false, '', () => {
         if (!res) {
-          alert(i18n.t('fail_delete_address'))
+          Alert.alert(i18n.t('fail_delete_address'))
         }
       })
     }).catch(e => {
       handleError(e)
-      this.props.showProgress(false, '', () => alert(e))
+      this.props.showProgress(false, '', () => Alert.alert(e))
     })
   }
 

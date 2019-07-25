@@ -75,10 +75,11 @@ export default class MainTabView extends React.Component {
         <SafeAreaView style={[CommonStyle.safeArea, { backgroundColor: PRIMARY_COLOR }]}>
           <View style={styles.container}>
             <Header
+            containerStyle={{height: '10%'}}
               backgroundColor="#ffffff"
               leftComponent={<Text style={styles.title}>{i18n.t(headerTitle)}</Text>}
               rightComponent={headerIcon}
-              outerContainerStyles={{ borderBottomWidth: 0, height: 80 }} />
+              outerContainerStyles={{ borderBottomWidth: 0 }}/>
             {this.renderContents()}
             <Navbar
               onTabSelected={this.updateIndex}
@@ -98,11 +99,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   title: {
-    flex: 1,
     width: 100,
     fontSize: 20,
     fontWeight: 'bold',
-    marginLeft: 10,
+    marginLeft: 10
   },
   containerStyle: {
     height: 60,

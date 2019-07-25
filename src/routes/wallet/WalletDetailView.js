@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, SafeAreaView, Clipboard } from 'react-native'
+import { View, StyleSheet, SafeAreaView, Clipboard, Alert } from 'react-native'
 import ActionButton from 'react-native-action-button'
 import { observer } from 'mobx-react'
 import { Icon } from 'react-native-elements'
@@ -26,7 +26,7 @@ export default class WalletDetailView extends React.Component {
         onPress={() => {
           const address = wallet.address
           Clipboard.setString(address)
-          alert(i18n.t('copied_addr'))
+          Alert.alert(i18n.t('copied_addr'))
         }} />,
     }
   }
@@ -41,18 +41,18 @@ export default class WalletDetailView extends React.Component {
     this.store.loadTransactions().then(() => {
       this.store.refreshTransactions().catch(e => {
         handleError(e)
-        alert(e.message)
+        Alert.alert(e.message)
       })
     }).catch(e => {
       handleError(e)
-      alert(e.message)
+      Alert.alert(e.message)
     })
   }
 
   handleRefreshTransactions = () => {
     this.store.refreshTransactions().catch(e => {
       handleError(e)
-      alert(e.message)
+      Alert.alert(e.message)
     })
   }
 
@@ -63,7 +63,7 @@ export default class WalletDetailView extends React.Component {
     } else {
       Clipboard.setString(transaction.targetAddress)
     }
-    alert(i18n.t('copied_target_address'))
+    Alert.alert(i18n.t('copied_target_address'))
   }
 
   handleSelectTransaction = (txHash) => {

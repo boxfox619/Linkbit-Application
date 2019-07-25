@@ -39,11 +39,11 @@ export default class AddressListView extends React.Component {
       if (res) {
         this.props.navigation.goBack(null)
       } else {
-        alert(i18n.t('fail_delete_address'))
+        Alert.alert(i18n.t('fail_delete_address'))
       }
     }).catch(err => {
       handleError(err)
-      alert(i18n.t('fail_delete_address'))
+      Alert.alert(i18n.t('fail_delete_address'))
     })
   }
 

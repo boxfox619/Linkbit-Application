@@ -1,6 +1,6 @@
 import React from 'react'
 import { observable } from 'mobx'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Alert } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import TouchID from 'react-native-touch-id'
 import { handleTouchIdError } from '../../libs/ErrorHandler'
@@ -41,7 +41,7 @@ class SecurityView extends React.Component {
 
   handleViewSetting = view => {
     if (view === 'pin' && this.props.setting.pin) {
-      this.props.setting.unsetPin().then(() => alert(i18n.t('finish_unset_pin')))
+      this.props.setting.unsetPin().then(() => Alert.alert(i18n.t('finish_unset_pin')))
       
       return
     }

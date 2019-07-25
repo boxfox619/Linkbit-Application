@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native'
+import { View, StyleSheet, SafeAreaView, ScrollView, Alert } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import { debounce } from 'lodash'
 import { NavigationButton } from '../../components/Button'
@@ -71,7 +71,7 @@ class CreateWalletView extends React.Component {
         await this.props.wallet.createNewWallet(coin.symbol, walletName, password)
         this.props.showProgress(false, '', () => this.props.navigation.navigate('Main'))
       } catch (err) {
-        this.props.showProgress(false, '', () => alert(err))
+        this.props.showProgress(false, '', () => Alert.alert(err))
         // this.props.showProgress(false, '', () => alert(i18n.t('fail_add_wallet')))
       }
     })

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, SafeAreaView } from 'react-native'
+import { View, StyleSheet, SafeAreaView, Alert } from 'react-native'
 import { observer } from 'mobx-react'
 import i18n from '../../libs/Locale'
 import { InputWithTitle } from '../../components/Input'
@@ -37,10 +37,10 @@ class AddressBuyView extends React.Component {
           this.props.navigation.replace('AddressBuyFinish', { address: this.addressBuyStore.linkaddress })
         }).catch(err => {
           handleError(err)
-          this.props.showProgress(false, '', () => alert(err.message))
+          this.props.showProgress(false, '', () => Alert.alert(err.message))
         })
       } else {
-        alert(i18n.t('err_addr'))
+        Alert.alert(i18n.t('err_addr'))
       }
     }
 

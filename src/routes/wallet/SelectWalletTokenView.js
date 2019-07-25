@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, SafeAreaView, View } from 'react-native'
+import { StyleSheet, SafeAreaView, View, Alert } from 'react-native'
 import SelectCoinView from './SelectCoinView'
 import { NavigationButton } from '../../components/Button'
 import { PRIMARY_COLOR } from '../../libs/Constraints'
@@ -22,7 +22,7 @@ export default class SelectWalletTokenView extends React.Component {
     const selectedCoin = parentCoin.subCoins.find(coin => coin.symbol === selectedCoinSymbol)
 
     if (!selectedCoin) {
-      alert(i18n('select_coin'))
+      Alert.alert(i18n('select_coin'))
 
       return
     }

@@ -10,16 +10,10 @@ import { SafeAreaView } from 'react-navigation';
 @inject('setting')
 @observer
 export default class GuideView extends React.Component {
-  @observable buttonLabel = i18n.t('next')
   @observable currentPage = 0
 
   onPageSelected = (page) => {
     this.currentPage = page
-    if (page == 3) {
-      this.buttonLabel = '시작하기'
-    } else {
-      this.buttonLabel = i18n.t('next')
-    }
   }
 
   onPressNext = () => {
@@ -35,6 +29,7 @@ export default class GuideView extends React.Component {
   }
 
   render() {
+    const buttonLabel = (page === 3) ? i18n.t('start') : i18n.t('next')
     return (
       <SafeAreaView style={styles.container}>
         <IndicatorViewPager
@@ -101,7 +96,7 @@ export default class GuideView extends React.Component {
         </IndicatorViewPager>
         <Button
           onPress={this.onPressNext}
-          title={this.buttonLabel}
+          title={buttonLabel}
           color="#594343"
           overrides={{ backgroundColor: '#594343' }}
           accessibilityLabel="Learn more about this purple button" />

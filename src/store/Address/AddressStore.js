@@ -1,4 +1,5 @@
 import { observable, runInAction, action } from 'mobx'
+import { Alert } from 'react-native'
 import AddressStorageApi from '../../api/Address/AddressStorageApi'
 import * as AddressNetworkApi from '../../api/Address/AddressNetworkApi'
 import LinkedAddress from './LinkedAddress'
@@ -88,7 +89,7 @@ class AddressStore {
     save = () => {
       this.addressStorageApi.saveAddressList(this.linkedAddressList.map(link => link.asJson)).catch(err => {
         handleError(err)
-        alert(err)
+        Alert.alert(err)
       })
     }
 

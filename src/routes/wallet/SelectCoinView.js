@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, SafeAreaView, View } from 'react-native'
+import { StyleSheet, SafeAreaView, View, Alert } from 'react-native'
 import { observer } from 'mobx-react'
 import { COIN_INFO, PRIMARY_COLOR } from '../../libs/Constraints'
 import NavigationButton from '../../components/Button/NavigationButton'
@@ -26,8 +26,7 @@ export default class SelectCoinView extends React.Component {
     const { nextPath } = this.props.navigation.state.params
     const coin = COIN_INFO.find(c => c.symbol === selectedCoin)
     if (!coin) {
-      alert(i18n.t('select_coin'))
-
+      Alert.alert(i18n.t('select_coin'))
       return
     }
     this.props.navigation.navigate(nextPath, { coin })

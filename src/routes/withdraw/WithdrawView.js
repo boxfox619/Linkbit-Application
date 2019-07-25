@@ -1,7 +1,7 @@
 import React from 'react'
 import { observable } from 'mobx'
 import { inject, observer } from 'mobx-react'
-import { View, StyleSheet, SafeAreaView } from 'react-native'
+import { View, StyleSheet, SafeAreaView, Alert } from 'react-native'
 import i18n from '../../libs/Locale'
 import { PRIMARY_COLOR } from '../../libs/Constraints'
 import Title from '../../components/Label/Title'
@@ -57,7 +57,7 @@ class WithdrawView extends React.Component {
       case 1:
         this.withdrawStore.checkAddressValid().then(() => {
           if (this.withdrawStore.destAddressError) {
-            alert(this.withdrawStore.destAddressError)
+            Alert.alert(this.withdrawStore.destAddressError)
           } else {
             this.step += 1
           }
@@ -65,7 +65,7 @@ class WithdrawView extends React.Component {
         break
       case 2:
         if (this.withdrawStore.amountError) {
-          alert(this.withdrawStore.amountError)
+          Alert.alert(this.withdrawStore.amountError)
           break
         }
         this.step += 1
@@ -103,7 +103,7 @@ class WithdrawView extends React.Component {
       })
     } catch (err) {
       handleError(err)
-      this.props.showProgress(false, '', () => alert(err.message))
+      this.props.showProgress(false, '', () => Alert.alert(err.message))
     } finally {
       this.props.showProgress(false)
     }

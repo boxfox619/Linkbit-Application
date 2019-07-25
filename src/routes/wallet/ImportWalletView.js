@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet, View } from 'react-native'
+import { SafeAreaView, StyleSheet, View, Alert } from 'react-native'
 import { observer, inject } from 'mobx-react'
 import { observable } from 'mobx'
 import { SegmentedControl, InputWithTitle } from '../../components'
@@ -50,16 +50,16 @@ export default class ImportWalletView extends React.Component {
     const importType = importMethod.type
     const invalidInput = importMethod.form.find(input => !this.value[input.key] || this.value[input.key].length === 0)
     if (this.walletName.length === 0) {
-      alert(i18n.t('enter_wallet_name'))
+      Alert.alert(i18n.t('enter_wallet_name'))
     } else if (invalidInput) {
-      alert(`${i18n.t('enter_missing_field')} : ${invalidInput.label}`)
+      Alert.alert(`${i18n.t('enter_missing_field')} : ${invalidInput.label}`)
     } else {
       const { coin } = this.props.navigation.state.params
       this.props.wallet.importWallet(coin.symbol, this.walletName, importType, this.value)
         .then(() => this.props.navigation.navigate('Main'))
         .catch(err => {
           handleError(err)
-          alert(i18n.t('import_wallet_failed'))
+          Alert.alert(i18n.t('import_wallet_failed'))
         })
     }
   }

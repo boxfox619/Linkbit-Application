@@ -28,8 +28,8 @@ export default class WalletSummaryCard extends React.Component {
             <Image style={styles.icon} source={this.coin.icon} resizeMode="contain" />
           </View>
         </View>
-        <Text style={styles.name}>{name}</Text>
         <View>
+          <Text style={styles.name}>{name}</Text>
           <View style={styles.subContainer}>
             <Text style={styles.label}>{symbol}</Text>
             <Text style={styles.valueLabel}>{balance}</Text>
@@ -54,7 +54,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 106,
     borderRadius: 6,
-    padding: 20,
+    paddingTop: '3.5%',
+    paddingBottom: 10,
+    paddingHorizontal: 20,
     justifyContent: 'space-between',
   },
   iconContainer: {
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     position: 'absolute',
     width: '100%',
-    marginTop: 20,
+    marginTop: 15,
     marginLeft: 20,
   },
   iconBackground: {
@@ -82,7 +84,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 3,
+    marginBottom: '2%',
   },
   subContainer: {
     display: 'flex',
