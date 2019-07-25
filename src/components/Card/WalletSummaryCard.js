@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { View, StyleSheet, Text, Image } from 'react-native'
-import { inject, observer } from 'mobx-react/index'
+import { inject, observer } from 'mobx-react'
 import { dollarFormat, fixed } from '../../libs/NumberFormatter'
 import Wallet from '../../store/Wallet/Wallet'
 

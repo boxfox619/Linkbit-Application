@@ -1,4 +1,4 @@
-import {AsyncStorage} from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 
 const COIN_STORAGE_KEY = 'coin'
 export default class CoinStorageApi {

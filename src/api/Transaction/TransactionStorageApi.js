@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 
 const TRANSACTION_STORAGE_KEY = 'transaction'
 export default class TransactionStorageApi {

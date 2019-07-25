@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 import crypto from 'crypto'
 import ECIES from 'eth-ecies'
 import * as ethUtil from 'ethereumjs-util'

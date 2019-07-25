@@ -25,6 +25,7 @@ export default class IndicatorViewPager extends Component {
     pagerStyle: {},
     onPageSelected: () => { },
     goToNext: () => { },
+    initialPage: 0
   }
 
   constructor(props) {
@@ -47,7 +48,7 @@ export default class IndicatorViewPager extends Component {
     }
   }
 
-  componentWillUpdate(nextProps) {
+  componentDidUpdate(nextProps) {
     this._childrenCount = React.Children.count(nextProps.children)
   }
 

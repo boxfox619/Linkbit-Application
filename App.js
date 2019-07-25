@@ -1,65 +1,54 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
-import { createAppContainer } from 'react-navigation'
-import { Provider } from 'mobx-react'
-import { observer } from 'mobx-react'
-import { observable } from 'mobx/lib/mobx'
-import Navigator from './src/containers/navigator'
-import { SplashView, GuideView } from './src/containers/guide'
-import withVerify from './src/components/HOC/withVerify'
 import i18n from './src/libs/Locale'
-import { createStore } from './src/store';
+import { Observer, Provider } from 'mobx-react'
+import { createStore } from './src/store'
+import { View, StyleSheet } from 'react-native'
+import { SplashView, GuideView } from './src/routes/guide'
+import withVerify from './src/components/HOC/withVerify'
+import AppNavigator from './src/routes'
 
-const AppContainer = withVerify(createAppContainer(Navigator), true)
-
-@observer
-export default class App extends React.Component {
-  @observable isVerify = true
-  @observable progress = true
-  @observable label = i18n.t('loading')
-  store
-
-  constructor(props) {
-    super(props)
-    this.store = createStore()
-  }
-
-  componentDidMount = async () => {
+const Container = withVerify(AppNavigator, true)
+const store = createStore()
+const App = () => {
+  const [progress, setProgress] = React.useState(false);
+  const [label, setLabel] = React.useState('');
+  const init = async () => {
     try {
-      this.label = i18n.t('loading_setting')
-      await this.store.setting.load()
-      this.label = i18n.t('loading_address')
-      await this.store.address.loadAddressList()
-      this.label = i18n.t('loading_wallet')
-      await this.store.wallet.loadWalletList()
-      this.label = i18n.t('loading_coin')
-      await this.store.coin.load()
-      this.label = i18n.t('loading_finish')
-      this.progress = false
+      setLabel(i18n.t('loading_setting'));
+      await store.setting.load()
+      setLabel(i18n.t('loading_address'));
+      await store.address.loadAddressList()
+      setLabel(i18n.t('loading_wallet'));
+      await store.wallet.loadWalletList()
+      setLabel(i18n.t('loading_coin'));
+      await store.coin.load()
+      setLabel(i18n.t('loading_finish'));
+      setProgress(false)
     } catch (err) {
-      this.label = i18n.t('loading_fail')
+      setLabel(i18n.t('loading_fail'))
     }
-  }
-
-  render() {
-    return (
-      <Provider {...this.store}>
-        <View style={[styles.container, !this.isVerify && styles.paddingTop]}>
-          {(this.progress) ? (<SplashView label={this.label} />) : (
-            this.store.setting.isInitialExecution ? (<GuideView />) : (<AppContainer />)
-          )}
-        </View>
-      </Provider>
-    )
-  }
-}
+  };
+  React.useEffect(() => { init() }, []);
+  return (
+    <Provider {...store}>
+      <Observer>
+        {() => (
+          <View style={[styles.container]}>
+            {(progress) ? (<SplashView label={label} />) : (
+              store.setting.isInitialExecution ? (<GuideView />) : (<Container />)
+            )}
+          </View>
+        )}
+      </Observer>
+    </Provider>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-  },
-  paddingTop: {
-    paddingTop: 90,
-  },
-})
+  }
+});
+
+export default App;
