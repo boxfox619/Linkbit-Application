@@ -28,11 +28,6 @@ target 'LinkbitApplication' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
-
-  pod 'react-native-randombytes', :path => '../node_modules/react-native-randombytes'
-
-  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
