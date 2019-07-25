@@ -12,7 +12,7 @@ const importMethods = [
   {
     type: 'mnemonic',
     form: [
-      { key: 'mnemonic', label: 'Mnemonic', type: 'string' },
+     /*  { key: 'mnemonic', label: 'Mnemonic', type: 'string' }, */
       { key: 'password', label: 'Password', type: 'password' },
     ],
   },
