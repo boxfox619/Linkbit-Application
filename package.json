@@ -20,7 +20,7 @@
     "ethereumjs-wallet": "^0.6.3",
     "events": "^1.1.1",
     "i18n-js": "^3.3.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "mobx": "^5.13.0",
     "mobx-react": "^5.4.3",
     "moment": "^2.24.0",
