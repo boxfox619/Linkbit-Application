@@ -27,7 +27,7 @@
     "prop-types": "^15.7.2",
     "proxy-polyfill": "^0.3.0",
     "react": "16.8.6",
-    "react-native": "0.60.4",
+    "react-native": "0.62.3",
     "react-native-action-button": "^2.8.5",
     "react-native-crypto": "^2.1.2",
     "react-native-dropdown-menu": "^2.0.0",
