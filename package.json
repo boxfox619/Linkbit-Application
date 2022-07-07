@@ -23,7 +23,7 @@
     "lodash": "^4.17.15",
     "mobx": "^5.13.0",
     "mobx-react": "^5.4.3",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "prop-types": "^15.7.2",
     "proxy-polyfill": "^0.3.0",
     "react": "16.8.6",
